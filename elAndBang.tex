@@ -1,38 +1,3 @@
-  
-\RequirePackage{fix-cm}
-\documentclass[smallextended]{svjour3}       % onecolumn (second format)
-\smartqed  % flush right qed marks, e.g. at end of proof
-
-\usepackage{bussproofs}
-\usepackage{turnstile}
-\usepackage{amssymb}
-\usepackage{latexsym}
-\setcounter{tocdepth}{3}
-\usepackage{graphicx}
-\usepackage{url}
-\usepackage{amsmath}
-\usepackage{listings}
-\usepackage{subfig}
-\usepackage{pgf}
-\usepackage{tikz}
-\usetikzlibrary{arrows,shapes,snakes,automata,backgrounds,petri}
-\usepackage[latin1]{inputenc}
-\usepackage{float}
-\usepackage{amssymb}
-
-
-
-
-\begin{document}
-
-\title {Eremic Logic} 
-\subtitle {A Modal Logic of Elementary Propositions}
-\author{Richard Prideaux Evans,  Martin Berger}
-\date{Received: date / Accepted: date}
-% The correct dates will be entered by the editor
-
-\maketitle
-
 \section{EL$[\land, !]$}
 \subsection{Syntax}
 Given a set $\mathcal{S}$ of symbols, with $a$ ranging over $\mathcal{S}$, and $A$ ranging over finite subsets of $\mathcal{S}$, the sentences of EL$[\land, !]$ are given by:
@@ -963,9 +928,4 @@ t(! A) & = & \bigwedge_{s \in S - A} \neg \langle s \rangle \top \nonumber
 \end{eqnarray}
 If $\mathcal{S}$ is an infinite set, then the translation of a $!$ formula will be an infinitary sentence.
 If $\mathcal{S}$ is finite, then the size of the HML formula will be of the order of $n * |\mathcal{S}|$ larger than the original EL formula (where $n$ is the number of $!$ operators occurring in the EL formula).
-
-
-
-
-\end{document}
 

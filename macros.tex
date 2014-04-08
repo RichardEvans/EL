@@ -1,0 +1,52 @@
+\usepackage{ifthen}
+\usepackage{amssymb}
+\newboolean{showcomments}
+\setboolean{showcomments}{true}
+\ifthenelse{\boolean{showcomments}}
+  {\newcommand{\mynote}[2]{
+    \fbox{\bfseries\sffamily\scriptsize#1}
+    {\small$\blacktriangleright$\textsf{\emph{#2}}$\blacktriangleleft$}
+   }
+  }
+  {\newcommand{\mynote}[2]{}
+  }
+\newcommand\laurie[1]{\mynote{Laurie}{#1}}
+\newcommand\richard[1]{\mynote{Richard}{#1}}
+
+
+\lstnewenvironment{code}
+    {\lstset{}%
+      \csname lst@SetFirstLabel\endcsname}
+    {\csname lst@SaveFirstLabel\endcsname}
+    \lstset{
+      basicstyle=\small\ttfamily,
+      flexiblecolumns=false,
+      basewidth={0.5em,0.45em},
+      literate={+}{{$+$}}1 {/}{{$/$}}1 {*}{{$*$}}1 {=}{{$=$}}1
+               {>}{{$>$}}1 {<}{{$<$}}1 {\\}{{$\lambda$}}1
+               {\\\\}{{\char`\\\char`\\}}1
+               {->}{{$\rightarrow$}}2 {>=}{{$\geq$}}2 {<-}{{$\leftarrow$}}2
+               {<=}{{$\leq$}}2 {=>}{{$\Rightarrow$}}2 
+               {\ .}{{$\bigcirc$}}2 {\ .\ }{{$\bigcirc$}}2
+               {>>}{{>>}}2 {>>=}{{>>=}}2
+               {|}{{$\mid$}}1               
+    }
+
+\newtheorem{mycase}{Case}
+\newtheorem{subcase}{Case}
+\numberwithin{subcase}{mycase}
+
+
+% Dot
+\def\fDot {\ast}
+% Bang
+\def\fBang {\ ! \ }
+% Or
+\def\fOr {\ | \ }
+
+% Turnstiles with subscripts
+\def\judgeX {\sststile{\mathrm{X}}{}}
+\def\judgeY {\sststile{\mathrm{Y}}{}}
+\def\judge {\sststile{\mathrm{}}{}}
+
+\EnableBpAbbreviations
