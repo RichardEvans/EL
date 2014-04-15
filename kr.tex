@@ -1,0 +1,138 @@
+\section{Using Eremic Logic as a Knowledge Representation Language}
+Eremic Logic has been found to be a highly-ergonomic language for the representation of complex simulational state.
+It has been used as the representation language for a large, complex, highly-dynamic multi-agent simulation \cite{evans-and-short}.
+The entire world state is stored as a set of sentences - all other aspects of world state are transient and computed as needed.
+The entire world state is stored as a Labelled Rooted Tree, using the non-monotonic update mechanism described above.
+The application in which Eremic Logic has been proven is not a toy academic problem, but an industrial-sized application involving tens of thousands of rules and tens of thousands of atomic facts.
+
+When applying it in a large knowledge base, Eremic Logic has been found to have a number of advantages over traditional predicate logic as a language to represent simulational state:
+\begin{itemize}
+\item
+The notion of a sub-tree in Eremic Logic gives us a natural way to represent \emph{objects}
+\item
+The update rule (described above) means that \emph{garbage collection} of invalid data happens automatically.
+\item
+Eremic logic allows a simpler less error-prone way of specifying \emph{postconditions} of actions
+\item
+The $!$ operator gives additional information to the type-checker, allowing an author to specify her intent more precisely
+\item
+The $!$ operator provides additional information to the compiler, allowing significantly more efficient clause ordering
+\end{itemize}
+I shall go through each of these in turn.
+
+\subsection{Using Sub-trees of Expressions to Represent Objects}
+Consider the following facts about Brown\footnote{The database is composed of Y-terms. For readability, the trailing $\star \top$ has been omitted. In Praxis, constants are identifiers starting with a lower-case letter while variables start with an upper-case letter.}:
+\begin{verbatim}
+brown *
+    (
+        sex!male /\
+        class!upper
+        in!dining_room /\
+        friends *
+        (
+            lucy /\
+            elizabeth
+        )
+)
+\end{verbatim}
+All the facts which start with the prefix ``brown'' form a sub-tree of the entire database.
+And all the facts which start with the prefix ``brown * friends'' form a sub-tree of that tree.
+A sub-tree can be treated as an individual via its prefix.
+The whole sub-tree can be removed in one fell swoop by deleting its associated prefix.
+So we can e.g. remove Brown's friends just by deleting the prefix ``brown * friends\'.
+(Compare this with Prolog - where it is much harder to remove all sentences containing a particular symbol).
+A sub-tree of terms is the Eremic Logic equivalent of an \emph{object} in an object-oriented programming language.
+
+The tree-structure of terms also allows us to express the \emph{life-time of data} in a natural way. 
+If we wish a piece of data $d$ to exist for just the duration of a proposition $t$, then we make $t$ be a sub-expression of $d$. 
+For example, if we want the friendships of an agent to exist just as long as the agent, then we place the relationships inside the agent: 
+\begin{verbatim}
+brown * friends
+\end{verbatim}
+Or if we want the score of a game to exist just as long as the game itself, then we place the score data inside the social practice for the game: 
+\begin{verbatim}
+process * whist * data * whose_move ! brown
+\end{verbatim}
+
+Another advantage of using a tree structure is that we get a form of \emph{automatic currying} which simplifies queries.
+So if, for example, Brown is married to Elizabeth, then the database would contain 
+\begin{verbatim}
+brown * married ! elizabeth
+\end{verbatim}
+In Eremic Logic, if we want to find out whether Brown is married, we can query the sub-term directly -  we just ask if 
+\begin{verbatim}
+brown * married
+\end{verbatim}
+In traditional predicate logic, if married is a two-place predicate, then we need to fill in the extra argument place with a free variable - we would need to find out if there exists an $X$ such that ``married(brown, X)'' - this is slower to compute and more cumbersome to type. 
+
+\subsection{Automatic Garbage Collection}
+The $!$ operator supports automatic clean up of dead data.
+For example, an object $p$ might have two states: $a$ and $b$. State $a$ might have two pieces of information, $x1$ and $x2$. State $b$ might have three pieces of information $y1$, $y2$ and $y3$. Being in state $a$ would be represented as:
+\[p \; ! \; a \star  (x1 \land x2)\]
+State $b$ would be represented as:
+\[p \; ! \; b \star (y1 \land y2 \land y3)\]
+Now that if we are in state $a$, and we switch to state $b$ by inserting $p \fBang b$ into the database, all the local data from  state $a$ is \emph{automatically} removed from the database according to the update rules for Eremic Logic. Everything is cleaned up \emph{automatically}.
+
+\subsection{Simpler Postconditions}
+When expressing the pre- and post-conditions of an action, planners based on predicate logic\footnote{An early example is STRIPS \cite{strips}.} have to explicitly describe the propositions that are removed when an action is performed:
+\begin{verbatim}
+action move(A, X, Y)
+    preconditions
+        at(A, X)
+    postconditions
+        add: at(A, Y) 
+        remove: at(A, X)
+\end{verbatim}
+Here, we need to explicitly state that when $A$ moves from $X$ to $Y$, $A$ is no longer at $X$. It might seem obvious to us that if $A$ is now at $Y$, he is no longer at $X$ - but we need to explicitly tell the system this. This is unnecessary, cumbersome and error-prone. In Eremic Logic, by contrast, the exclusion operator means we do not need to specify the facts that are no longer true\footnote{Note that the rule is a horn-clause of Y-terms, not X-terms. Note also that the trailing $\star \top$ has been suppressed for readability.}:
+\begin{verbatim}
+action move * A * X * Y
+    preconditions
+        A * at ! X
+    postconditions
+        add: A * at ! Y
+\end{verbatim}
+The ``!" operator makes it clear that something can only be at one place at a time, and the non-monotonic update rule \emph{automatically} removes the old invalid location data.
+
+\subsection{The $!$ Operator Helps Remove Errors During Type-Checking}
+The $!$ operator allows the simulation author to specify her intent more precisely.
+When we specify, for example, the type-signature for an agent's gender:
+\begin{verbatim}
+A(agent) * sex ! G(gender)
+\end{verbatim}
+We are saying that an agent has \empty{exactly one} gender.
+This exclusion-information is available to the type-checker, which can rule out at initialisation-time any piece of code which assumes that an agent could have multiple genders. 
+
+Some modern logic-programming languages are starting to add the ability to specify uniqueness properties of predicates \cite{mercury}. 
+But they treat uniqueness properties as meta-linguistic predicates. 
+Eremic Logic is the first language to treat uniqueness as a first-class element of the language.
+
+\subsection{Using the $!$ Operator to Optimize Logic Programs}
+Suppose, for example, we want to find all married couples who are currently at home.
+In Prolog, we might write something like:
+\begin{verbatim}
+married_couple_at_home(X, Y) :-
+    at_home(X),
+    at_home(Y),
+    spouse(X,Y).
+\end{verbatim}	
+Rules like this create a large search-space because we need to find all instances of $at\_home(X)$ and all instances of  $at\_home(Y)$ and take the cross-product \cite{smith-and-genesereth}. If there are $n$ instances of $at\_home$, then we will be searching $n^2$ instances of $(x,y)$ substitutions.
+
+If we express the rule in Eremic Logic, the compiler is able to use the extra information expressed in the $!$ operator to reorder the clauses to find the result significantly faster.
+Since someone can only have a single spouse at any moment, the rule is expressed in Eremic Logic as\footnote{Note that the rule is a horn-clause of Y-terms, not X-terms. Note also that the trailing $\star \top$ has been suppressed for readability.}:
+\begin{verbatim}
+married_couple_at_home * X * Y :-
+    at_home * X,
+    at_home* Y,
+    spouse * X ! Y.
+\end{verbatim}	
+Now the compiler is able to reorder these clauses to minimize the search-space. 
+It can see that, once $X$ is instantiated, evaluating $spouse * X \; ! \; Y$ involves no increase to the search-space.
+So it reorders the clauses to produce:
+\begin{verbatim}
+married_couple_at_home * X * Y :-
+    at_home * X,
+    spouse * X ! Y,
+    at_home* Y.
+\end{verbatim}	
+Now it is able to find all results by just searching $n$ instances - a significant optimization.
+
