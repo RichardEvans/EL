@@ -1,21 +1,36 @@
+* Find a better name for !A than "bang A".
+
+* Be consistent. In particular
+
+  - Either all definitions are in an explicit \begin{definition}
+    environment or none.
+
+* Timetable: 13.May to 16.May, can we finish it?
+
 * Find possible reviewers:
 
-- Michael Wooldridge http://www.cs.ox.ac.uk/people/michael.wooldridge/
-- Robert Brandom http://www.pitt.edu/~rbrandom/
-- Marek Sergot http://www.doc.ic.ac.uk/~mjs/
-- Marcus Kracht http://wwwhomes.uni-bielefeld.de/mkracht/index-en.html
+  - Michael Wooldridge http://www.cs.ox.ac.uk/people/michael.wooldridge/
+  - Robert Brandom http://www.pitt.edu/~rbrandom/
+  - Marek Sergot http://www.doc.ic.ac.uk/~mjs/
+  - Marcus Kracht http://wwwhomes.uni-bielefeld.de/mkracht/index-en.html
 
-* Prepare Haskell decision procedure. Put on Github. Write instructions
-on how to use.
+* Could it make sense to prepare a little video presentation (using
+  Screenflow, or recording professionally), maybe 15 minutes, to
+  introduce the material? This could make it more accessible to
+  non-technical audiences.)
 
-* THink about how to interface the paper with Versu. 
-Versu—A Simulationist Storytelling System
+* Prepare Haskell decision procedure. Put on Github. Write
+  instructions on how to use.
+
+* THink about how to interface the paper with Versu.  Versu—A
+  Simulationist Storytelling System
 
 * Think about seminars (Sussex, Imperial, Oxford, which others?)
 
 * Related work: 
-- Investgations into negation
-- Philosophical stuff
-- Logics for knowledge representation
-- Standard Modal Logic stuff
-- HM Logic
+
+  - Investgations into negation
+  - Philosophical stuff
+  - Logics for knowledge representation
+  - Standard Modal Logic stuff
+  - HM Logic

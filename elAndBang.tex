@@ -106,14 +106,25 @@ We define a function $\mu$ which, given a formula $\phi$, produces the simplest\
 		& & \mbox{and }w' \mbox{ is a new state not appearing in }\mathcal{W} \nonumber
 \end{eqnarray}
 The only complex case is the clause for $\mu (\phi_1 \land \phi_2)$, which uses the $\sqcap$ function, defined as\footnote{We assume that the sets of states in the two pointed models are disjoint.}:
-\begin{eqnarray}
-\bot \sqcap X & = & \bot \nonumber \\
-X \sqcap \bot & = & \bot \nonumber \\
-m \sqcap n & = & \mbox{if } \mathsf{consistent}(m, n)\nonumber \\
-	& & \mbox{then } \mathsf{merge}(m, n) \nonumber \\
-	& & \mbox{else } \bot \nonumber
-\end{eqnarray}
-The $\mathsf{consistent}$ predicate is true of pointed models $m$ and $n$ if the out-transitions on $m$'s root node respect the labelling on $n$'s root node, and the out-transitions on $n$'s root node respect the labelling on $m$'s root node. In other words:
+
+\begin{eqnarray*}
+  \bot \sqcap X 
+     & = & 
+  \bot \nonumber 
+     \\
+  X \sqcap \bot 
+     & = & 
+  \bot \nonumber 
+     \\
+  m \sqcap n 
+     & = & 
+  \begin{cases}
+    \mathsf{merge}(m, n) & \text{if}\ \mathsf{consistent}(m, n) \\
+    \bot & \text{else}
+  \end{cases}
+\end{eqnarray*}
+
+\noindent The $\mathsf{consistent}$ predicate is true of pointed models $m$ and $n$ if the out-transitions on $m$'s root node respect the labelling on $n$'s root node, and the out-transitions on $n$'s root node respect the labelling on $m$'s root node. In other words:
 \begin{eqnarray}
 \mathsf{consistent}(m, n) & \mbox{ iff } & \mathsf{out}(m) \subseteq \mathsf{restriction}(n) \mbox{ and} \nonumber \\
 & & \mathsf{out}(n) \subseteq \mathsf{restriction}(m) \nonumber
