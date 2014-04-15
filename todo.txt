@@ -1,0 +1,21 @@
+* Find possible reviewers:
+
+- Michael Wooldridge http://www.cs.ox.ac.uk/people/michael.wooldridge/
+- Robert Brandom http://www.pitt.edu/~rbrandom/
+- Marek Sergot http://www.doc.ic.ac.uk/~mjs/
+- Marcus Kracht http://wwwhomes.uni-bielefeld.de/mkracht/index-en.html
+
+* Prepare Haskell decision procedure. Put on Github. Write instructions
+on how to use.
+
+* THink about how to interface the paper with Versu. 
+Versu—A Simulationist Storytelling System
+
+* Think about seminars (Sussex, Imperial, Oxford, which others?)
+
+* Related work: 
+- Investgations into negation
+- Philosophical stuff
+- Logics for knowledge representation
+- Standard Modal Logic stuff
+- HM Logic
