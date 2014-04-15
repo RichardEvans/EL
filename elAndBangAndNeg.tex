@@ -1,1 +1,654 @@
 \section{EL$[\land, !, \neg]$}
+
+\section{Super New Eremic Logic!!!}
+What is interesting about this new version:
+\begin{itemize}
+\item
+The $\fBang$ operator now operates on \emph{sequences of symbols}, rather than on propositions.
+As well as a set of unary operators (of the form $\langle a \rangle$ for $a \in \mathcal{S}$), we also have a set of nullary operators (of the form $!\{A\}$ for $A \subseteq \mathcal{S}$). 
+\item
+The previous version was not normal: $p \land q \judge p$, but $\fBang (p \land q) \nvdash \fBang p$. Now that ! is a different sort of operator (a nullary operator), we restore normality.
+\item
+In the previous version, $! p$ was doing \emph{double-duty}: it was saying $p$ was true, but \emph{also} saying something about the width of the tree based on the heads of $p$. This weirdness meant that e.g. $!^np$ just meant $!p$. Now, $\fBang A$ \emph{only} says something about the width of the tree. 
+\item
+In the new version we can support disjunction, negation, existential quantification. None of these were addable in the old version because it was not clear what the $h()$ function  did with negation or existential quantification.
+\item
+Even ignoring disjunction, negation, etc, the new version is more expressive. We can express ``there is an $a$ transition and the only possible transitions are $a$ and $b$ transitions'' as $\langle a \rangle \top \land \fBang \{a, b\}$. (This was not expressible in the old version).
+\item
+Now that $!$ is a nullary operator on sequences of symbols (rather than a unary operator on propositions, as it was before), it is straightforward to expand EL to include quantifiers.
+\item
+The semantics operates in terms of normal Labelled Transition Systems. The \emph{decision procedure} uses LTSs with additional annotations on each node, but the semantics uses standard LTSs. (In contrast, the previous version used LTSs with additional node-labellings $\{\ast, \fBang\}$ to evaluate the semantics).
+\end{itemize}
+
+\subsection{Syntax}
+Given a set $\mathcal{S}$ of symbols, with $a$ ranging over $\mathcal{S}$, and $A$ ranging over (possibly empty) sequences of elements of $\mathcal{S}$, the sentences of Super New Eremic Logic (SNEL) are given by\footnote{We include $\lor$, even though it is definable in terms of $\neg$ and $\land$, because our decision procedure involves translating formulae into Disjunctive Normal Form.}:
+\[
+\phi ::= \top \fOr \bot \fOr \neg \phi \fOr \phi_1 \land \phi_2 \fOr\phi_1 \lor \phi_2 \fOr \langle a \rangle \phi \fOr \fBang A 
+\]
+\subsection{Semantics}
+A LTS is a pair $(\mathcal{W}, \rightarrow)$, containing a set of states $\mathcal{W}$, and a transition relation $\rightarrow \subseteq \mathcal{W} \times \mathcal{S} \times \mathcal{W}$.
+
+Sentences of EL are interpreted in a \emph{deterministic} LTS : for all states $x \in \mathcal{W}$ and symbols $s \in \mathcal{S}$, there is \emph{at most} one $y$ such that $x \xrightarrow{s} y$.
+
+A {\bf pointed model} is a pair $(l,w)$, where $l$ is a LTS of the form $(\mathcal{W}, \rightarrow)$, and $w$ is a distinguished state in $\mathcal{W}$.
+
+Formulae are interpreted in a pointed model $(l,w)$:
+\begin{eqnarray}
+(l,w) & \models & \top  \mbox{ always } \nonumber \\
+(l,w) & \models & \bot \mbox{ never }\nonumber \\
+(l,w) & \models & \neg \phi \mbox{ iff } (l,w) \nvDash \phi \nonumber \\
+(l,w) & \models & \phi_1 \land \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2 \nonumber \\
+(l,w) & \models & \phi_1 \lor \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { or } (l,w) \models \phi_2 \nonumber \\
+(l,w) & \models & \langle a \rangle \phi \mbox{ iff there is a } w \xrightarrow{a} w' \mbox { such that } (l,w') \models \phi \nonumber \\
+(l,w) & \models & \fBang A \mbox{ iff } \{s \fOr \exists w' \; w \xrightarrow{s} w'\} \subseteq A\nonumber
+\end{eqnarray}
+Intuitively, $\fBang A$ means that the \emph{only} transitions coming out of the current state are those specified in $A$.
+
+\subsection{Relation between SNEL and the Previous Version of EL}
+Given a function $h$ on EL that gives the set of transitions that a sentence specifies:
+\begin{eqnarray}
+h & :: & \phi \rightarrow 2^S \nonumber \\
+h(\top) & = & \{ \} \nonumber \\
+h(\fBang \phi) & = & h(\phi) \nonumber \\
+h(\phi_1 \land \phi_2) & = & h(\phi_1) \cup h(\phi_2) \nonumber \\
+h(\langle s \rangle \phi) & = & \{ s \} \nonumber
+\end{eqnarray}
+We can translate $\fBang \phi$ in EL to $\phi \; \land \; \fBang h(\phi)$ in SNEL.
+
+\subsection{Negation}
+Negation can be translated away using the following rewrite rules, \emph{relative to a certain set $\Sigma$ of symbols}:
+\begin{eqnarray}
+\neg_\Sigma(\top) & \rightarrow & \bot \nonumber \\
+\neg_\Sigma(\bot) & \rightarrow & \top \nonumber \\
+\neg_\Sigma(\phi_1 \land \phi_2) & \rightarrow & \neg_\Sigma(\phi_1) \lor \neg_\Sigma(\phi_2) \nonumber \\
+\neg_\Sigma(\phi_1 \lor \phi_2) & \rightarrow & \neg_\Sigma(\phi_1) \land \neg_\Sigma(\phi_2) \nonumber \\
+\neg_\Sigma(\langle a \rangle \phi) & \rightarrow & \fBang(\Sigma-\{a\}) \lor \langle a \rangle \neg_\Sigma(\phi) \nonumber \\
+\neg_\Sigma(\fBang A) & \rightarrow & \bigvee_{a \in \Sigma - A} \langle a \rangle \top\nonumber
+\end{eqnarray}
+Note that, if $\Sigma$ is infinite, then the last two clauses will generate infinitary sentences.
+
+\subsection{Restricting the Law of the Excluded Middle to a Determinate Set of Possibilities}
+Given a formula $p$ and particular set $\Sigma$ of symbols, then we cannot hope to prove 
+\[
+\models p \lor \neg_\Sigma(p)
+\]
+For example, let $p$ be $\langle a \rangle \top$ and $\Sigma = \{a, b\}$.
+Now
+\[
+\neg_\Sigma(\langle a \rangle \top) \; = \; ! \{b\} \lor \langle a \rangle \neg_\Sigma(\top) \; =  \; ! \{b\} \lor \langle a \rangle \bot
+\]
+So, in this case:
+\[
+p \lor \neg p \; = \; \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
+\]
+Now this will not in general be valid - it will be false in any model which contains a transition from the root to any other symbol not in $\Sigma$, for example: $c$.
+
+But if we \emph{fix in advance the set of available options} (in this case restricting to the set $\Sigma$), then we can prove the excluded middle:
+\[
+!\{a, b\} \models \; \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
+\]
+More generally, let $\mathsf{path}(\phi)$ be the set of symbol-sequences in $\phi$.
+So for example:
+\[
+\mathsf{path}(\langle a \rangle (\langle b \rangle \top \land \langle c \rangle \langle d \rangle \top)) = \{(), (a), (a, b), (a, c, d)\}
+\]
+Then the following is valid for any formula $\phi$ (letting $\Sigma = \sigma(\phi)$): 
+\[
+\bigwedge_{(a_1, ..., a_n) \in \mathsf{path}(\phi)} \langle a_1 \rangle ... \langle a_n \rangle \fBang \Sigma \models \phi \lor \neg_\Sigma (\phi)
+\]
+\subsubsection{Discussion: Precisifying the Negation. }
+If someone asserts that, say, Jack does not support Manchester United, we have so far said very little. 
+Until we know the \emph{range of football teams} he could support, we don't know what the negation amounts to. 
+Until we have some more determinate information about the range of possible choices, there are an \emph{indefinite} number of ways in which this could be true.
+But if we knew that the only possible teams Jack could support are Manchester United, Arsenal or Chelsea, then suddenly our negation has some determinate content.
+SNEL captures this intuition. 
+Once a negated sentence has been precisified by specifying the range of allowable options (via the $!$ operator), the negated claim can be made precise, and the law of excluded middle can be proven.
+
+\subsubsection{Discussion: Negation as Infinitary Disjunction. }
+As is well known the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.
+
+Analogously, given an infinite set $\mathcal{S}$ of symbols, the negation of propositional logic can be translated into an infinitary disjunction of sentences in SNEL.
+
+
+
+\section{A Naive Decision Procedure}
+Define $|\phi|$ as the degree of $\phi$:
+\begin{eqnarray}
+|\top| & = & 0 \nonumber \\
+|\bot| & = & 0 \nonumber \\
+|\neg \phi| & = & | \phi | \nonumber \\
+|\phi_1 \land \phi_2| & = & \mathsf{max}(| \phi_1 |, | \phi_2|) \nonumber \\
+|\phi_1 \lor \phi_2| & = & \mathsf{max}(| \phi_1 |, | \phi_2|) \nonumber \\
+|\langle a \rangle \phi | & = & 1 + | \phi | \nonumber \\
+| \fBang S | & = & 1 \nonumber
+\end{eqnarray}
+Define the $\mathsf{symbols}$ of a formula as:
+\begin{eqnarray}
+\mathsf{symbols}(\top) & = & \{\} \nonumber \\
+\mathsf{symbols}(\bot) & = & \{\} \nonumber \\
+\mathsf{symbols}(\neg \phi) & = & \mathsf{symbols}(\phi) \nonumber \\
+\mathsf{symbols}(\phi_1 \land \phi_2) & = &\mathsf{symbols}(\phi_1) \cup \mathsf{symbols}(\phi_2) \nonumber \\
+\mathsf{symbols}(\phi_1 \lor \phi_2) & = &\mathsf{symbols}(\phi_1) \cup \mathsf{symbols}(\phi_2) \nonumber \\
+\mathsf{symbols}(\langle a \rangle \phi) & = & \{a\} \cup \mathsf{symbols}(\phi) \nonumber \\
+\mathsf{symbols}(\fBang S) & = & S \nonumber
+\end{eqnarray}
+Now define $\sigma(\phi)$ as:
+\[
+\sigma(\phi) = |\mathsf{symbols}(\phi)| + 1
+\]
+Then we can prove the following theorem:
+
+\begin{theorem}
+If a formula $\phi$ is satisfiable, then there is a finite tree-like model of height $|\phi|$ and branching factor $\sigma(\phi)$ that satisfies $\phi$.
+\end{theorem}
+\begin{proof}
+Take the original pointed model $(l,w)$ that satisfies $\phi$.
+Let $(l',w)$ be the generated sub-model starting at $w$. 
+It is well known that generated sub-models satisfy the same formulae, so $(l',w)$ also satisfies $\phi$.
+Now (by Proposition 2.15 of ``Modal Logic'') we can construct a tree-like model $(l'',w)$ of branching factor $\sigma(\phi)+1$ that also satisfies $\phi$.
+Now take the restriction of $(l'',w)$ to height $|\phi|$.
+Now $(l'',w)$ bisimulates $(l,w)$ to degree $|\phi|$.
+But (by Proposition 2.31 of ``Modal Logic''), if two models bisimulate to degree $|\phi|$, then they agree on all formulae of degree $|\phi|$. So the restriction of the tree-like model satisfies $\phi$.
+\end{proof}
+
+To use Theorem 1 as a decision procedure: if we have a claim $P_1, ..., P_n \models Q$,  let $ \phi = \bigwedge P_i \land \neg Q$, and look for a satisfying model of $\phi$. By Theorem 1, we only need to search a finite number of trees of height $\leq |\phi|$ and branching factor $\leq \sigma(\phi)$.
+
+\subsection{The Need for an Additional Symbol}
+Note that the function $\sigma(\phi) = |\mathsf{symbols}(\phi)| + 1$ adds one additional symbol to the symbols in $\phi$. Why is this?
+
+Consider the invalid claim that says that nothing ever exists:
+\[
+\top \nvDash \fBang []
+\]
+To see that it is invalid, we need to consider a model which includes a transition using a new symbol $\nu$ which is not in $\mathsf{symbols}(\phi)$. (After all, in this case, $\mathsf{symbols}(\top \land \neg  \fBang []) = []$). 
+So, when enumerating finite models that might satisfy $\phi$, the symbols we need to consider are:
+\[
+\mathsf{symbols}(\phi) \cup \{\nu\}
+\]
+where $\nu \notin \mathsf{symbols}(\phi)$. Another case where the extra $\nu$ symbol is needed is for showing that:
+\[
+\langle a \rangle \top \nvDash \fBang [a]
+\]
+To show this we need a model which satisfies $\langle a \rangle \top \land \neg \nvDash \fBang [a]$.
+Any satisfying counter model includes an extra transition from the root using a symbol other than $a$.
+
+\subsection{Doubly-Exponential Search Space}
+The number of trees grows at a rate which is doubly exponential.
+At level $0$, there is just one node.
+At level $1$, there are $\sigma(\phi)$ nodes.
+At level $h$, there are $\sigma(\phi)^h$ nodes.
+The total height of the tree is $|\phi|$, so the total number of nodes in the model is:
+\[
+\sum_{i=0}^{|\phi|} (\sigma(\phi))^i
+\]
+The different models are distinguished by which of these nodes are used. 
+Each node is either used or unused.
+So the total number of models is no more than $2 ^ {\sum_{i=0}^{|\phi|} (\sigma(\phi))^i}$.
+(In fact it is significantly less than this upper bound because there are restrictions on which combinations of nodes can be used and unused: a child cannot be used if any of its ancestors are unused).
+
+To get the exact number of trees for a given height $h$ and branching factor $b$, define the following recursive function:
+\begin{eqnarray}
+a(0) & = & 1\nonumber \\
+a(n+1) & = & (1+a(n))^b \nonumber
+\end{eqnarray}
+Then the number of trees is $a(h)$.
+This quickly grows enormous, as the following table shows, for $b = 3$:
+\begin{center}
+\begin{tabular}{ r | r }
+h & a(h) \\
+\hline
+0 & 1 \\
+1 & 8 \\
+2 & 729 \\
+3 & 389017000 \\
+4 & 5.8871587e+25 \\
+\end{tabular}
+\end{center}
+    
+\section{A More Efficient DecisionProcedure}
+We can use the fact that the $[\land, \fBang]$ fragment of SNEL has a linear-time decision procedure to build an exponential-time decision procedure for SNEL $[\land, \fBang, \lor ,\neg]$:
+
+Given a claim $P \models Q$, let $\Sigma = \mathsf{symbols}(P) \cup \mathsf{symbols}(Q) \cup \{\nu\}$ (where $\nu$ is a new symbol which does not occur in $P$ or $Q$).
+First, translate away all negations in $P$ using $\neg_\Sigma()$ as defined in Section 1.4.
+Let the result be $P'$.
+Second, reduce $P'$ to Disjunctive Normal Form by repeated application of the rewrite rules:
+\begin{eqnarray}
+p \land (q \lor r) & \leadsto & (p \land q) \lor (p \land r) \nonumber \\
+(p \lor q) \land r & \leadsto & (p \land r) \lor (q \land r) \nonumber
+\end{eqnarray}
+Let the resulting disjuncts be $P_1, ..., P_n$. 
+Now 
+\[
+P \models Q \mbox{ iff } \forall P_{i=1}^n P_i \models Q
+\]
+Now, to check whether each $P_i \models Q$, we will construct an annotated model of $P_i$ which has labels on the vertices as well as on the edges of the LTS. We can construct this annotated model, $\mu(P_i)$ in linear time. 
+Now define the $\Sigma$ extensions of an annotated model $m$ as all models which extend the nodes of $m$ with extra transitions taken from $\Sigma$ which respect the node labelling on $m$.
+Now $P_i \models Q$ if and only if all $\Sigma$-extensions of $\mu(P_i)$ satisfy $Q$.
+So, to check whether $P_i \models Q$, we enumerate the $\Sigma$-extensions of $\mu(P_i)$ (there are a finite number of such extensions - the exact number is exponential in the size of $\mu(P_i)$) and check for each one whether it satisfies $Q$.
+
+To fill out this sketch, I will describe the structure of the annotated model, define the $\mu$ function, and show how to compute the extensions of an annotated model relative to a set $\Sigma$ of symbols.
+
+\subsection{Annotated LTSs}
+Recall a LTS is a pair $(\mathcal{W}, \rightarrow)$, containing a set of states $\mathcal{W}$, and a transition relation $\rightarrow \subseteq \mathcal{W} \times \mathcal{S} \times \mathcal{W}$.
+An annotated LTS, is a triple $(\mathcal{W}, \rightarrow, \mathcal{L})$, with $\mathcal{W}$ and $\rightarrow$ as before, together with a state-labelling function $\mathcal{L} : \mathcal{W} \rightarrow L$, where each label in $L$ is either the wild-card $\ast$, or $\fBang$ together with a set $A \subseteq \mathcal{S}$ of symbols.
+The annotated LTS keeps track of the $\fBang$ restrictions on each node. 
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance=1.3cm,>=stealth',bend angle=45,auto]
+  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
+  \tikzstyle{red place}=[place,draw=red!75,fill=red!20]
+  \tikzstyle{transition}=[rectangle,thick,draw=black!75,
+  			  fill=black!20,minimum size=4mm]
+  \tikzstyle{every label}=[red]
+  \begin{scope}[xshift=0cm]
+    \node [place] (w1) {$!\{a,b\}$};
+    \node [place] (e1) [below of=w1] {$\ast$}
+      edge [pre]  node[swap] {a}                 (w1);
+    \node [place] (e2) [below of=e1] {$\ast$}
+      edge [pre]  node[swap] {b}                 (e1);
+  \end{scope}   
+  \begin{scope}[xshift=4cm]
+    \node [place] (w1) {$\ast$};
+    \node [place] (e1) [below of=w1] {$!\{b\}$}
+      edge [pre]  node[swap] {a}                 (w1);
+    \node [place] (e2) [below of=e1] {$\ast$}
+      edge [pre]  node[swap] {b}                 (e1);
+  \end{scope}   
+  \begin{scope}[xshift=8cm]
+    \node [place] (w1) {$!$};
+    \node [place] (e1) [below of=w1] {$!\{b\}$}
+      edge [pre]  node[swap] {a}                 (w1);
+    \node [place] (e2) [below of=e1] {$!\{\}$}
+      edge [pre]  node[swap] {b}                 (e1);
+  \end{scope}   
+\end{tikzpicture}
+\caption{Various annotated models of $\langle a \rangle \langle b \rangle \top$}
+\end{figure}
+
+Now, for an annotated model to be valid, we insist that the transitions coming out of a node $w$ are a subset of the allowed transitions in $\mathcal{L}(w)$:
+\begin{definition}
+An annotated model $(\mathcal{W}, \rightarrow, \mathcal{L})$ is valid iff for all $w \in \mathcal{W}$, $ \{s \fOr \exists w' \; w \xrightarrow{s} w'\} \subseteq \mathcal{L}(w)$.
+\end{definition}
+
+\subsection{A Partial Ordering on Pointed Annotated Models}
+A relation $Z \subseteq \mathcal{W} \times \mathcal{W}'$ is a (one-way) {\bf simulation} from  $(\mathcal{W}, \rightarrow, \mathcal{V})$ to $(\mathcal{W}', \rightarrow', \mathcal{V}')$ iff for all $(x,x') \in Z$ and $s \in S$:
+\begin{enumerate}
+\item
+If $x \xrightarrow{s} y$ then there exists a $y' \in \mathcal{W}'$ such that $(y,y') \in Z$ and $x' \xrightarrow{s} y'$
+\item
+$\mathcal{V}'(x') \leq \mathcal{V}(x)$ for all $(x,x') \in Z$
+\end{enumerate}
+We overload $\leq$ on values of $\mathcal{V}$ as follows:
+\begin{eqnarray}
+\ast & \leq & \ast \mbox{ always} \nonumber \\
+\ast & \leq & \fBang A \mbox{ never}  \nonumber \\
+\fBang A & \leq & \ast \mbox{ always}  \nonumber \\
+\fBang A & \leq & \fBang B \mbox{ iff } A \subseteq B \nonumber
+\end{eqnarray}
+We use this notion of simulation to define $\leq$ on pointed annotated models:
+\begin{definition}
+$(l,w) \leq (l',w')$ if there is a simulation $Z$ from $l'$ to $l$ with $(w',w) \in Z$
+\end{definition}
+Intuitively, $m \leq n$ if $m$ can match all the transitions of $n$.
+
+To make our models into a lattice, we add a bottom element $\bot$ and stipulate that $\bot \leq m$ for all pointed models $m$.
+The topmost element in the lattice is the pointed model $( (\{w\}, \{\}, \{(w, \ast)\}), w)$, for some state $w$.
+
+\subsection{Computing $\mu$ - the Simplest Annotated Model Satisfying a Term}
+We define a function $\mu$ which, given a term $t$, produces the simplest\footnote{``Simplest'' as in the least upper bound, according to $\leq$, defined in terms of simulation.} model which satisfies $t$:
+\begin{eqnarray}
+\mu (\top) & = & ( (\{v\}, \{\}, \{(v, \ast)\}), v) \nonumber \\
+\mu (\fBang A) & = & ( (\{v\}, \{\}, \{(v, !A)\}), v) \nonumber \\
+\mu (\phi_1 \land \phi_2) & = & \mu(\phi_1) \sqcap \mu(\phi_2) \nonumber \\
+\mu (\langle a \rangle \phi) & = & ( (\mathcal{W} \cup \{w'\}, \rightarrow \cup (w', a, w), \mathcal{V} [\ast / w']), w') \nonumber \\
+		& & \mbox{where }\mu(\phi) = ( (\mathcal{W}, \rightarrow, \mathcal{V}), w) \nonumber \\
+		& & \mbox{and }w' \mbox{ is a new state not appearing in }\mathcal{W} \nonumber
+\end{eqnarray}
+Here, $\mathcal{V} [\ast/w]$ means the state-label assignment just like $\mathcal{V}$, except that it assigns $\ast$ to $w$. 
+Note that there is no clause for $\neg$ or $\lor$ - this is because $\mu$ operates on terms \emph{after} negation has been translated away, and the term has been reduced to Disjunctive Normal Form. 
+
+The most complex case is the clause for $\mu (\phi_1 \land \phi_2)$, which uses the $\sqcap$ function, defined as:
+\begin{eqnarray}
+\bot \sqcap X & = & \bot \nonumber \\
+X \sqcap \bot & = & \bot \nonumber \\
+m \sqcap n & = & \mbox{if } \mathsf{consistent}(m, n)\nonumber \\
+	& & \mbox{then } \mathsf{merge}(m, n) \nonumber \\
+	& & \mbox{else } \bot \nonumber
+\end{eqnarray}
+The $\mathsf{consistent}$ predicate is true of pointed annotated models $m$ and $n$ if the out-transitions on $m$'s root node respect the labelling on $n$'s root node, and the out-transitions on $n$'s root node respect the labelling on $m$'s root node. In other words:
+\begin{eqnarray}
+\mathsf{consistent}(m, n) & \mbox{ iff } & \mathsf{respectLabel}(\mathsf{outRoot}(m), \mathsf{labelRoot}(n)) \mbox{ and} \nonumber \\
+& & \mathsf{respectLabel}(\mathsf{outRoot}(n), \mathsf{labelRoot}(m)) \nonumber
+\end{eqnarray}
+where:
+\begin{eqnarray}
+\mathsf{outRoot}(((\_,\rightarrow,\_),w)) & = & \{ s \fOr \exists x . w \xrightarrow{s} x \} \nonumber \\
+\mathsf{labelRoot}(((\_,\_,\mathcal{V}),w)) & = & \mathcal{V}[w] \nonumber
+\end{eqnarray}
+The $\mathsf{respectLabel}$ predicate is true of  a set of symbols $A$ and label $l$ if $A$ is compatible with $l$ (in which case either $l$ is $\ast$, or $l$ is $!B$ and $A \subseteq B$):
+\begin{eqnarray}
+\mathsf{respectLabel}(A, *) & & \mbox{ always} \nonumber \\
+\mathsf{respectLabel}(A, !B) & & \mbox{ iff } A \subseteq B \nonumber
+\end{eqnarray}
+Now the $\mathsf{merge}$ function fuses two pointed annotated models together:
+\begin{eqnarray}
+\mathsf{merge}(((\mathcal{W},\rightarrow,\mathcal{V}), w), ((\mathcal{W}',\rightarrow',\mathcal{V}'), w')) & = & (\mathcal{W} \cup \mathcal{W}'[w/w'], \rightarrow \cup \rightarrow'[w/w'], \mathcal{V} \sqcap \mathcal{V}'[w/w']) \nonumber
+\end{eqnarray}
+Here, $\mathcal{W}'[w/w']$ is $\mathcal{W}'$ with $w$ replacing $w'$.
+The function $\sqcap$ is overloaded on state-labellings and is defined as:
+\[
+\mathcal{V} \sqcap \mathcal{V}' = \{ (w, \mathcal{V}(w) \sqcap \mathcal{V}'(w) ) \fOr w \in \mathcal{W} \cup \mathcal{W}'\}
+\]
+Where $\sqcap$ is also overloaded over labels as:
+\begin{eqnarray}
+\ast \sqcap \ast & = & \ast \nonumber \\
+\ast \sqcap \fBang A & = & \fBang A \nonumber \\
+\fBang A \sqcap \ast & = & \fBang A \nonumber \\
+\fBang A \; \sqcap \; \fBang B & = & \fBang (A \cap B) \nonumber
+\end{eqnarray}
+
+\subsection{Computing the Extensions of an Annotated Model}
+
+Recall that, to check whether $P_i \models Q$, we enumerate the $\Sigma$-extensions of $\mu(P_i)$ (there are a finite number of such extensions - the exact number is exponential in the size of $\mu(P_i)$) and check for each one whether it satisfies $Q$.
+
+\begin{definition}
+Given an annotated LTS $(\mathcal{W},\rightarrow,\mathcal{V})$,  and a set $\Sigma$ of symbols, then $(\mathcal{W'},\rightarrow',\mathcal{V'})$ is a {\bf $\Sigma$-extension} of $(\mathcal{W},\rightarrow,\mathcal{V})$ if it is a valid LTS (recall Definition 1) and for all $(x,s,y) \in \rightarrow'$, either:
+\begin{itemize} 
+\item
+$(x, s, y) \in \rightarrow$,  or;
+\item
+ $x \in \mathcal{W}$ and $s \in \Sigma$ and $y$ is a new state not appearing elsewhere in $\mathcal{W}$ or $\mathcal{W'}$.
+\end{itemize}
+\end{definition}
+In other words, $m'$ is an extension of an annotated model $m$, if all its transitions are either from $m$ or involve states of $m$ transitioning via elements of $\Sigma$ to new states not appearing in $m$ or $m'$.
+
+The number of extensions can quickly grow very large.
+If annotated LTS $m$ has $n$ states, then the number of possible extensions is:
+\[
+({2^{|\Sigma|}})^n
+\] 
+But recall that we are computing these extensions in order to verify $q$. So we can make a significant optimisation by restricting the height of each tree to $|q|$.
+
+\subsection{Example: Resolution}
+TODO: this particular example of resolution is no longer valid now we no longer are restricting ourselves to deterministic models!!
+We could either remove this section altogether, or add the square bracket operator. 
+Adding the square bracket operator would complicate the decision procedure enormously.
+Consider, e.g. verifying that 
+\[
+[a] \langle b \rangle \top \land \langle a \rangle \langle c \rangle \top \models \langle a \rangle (\langle b \rangle \top \land \langle c \rangle \top)
+\]
+TODO!!! Resolve this!!!
+
+Using this decision procedure, we can quickly verify that, for example:
+\[
+(\langle a \rangle \top \lor \langle b \rangle \langle a \rangle \top ) \land (\langle b \rangle \fBang [] \lor \langle c \rangle \top) \models \langle a \rangle \top \lor \langle c \rangle \top
+\]
+This is a form of resolution without negation, relying on the incompatibility between $\langle b \rangle \langle a \rangle \top$ and $\langle b \rangle \fBang []$.
+
+\section{Relating EL to Propositional Logic and Hennessy-Milner Logic}
+Consider the following six languages:
+\begin{center}
+\begin{tabular}{ l | r }
+Language & Description \\
+\hline
+PL[$\land$] & Propositional Logic restricted to the $\land$ operator \\
+HML[$\land$] & Hennessy-Milner Logic restricted to the $\land$ operator \\
+EL[$\land, !$] & Eremic Logic restricted to the $\land$ and $\fBang$ operators \\
+PL [$\land, \neg$] & Full Propositional Logic \\
+HML [$\land, \neg$] & Full Hennessy-Milner Logic \\
+EL [$\land, !, \neg$] & Full Eremic Logic \\
+\end{tabular}
+\end{center}
+Now the top three languages are simple to the point of triviality. In each case:
+\begin{itemize}
+\item
+There is no facility for expressing disjunction
+\item
+Every formula that is satisfiable has a simplest satisfying model
+\item
+There is a simple linear-time decision procedure
+\end{itemize}
+But there is one way in which EL[$\land, !$]  is significantly more expressive.
+No two sentences of PL[$\land$] (or HML[$\land$] ) are incompatible with each other. 
+But many pairs of sentences of EL[$\land, !$] are incompatible.
+(For example: $\langle a \rangle \top$ and $! []$). 
+Because EL[$\land, !$]  is expressive enough to be able to make incompatible claims, it satisfies Brandom's property of {\bf Incompatibility Semantics\footnote{$Inc(p)$ is the set of sets of sentences incompatible with $p$.}}:
+\[
+p \models q \mbox{ iff } Inc(q) \subseteq Inc(p)
+\]
+EL[$\land, !$]  is the \emph{only} logic with a linear-time decision procedure that is expressive enough to respect Incompatibility Semantics.
+
+The bottom three language can all be decided in exponential time.
+But HML is more expressive than PL, and EL [$\land, !, \neg$]  is more expressive than full HML. 
+\begin{proposition}
+Full HML  is more expressive than full PL.
+\end{proposition}
+To see this, fix a PL with the nullary operator $\top$ plus an infinite number of propositional atoms $P_{(i,j)}$, indexed by $i$ and $j$.
+Now translate each formula of HML via the rules:
+\begin{eqnarray}
+t(\top)  & = & \top \nonumber \\
+t(p \land q) & = & t(p) \land t(q) \nonumber \\
+t(\neg p) & = & \neg t(p)  \nonumber \\
+t(\langle a_i \rangle p_j) & = & P_{(i,j)} \nonumber
+\end{eqnarray}
+Now to show that HML is more expressive, we show that there are formulae $p$ and $q$ of HML such that
+\[
+p \models_{HML} q \mbox{ but } t(p) \nvDash_{PL} t(q)
+\]
+For example, let $p = \langle a \rangle \langle b \rangle \top$ and $q = \langle a \rangle \top$.
+Clearly, $p \models_{HML} q$. But $t(p) = P_{(i,j)}$ and $t(q) = P_{(i',j')}$ for some $i,j,i',j'$, and there are no entailments in PL between arbitrary propositional atoms.
+
+\begin{proposition}
+EL [$\land, !, \neg$]  is more expressive than full HML
+\end{proposition}
+Given a background set $\mathcal{S}$ of symbols, the sentence $\fBang A$ of EL can be translated into HML as:
+\[
+\bigwedge_{a \in \mathcal{S} - A} \neg \langle a \rangle \top
+\]
+But if $\mathcal{S}$ is infinite, then this is an infinitary disjunction.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=3.3cm,>=stealth',bend angle=45,auto]
+  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
+  \tikzstyle{red place}=[place,draw=red!75,fill=red!20]
+  \tikzstyle{transition}=[rectangle,thick,draw=black!75,
+  			  fill=black!20,minimum size=4mm]
+  \tikzstyle{every label}=[red]
+  \begin{scope}  
+    \node [place] (w1) {PL[$\land$]};
+    \node [place] (e1) [below of=w1] {PL [$\land, \neg$] };
+  \end{scope}
+  \begin{scope}[xshift=4cm]
+    \node [place] (w1) {HML[$\land$]};
+    \node [place] (e1) [below of=w1] {HML [$\land, \neg$] };
+  \end{scope} 
+  \begin{scope}[xshift=8cm]
+    \node [place] (w1) {EL[$\land, !$]};
+    \node [place] (e1) [below of=w1] {EL [$\land, !, \neg$] };
+  \end{scope}
+  \draw (2,0) node {$\subseteq $};
+  \draw (6,0) node {$\subseteq$};
+  \draw (2,-3) node {$\subseteq $};
+  \draw (6,-3) node {$\subseteq$};
+  \draw (0,-1.5) node {$\subseteq $};
+  \draw (4,-1.5) node {$\subseteq $};
+  \draw (8,-1.5) node {$\subseteq $};
+\end{tikzpicture}
+\caption{Inclusion Relations Between the Six Logics}
+\end{figure}
+
+\section{Translating SNEL into First Order Logic}
+
+We will use a sorted FOL with two sorts, $State$ and $Symbol$ (translation from two-sorted FOL to un-sorted FOL can be done in the usual way). 
+We will use three types of predicate:
+\begin{itemize}
+\item
+A set of two-place predicates $Arr_s(x, y)$, one for each $s \in \mathcal{S}$, where $x$ and $y$ are of type $State$. $Arr_s(x, y)$ is true if $x \xrightarrow{s} y$.
+\item
+A two-place predicate $Out(x, s)$, where $x$ is of type $State$ and $s$ is of type $Symbol$. $Out(x, s)$ is true if there is a $y$ such that $x \xrightarrow{s} y$.
+\item 
+A set of one-place predicates $OneOf$, one for each subset $\{s_1, ..., s_n\} \subseteq \mathcal{S}$. $OneOf_{\{s_1, ..., s_n\}}(s)$ is true if $s=s_1 \lor ... \lor s=s_n$.
+\end{itemize}
+TODO!!!! This is unfinished.
+With $x_1, x_2$ being variables of type $State$, and $s_1, s_2$ being constants or variables of type $Symbol$, the sentences of FOL are of the form:
+\[
+\phi ::= Arr(x_1,s_1,x_2) \fOr x_1 = x_2 \fOr s_1 = s_2 \fOr \neg \phi \fOr \phi_1 \land \phi_2 \fOr \exists x_1:State . \phi \fOr \exists s_1:Symbol . \phi
+\]
+The translation of an EL formula is relative to a variable $x$ of type $State$ (which will be instantiated to the particular state at which we are evaluating the formula):
+\begin{eqnarray}
+T_x(\top) & = & (x = x) \nonumber \\
+T_x(\phi_1 \land \phi_2) & = & T_x(\phi_1) \land T_x(\phi_2) \nonumber \\
+T_x(\langle s \rangle \phi) & = & \exists y : State \; . \; Arr_s(x,y) \land T_y(\phi) \nonumber \\
+T_x(\fBang A) & = & \forall s : Symbol \; . \; Out(x, s) \rightarrow  OneOf_A(s) \nonumber
+\end{eqnarray}
+So, for example:
+\begin{eqnarray}
+T_x(\langle a \rangle \top \land \fBang \{a\}) = & &\nonumber \\
+& \exists y : State \; . \; Arr_a(x,y) \land y = y & \land \nonumber \\
+& \forall s : Symbol \; . \; Out(x,s) \rightarrow OneOf_{\{a\}}(s) \nonumber
+\end{eqnarray}
+In other words: there is an $a$ transition out of $x$ and there are no other transitions out of $x$.
+
+\section{EL With Quantifiers}
+Now that $!$ is a nullary operator on sequences of symbols (rather than a unary operator on propositions, as it was before), we can expand EL to include quantifiers in the obvious way.
+
+Using quantifiers, we can now express typing judgements directly in the language. For example, to say that a person's gender can only be male or female, we would write:
+\[
+\forall X \langle X \rangle \langle gender \rangle \rightarrow \langle X \rangle \langle gender \rangle ![male, female]
+\]
+To say that every person must have exactly one gender, we can write:
+\[
+\forall X  \langle X \rangle \langle gender \rangle \rightarrow \exists Y \langle X \rangle \langle gender \rangle (\langle Y \rangle \top \land \fBang [Y])
+\]
+
+\section{Inference Rules}
+In EL, a judgement is of the form:
+\[
+A \judge B
+\]
+Here, $A$ and $B$ are \emph{single terms}.
+To avoid the need for structural inference rules, we restrict sequents to single terms on the left and right hand side.
+
+\subsection{Standard Rules}
+EL has the following standard axioms and inference-rules:
+Our first axiom is {\bf Identity}:
+\[
+\boxed
+{
+X \judge X
+}
+\]
+{\bf $\top$ Right} states that $\top$ is always provable:
+\[
+\boxed
+{
+X \judge \top
+}
+\]
+{\bf $\bot$ Left} states that anything is provable from $\bot$:
+\[
+\boxed
+{
+\bot \judge X
+}
+\]
+Note that $\bot$ is not a primitive symbol of EL - it is defined as one of the unsatisfiable terms, for example $\langle a \rangle \top \; \land \; \fBang \{\}$. 
+
+EL has the standard transitivity inference rule:
+\begin{center}
+\fbox{
+\AxiomC{$X \judge Y$}
+\AxiomC{$Y \judge Z$}
+\LeftLabel{{\bf Transitivity: \quad}}
+\BinaryInfC{$X \judge Z$}
+\DisplayProof
+}
+\end{center}
+It has the standard three rules for handling conjunction:
+\begin{center}
+\fbox{
+\AxiomC{$X \judge Y$}
+\LeftLabel{{\bf $\land$ Left 1: \quad}}
+\UnaryInfC{$X \land Z \judge Y$}
+\DisplayProof
+}
+\end{center}
+
+\begin{center}
+\fbox{
+\AxiomC{$X \judge Y$}
+\LeftLabel{{\bf $\land$ Left 2: \quad}}
+\UnaryInfC{$Z \land X \judge Y$}
+\DisplayProof
+}
+\end{center}
+
+\begin{center}
+\fbox{
+\AxiomC{$X \judge Y$}
+\AxiomC{$X \judge Z$}
+\LeftLabel{{\bf $\land$ Right: \quad}}
+\BinaryInfC{$X \judge Y \land Z$}
+\DisplayProof
+}
+\end{center}
+
+\subsection{Rules Unique to EL}
+EL has six rules for capturing its distinctive properties: the relations betwen $\langle \rangle$, $!$ and $\bot$.
+The {\bf Bottom Right 1} axiom captures how $\langle \rangle$ and $!$ interact:
+\[
+\boxed
+{
+\langle a \rangle X \land \fBang A \judge \bot \mbox{ if } a \notin A
+}
+\]
+{\bf Bottom Right 2} is another axiom for deriving $\bot$ from inside $\langle \rangle$:
+\[
+\boxed
+{
+\langle a \rangle \bot \judge \bot
+}
+\]
+There is a rule for strengthening $\fBang$ on the left hand side: 
+\begin{center}
+\fbox{
+\AxiomC{$X \land \fBang A \judge Y$}
+\LeftLabel{{\bf ! Left: \quad}}
+\RightLabel{where $A' \subseteq A $}
+\UnaryInfC{$X \land \fBang A' \judge Y$}
+\DisplayProof
+}
+\end{center}
+There is a rule for weakening $\fBang$ on the right hand side: 
+\begin{center}
+\fbox{
+\AxiomC{$X \judge \fBang A$}
+\LeftLabel{{\bf ! Right 1: \quad}}
+\RightLabel{where $A \subseteq A'$}
+\UnaryInfC{$X \judge \fBang A'$}
+\DisplayProof
+}
+\end{center}
+There is a rule for taking the intersection of two $!$s on the right hand side:
+\begin{center}
+\fbox{
+\AxiomC{$X \judge \fBang A_1$}
+\AxiomC{$X \judge \fBang A_2$}
+\LeftLabel{{\bf ! Right 2: \quad}}
+\BinaryInfC{$X \judge \fBang (A_1 \cap A_2)$}
+\DisplayProof
+}
+\end{center}
+Finally, there is a rule for adding transitions to judgements:
+\begin{center}
+\fbox{
+\AxiomC{$X \judge Y$}
+\LeftLabel{{\bf Transition Normal: \quad}}
+\UnaryInfC{$\langle a \rangle X \judge \langle a \rangle Y$}
+\DisplayProof
+}
+\end{center}
+
+
