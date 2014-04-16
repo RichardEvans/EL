@@ -5,6 +5,25 @@
   - Either all definitions are in an explicit \begin{definition}
     environment or none.
 
+*  I recommend to use the following order of presentation in Chapters 2 and 3.
+
+  - Formulae
+  - Models and the satisfaction relation.
+  - Rules and axioms
+  - Soundness of rules and axioms
+  - Completeness of rules and axioms
+  - Other stuff (Translation into FOL, decision procedure etc).
+
+  I think it might also help if we relegate standard proofs to the
+  appendix.  For example we could just state the soundness theorem in
+  the main body of the paper, prove 2 or 3 interesting cases, and have
+  the rest in the appendix. I also prefer it if ther proof rules are
+  all in one figure, rather than distributed over a couple of pages.
+
+  - Rules and axioms in figures.
+
+  - Easy proof go in the appendix
+
 * Timetable: 13.May to 16.May, can we finish it?
 
 * Find possible reviewers (please add more):

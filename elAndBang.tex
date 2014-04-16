@@ -1,13 +1,24 @@
 \section{EL$[\land, !]$}
 
 \subsection{Syntax}
-Given a set $\mathcal{S}$ of symbols, with $a$ ranging over $\mathcal{S}$, and $A$ ranging over finite subsets of $\mathcal{S}$, the sentences of EL$[\land, !]$ are given by:
-\[
-\phi ::= \top \fOr \phi_1 \land \phi_2  \fOr \langle a \rangle \phi \fOr \fBang A 
-\]
-The $!$ operator is used to restrict the allowable transitions coming out of a state.
-Intuitively, $\fBang A$ means that the \emph{only} transitions coming out of the current state are those specified in $A$.
+
+\NI Given a set $\mathcal{S}$ of symbols, with $a$ ranging over
+$\mathcal{S}$, and $A$ ranging over finite subsets of $\mathcal{S}$,
+the sentences of EL$[\land, !]$ are given by:
+
+\begin{GRAMMAR}
+  \phi 
+     &::=& 
+  \top \fOr \phi_1 \land \phi_2  \fOr \langle a \rangle \phi \fOr \fBang A 
+\end{GRAMMAR}
+
+\NI The $!$ operator is used to restrict the allowable transitions
+coming out of a state.  Intuitively, $\fBang A$ means that the
+\emph{only} transitions coming out of the current state are those
+specified in $A$.
+
 \subsection{Semantics}
+
 \begin{definition}
 A {\bf model} is a triple $(\mathcal{W}, \rightarrow, \lambda)$, containing a Labeled Transition System (a set of states $\mathcal{W}$, and a transition relation $\rightarrow \; \subseteq \; \mathcal{W} \times \mathcal{S} \times \mathcal{W}$), together with a node-labelling $\lambda$ that maps each element of $\mathcal{W}$ to a subset of $\mathcal{S}$. 
 \end{definition}
@@ -193,6 +204,8 @@ Further, if $n \models x$ and $m \leq n$ then $m \models x$. So, substituting $q
 \end{proof}
 Given this theorem, the decision procedure is straightforward: to test if $p \models q$, we construct $\mu(p)$, and then inspect whether $\mu(p) \models q$.
 Construction of $\mu(p)$ is linear in the size of $p$, and computing whether a model satisfies $q$ is linear in the size of $q$, so computing whether $p \models q$ is $O(|p|+|q|)$.
+
+\input{figure:elAndBangRules}
 
 \section{Inference Rules}
 In EL, a judgement is of the form:
@@ -902,6 +915,18 @@ T_x(\phi) \land \bigwedge_{A \in \phi, a \in\mathsf{sym}(\phi)-A} Restrict_A(x) 
 If $\phi$ is not consistent, then $\phi \models \psi$ is valid.
 If $\phi$ is consistent, then construct the skolemized version of $T_x(\phi)$. 
 Now $\phi \models \psi$ iff the skolemized version of  $T_x(\phi)$ is a witness for $T_x(\psi)$. 
+
+\begin{theorem}\label{theorem:elAndBang:soundness}
+\begin{itemize}
+
+\item The proof rules in Figure \ref{figure:elAndBangRules} are sound.
+\item The axioms in Figure \ref{figure:elAndBangAxioms} are sound.
+
+\end{itemize}
+\end{theorem}
+\begin{proof}
+Immediate from the definitions
+\end{proof}
 
 \section{Comparing EL with Hennessy-Milner Logic}
 \subsection{Syntax}

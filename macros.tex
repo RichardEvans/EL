@@ -10,8 +10,35 @@
   }
   {\newcommand{\mynote}[2]{}
   }
-\newcommand\laurie[1]{\mynote{Laurie}{#1}}
+\newcommand\martin[1]{\mynote{Laurie}{#1}}
 \newcommand\richard[1]{\mynote{Richard}{#1}}
+
+\newcommand{\NI}{\noindent}
+\newenvironment{FIGURE}{\begin{figure}[h]\rule{\linewidth}{0.5pt}
+ %\vspace{3.2mm}
+}{\rule{\linewidth}{0.5pt}\end{figure}}
+\newenvironment{RULES}{\[\begin{array}{c}}{\end{array}\]}
+\newenvironment{GRAMMAR}{\[\begin{array}{lcl}}{\end{array}\]}
+\newcommand{\VERTICAL}{\  \mid\hspace{-3.0pt}\mid \ }
+\newcommand{\infer}[2]{\frac{\displaystyle{ #1 }}{\displaystyle{ #2 }}}
+\newcommand{\ZEROPREMISERULE}[1]{\infer{-}{#1}}
+\newcommand{\ONEPREMISERULE}[2]{\infer{#1}{#2}}
+\newcommand{\TWOPREMISERULE}[3]{\infer{#1 \quad #2}{#3}}
+\newcommand{\THREEPREMISERULE}[4]{\infer{#1 \quad #2 \quad #3}{#4}}
+\newcommand{\FOURPREMISERULE}[5]{\infer{#1 \quad #2 \quad #3 \quad #4}{#5}}
+\newcommand{\SIXPREMISERULE}[7]{\infer{#1 \quad #2 \quad #3 \quad #4 \quad #5 \quad #6}{#7}}
+\newcommand{\RULENAME}[1]{\textsc{#1}}
+\newcommand{\SMALLRULENAME}[1]{\textsc{\tiny #1}}
+\newcommand{\ZEROPREMISERULENAMEDRIGHT}[2]{\ZEROPREMISERULE{#1}\,\SMALLRULENAME{#2}}
+\newcommand{\ONEPREMISERULENAMEDRIGHT}[3]{\ONEPREMISERULE{#1}{#2}\,\SMALLRULENAME{#3}}
+\newcommand{\TWOPREMISERULENAMEDRIGHT}[4]{\TWOPREMISERULE{#1}{#2}{#3}\,\SMALLRULENAME{#4}}
+\newcommand{\THREEPREMISERULENAMEDRIGHT}[5]{\THREEPREMISERULE{#1}{#2}{#3}{#4}\,\SMALLRULENAME{#5}}
+\newcommand{\FOURPREMISERULENAMEDRIGHT}[6]{\FOURPREMISERULE{#1}{#2}{#3}{#4}{#5}\,\SMALLRULENAME{#6}}
+\newcommand{\ZEROPREMISERULENAMEDLEFT}[2]{\SMALLRULENAME{#2}\,\ZEROPREMISERULE{#1}}
+\newcommand{\ONEPREMISERULENAMEDLEFT}[3]{\SMALLRULENAME{#3}\,\ONEPREMISERULE{#1}{#2}}
+\newcommand{\TWOPREMISERULENAMEDLEFT}[4]{\SMALLRULENAME{#4}\,\TWOPREMISERULE{#1}{#2}{#3}}
+\newcommand{\THREEPREMISERULENAMEDLEFT}[5]{\SMALLRULENAME{#5}\,\THREEPREMISERULE{#1}{#2}{#3}{#4}}
+\newcommand{\FOURPREMISERULENAMEDLEFT}[6]{\SMALLRULENAME{#6}\,\FOURPREMISERULE{#1}{#2}{#3}{#4}{#5}}
 
 \newcommand{\MAY}[2]{\langle #1 \rangle #2}
 \newcommand{\NEG}[1]{\mathsf{neg}(#1)}
