@@ -7,7 +7,7 @@
 
 * Timetable: 13.May to 16.May, can we finish it?
 
-* Find possible reviewers:
+* Find possible reviewers (please add more):
 
   - Michael Wooldridge http://www.cs.ox.ac.uk/people/michael.wooldridge/
   - Robert Brandom http://www.pitt.edu/~rbrandom/
