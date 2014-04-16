@@ -1,0 +1,39 @@
+\begin{FIGURE}
+\begin{RULES}
+
+  \ZEROPREMISERULENAMEDRIGHT
+  {
+    X \judge X
+  }{Identity}
+    \quad
+  \ZEROPREMISERULENAMEDRIGHT
+  {
+    X \judge \top
+  }{$\top$ Right}
+    \quad
+  \ZEROPREMISERULENAMEDRIGHT
+  {
+    \bot \judge X
+  }{$\bot$ Left}
+    \quad
+  \TWOPREMISERULENAMEDRIGHT
+  {
+    X \judge Y
+  }
+  {
+    Y \judge Z
+  }
+  {
+    X \judge Z
+  }{Transitivity}
+    \\\\
+  \ONEPREMISERULENAMEDRIGHT
+  {
+    X \judge Y
+  }
+  {
+    X \AND Z \judge Y
+  }{$\AND$ Left 1}
+\end{RULES}
+\caption{Proof rules. Put in remaining rules as they stabilise!}\label{figure:elAndBangRules}
+\end{FIGURE}
