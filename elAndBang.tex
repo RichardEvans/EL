@@ -1,21 +1,28 @@
-\section{EL$[\land, !]$}
+\section{EL$[\AND, !]$}
 
 \subsection{Syntax}
 
-\NI Given a set $\mathcal{S}$ of symbols, with $a$ ranging over
+\begin{definition} Given a set $\mathcal{S}$ of symbols, with $a$ ranging over
 $\mathcal{S}$, and $A$ ranging over finite subsets of $\mathcal{S}$,
-the sentences of EL$[\land, !]$ are given by:
+the sentences of EL$[\AND, !]$ are given by:
 
 \begin{GRAMMAR}
   \phi 
      &::=& 
-  \top \fOr \phi_1 \land \phi_2  \fOr \langle a \rangle \phi \fOr \fBang A 
+  \top 
+     \VERTICAL 
+  \phi_1 \AND \phi_2  
+     \VERTICAL 
+  \MAY{a}{\phi}
+     \VERTICAL 
+  \fBang A 
 \end{GRAMMAR}
 
 \NI The $!$ operator is used to restrict the allowable transitions
 coming out of a state.  Intuitively, $\fBang A$ means that the
 \emph{only} transitions coming out of the current state are those
 specified in $A$.
+\end{definition}
 
 \subsection{Semantics}
 
@@ -36,44 +43,14 @@ A {\bf pointed model} is a pair $(l,w)$, where $m$ is a \emph{valid} model of th
 Formulae are interpreted in a pointed model $(l,w)$:
 \begin{eqnarray}
 (l,w) & \models & \top  \mbox{ always } \nonumber \\
-(l,w) & \models & \phi_1 \land \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2 \nonumber \\
+(l,w) & \models & \phi_1 \AND \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2 \nonumber \\
 (l,w) & \models & \langle a \rangle \phi \mbox{ iff there is a } w \xrightarrow{a} w' \mbox { such that } (l,w') \models \phi \nonumber \\
 (l,w) & \models & \fBang A \mbox{ iff } \lambda(w) \subseteq A\nonumber
 \end{eqnarray}
 Note that if a model is valid then $(l,w) \models \fBang A$ implies $\{s \fOr \exists w' \; w \xrightarrow{s} w'\} \subseteq A$.
 From now on, we will restrict ourselves to valid models.
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[node distance=1.3cm,>=stealth',bend angle=45,auto]
-  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
-  \tikzstyle{red place}=[place,draw=red!75,fill=red!20]
-  \tikzstyle{transition}=[rectangle,thick,draw=black!75,
-  			  fill=black!20,minimum size=4mm]
-  \tikzstyle{every label}=[red]
-  \begin{scope}[xshift=0cm]
-    \node [place] (w1) {$S$};
-    \node [place] (e1) [below of=w1] {$\mathcal{S}$}
-      edge [pre]  node[swap] {a}                 (w1);
-    \node [place] (e2) [below of=e1] {$\mathcal{S}$}
-      edge [pre]  node[swap] {b}                 (e1);
-  \end{scope}   
-  \begin{scope}[xshift=4cm]
-    \node [place] (w1) {$\mathcal{S}$};
-    \node [place] (e1) [below of=w1] {$\{a,b,c\}$}
-      edge [pre]  node[swap] {a}                 (w1);
-    \node [place] (e2) [below of=e1] {$\mathcal{S}$}
-      edge [pre]  node[swap] {b}                 (e1);
-  \end{scope}   
-  \begin{scope}[xshift=8cm]
-    \node [place] (w1) {$\{a\}$};
-    \node [place] (e1) [below of=w1] {$\{b\}$}
-      edge [pre]  node[swap] {a}                 (w1);
-    \node [place] (e2) [below of=e1] {$\{\}$}
-      edge [pre]  node[swap] {b}                 (e1);
-  \end{scope}   
-\end{tikzpicture}
-\caption{Various models of $\langle a \rangle \langle b \rangle \top$}
-\end{figure}
+
+\input{figure:elAndBang:models}
 
 \section{Semantic Constructions}
 The following semantic constructions are used throughout the proofs that follow.
@@ -111,12 +88,12 @@ We define a function $\mu$ which, given a formula $\phi$, produces the simplest\
 \begin{eqnarray}
 \mu (\top) & = & ( (\{v\}, \{\}, \{v \mapsto \mathcal{S}\}), v) \nonumber \\
 \mu (\fBang A) & = & ( (\{v\}, \{\}, \{v \mapsto A\}), v) \nonumber \\
-\mu (\phi_1 \land \phi_2) & = & \mu(\phi_1) \sqcap \mu(\phi_2) \nonumber \\
+\mu (\phi_1 \AND \phi_2) & = & \mu(\phi_1) \sqcap \mu(\phi_2) \nonumber \\
 \mu (\langle a \rangle \phi) & = & ( (\mathcal{W} \cup \{w'\}, \rightarrow \cup (w' \xrightarrow{a} w), \lambda \cup \{w' \mapsto \mathcal{S}\}]), w') \nonumber \\
 		& & \mbox{where }\mu(\phi) = ( (\mathcal{W}, \rightarrow, \lambda), w) \nonumber \\
 		& & \mbox{and }w' \mbox{ is a new state not appearing in }\mathcal{W} \nonumber
 \end{eqnarray}
-The only complex case is the clause for $\mu (\phi_1 \land \phi_2)$, which uses the $\sqcap$ function, defined as\footnote{We assume that the sets of states in the two pointed models are disjoint.}:
+The only complex case is the clause for $\mu (\phi_1 \AND \phi_2)$, which uses the $\sqcap$ function, defined as\footnote{We assume that the sets of states in the two pointed models are disjoint.}:
 
 \begin{eqnarray*}
   \bot \sqcap X 
@@ -163,8 +140,8 @@ It is easy to show that $\mu$ satisfies the following propositions:
 \subsection{Defining $\theta$ - a Term that Characterises a Model}
 The inverse function $\theta$ produces a formula that characterises a given pointed model:
 \begin{eqnarray}
-\theta(\bot) & = & \langle a \rangle \top \land ! \{ \} \mbox{ for some symbol }a \nonumber \\
-\theta(l, w) & = & \mathsf{bang}(l,w) \land \bigwedge_{(s,w') \in \mathsf{trans}(l,w)} \langle s \rangle \theta(l, w') \nonumber 
+\theta(\bot) & = & \langle a \rangle \top \AND ! \{ \} \mbox{ for some symbol }a \nonumber \\
+\theta(l, w) & = & \mathsf{bang}(l,w) \AND \bigwedge_{(s,w') \in \mathsf{trans}(l,w)} \langle s \rangle \theta(l, w') \nonumber 
 \end{eqnarray}
 Here:
 \begin{eqnarray}
@@ -238,7 +215,7 @@ X \judge \top
 \bot \judge X
 }
 \]
-Note that $\bot$ is not a primitive symbol of EL - it is defined as one of the unsatisfiable terms, for example $\langle a \rangle \top \; \land \; \fBang \{\}$. 
+Note that $\bot$ is not a primitive symbol of EL - it is defined as one of the unsatisfiable terms, for example $\langle a \rangle \top \; \AND \; \fBang \{\}$. 
 
 EL has the standard transitivity inference rule:
 \begin{center}
@@ -254,8 +231,8 @@ It has the standard three rules for handling conjunction:
 \begin{center}
 \fbox{
 \AxiomC{$X \judge Y$}
-\LeftLabel{{\bf $\land$ Left 1: \quad}}
-\UnaryInfC{$X \land Z \judge Y$}
+\LeftLabel{{\bf $\AND$ Left 1: \quad}}
+\UnaryInfC{$X \AND Z \judge Y$}
 \DisplayProof
 }
 \end{center}
@@ -263,8 +240,8 @@ It has the standard three rules for handling conjunction:
 \begin{center}
 \fbox{
 \AxiomC{$X \judge Y$}
-\LeftLabel{{\bf $\land$ Left 2: \quad}}
-\UnaryInfC{$Z \land X \judge Y$}
+\LeftLabel{{\bf $\AND$ Left 2: \quad}}
+\UnaryInfC{$Z \AND X \judge Y$}
 \DisplayProof
 }
 \end{center}
@@ -273,8 +250,8 @@ It has the standard three rules for handling conjunction:
 \fbox{
 \AxiomC{$X \judge Y$}
 \AxiomC{$X \judge Z$}
-\LeftLabel{{\bf $\land$ Right: \quad}}
-\BinaryInfC{$X \judge Y \land Z$}
+\LeftLabel{{\bf $\AND$ Right: \quad}}
+\BinaryInfC{$X \judge Y \AND Z$}
 \DisplayProof
 }
 \end{center}
@@ -285,7 +262,7 @@ The {\bf Bottom Right 1} axiom captures how $\langle \rangle$ and $!$ interact:
 \[
 \boxed
 {
-\langle a \rangle X \land \fBang A \judge \bot \mbox{ if } a \notin A
+\langle a \rangle X \AND \fBang A \judge \bot \mbox{ if } a \notin A
 }
 \]
 {\bf Bottom Right 2} is another axiom for deriving $\bot$ from inside $\langle \rangle$:
@@ -298,10 +275,10 @@ The {\bf Bottom Right 1} axiom captures how $\langle \rangle$ and $!$ interact:
 There is a rule for strengthening $\fBang$ on the left hand side: 
 \begin{center}
 \fbox{
-\AxiomC{$X \land \fBang A \judge Y$}
+\AxiomC{$X \AND \fBang A \judge Y$}
 \LeftLabel{{\bf ! Left: \quad}}
 \RightLabel{where $A' \subseteq A $}
-\UnaryInfC{$X \land \fBang A' \judge Y$}
+\UnaryInfC{$X \AND \fBang A' \judge Y$}
 \DisplayProof
 }
 \end{center}
@@ -372,10 +349,10 @@ $p$ is $\top$
 Then we can prove  $\theta(m) \judge p$ immediately using axiom {\bf $\top$ Right}.
 
 \begin{mycase}
-$p$ is $q \land q'$
+$p$ is $q \AND q'$
 \end{mycase}
 By the induction hypothesis, $\theta(m) \judge q$ and $\theta(m) \judge q'$.
-The proof of $\theta(m) \judge q \land q'$ follows immediately using {\bf $\land$ Right}.
+The proof of $\theta(m) \judge q \AND q'$ follows immediately using {\bf $\AND$ Right}.
 
 \begin{mycase}
 $p$ is $\langle a \rangle q$
@@ -384,7 +361,7 @@ If $m \models \langle a \rangle q$, then either $m = \bot$ or $m$ is a pointed m
 \begin{subcase}
 $m = \bot$
 \end{subcase}
-In this case, $\theta(m) = \theta(\bot) = \bot$. (Recall, that we are overloading $\bot$ to mean both the pointed model at the bottom of our lattice and a formula (such as $\langle s \rangle \top \land !\{\}$) which is always false).
+In this case, $\theta(m) = \theta(\bot) = \bot$. (Recall, that we are overloading $\bot$ to mean both the pointed model at the bottom of our lattice and a formula (such as $\langle s \rangle \top \AND !\{\}$) which is always false).
 In this case, $ \theta(\bot) \judge  \langle a \rangle q$ using {\bf $\bot$ Left}.
 
 \begin{subcase}
@@ -406,7 +383,7 @@ Now by {\bf Transition Normal}:
 \[
 \langle a \rangle \theta( (l,w') ) \judge \langle a \rangle q
 \]
-Using repeated application of {\bf $\land$ Left}, we can show:
+Using repeated application of {\bf $\AND$ Left}, we can show:
 \[
 \theta((l,w)) \judge \langle a \rangle \theta((l,w'))
 \]
@@ -418,8 +395,8 @@ Finally, using {\bf Transitivity}, we derive:
 $p$ is $\fBang q$
 \end{mycase}
 If $(l,w) \models \fBang A$, then $\lambda(w) \subseteq A$.
-Then $\theta(l,w) = ! \; \lambda(w) \land \phi$.
-Now we can prove $! \; \lambda(w) \land \phi \judge \fBang A$ using  {\bf $!$ Right 1} and repeated applications of {\bf $\land$ Left}.
+Then $\theta(l,w) = ! \; \lambda(w) \AND \phi$.
+Now we can prove $! \; \lambda(w) \AND \phi \judge \fBang A$ using  {\bf $!$ Right 1} and repeated applications of {\bf $\AND$ Left}.
 \qed
 \end{proof}
 
@@ -438,20 +415,20 @@ $p$ is $\top$
 Then we can prove  $\top \judge \top$ using either {\bf $\top$ Right} or {\bf Identity}.
 
 \begin{mycase}
-$p$ is $q \land q'$
+$p$ is $q \AND q'$
 \end{mycase}
 By the induction hypothesis, $q \judge \theta(\mu(q))$ and $q' \judge \theta(\mu(q'))$.
-Using {\bf $\land$ Left} and {\bf $\land$ Right}, we can show:
+Using {\bf $\AND$ Left} and {\bf $\AND$ Right}, we can show:
 \[
-q \land q' \judge \theta(\mu(q)) \land \theta(\mu(q'))
+q \AND q' \judge \theta(\mu(q)) \AND \theta(\mu(q'))
 \]
 Lemma 6, proven below, states that, for all models $m$ and $n$:
 \[
-\theta(m) \land \theta(n) \judge \theta (m \sqcap n)
+\theta(m) \AND \theta(n) \judge \theta (m \sqcap n)
 \]
 From Lemma 6 (substituting $\mu(q)$ for $m$ and $\mu(q')$ for $n$), it follows that:
 \[
-\theta(\mu(q)) \land \theta(\mu(q')) \judge \theta(\mu(q \land q'))
+\theta(\mu(q)) \AND \theta(\mu(q')) \judge \theta(\mu(q \AND q'))
 \]
 Our desired result follows using {\bf Transitivity}.
 
@@ -496,13 +473,13 @@ The desired conclusion follows from noting that:
  \begin{mycase}
 $p$ is $\fBang A$
 \end{mycase}
-If $p$ is $\fBang A$, then $ \theta(\mu(p))$ is $\fBang A \land \top$.
-We can prove $\fBang A \judge \fBang A \land \top$ using {\bf $\land$ Right}, {\bf $\top$ Right} and {\bf Identity}.
+If $p$ is $\fBang A$, then $ \theta(\mu(p))$ is $\fBang A \AND \top$.
+We can prove $\fBang A \judge \fBang A \AND \top$ using {\bf $\AND$ Right}, {\bf $\top$ Right} and {\bf Identity}.
 \qed
 \end{proof}
 Finally, to fill the hole in Case 2 above, we need to show that:
 \begin{lemma}
-For all models $m$ and $n$, $\theta(m) \land \theta(n) \judge \theta (m \sqcap n)$.
+For all models $m$ and $n$, $\theta(m) \AND \theta(n) \judge \theta (m \sqcap n)$.
 \end{lemma}
 
 \begin{proof}
@@ -523,37 +500,37 @@ $n = \bot$
 \item
 Neither $m$ nor $n$ are $\bot$, but together they are incompatible. 
 \end{itemize}
-If either $m$ or $n$ is $\bot$, then the proof is a simple application of {\bf Identity} followed by {\bf $\land$ Left}.
+If either $m$ or $n$ is $\bot$, then the proof is a simple application of {\bf Identity} followed by {\bf $\AND$ Left}.
 
 Next, let us consider the case where neither $m$ nor $n$ are $\bot$, but together they are incompatible.
 Let $m$ be the pointed model $(l, w)$ and let $n$ be $(l', w')$.
 If $(l, w) \sqcap (l', w') = \bot$, then\footnote{The alternative, in which the $s$-transition is in $n$ and the transition-restriction is in $m$, is identical, swapping $m$ with $n$.} there exists a symbol $s$ and a state $w_2$ such that $w \xrightarrow{s} w_2$ but $s \notin \lambda'(w')$.
 
-In this case, by the definition of $\theta$, $\theta(m) \judge \langle s \rangle \top$, using  {\bf Identity} and repeated applications of {\bf $\land$ Left}.
-Further, by the definition of $\theta$, $\theta(n) \judge \; ! \; \lambda'(w')$, using  {\bf Identity} and repeated applications of by {\bf $\land$ Left}. Again, $s \notin  \lambda'(w')$.
+In this case, by the definition of $\theta$, $\theta(m) \judge \langle s \rangle \top$, using  {\bf Identity} and repeated applications of {\bf $\AND$ Left}.
+Further, by the definition of $\theta$, $\theta(n) \judge \; ! \; \lambda'(w')$, using  {\bf Identity} and repeated applications of by {\bf $\AND$ Left}. Again, $s \notin  \lambda'(w')$.
 
-Therefore,  $\theta(m) \land \theta(n) \judge \bot$, using  {\bf $\land$ Right} and  {\bf Bottom Right 1}.
+Therefore,  $\theta(m) \AND \theta(n) \judge \bot$, using  {\bf $\AND$ Right} and  {\bf Bottom Right 1}.
 \begin{mycase}
 $(m \sqcap n) \neq \bot$
 \end{mycase}
 In this case, let $(l,w) = m$ and let $(l',w')=n$.
 Then, from the definition of $\mathsf{merge}$ above:
 \[
-\theta((l,w) \sqcap (l',w')) = \; ! \; (\lambda(w) \cap \lambda'(w')) \land \bigwedge_{w \xrightarrow{s} w_2} \langle s \rangle \theta((l, w_2)) \land \bigwedge_{w' \xrightarrow{s} w_3} \langle s \rangle \theta((l', w_3))
+\theta((l,w) \sqcap (l',w')) = \; ! \; (\lambda(w) \cap \lambda'(w')) \AND \bigwedge_{w \xrightarrow{s} w_2} \langle s \rangle \theta((l, w_2)) \AND \bigwedge_{w' \xrightarrow{s} w_3} \langle s \rangle \theta((l', w_3))
 \]
-We need to show that $\theta((l,w)) \land \theta((l',w')) \judge \theta((l,w) \sqcap (l',w'))$ - or in other words, that:
+We need to show that $\theta((l,w)) \AND \theta((l',w')) \judge \theta((l,w) \sqcap (l',w'))$ - or in other words, that:
 \begin{itemize}
 \item
-$\theta((l,w)) \land \theta((l',w')) \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$
+$\theta((l,w)) \AND \theta((l',w')) \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$
 \item
-$\theta((l,w)) \land \theta((l',w')) \judge \langle s \rangle \theta((l, w_2))$ for all $s,w_2$ such that $w \xrightarrow{s} w_2$
+$\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_2))$ for all $s,w_2$ such that $w \xrightarrow{s} w_2$
 \item
-$\theta((l,w)) \land \theta((l',w')) \judge \langle s \rangle \theta((l, w_3))$ for all $s,w_3$ such that $w' \xrightarrow{s} w_3$
+$\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_3))$ for all $s,w_3$ such that $w' \xrightarrow{s} w_3$
 \end{itemize}
-To show $\theta((l,w)) \land \theta((l',w')) \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$, note that $\theta((l,w))  \judge \; ! \; \lambda(w)$ and $\theta((l',w')) \judge \; ! \;  \lambda'(w'))$.
-We can derive $\theta((l,w)) \land \theta((l',w')) \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$ using {\bf $\land$ Right} and {\bf $!$ Right 2}. 
+To show $\theta((l,w)) \AND \theta((l',w')) \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$, note that $\theta((l,w))  \judge \; ! \; \lambda(w)$ and $\theta((l',w')) \judge \; ! \;  \lambda'(w'))$.
+We can derive $\theta((l,w)) \AND \theta((l',w')) \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$ using {\bf $\AND$ Right} and {\bf $!$ Right 2}. 
 
-To show $\theta((l,w)) \land \theta((l',w')) \judge \langle s \rangle \theta((l, w_2))$, observe from the definition of $\theta$ that $\theta((l,w))$ contains a conjunct $\langle s \rangle \theta((l, w_2))$, so the proof follows from  {\bf $\land$ Right} and repeated applications of  {\bf $\land$ Left}. The same procedure applies to show $\theta((l,w)) \land \theta((l',w')) \judge \langle s \rangle \theta((l, w_3))$ for all $s,w_3$ such that $w' \xrightarrow{s} w_3$.
+To show $\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_2))$, observe from the definition of $\theta$ that $\theta((l,w))$ contains a conjunct $\langle s \rangle \theta((l, w_2))$, so the proof follows from  {\bf $\AND$ Right} and repeated applications of  {\bf $\AND$ Left}. The same procedure applies to show $\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_3))$ for all $s,w_3$ such that $w' \xrightarrow{s} w_3$.
 
 This completes Lemma 6 and hence the Completeness Proof.
 \qed
@@ -613,7 +590,7 @@ Right to left: assume, for reductio, that $m \models p$ and $m \nvDash q$. we wi
 Assume $m \models p \mbox{ and } m \nvDash q$. We will construct another model $n$ such that $n \in \mathcal{J}(\mu(q))$ but $n \notin \mathcal{J}(\mu(p))$.
 This will entail, via Lemma 3, that $\mathcal{I}(q) \nsubseteq \mathcal{I}(p)$.
 
-If $m \nvDash q$, then there is a formula $q'$ that does not contain $\land$ such that $q \models q'$ and $m \nvDash q'$. $q'$ must be either of the form (i) $\langle a_1 \rangle ... \langle a_n \rangle \top$ (for $n > 0$) or (ii) of the form $\langle a_1 \rangle ... \langle a_n \rangle \; !\{A\}$ where $A \subseteq \mathcal{S} \mbox{ and } n >= 0$.
+If $m \nvDash q$, then there is a formula $q'$ that does not contain $\AND$ such that $q \models q'$ and $m \nvDash q'$. $q'$ must be either of the form (i) $\langle a_1 \rangle ... \langle a_n \rangle \top$ (for $n > 0$) or (ii) of the form $\langle a_1 \rangle ... \langle a_n \rangle \; !\{A\}$ where $A \subseteq \mathcal{S} \mbox{ and } n >= 0$.
 
 In case (i), there must be an $i$ between $0$ and $n$ such that $m \models \langle a_1 \rangle ... \langle a_i \rangle \top$ but $m \nvDash  \langle a_1 \rangle ... \langle a_{i+1} \rangle \top$. We need to construct another model $n$ such that $n \sqcap \mu(q) = \bot$, but $n \sqcap \mu(p) \neq \bot$. Letting $m = ((\mathcal{W},\rightarrow,\lambda),w)$, then $m \models \langle a_1 \rangle ... \langle a_i \rangle \top$ implies that there is at least one sequence of states of the form $w, w_1, ..., w_i$ such that $w \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_i$. 
 Now let $n$ be just like $m$ but with additional transition-restrictions on each $w_i$ that it not include $a_{i+1}$. 
@@ -704,12 +681,12 @@ EL does not include the box operator or disjunction, so this formula is ruled ou
 But we can massage it into a form which is more amenable to EL's expressive resources:
 \begin{eqnarray}
 [s] (\phi_1 \lor ... \lor \phi_n) & = & \neg \langle s \rangle \neg (\phi_1 \lor ... \lor \phi_n) \nonumber \\
-	& = & \neg \langle s \rangle (\neg \phi_1\land ... \land \neg \phi_n) \nonumber
+	& = & \neg \langle s \rangle (\neg \phi_1\AND ... \AND \neg \phi_n) \nonumber
 \end{eqnarray}
 Further, if the original formula $[s] (\phi_1 \lor ... \lor \phi_n)$ is true in $x'$ but not in $x$, then its negation will be true in $x$ but not in $x'$. 
 So we have the following formula, true in $x$ but not in $x'$:
 \[
- \langle s \rangle (\neg \phi_1\land ... \land \neg \phi_n)
+ \langle s \rangle (\neg \phi_1\AND ... \AND \neg \phi_n)
  \]
 The reason for massaging the formula in this way is so we can express it in EL (which does not have the box operator or disjunction).
 At this moment, the revised formula is \emph{still} outside EL because it uses negation. 
@@ -723,7 +700,7 @@ y \nvDash \phi_j \mbox{ and } y'_j \models \phi_j & & j = m+1 \mbox{ to } n \non
 \end{eqnarray}
 The formula we will use to distinguish between $x$ and $x'$ is:
 \[
- \langle s \rangle ( \bigwedge_{i=1}^m \phi_i \; \land \; \bigwedge_{j=m+1}^n \mathsf{neg}(y, \phi_j))
+ \langle s \rangle ( \bigwedge_{i=1}^m \phi_i \; \AND \; \bigwedge_{j=m+1}^n \mathsf{neg}(y, \phi_j))
  \]
  Here, $\mathsf{neg}$ is a meta-language function that, given a state y and a formula $\phi_j$, returns a sentence that is true in $y$ but incompatible with $\phi_j$. I will show that, since $y \nvDash \phi_j$, it is always possible to construct $ \mathsf{neg}(y, \phi_j)$ using the $!$ operator.
 
@@ -732,14 +709,14 @@ Consider the possible forms of $\phi_j$:
 \item
 $\top$: this case cannot occur since all models satisfy $\top$.
 \item
-$\phi_1 \land \phi_2$: we know $y'_j \models \phi_1 \land \phi_2$ and $y \nvDash \phi_1 \land \phi_2$. There are three possibilities:
+$\phi_1 \AND \phi_2$: we know $y'_j \models \phi_1 \AND \phi_2$ and $y \nvDash \phi_1 \AND \phi_2$. There are three possibilities:
 \begin{enumerate}
 \item
-$y \nvDash \phi_1$ and $y \models \phi_2$. In this case, $\mathsf{neg}(y, \phi_1 \land \phi_2) = \mathsf{neg}(y, \phi_1) \land \phi_2$.
+$y \nvDash \phi_1$ and $y \models \phi_2$. In this case, $\mathsf{neg}(y, \phi_1 \AND \phi_2) = \mathsf{neg}(y, \phi_1) \AND \phi_2$.
 \item
-$y \models \phi_1$ and $y \nvDash \phi_2$. In this case, $\mathsf{neg}(y, \phi_1 \land \phi_2) = \phi_1 \land \mathsf{neg}(y, \phi_2)$.
+$y \models \phi_1$ and $y \nvDash \phi_2$. In this case, $\mathsf{neg}(y, \phi_1 \AND \phi_2) = \phi_1 \AND \mathsf{neg}(y, \phi_2)$.
 \item
-$y \nvDash \phi_1$ and $y \nvDash \phi_2$. In this case, $\mathsf{neg}(y, \phi_1 \land \phi_2) =  \mathsf{neg}(y, \phi_1) \land \mathsf{neg}(y, \phi_2)$.
+$y \nvDash \phi_1$ and $y \nvDash \phi_2$. In this case, $\mathsf{neg}(y, \phi_1 \AND \phi_2) =  \mathsf{neg}(y, \phi_1) \AND \mathsf{neg}(y, \phi_2)$.
 \end{enumerate}
 \item
 $!A$: if $y \nvDash !A \mbox{ and } y'_j \models !A$, then there is a symbol $a \in \mathcal{S}-A$ such that $y \xrightarrow{a} z$ for some $z$ but there is no such $z$ such that $y'_j \xrightarrow{a} z$. In this case, let $\mathsf{neg}(y, \phi_j) = \langle a \rangle \top$.
@@ -792,17 +769,17 @@ $y \nvDash \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \ra
 Consider $y$ and $y'_j$ as in Fig.1.
 One formula that is true in $y'_j$ but not in $y$ is
 \[
-\langle a \rangle (\langle b \rangle \top \land \langle c \rangle \top)
+\langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top)
 \]
 Now:
 \begin{eqnarray}
-\mathsf{neg}(y, \langle a \rangle (\langle b \rangle \top \land \langle c \rangle \top)) & = & \nonumber \\
-\bigwedge\limits_{y \xrightarrow{a} z} \langle a \rangle \mathsf{neg}(z, \langle b \rangle \top \land \langle c \rangle \top) & = & \nonumber \\
-\langle a \rangle \mathsf{neg}(z_1, \langle b \rangle \top \land \langle c \rangle \top) \land \langle a \rangle\mathsf{neg}(z_2, \langle b \rangle \top \land \langle c \rangle \top) & = & \nonumber \\
-\langle a \rangle (\langle b \rangle \top \land \mathsf{neg}(z_1, \langle c \rangle \top)) \land \langle a \rangle\mathsf{neg}(z_2, \langle b \rangle \top \land \langle c \rangle \top) & = & \nonumber \\
-\langle a \rangle (\langle b \rangle \top \land \mathsf{neg}(z_1, \langle c \rangle \top)) \land \langle a \rangle(\mathsf{neg}(z_2, \langle b \rangle \top) \land \langle c \rangle \top) & = & \nonumber \\
-\langle a \rangle (\langle b \rangle \top \land \fBang \{b\}) \land \langle a \rangle(\mathsf{neg}(z_2, \langle b \rangle \top) \land \langle c \rangle \top) & = & \nonumber \\
-\langle a \rangle (\langle b \rangle \top \land \fBang \{b\}) \land \langle a \rangle(\fBang \{c\} \land \langle c \rangle \top) & & \nonumber
+\mathsf{neg}(y, \langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top)) & = & \nonumber \\
+\bigwedge\limits_{y \xrightarrow{a} z} \langle a \rangle \mathsf{neg}(z, \langle b \rangle \top \AND \langle c \rangle \top) & = & \nonumber \\
+\langle a \rangle \mathsf{neg}(z_1, \langle b \rangle \top \AND \langle c \rangle \top) \AND \langle a \rangle\mathsf{neg}(z_2, \langle b \rangle \top \AND \langle c \rangle \top) & = & \nonumber \\
+\langle a \rangle (\langle b \rangle \top \AND \mathsf{neg}(z_1, \langle c \rangle \top)) \AND \langle a \rangle\mathsf{neg}(z_2, \langle b \rangle \top \AND \langle c \rangle \top) & = & \nonumber \\
+\langle a \rangle (\langle b \rangle \top \AND \mathsf{neg}(z_1, \langle c \rangle \top)) \AND \langle a \rangle(\mathsf{neg}(z_2, \langle b \rangle \top) \AND \langle c \rangle \top) & = & \nonumber \\
+\langle a \rangle (\langle b \rangle \top \AND \fBang \{b\}) \AND \langle a \rangle(\mathsf{neg}(z_2, \langle b \rangle \top) \AND \langle c \rangle \top) & = & \nonumber \\
+\langle a \rangle (\langle b \rangle \top \AND \fBang \{b\}) \AND \langle a \rangle(\fBang \{c\} \AND \langle c \rangle \top) & & \nonumber
 \end{eqnarray}
 The resulting formula is true in $y$ but not in $y'_j$.
 
@@ -810,7 +787,7 @@ The resulting formula is true in $y$ but not in $y'_j$.
 \subsection{Discussion}
 Consider the fragment of HML without negation:
 \[
-\phi ::= \top \fOr \phi_1 \land \phi_2  \fOr \langle a \rangle \phi
+\phi ::= \top \fOr \phi_1 \AND \phi_2  \fOr \langle a \rangle \phi
 \]
 Without negation, $p \equiv p'$ does \emph{not} entail $p \sim p'$, as Fig. 3 shows.
 \begin{figure}[h]
@@ -847,7 +824,7 @@ Without negation, $p \equiv p'$ does \emph{not} entail $p \sim p'$, as Fig. 3 sh
 \end{tikzpicture}
 \caption{Without negation, $p \equiv p'$ does not entail $p \sim p'$}
 \end{figure}
-Here, $x \equiv x'$ - they both satisfy the sub formulae of $\langle a \rangle (\langle b \rangle \top \land \langle c \rangle \top)$.
+Here, $x \equiv x'$ - they both satisfy the sub formulae of $\langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top)$.
 But there is no bisimulation between $x$ and $x'$ ($y_1$ cannot be matched with $y'$ because $y'$ has an additional outgoing $c$-transition). 
 
 If we remove negation, HML  is insufficiently expressive to distinguish between these two non-bisimilar models.
@@ -876,20 +853,20 @@ $Restrict_{A}(x)$ is true if $\lambda(x) = A$.
 \end{itemize}
 With $x_1, x_2$ being state variables, $s$ a symbol in $\mathcal{S}$, and $A$ ranging over subsets of $\mathcal{S}$, our restricted fragment of FOL has sentences of the form:
 \[
-\phi ::= \top \fOr Arr_{s}(x_1, x_2)\fOr Restrict_A(x_1) \fOr \phi_1 \land \phi_2 \fOr \exists x_1 . \phi 
+\phi ::= \top \fOr Arr_{s}(x_1, x_2)\fOr Restrict_A(x_1) \fOr \phi_1 \AND \phi_2 \fOr \exists x_1 . \phi 
 \]
 Notice that this fragment of FOL has no negation, disjunction, implication, or universal quantification.
 
 The translation of an EL formula is relative to a variable $x$ (which will be instantiated to the particular state at which we are evaluating the formula):
 \begin{eqnarray}
 T_x(\top) & = & \top \nonumber \\
-T_x(\phi_1 \land \phi_2) & = & T_x(\phi_1) \land T_x(\phi_2) \nonumber \\
-T_x(\langle s \rangle \phi) & = & \exists y \; . \; Arr_s(x,y) \land T_y(\phi) \nonumber \\
+T_x(\phi_1 \AND \phi_2) & = & T_x(\phi_1) \AND T_x(\phi_2) \nonumber \\
+T_x(\langle s \rangle \phi) & = & \exists y \; . \; Arr_s(x,y) \AND T_y(\phi) \nonumber \\
 T_x(\fBang A) & = & Restrict_A(x) \nonumber
 \end{eqnarray}
 So, for example:
 \[
-T_x(\langle a \rangle \top \land \fBang \{a\}) = \exists y \; . \; Arr_a(x,y) \land \top \land Restrict_{\{a\}}(x)
+T_x(\langle a \rangle \top \AND \fBang \{a\}) = \exists y \; . \; Arr_a(x,y) \AND \top \AND Restrict_{\{a\}}(x)
 \]
 
 \subsection{Discussion}
@@ -903,14 +880,14 @@ Because our FOL formulae use no negation, disjunction, or implication, this can 
 First check if $T_x(\phi)$ is consistent.
 This is done by conjoining $T_x(\phi)$ to a set of conditionals of the form:
 \[
-Restrict_A(x) \land Arr_a(x,y) \rightarrow \bot
+Restrict_A(x) \AND Arr_a(x,y) \rightarrow \bot
 \]
 for each $a \in \mathsf{sym}(\phi)-A$ and each $A$ appearing in a formula $!A$ in $\phi$.
 Here, $\mathsf{sym}(\phi)$ is the set of symbols in $\phi$.
 
 $T_x(\phi)$ is inconsistent if 
 \[
-T_x(\phi) \land \bigwedge_{A \in \phi, a \in\mathsf{sym}(\phi)-A} Restrict_A(x) \land Arr_a(x,y) \rightarrow \bot \; \models \; \bot
+T_x(\phi) \AND \bigwedge_{A \in \phi, a \in\mathsf{sym}(\phi)-A} Restrict_A(x) \AND Arr_a(x,y) \rightarrow \bot \; \models \; \bot
 \]
 If $\phi$ is not consistent, then $\phi \models \psi$ is valid.
 If $\phi$ is consistent, then construct the skolemized version of $T_x(\phi)$. 
@@ -932,7 +909,7 @@ Immediate from the definitions
 \subsection{Syntax}
 Given a set $\mathcal{S}$ of symbols, with $s$ ranging over $\mathcal{S}$, the sentences of Hennessy-Milner Logic (HML) are given by:
 \[
-\phi ::= \top \fOr \phi_1 \land \phi_2 \fOr \langle s \rangle \phi \fOr \neg \phi 
+\phi ::= \top \fOr \phi_1 \AND \phi_2 \fOr \langle s \rangle \phi \fOr \neg \phi 
 \]
 \subsection{Semantics}
 A {\bf Labelled Transition System} (LTS) is a pair $(\mathcal{W}, \rightarrow)$, where $\mathcal{W}$ is a set of states, and $\rightarrow$ is a set of transition relations: $\rightarrow \; \subseteq \; \mathcal{W} \times S \times \mathcal{W}$.
@@ -943,7 +920,7 @@ A {\bf pointed LTS} is a pair $(l, w)$, where $l$ is a LTS $(\mathcal{W}, \right
 A sentence of HML is evaluated in a pointed LTS $(l, w)$:
 \begin{eqnarray}
 (l,w) & \models & \top \nonumber \\
-(l,w) & \models & \phi_1 \land \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2 \nonumber \\
+(l,w) & \models & \phi_1 \AND \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2 \nonumber \\
 (l,w) & \models & \langle s \rangle \phi \mbox{ iff there is a } w \xrightarrow{s} w' \mbox { such that } (l,w') \models \phi \nonumber \\
 (l,w) & \models & \neg \phi \mbox{ iff } (l,w)  \nvDash \phi \nonumber
 \end{eqnarray}
@@ -959,7 +936,7 @@ Semantically, an EL model has an additional node-labelling, describing the allow
 We can translate formulae of EL into HML using the function $t$:
 \begin{eqnarray}
 t(\top) & = & \top \nonumber \\
-t(\phi_1 \land \phi_2) & = & t(\phi_1) \land t(\phi_2) \nonumber \\
+t(\phi_1 \AND \phi_2) & = & t(\phi_1) \AND t(\phi_2) \nonumber \\
 t(\langle s \rangle \phi) & = & \langle s \rangle t(\phi) \nonumber \\
 t(! A) & = & \bigwedge_{s \in S - A} \neg \langle s \rangle \top \nonumber
 \end{eqnarray}
