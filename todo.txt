@@ -32,6 +32,9 @@
   - Robert Brandom http://www.pitt.edu/~rbrandom/
   - Marek Sergot http://www.doc.ic.ac.uk/~mjs/
   - Marcus Kracht http://wwwhomes.uni-bielefeld.de/mkracht/index-en.html
+  - Graham White and Paulo Oliva at QMUL
+  - Bernhard Reus at Sussex
+  - Billiejoe Charlton
 
 * Could it make sense to prepare a little video presentation (using
   Screenflow, or recording professionally), maybe 15 minutes, to
@@ -44,7 +47,7 @@
 * THink about how to interface the paper with Versu.  Versu—A
   Simulationist Storytelling System
 
-* Think about seminars (Sussex, Imperial, Oxford, which others?)
+* Think about seminars (Sussex, Imperial, Oxford, QMUL which others?)
 
 * Related work: 
 
