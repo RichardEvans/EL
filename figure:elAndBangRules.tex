@@ -9,12 +9,12 @@
   \ZEROPREMISERULENAMEDRIGHT
   {
     X \judge \top
-  }{$\top$ Right}
+  }{$\top$-Right}
     \quad
   \ZEROPREMISERULENAMEDRIGHT
   {
     \bot \judge X
-  }{$\bot$ Left}
+  }{$\bot$-Left}
     \quad
   \TWOPREMISERULENAMEDRIGHT
   {
@@ -33,7 +33,50 @@
   }
   {
     X \AND Z \judge Y
-  }{$\AND$ Left 1}
+  }{$\AND$-Left 1}
+     \quad
+  \ONEPREMISERULENAMEDRIGHT
+  {
+    X \judge Y
+  }
+  {
+    Z \AND X  \judge Y
+  }{$\AND$-Left 2}
+     \quad
+  \TWOPREMISERULENAMEDRIGHT
+  {
+    X \judge Y
+  }
+  {
+    Y \judge Z
+  }
+  {
+    X \judge Y \AND Z
+  }{$\AND$-Right}
+     \\\\
+     \ONEPREMISERULENAMEDRIGHT
+     {
+       a \notin A
+     }
+     {
+       !A \AND \MAY{a}{X} \judge \bot
+     }{$\bot$-Right 1}
+        \quad
+     \ZEROPREMISERULENAMEDRIGHT
+     {
+       \MAY{a}{\bot} \judge \bot
+     }{$\bot$-Right 2}
+        \quad
+     \TWOPREMISERULENAMEDRIGHT
+     {
+       X \AND !A \judge Y
+     }
+     {
+       A' \subseteq A
+     }
+     {
+       X \AND !A \judge Y
+     }{!-Left}
 \end{RULES}
 \caption{Proof rules. Put in remaining rules as they stabilise!}\label{figure:elAndBangRules}
 \end{FIGURE}
