@@ -2,65 +2,104 @@
 
 
 \subsection{Syntax}
-Given a set $\mathcal{S}$ of symbols, with $a$ ranging over $\mathcal{S}$, and $A$ ranging over (possibly empty) sequences of elements of $\mathcal{S}$, the sentences of EL$[\land, !, \neg]$ are given by\footnote{We include $\lor$, even though it is definable in terms of $\neg$ and $\land$, because our decision procedure involves translating formulae into Disjunctive Normal Form.}:
-\[
-\phi ::= \top \fOr \bot \fOr \neg \phi \fOr \phi_1 \land \phi_2 \fOr\phi_1 \lor \phi_2 \fOr \langle a \rangle \phi \fOr \fBang A 
-\]
+
+Given a set $\mathcal{S}$ of symbols, with $a$ ranging over
+$\mathcal{S}$, and $A$ ranging over (possibly empty) sequences of
+elements of $\mathcal{S}$, the sentences of EL$[\land, !, \neg]$ are
+given by\footnote{We include $\lor$, even though it is definable in
+terms of $\neg$ and $\land$, because our decision procedure involves
+translating formulae into Disjunctive Normal Form.}:
+
+\begin{GRAMMAR}
+  \phi 
+     &\quad ::= \quad & 
+   \top \fOr \bot \fOr \neg \phi \fOr \phi_1 \land \phi_2 \fOr\phi_1 \lor \phi_2 \fOr \langle a \rangle \phi \fOr \fBang A 
+\end{GRAMMAR}
+
 \subsection{Semantics}
 
-The semantics of EL$[\land, !, \neg]$ is just as in EL$[\land, !]$ above, except for the obvious clause for negation:
+The semantics of EL$[\land, !, \neg]$ is just as in EL$[\land, !]$
+above, except for the obvious clause for negation:
 \begin{eqnarray}
 (l,w) & \models & \neg \phi \mbox{ iff } (l,w) \nvDash \phi \nonumber
 \end{eqnarray}
 
 \subsection{Negation}
-Negation can be translated away using the following rewrite rules, \emph{relative to a certain set $\Sigma$ of symbols}:
+
+Negation can be translated away using the following rewrite rules,
+\emph{relative to a certain set $\Sigma$ of symbols}:
+
 \begin{eqnarray}
-\neg_\Sigma(\top) & \rightarrow & \bot \nonumber \\
-\neg_\Sigma(\bot) & \rightarrow & \top \nonumber \\
-\neg_\Sigma(\phi_1 \land \phi_2) & \rightarrow & \neg_\Sigma(\phi_1) \lor \neg_\Sigma(\phi_2) \nonumber \\
-\neg_\Sigma(\phi_1 \lor \phi_2) & \rightarrow & \neg_\Sigma(\phi_1) \land \neg_\Sigma(\phi_2) \nonumber \\
-\neg_\Sigma(\langle a \rangle \phi) & \rightarrow & \fBang(\Sigma-\{a\}) \lor \langle a \rangle \neg_\Sigma(\phi) \nonumber \\
-\neg_\Sigma(\fBang A) & \rightarrow & \bigvee_{a \in \Sigma - A} \langle a \rangle \top\nonumber
+  \neg_{\Sigma}(\top) & \ = \ & \bot \nonumber \\
+  \neg_\Sigma(\bot) & \ = \ & \top \nonumber \\
+  \neg_\Sigma(\phi_1 \land \phi_2) & \ = \ & \neg_\Sigma(\phi_1) \lor \neg_\Sigma(\phi_2) \nonumber \\
+  \neg_\Sigma(\phi_1 \lor \phi_2) & \ = \ & \neg_\Sigma(\phi_1) \land \neg_\Sigma(\phi_2) \nonumber \\
+  \neg_\Sigma(\langle a \rangle \phi) & \ = \ & \fBang(\Sigma-\{a\}) \lor \langle a \rangle \neg_\Sigma(\phi) \nonumber \\
+  \neg_\Sigma(\fBang A) & \ = \ & \bigvee_{a \in \Sigma - A} \langle a \rangle \top\nonumber
 \end{eqnarray}
-Note that, if $\Sigma$ is infinite, then the last two clauses will generate infinitary sentences.
+
+\NI Note that, if $\Sigma$ is infinite, then the last two clauses will generate infinitary sentences.
 
 \subsection{Restricting the Law of the Excluded Middle to a Determinate Set of Possibilities}
-Given a formula $p$ and particular set $\Sigma$ of symbols, then we cannot hope to prove 
+
+Given a formula $p$ and particular set $\Sigma$ of symbols, then we
+cannot hope to prove
+
 \[
 \models p \lor \neg_\Sigma(p)
 \]
-For example, let $p$ be $\langle a \rangle \top$ and $\Sigma = \{a, b\}$.
-Now
+
+\NI For example, let $p$ be $\langle a \rangle \top$ and $\Sigma = \{a,
+b\}$.  Now
+
 \[
 \neg_\Sigma(\langle a \rangle \top) \; = \; ! \{b\} \lor \langle a \rangle \neg_\Sigma(\top) \; =  \; ! \{b\} \lor \langle a \rangle \bot
 \]
-So, in this case:
+
+\NI So, in this case:
 \[
 p \lor \neg p \; = \; \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
 \]
-Now this will not in general be valid - it will be false in any model which contains a transition from the root to any other symbol not in $\Sigma$, for example: $c$.
 
-But if we \emph{fix in advance the set of available options} (in this case restricting to the set $\Sigma$), then we can prove the excluded middle:
+\NI Now this will not in general be valid - it will be false in any model
+which contains a transition from the root to any other symbol not in
+$\Sigma$, for example: $c$.
+
+But if we \emph{fix in advance the set of available options} (in this
+case restricting to the set $\Sigma$), then we can prove the excluded
+middle:
 \[
 !\{a, b\} \models \; \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
 \]
-More generally, let $\mathsf{path}(\phi)$ be the set of symbol-sequences in $\phi$.
-So for example:
+
+\NI More generally, let $\mathsf{path}(\phi)$ be the set of
+symbol-sequences in $\phi$.  So for example:
+
 \[
 \mathsf{path}(\langle a \rangle (\langle b \rangle \top \land \langle c \rangle \langle d \rangle \top)) = \{(), (a), (a, b), (a, c, d)\}
 \]
-Then the following is valid for any formula $\phi$ (letting $\Sigma = \sigma(\phi)$): 
+
+\NI Then the following is valid for any formula $\phi$ (letting
+$\Sigma = \sigma(\phi)$):
+
 \[
 \bigwedge_{(a_1, ..., a_n) \in \mathsf{path}(\phi)} \langle a_1 \rangle ... \langle a_n \rangle \fBang \Sigma \models \phi \lor \neg_\Sigma (\phi)
 \]
+
 \subsubsection{Discussion: Precisifying the Negation. }
-If someone asserts that, say, Jack does not support Manchester United, we have so far said very little. 
-Until we know the \emph{range of football teams} he could support, we don't know what the negation amounts to. 
-Until we have some more determinate information about the range of possible choices, there are an \emph{indefinite} number of ways in which this could be true.
-But if we knew that the only possible teams Jack could support are Manchester United, Arsenal or Chelsea, then suddenly our negation has some determinate content.
-SNEL captures this intuition. 
-Once a negated sentence has been precisified by specifying the range of allowable options (via the $!$ operator), the negated claim can be made precise, and the law of excluded middle can be proven.
+
+\NI If someone asserts that, say, Jack does not support Manchester United,
+we have so far said very little.  Until we know the \emph{range of
+  football teams} he could support, we don't know what the negation
+amounts to.  Until we have some more determinate information about the
+range of possible choices, there are an \emph{indefinite} number of
+ways in which this could be true.  But if we knew that the only
+possible teams Jack could support are Manchester United, Arsenal or
+Chelsea, then suddenly our negation has some determinate content.
+SNEL captures this intuition.  Once a negated sentence has been
+precisified by specifying the range of allowable options (via the $!$
+operator), the negated claim can be made precise, and the law of
+excluded middle can be proven.
 
 \subsubsection{Discussion: Negation as Infinitary Disjunction. }
 As is well known the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.

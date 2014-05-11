@@ -8,7 +8,7 @@ the sentences of EL$[\AND, !]$ are given by:
 
 \begin{GRAMMAR}
   \phi 
-     &::=& 
+     &\quad ::= \quad & 
   \top 
      \VERTICAL 
   \phi_1 \AND \phi_2  
@@ -732,98 +732,44 @@ $y \nvDash \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \ra
 \qed
 \end{proof}
 
-\subsection{Worked Example of $\mathsf{neg}$}
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[node distance=1.3cm,>=stealth',bend angle=45,auto]
-  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
-  \tikzstyle{red place}=[place,draw=red!75,fill=red!20]
-  \tikzstyle{transition}=[rectangle,thick,draw=black!75,
-  			  fill=black!20,minimum size=4mm]
-  \tikzstyle{every label}=[red]
+\subsection{Worked example of $\mathsf{neg}$}
 
-  \begin{scope}[xshift=0cm]
-    \node [place] (t) {$y$};
-    \node [place] (a) [below left of=t] {$z_1$}
-      edge [pre]  node[swap] {a}                 (t);
-    \node [place] (a2) [below right of=t] {$z_2$}
-      edge [pre]  node[swap] {a}                 (t);
-    \node [place] (b) [below of=a] {$w_1$}
-      edge [pre]  node[swap] {b}                 (a);
-    \node [place] (c) [below of=a2] {$w_2$}
-      edge [pre]  node[swap] {c}                 (a2);
-  \end{scope}  
-  \begin{scope}[xshift=6cm]
-    \node [place] (t) {$y'_j$};
-    \node [place] (a) [below of=t] {$z'$}
-      edge [pre]  node[swap] {a}                 (t);
-    \node [place] (b) [below left of=a] {$w'_1$}
-      edge [pre]  node[swap] {b}                 (a);
-    \node [place] (c) [below right of=a] {$w'_2$}
-      edge [pre]  node[swap] {c}                 (a);
-  \end{scope}  
-\end{tikzpicture}
-\caption{Worked Example of $\mathsf{neg}$}
-\end{figure}
+\input{figure:example:neg}
 
-Consider $y$ and $y'_j$ as in Fig.1.
+Consider $y$ and $y'_j$ as in Figure \ref{figure:example:neg}.
 One formula that is true in $y'_j$ but not in $y$ is
 \[
 \langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top)
 \]
 Now:
-\begin{eqnarray}
-\mathsf{neg}(y, \langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top)) & = & \nonumber \\
-\bigwedge\limits_{y \xrightarrow{a} z} \langle a \rangle \mathsf{neg}(z, \langle b \rangle \top \AND \langle c \rangle \top) & = & \nonumber \\
-\langle a \rangle \mathsf{neg}(z_1, \langle b \rangle \top \AND \langle c \rangle \top) \AND \langle a \rangle\mathsf{neg}(z_2, \langle b \rangle \top \AND \langle c \rangle \top) & = & \nonumber \\
-\langle a \rangle (\langle b \rangle \top \AND \mathsf{neg}(z_1, \langle c \rangle \top)) \AND \langle a \rangle\mathsf{neg}(z_2, \langle b \rangle \top \AND \langle c \rangle \top) & = & \nonumber \\
-\langle a \rangle (\langle b \rangle \top \AND \mathsf{neg}(z_1, \langle c \rangle \top)) \AND \langle a \rangle(\mathsf{neg}(z_2, \langle b \rangle \top) \AND \langle c \rangle \top) & = & \nonumber \\
-\langle a \rangle (\langle b \rangle \top \AND \fBang \{b\}) \AND \langle a \rangle(\mathsf{neg}(z_2, \langle b \rangle \top) \AND \langle c \rangle \top) & = & \nonumber \\
-\langle a \rangle (\langle b \rangle \top \AND \fBang \{b\}) \AND \langle a \rangle(\fBang \{c\} \AND \langle c \rangle \top) & & \nonumber
-\end{eqnarray}
-The resulting formula is true in $y$ but not in $y'_j$.
+\begin{eqnarray*}
+\lefteqn{\mathsf{neg}(y, \langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top))}\qquad \qquad \qquad  \\
+& = & \bigwedge\limits_{y \xrightarrow{a} z} \langle a \rangle \mathsf{neg}(z, \langle b \rangle \top \AND \langle c \rangle \top)  \\
+& = & \langle a \rangle \mathsf{neg}(z_1, \langle b \rangle \top \AND \langle c \rangle \top) \AND \langle a \rangle\mathsf{neg}(z_2, \langle b \rangle \top \AND \langle c \rangle \top)  \\
+& = & \langle a \rangle (\langle b \rangle \top \AND \mathsf{neg}(z_1, \langle c \rangle \top)) \AND \langle a \rangle\mathsf{neg}(z_2, \langle b \rangle \top \AND \langle c \rangle \top)  \\
+& = & \langle a \rangle (\langle b \rangle \top \AND \mathsf{neg}(z_1, \langle c \rangle \top)) \AND \langle a \rangle(\mathsf{neg}(z_2, \langle b \rangle \top) \AND \langle c \rangle \top)  \\
+& = & \langle a \rangle (\langle b \rangle \top \AND \fBang \{b\}) \AND \langle a \rangle(\mathsf{neg}(z_2, \langle b \rangle \top) \AND \langle c \rangle \top)  \\
+& = & \langle a \rangle (\langle b \rangle \top \AND \fBang \{b\}) \AND \langle a \rangle(\fBang \{c\} \AND \langle c \rangle \top) 
+\end{eqnarray*}
+
+\NI The resulting formula is true in $y$ but not in $y'_j$.
+
 
 
 \subsection{Discussion}
 Consider the fragment of HML without negation:
-\[
-\phi ::= \top \fOr \phi_1 \AND \phi_2  \fOr \langle a \rangle \phi
-\]
-Without negation, $p \equiv p'$ does \emph{not} entail $p \sim p'$, as Fig. 3 shows.
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[node distance=1.3cm,>=stealth',bend angle=45,auto]
-  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
-  \tikzstyle{red place}=[place,draw=red!75,fill=red!20]
-  \tikzstyle{transition}=[rectangle,thick,draw=black!75,
-  			  fill=black!20,minimum size=4mm]
-  \tikzstyle{every label}=[red]
 
-  \begin{scope}[xshift=0cm]
-    \node [place] (w1) {$x$};
-    \node [place] (e1) [below left of=w1] {$y_1$}
-      edge [pre]  node[swap] {a}                 (w1);
-    \node [place] (c) [below of=e1] {$z_1$}
-      edge [pre]  node[swap] {b}                 (e1);
-    \node [place] (e2) [below right of=w1] {$y_2$}
-      edge [pre]  node[swap] {a}                 (w1);
-    \node [place] (c) [below of=e2] {$z_2$}
-      edge [pre]  node[swap] {b}                 (e2);
-    \node [place] (c) [below right of=e2] {$z_3$}
-      edge [pre]  node[swap] {c}                 (e2);
-  \end{scope}  
-  \begin{scope}[xshift=6cm]
-    \node [place] (t) {$x'$};
-    \node [place] (a) [below of=t] {$y'$}
-      edge [pre]  node[swap] {a}                 (t);
-    \node [place] (b) [below left of=a] {$z'_1$}
-      edge [pre]  node[swap] {b}                 (a);
-    \node [place] (c) [below right of=a] {$z'_2$}
-      edge [pre]  node[swap] {c}                 (a);
-  \end{scope}  
-\end{tikzpicture}
-\caption{Without negation, $p \equiv p'$ does not entail $p \sim p'$}
-\end{figure}
+\begin{GRAMMAR}
+  \phi 
+    &\quad ::= \quad&
+  \top \fOr \phi_1 \AND \phi_2  \fOr \langle a \rangle \phi
+\end{GRAMMAR}
+
+\NI Without negation, $p \equiv p'$ does \emph{not} entail $p \sim
+p'$, as Figure \ref{figure:hml} shows.
+
+\input{figure:hml}
+
 Here, $x \equiv x'$ - they both satisfy the sub formulae of $\langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top)$.
 But there is no bisimulation between $x$ and $x'$ ($y_1$ cannot be matched with $y'$ because $y'$ has an additional outgoing $c$-transition). 
 
@@ -852,9 +798,11 @@ A set of one-place predicates $Restrict_A$, one for each finite subset $A \subse
 $Restrict_{A}(x)$ is true if $\lambda(x) = A$.
 \end{itemize}
 With $x_1, x_2$ being state variables, $s$ a symbol in $\mathcal{S}$, and $A$ ranging over subsets of $\mathcal{S}$, our restricted fragment of FOL has sentences of the form:
-\[
-\phi ::= \top \fOr Arr_{s}(x_1, x_2)\fOr Restrict_A(x_1) \fOr \phi_1 \AND \phi_2 \fOr \exists x_1 . \phi 
-\]
+\begin{GRAMMAR}
+  \phi 
+     &\quad ::= \quad&
+  \top \fOr Arr_{s}(x_1, x_2)\fOr Restrict_A(x_1) \fOr \phi_1 \AND \phi_2 \fOr \exists x_1 . \phi 
+\end{GRAMMAR}
 Notice that this fragment of FOL has no negation, disjunction, implication, or universal quantification.
 
 The translation of an EL formula is relative to a variable $x$ (which will be instantiated to the particular state at which we are evaluating the formula):
@@ -908,9 +856,11 @@ Immediate from the definitions
 \section{Comparing EL with Hennessy-Milner Logic}
 \subsection{Syntax}
 Given a set $\mathcal{S}$ of symbols, with $s$ ranging over $\mathcal{S}$, the sentences of Hennessy-Milner Logic (HML) are given by:
-\[
-\phi ::= \top \fOr \phi_1 \AND \phi_2 \fOr \langle s \rangle \phi \fOr \neg \phi 
-\]
+\begin{GRAMMAR}
+  \phi 
+     &\quad ::= \quad & 
+  \top \fOr \phi_1 \AND \phi_2 \fOr \langle s \rangle \phi \fOr \neg \phi 
+\end{GRAMMAR}
 \subsection{Semantics}
 A {\bf Labelled Transition System} (LTS) is a pair $(\mathcal{W}, \rightarrow)$, where $\mathcal{W}$ is a set of states, and $\rightarrow$ is a set of transition relations: $\rightarrow \; \subseteq \; \mathcal{W} \times S \times \mathcal{W}$.
 We write $x \xrightarrow{s} y$ to abbreviate $(x,s,y) \in \rightarrow$.

@@ -1,0 +1,34 @@
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance=1.3cm,>=stealth',bend angle=45,auto]
+  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
+  \tikzstyle{red place}=[place,draw=red!75,fill=red!20]
+  \tikzstyle{transition}=[rectangle,thick,draw=black!75,
+  			  fill=black!20,minimum size=4mm]
+  \tikzstyle{every label}=[red]
+
+  \begin{scope}[xshift=0cm]
+    \node [place] (w1) {$x$};
+    \node [place] (e1) [below left of=w1] {$y_1$}
+      edge [pre]  node[swap] {a}                 (w1);
+    \node [place] (c) [below of=e1] {$z_1$}
+      edge [pre]  node[swap] {b}                 (e1);
+    \node [place] (e2) [below right of=w1] {$y_2$}
+      edge [pre]  node[swap] {a}                 (w1);
+    \node [place] (c) [below of=e2] {$z_2$}
+      edge [pre]  node[swap] {b}                 (e2);
+    \node [place] (c) [below right of=e2] {$z_3$}
+      edge [pre]  node[swap] {c}                 (e2);
+  \end{scope}  
+  \begin{scope}[xshift=6cm]
+    \node [place] (t) {$x'$};
+    \node [place] (a) [below of=t] {$y'$}
+      edge [pre]  node[swap] {a}                 (t);
+    \node [place] (b) [below left of=a] {$z'_1$}
+      edge [pre]  node[swap] {b}                 (a);
+    \node [place] (c) [below right of=a] {$z'_2$}
+      edge [pre]  node[swap] {c}                 (a);
+  \end{scope}  
+\end{tikzpicture}
+\caption{Without negation, $p \equiv p'$ does not entail $p \sim p'$}\label{figure:hml}
+\end{figure}

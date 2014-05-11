@@ -5,6 +5,8 @@
   - Either all definitions are in an explicit \begin{definition}
     environment or none.
 
+  - Term defined should always be \textbf{...} or \textsc{...} etc.
+
 *  I recommend to use the following order of presentation in Chapters 2 and 3.
 
   - Formulae
@@ -56,3 +58,4 @@
   - Logics for knowledge representation
   - Standard Modal Logic stuff
   - HM Logic
+  - Linear logic (additive conjunction)
