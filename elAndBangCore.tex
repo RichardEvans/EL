@@ -273,9 +273,9 @@ We will show that $p \models q$ implies there is a derivation of $p
 \judge q$.  Our proof will make use of two lemmas:
 \begin{itemize}
 \item
-Lemma 4: if $m \models p$ then $\theta(m) \judge p$.
+Lemma \ref{first-completeness-lemma}: if $m \models p$ then $\theta(m) \judge p$.
 \item
-Lemma 5: for all formulae $p$, $p \judge \theta(\mu(p))$.
+Lemma \ref{second-completeness-lemma}: for all formulae $p$, $p \judge \theta(\mu(p))$.
 \end{itemize}
 With these two lemmas in hand, the proof is straightforward.
 \begin{theorem}
@@ -290,8 +290,9 @@ But we also have, by Lemma 2, $p \judge \theta(\mu(p)) $.
 So by transitivity, we have $p \judge q$.
 \qed
 \end{proof}
-Next we will prove Lemma 4.
+Next we will prove Lemma \ref{first-completeness-lemma}.
 \begin{lemma}
+\label{first-completeness-lemma}
 If $m \models p$ then $\theta(m) \judge p$.
 \end{lemma}
 \begin{proof}
@@ -356,6 +357,7 @@ Now we can prove $! \; \lambda(w) \AND \phi \judge \fBang A$ using  {\bf $!$ Rig
 \end{proof}
 
 \begin{lemma}
+\label{second-completeness-lemma}
 For all formulae $p$, we can derive $p \judge \theta(\mu(p))$.
 \end{lemma}
 Explanation: $\mu(p)$ is the simplest model satisfying $p$, and $\theta(m)$ is the simplest formula describing $m$, so $\theta(\mu(p))$ is a simplified form of $p$. This lemma states that EL has the inferential capacity to transform any proposition into its simplified form.
@@ -377,11 +379,11 @@ Using {\bf $\AND$ Left} and {\bf $\AND$ Right}, we can show:
 \[
 q \AND q' \judge \theta(\mu(q)) \AND \theta(\mu(q'))
 \]
-Lemma 6, proven below, states that, for all models $m$ and $n$:
+Lemma \ref{third-completeness-lemma}, proven below, states that, for all models $m$ and $n$:
 \[
 \theta(m) \AND \theta(n) \judge \theta (m \sqcap n)
 \]
-From Lemma 6 (substituting $\mu(q)$ for $m$ and $\mu(q')$ for $n$), it follows that:
+From Lemma \ref{third-completeness-lemma} (substituting $\mu(q)$ for $m$ and $\mu(q')$ for $n$), it follows that:
 \[
 \theta(\mu(q)) \AND \theta(\mu(q')) \judge \theta(\mu(q \AND q'))
 \]
@@ -434,6 +436,7 @@ We can prove $\fBang A \judge \fBang A \AND \top$ using {\bf $\AND$ Right}, {\bf
 \end{proof}
 Finally, to fill the hole in Case 2 above, we need to show that:
 \begin{lemma}
+\label{third-completeness-lemma}
 For all models $m$ and $n$, $\theta(m) \AND \theta(n) \judge \theta (m \sqcap n)$.
 \end{lemma}
 
@@ -487,7 +490,7 @@ We can derive $\theta((l,w)) \AND \theta((l',w')) \judge \; ! \; (\lambda(w) \ca
 
 To show $\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_2))$, observe from the definition of $\theta$ that $\theta((l,w))$ contains a conjunct $\langle s \rangle \theta((l, w_2))$, so the proof follows from  {\bf $\AND$ Right} and repeated applications of  {\bf $\AND$ Left}. The same procedure applies to show $\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_3))$ for all $s,w_3$ such that $w' \xrightarrow{s} w_3$.
 
-This completes Lemma 6 and hence the Completeness Proof.
+This completes Lemma \ref{third-completeness-lemma} and hence the Completeness Proof.
 \qed
 
 \end{proof}

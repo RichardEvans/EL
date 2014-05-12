@@ -77,12 +77,15 @@ $\mathcal{J}(m)$ is the set of models that are incompatible with $m$:
 \]
 We shall make use of three lemmas:
 \begin{lemma}
+\label{first-incompatibility-lemma}
 $\mbox{if }p \models q \mbox{ then } \mu(p) \leq \mu(q)$
 \end{lemma}
 \begin{lemma}
+\label{second-incompatibility-lemma}
 $\mbox{if }m \leq n \mbox{ then } x \sqcap m \leq x \sqcap n$
 \end{lemma}
 \begin{lemma}
+\label{third-incompatibility-lemma}
 $\mbox{if }\mathcal{I}(q) \subseteq \mathcal{I}(p) \mbox{ then } \mathcal{J}(\mu(q)) \subseteq \mathcal{J}(\mu(p))$
 \end{lemma}
 
@@ -93,16 +96,16 @@ $p \models q \; \mbox{ iff } \; \mathcal{I}(q) \subseteq \mathcal{I}(p)$
 \begin{proof}
 
 Left to right: Assume $p \models q$ and $r \in \mathcal{I}(q)$.
-By Lemma 1, $\mu(p) \leq \mu(q)$.
+By Lemma \ref{first-incompatibility-lemma}, $\mu(p) \leq \mu(q)$.
 From $r \in \mathcal{I}(q)$, $\mu(r) \sqcap \mu(q) = \bot$.
-By Lemma 2, $\mu(r) \sqcap \mu(p) \leq \mu(r) \sqcap \mu(q)$ (substituting $\mu(r)$ for $x$, $\mu(p)$ for $m$, and $\mu(q)$ for $n$).
+By Lemma \ref{second-incompatibility-lemma}, $\mu(r) \sqcap \mu(p) \leq \mu(r) \sqcap \mu(q)$ (substituting $\mu(r)$ for $x$, $\mu(p)$ for $m$, and $\mu(q)$ for $n$).
 But if $\mu(r) \sqcap \mu(q) = \bot$, and $\mu(r) \sqcap \mu(p) \leq \mu(r) \sqcap \mu(q)$, then $\mu(r) \sqcap \mu(p) = \bot$ also, because the only element that is $\leq \bot$ is $\bot$ itself.
 But if $\mu(r) \sqcap \mu(p) = \bot$, then $r \in \mathcal{I}(p)$.
 \qed
 
 Right to left: assume, for reductio, that $m \models p$ and $m \nvDash q$. we will show that $\mathcal{I}(q) \nsubseteq \mathcal{I}(p)$. 
 Assume $m \models p \mbox{ and } m \nvDash q$. We will construct another model $n$ such that $n \in \mathcal{J}(\mu(q))$ but $n \notin \mathcal{J}(\mu(p))$.
-This will entail, via Lemma 3, that $\mathcal{I}(q) \nsubseteq \mathcal{I}(p)$.
+This will entail, via Lemma \ref{third-incompatibility-lemma}, that $\mathcal{I}(q) \nsubseteq \mathcal{I}(p)$.
 
 If $m \nvDash q$, then there is a formula $q'$ that does not contain $\AND$ such that $q \models q'$ and $m \nvDash q'$. $q'$ must be either of the form (i) $\langle a_1 \rangle ... \langle a_n \rangle \top$ (for $n > 0$) or (ii) of the form $\langle a_1 \rangle ... \langle a_n \rangle \; !\{A\}$ where $A \subseteq \mathcal{S} \mbox{ and } n >= 0$.
 

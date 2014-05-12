@@ -318,9 +318,9 @@ We will show that $p \models q$ implies there is a derivation of $p \judge q$.
 Our proof will make use of two lemmas:
 \begin{itemize}
 \item
-Lemma 4: if $m \models p$ then $\theta(m) \judge p$.
+ \ref{first_completeness_lemma}: if $m \models p$ then $\theta(m) \judge p$.
 \item
-Lemma 5: for all terms $p$, $p \judge \theta(\mu(p))$.
+\ref{second_completeness_lemma}: for all terms $p$, $p \judge \theta(\mu(p))$.
 \end{itemize}
 With these two lemmas in hand, the proof is straightforward.
 \begin{theorem}
@@ -335,8 +335,9 @@ But we also have, by Lemma 2, $p \judge \theta(\mu(p)) $.
 So by transitivity, we have $p \judge q$.
 \qed
 \end{proof}
-Next we will prove Lemma 4.
+Next we will prove \ref{first_completeness_lemma}.
 \begin{lemma}
+\label{first_completeness_lemma}
 If $m \models p$ then $\theta(m) \judge p$.
 \end{lemma}
 \begin{proof}
@@ -401,6 +402,7 @@ Now we can prove $! \; \lambda(w) \AND \phi \judge \fBang A$ using  {\bf $!$ Rig
 \end{proof}
 
 \begin{lemma}
+\label{second_completeness_lemma}
 For all terms $p$, we can derive $p \judge \theta(\mu(p))$.
 \end{lemma}
 Explanation: $\mu(p)$ is the simplest model satisfying $p$, and $\theta(m)$ is the simplest formula describing $m$, so $\theta(\mu(p))$ is a simplified form of $p$. This lemma states that EL has the inferential capacity to transform any proposition into its simplified form.
