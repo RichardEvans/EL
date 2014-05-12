@@ -48,7 +48,7 @@
     X \judge Y
   }
   {
-    Y \judge Z
+    X \judge Z
   }
   {
     X \judge Y \AND Z
@@ -69,14 +69,44 @@
         \quad
      \TWOPREMISERULENAMEDRIGHT
      {
-       X \AND !A \judge Y
+       X \AND \, !A \judge Y
      }
      {
        A' \subseteq A
      }
      {
-       X \AND !A \judge Y
+       X \AND\, !A' \judge Y
      }{!-Left}
+     \\\\
+     \TWOPREMISERULENAMEDRIGHT
+     {
+       X \judge !A
+     }
+     {
+       A \subseteq A'
+     }
+     {
+       X \judge!A'
+     }{!-Right 1}
+     \quad
+     \TWOPREMISERULENAMEDRIGHT
+     {
+       X \judge !A
+     }
+     {
+       X \judge !B
+     }
+     {
+       X \judge !(A \cap B)
+     }{!-Right 2}
+     \quad
+     \ONEPREMISERULENAMEDRIGHT
+     {
+       X \judge Y
+     }
+     {
+       \MAY{a}{X} \judge \MAY{a}{Y}
+     }{Transition Normal}
 \end{RULES}
-\caption{Proof rules. Put in remaining rules as they stabilise!}\label{figure:elAndBangRules}
+\caption{Proof rules.}\label{figure:elAndBangRules}
 \end{FIGURE}
