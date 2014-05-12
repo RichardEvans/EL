@@ -1,0 +1,24 @@
+\section{Mathematical preliminaries}\label{preliminaries}
+
+\begin{definition}
+Let $A$ be a set of \emph{actions}.  A \emph{labelled transition
+  system over $A$} is a pair $(S, \rightarrow)$ where $S$ is a set of
+\emph{states} and $\rightarrow \subseteq S \times A \times S$ is the
+\emph{transition relation}.
+\end{definition}
+
+\begin{definition}
+Given a labelled transition system $\LLL = (S, \rightarrow)$ over $A$,
+a \emph{bisimulation} is a relation $\RRR \subseteq S \times S$ such
+that whenever $(s, s') \in \RRR$:
+\begin{itemize}
+
+\item If $s \TRANS{a} s'$ then there exists a transition $t \TRANS{a} t'$ with $(t, t') \in \RRR$.
+
+\item If $t \TRANS{a} t'$ then there exists a transition $s \TRANS{a} s'$ with $(t, t') \in \RRR$.
+
+\end{itemize}
+
+\end{definition}
+
+\NI \textbf{To do: add more stuff}

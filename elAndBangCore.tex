@@ -1,0 +1,451 @@
+\section{Core eremic logic: the EL$[\AND, !]$ fragment}
+
+\subsection{Syntax}
+
+\begin{definition} Given a set $\mathcal{S}$ of symbols, with $a$ ranging over
+$\mathcal{S}$, and $A$ ranging over finite subsets of $\mathcal{S}$,
+the sentences of EL$[\AND, !]$ are given by:
+
+\begin{GRAMMAR}
+  \phi 
+     &\quad ::= \quad & 
+  \top 
+     \VERTICAL 
+  \phi_1 \AND \phi_2  
+     \VERTICAL 
+  \MAY{a}{\phi}
+     \VERTICAL 
+  \fBang A 
+\end{GRAMMAR}
+
+\NI The $!$ operator is used to restrict the allowable transitions
+coming out of a state.  Intuitively, $\fBang A$ means that the
+\emph{only} transitions coming out of the current state are those
+specified in $A$.
+\end{definition}
+
+\subsection{Semantics}
+
+\begin{definition}
+A {\bf model} is a triple $(\mathcal{W}, \rightarrow, \lambda)$,
+containing a Labeled Transition System (a set of states $\mathcal{W}$,
+and a transition relation $\rightarrow \; \subseteq \; \mathcal{W}
+\times \mathcal{S} \times \mathcal{W}$), together with a
+node-labelling $\lambda$ that maps each element of $\mathcal{W}$ to a
+subset of $\mathcal{S}$.
+\end{definition}
+The intended interpretation is that $\lambda(w)$ is the set of allowed transition symbols emanating from $w$.
+The $\lambda$ function is the semantic counterpart of the $!$ operator.
+
+Now, for a model to be valid, we insist that the transitions coming out of a node $w$ are a subset of the allowed transitions in $\lambda(w)$:
+\begin{definition}
+A model $(\mathcal{W}, \rightarrow, \lambda)$ is {\bf valid} iff for all $w \in \mathcal{W}$, $ \{s \fOr \exists w' \; w \xrightarrow{s} w'\} \subseteq \lambda(w)$.
+\end{definition}
+
+\begin{definition}
+A {\bf pointed model} is a pair $(l,w)$, where $m$ is a \emph{valid} model of the form $(\mathcal{W}, \rightarrow, \lambda)$, and $w$ is a distinguished state in $\mathcal{W}$.
+\end{definition}
+Formulae are interpreted in a pointed model $(l,w)$:
+\begin{eqnarray}
+(l,w) & \models & \top  \mbox{ always } \nonumber \\
+(l,w) & \models & \phi_1 \AND \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2 \nonumber \\
+(l,w) & \models & \langle a \rangle \phi \mbox{ iff there is a } w \xrightarrow{a} w' \mbox { such that } (l,w') \models \phi \nonumber \\
+(l,w) & \models & \fBang A \mbox{ iff } \lambda(w) \subseteq A\nonumber
+\end{eqnarray}
+Note that if a model is valid then $(l,w) \models \fBang A$ implies $\{s \fOr \exists w' \; w \xrightarrow{s} w'\} \subseteq A$.
+From now on, we will restrict ourselves to valid models.
+
+\input{figure:elAndBang:models}
+
+
+\input{figure:elAndBangRules}
+
+\subsection{Inference Rules}
+In EL, a judgement is of the form:
+\[
+A \judge B
+\]
+Here, $A$ and $B$ are \emph{single terms}.
+To avoid the need for structural inference rules, we restrict sequents to single terms on the left and right hand side.
+
+\subsection{Standard Rules}
+EL has the following standard axioms and inference-rules:
+Our first axiom is {\bf Identity}:
+\[
+\boxed
+{
+X \judge X
+}
+\]
+{\bf $\top$ Right} states that $\top$ is always provable:
+\[
+\boxed
+{
+X \judge \top
+}
+\]
+{\bf $\bot$ Left} states that anything is provable from $\bot$:
+\[
+\boxed
+{
+\bot \judge X
+}
+\]
+Note that $\bot$ is not a primitive symbol of EL - it is defined as one of the unsatisfiable terms, for example $\langle a \rangle \top \; \AND \; \fBang \{\}$. 
+
+EL has the standard transitivity inference rule:
+\begin{center}
+\fbox{
+\AxiomC{$X \judge Y$}
+\AxiomC{$Y \judge Z$}
+\LeftLabel{{\bf Transitivity: \quad}}
+\BinaryInfC{$X \judge Z$}
+\DisplayProof
+}
+\end{center}
+It has the standard three rules for handling conjunction:
+\begin{center}
+\fbox{
+\AxiomC{$X \judge Y$}
+\LeftLabel{{\bf $\AND$ Left 1: \quad}}
+\UnaryInfC{$X \AND Z \judge Y$}
+\DisplayProof
+}
+\end{center}
+
+\begin{center}
+\fbox{
+\AxiomC{$X \judge Y$}
+\LeftLabel{{\bf $\AND$ Left 2: \quad}}
+\UnaryInfC{$Z \AND X \judge Y$}
+\DisplayProof
+}
+\end{center}
+
+\begin{center}
+\fbox{
+\AxiomC{$X \judge Y$}
+\AxiomC{$X \judge Z$}
+\LeftLabel{{\bf $\AND$ Right: \quad}}
+\BinaryInfC{$X \judge Y \AND Z$}
+\DisplayProof
+}
+\end{center}
+
+\subsection{Rules Unique to EL}
+EL has six rules for capturing its distinctive properties: the relations betwen $\langle \rangle$, $!$ and $\bot$.
+The {\bf Bottom Right 1} axiom captures how $\langle \rangle$ and $!$ interact:
+\[
+\boxed
+{
+\langle a \rangle X \AND \fBang A \judge \bot \mbox{ if } a \notin A
+}
+\]
+{\bf Bottom Right 2} is another axiom for deriving $\bot$ from inside $\langle \rangle$:
+\[
+\boxed
+{
+\langle a \rangle \bot \judge \bot
+}
+\]
+There is a rule for strengthening $\fBang$ on the left hand side: 
+\begin{center}
+\fbox{
+\AxiomC{$X \AND \fBang A \judge Y$}
+\LeftLabel{{\bf ! Left: \quad}}
+\RightLabel{where $A' \subseteq A $}
+\UnaryInfC{$X \AND \fBang A' \judge Y$}
+\DisplayProof
+}
+\end{center}
+There is a rule for weakening $\fBang$ on the right hand side: 
+\begin{center}
+\fbox{
+\AxiomC{$X \judge \fBang A$}
+\LeftLabel{{\bf ! Right 1: \quad}}
+\RightLabel{where $A \subseteq A'$}
+\UnaryInfC{$X \judge \fBang A'$}
+\DisplayProof
+}
+\end{center}
+There is a rule for taking the intersection of two $!$s on the right hand side:
+\begin{center}
+\fbox{
+\AxiomC{$X \judge \fBang A_1$}
+\AxiomC{$X \judge \fBang A_2$}
+\LeftLabel{{\bf ! Right 2: \quad}}
+\BinaryInfC{$X \judge \fBang (A_1 \cap A_2)$}
+\DisplayProof
+}
+\end{center}
+Finally, there is a rule for adding transitions to judgements:
+\begin{center}
+\fbox{
+\AxiomC{$X \judge Y$}
+\LeftLabel{{\bf Transition Normal: \quad}}
+\UnaryInfC{$\langle a \rangle X \judge \langle a \rangle Y$}
+\DisplayProof
+}
+\end{center}
+
+\subsection{Soundness and completeness}
+
+We will show that $p \models q$ implies there is a derivation of $p \judge q$.
+Our proof will make use of two lemmas:
+\begin{itemize}
+\item
+Lemma 4: if $m \models p$ then $\theta(m) \judge p$.
+\item
+Lemma 5: for all terms $p$, $p \judge \theta(\mu(p))$.
+\end{itemize}
+With these two lemmas in hand, the proof is straightforward.
+\begin{theorem}
+If $p \models q$ then $p \judge q$
+\end{theorem}
+\begin{proof}
+Assume $p \models q$. 
+Then all models which satisfy $p$ also satisfy $q$.
+In particular, $\mu(p) \models q$.
+Then $\theta(\mu(p)) \judge q$ by Lemma 1.
+But we also have, by Lemma 2, $p \judge \theta(\mu(p)) $.
+So by transitivity, we have $p \judge q$.
+\qed
+\end{proof}
+Next we will prove Lemma 4.
+\begin{lemma}
+If $m \models p$ then $\theta(m) \judge p$.
+\end{lemma}
+\begin{proof}
+Induction on $p$.
+\setcounter{mycase}{0}
+
+\begin{mycase}
+$p$ is $\top$
+\end{mycase}
+Then we can prove  $\theta(m) \judge p$ immediately using axiom {\bf $\top$ Right}.
+
+\begin{mycase}
+$p$ is $q \AND q'$
+\end{mycase}
+By the induction hypothesis, $\theta(m) \judge q$ and $\theta(m) \judge q'$.
+The proof of $\theta(m) \judge q \AND q'$ follows immediately using {\bf $\AND$ Right}.
+
+\begin{mycase}
+$p$ is $\langle a \rangle q$
+\end{mycase}
+If $m \models \langle a \rangle q$, then either $m = \bot$ or $m$ is a pointed model of the form $(l,w)$.
+\begin{subcase}
+$m = \bot$
+\end{subcase}
+In this case, $\theta(m) = \theta(\bot) = \bot$. (Recall, that we are overloading $\bot$ to mean both the pointed model at the bottom of our lattice and a formula (such as $\langle s \rangle \top \AND !\{\}$) which is always false).
+In this case, $ \theta(\bot) \judge  \langle a \rangle q$ using {\bf $\bot$ Left}.
+
+\begin{subcase}
+ $m$ is a pointed model of the form $(l,w)$
+ \end{subcase}
+Given $m \models \langle a \rangle q$, and that $m$ is a pointed model of the form $(l,w)$, we know that:
+\[
+(l,w) \models \langle a \rangle q
+\]
+From the satisfaction clause for $\langle a \rangle$, it follows that:
+\[
+\exists w' \mbox{ such that } w \xrightarrow{a} w' \mbox { and } (l,w') \models q
+\]
+By the induction hypothesis:
+\[
+\theta( (l,w') ) \judge q
+\]
+Now by {\bf Transition Normal}:
+\[
+\langle a \rangle \theta( (l,w') ) \judge \langle a \rangle q
+\]
+Using repeated application of {\bf $\AND$ Left}, we can show:
+\[
+\theta((l,w)) \judge \langle a \rangle \theta((l,w'))
+\]
+Finally, using {\bf Transitivity}, we derive:
+\[
+\theta((l,w)) \judge  \langle a \rangle q
+\]
+\begin{mycase}
+$p$ is $\fBang q$
+\end{mycase}
+If $(l,w) \models \fBang A$, then $\lambda(w) \subseteq A$.
+Then $\theta(l,w) = ! \; \lambda(w) \AND \phi$.
+Now we can prove $! \; \lambda(w) \AND \phi \judge \fBang A$ using  {\bf $!$ Right 1} and repeated applications of {\bf $\AND$ Left}.
+\qed
+\end{proof}
+
+\begin{lemma}
+For all terms $p$, we can derive $p \judge \theta(\mu(p))$.
+\end{lemma}
+Explanation: $\mu(p)$ is the simplest model satisfying $p$, and $\theta(m)$ is the simplest formula describing $m$, so $\theta(\mu(p))$ is a simplified form of $p$. This lemma states that EL has the inferential capacity to transform any proposition into its simplified form.
+\begin{proof}
+Induction on $p$.
+
+\setcounter{mycase}{0}
+
+\begin{mycase}
+$p$ is $\top$
+\end{mycase}
+Then we can prove  $\top \judge \top$ using either {\bf $\top$ Right} or {\bf Identity}.
+
+\begin{mycase}
+$p$ is $q \AND q'$
+\end{mycase}
+By the induction hypothesis, $q \judge \theta(\mu(q))$ and $q' \judge \theta(\mu(q'))$.
+Using {\bf $\AND$ Left} and {\bf $\AND$ Right}, we can show:
+\[
+q \AND q' \judge \theta(\mu(q)) \AND \theta(\mu(q'))
+\]
+Lemma 6, proven below, states that, for all models $m$ and $n$:
+\[
+\theta(m) \AND \theta(n) \judge \theta (m \sqcap n)
+\]
+From Lemma 6 (substituting $\mu(q)$ for $m$ and $\mu(q')$ for $n$), it follows that:
+\[
+\theta(\mu(q)) \AND \theta(\mu(q')) \judge \theta(\mu(q \AND q'))
+\]
+Our desired result follows using {\bf Transitivity}.
+
+\begin{mycase}
+$p$ is $\langle a \rangle q$
+\end{mycase}
+By the induction hypothesis, $q \judge \theta(\mu(q))$.
+Now there are two sub-cases to consider, depending on whether or not $\theta(\mu(q)) = \bot$.
+\begin{subcase}
+$\theta(\mu(q)) = \bot$
+\end{subcase}
+In this case, $\theta(\mu(\langle a \rangle q))$ also equals $\bot$. 
+By the induction hypothesis:
+\[
+q \judge \bot
+\]
+By {\bf Transition Normal}:
+\[
+\langle a \rangle q \judge \langle a \rangle \bot
+\]
+By {\bf Bottom Right 2}:
+\[
+\langle a \rangle \bot \judge \bot
+\]
+The desired proof that:
+\[
+\langle a \rangle q \judge \bot
+\]
+follows by {\bf Transitivity}.
+\begin{subcase}
+$\theta(\mu(q)) \neq \bot$
+\end{subcase}
+By the induction hypothesis, $q \judge \theta(\mu(q))$.
+So, by {\bf Transition Normal}:
+\[
+\langle a \rangle q \judge \langle a \rangle \theta(\mu(q))
+\]
+The desired conclusion follows from noting that:
+\[
+ \langle a \rangle \theta(\mu(q)) = \theta(\mu(\langle a \rangle q))
+ \]
+ \begin{mycase}
+$p$ is $\fBang A$
+\end{mycase}
+If $p$ is $\fBang A$, then $ \theta(\mu(p))$ is $\fBang A \AND \top$.
+We can prove $\fBang A \judge \fBang A \AND \top$ using {\bf $\AND$ Right}, {\bf $\top$ Right} and {\bf Identity}.
+\qed
+\end{proof}
+Finally, to fill the hole in Case 2 above, we need to show that:
+\begin{lemma}
+For all models $m$ and $n$, $\theta(m) \AND \theta(n) \judge \theta (m \sqcap n)$.
+\end{lemma}
+
+\begin{proof}
+
+There are two cases to consider, depending on whether or not $(m \sqcap n) = \bot$.
+
+\setcounter{mycase}{0}
+
+\begin{mycase}
+$(m \sqcap n) = \bot$
+\end{mycase}
+If $(m \sqcap n) = \bot$, there are three possibilities:
+\begin{itemize}
+\item
+$m = \bot$
+\item
+$n = \bot$
+\item
+Neither $m$ nor $n$ are $\bot$, but together they are incompatible. 
+\end{itemize}
+If either $m$ or $n$ is $\bot$, then the proof is a simple application of {\bf Identity} followed by {\bf $\AND$ Left}.
+
+Next, let us consider the case where neither $m$ nor $n$ are $\bot$, but together they are incompatible.
+Let $m$ be the pointed model $(l, w)$ and let $n$ be $(l', w')$.
+If $(l, w) \sqcap (l', w') = \bot$, then\footnote{The alternative, in which the $s$-transition is in $n$ and the transition-restriction is in $m$, is identical, swapping $m$ with $n$.} there exists a symbol $s$ and a state $w_2$ such that $w \xrightarrow{s} w_2$ but $s \notin \lambda'(w')$.
+
+In this case, by the definition of $\theta$, $\theta(m) \judge \langle s \rangle \top$, using  {\bf Identity} and repeated applications of {\bf $\AND$ Left}.
+Further, by the definition of $\theta$, $\theta(n) \judge \; ! \; \lambda'(w')$, using  {\bf Identity} and repeated applications of by {\bf $\AND$ Left}. Again, $s \notin  \lambda'(w')$.
+
+Therefore,  $\theta(m) \AND \theta(n) \judge \bot$, using  {\bf $\AND$ Right} and  {\bf Bottom Right 1}.
+\begin{mycase}
+$(m \sqcap n) \neq \bot$
+\end{mycase}
+In this case, let $(l,w) = m$ and let $(l',w')=n$.
+Then, from the definition of $\mathsf{merge}$ above:
+\[
+\theta((l,w) \sqcap (l',w')) = \; ! \; (\lambda(w) \cap \lambda'(w')) \AND \bigwedge_{w \xrightarrow{s} w_2} \langle s \rangle \theta((l, w_2)) \AND \bigwedge_{w' \xrightarrow{s} w_3} \langle s \rangle \theta((l', w_3))
+\]
+We need to show that $\theta((l,w)) \AND \theta((l',w')) \judge \theta((l,w) \sqcap (l',w'))$ - or in other words, that:
+\begin{itemize}
+\item
+$\theta((l,w)) \AND \theta((l',w')) \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$
+\item
+$\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_2))$ for all $s,w_2$ such that $w \xrightarrow{s} w_2$
+\item
+$\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_3))$ for all $s,w_3$ such that $w' \xrightarrow{s} w_3$
+\end{itemize}
+To show $\theta((l,w)) \AND \theta((l',w')) \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$, note that $\theta((l,w))  \judge \; ! \; \lambda(w)$ and $\theta((l',w')) \judge \; ! \;  \lambda'(w'))$.
+We can derive $\theta((l,w)) \AND \theta((l',w')) \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$ using {\bf $\AND$ Right} and {\bf $!$ Right 2}. 
+
+To show $\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_2))$, observe from the definition of $\theta$ that $\theta((l,w))$ contains a conjunct $\langle s \rangle \theta((l, w_2))$, so the proof follows from  {\bf $\AND$ Right} and repeated applications of  {\bf $\AND$ Left}. The same procedure applies to show $\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_3))$ for all $s,w_3$ such that $w' \xrightarrow{s} w_3$.
+
+This completes Lemma 6 and hence the Completeness Proof.
+\qed
+
+\end{proof}
+
+\subsection{The standard translation from  EL into FOL}
+
+We will translate EL into a restricted fragment of FOL.
+There are three types of predicate:
+\begin{itemize}
+\item
+A 0-place predicate $\top$, which is true in all models.
+\item
+A set of two-place predicates $Arr_s(x, y)$, one for each $s \in \mathcal{S}$, where $x$ and $y$ are of type $State$. $Arr_s(x, y)$ is true if $x \xrightarrow{s} y$.
+\item
+A set of one-place predicates $Restrict_A$, one for each finite subset $A \subseteq \mathcal{S}$. 
+$Restrict_{A}(x)$ is true if $\lambda(x) = A$.
+\end{itemize}
+With $x_1, x_2$ being state variables, $s$ a symbol in $\mathcal{S}$, and $A$ ranging over subsets of $\mathcal{S}$, our restricted fragment of FOL has sentences of the form:
+\begin{GRAMMAR}
+  \phi 
+     &\quad ::= \quad&
+  \top \fOr Arr_{s}(x_1, x_2)\fOr Restrict_A(x_1) \fOr \phi_1 \AND \phi_2 \fOr \exists x_1 . \phi 
+\end{GRAMMAR}
+Notice that this fragment of FOL has no negation, disjunction, implication, or universal quantification.
+
+The translation of an EL formula is relative to a variable $x$ (which will be instantiated to the particular state at which we are evaluating the formula):
+\begin{eqnarray}
+T_x(\top) & = & \top \nonumber \\
+T_x(\phi_1 \AND \phi_2) & = & T_x(\phi_1) \AND T_x(\phi_2) \nonumber \\
+T_x(\langle s \rangle \phi) & = & \exists y \; . \; Arr_s(x,y) \AND T_y(\phi) \nonumber \\
+T_x(\fBang A) & = & Restrict_A(x) \nonumber
+\end{eqnarray}
+So, for example:
+\[
+T_x(\langle a \rangle \top \AND \fBang \{a\}) = \exists y \; . \; Arr_a(x,y) \AND \top \AND Restrict_{\{a\}}(x)
+\]
+
+
+\subsection{Compactness}
+
