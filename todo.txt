@@ -15,6 +15,8 @@
 
 * Be consistent. In particular
 
+  - FOL vs first-order logic, EL vs eremic logic
+
   - Either all definitions are in an explicit \begin{definition}
     environment or none.
 

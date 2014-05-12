@@ -14,8 +14,54 @@ that whenever $(s, s') \in \RRR$: if $s \TRANS{a} s'$ then there
 exists a transition $t \TRANS{a} t'$ with $(t, t') \in \RRR$.  We say
 $\RRR$ is a \emph{bisimulation} if both, $\RRR$ and $\RRR^{-1}$ are
 simulations. Here $\RRR^{-1} = \{(y, x)\ |\ (x, y) \in \RRR\}$.
+
+We say two states $s, s'$ are \emph{bisimilar}, written $s \BISIM s'$
+if there is a bisimulation $\RRR$ with $(s, s') \in \RRR$.
 \end{definition}
 
 \martin{Define (bi)simulations on 2 LTS}
 
 \NI \textbf{To do: add more stuff}
+
+\subsection{Semantic Constructions}
+The following semantic constructions are used throughout the proofs that follow.
+\subsection{Simulations and Bisimulations}
+
+\NI A relation $Z \subseteq \mathcal{W} \times \mathcal{W}'$ is a
+(one-way) {\bf simulation} from $(\mathcal{W}, \rightarrow, \lambda)$
+to $(\mathcal{W}', \rightarrow', \lambda')$ iff for all $(x,x') \in Z$
+and $s \in S$:
+
+\begin{enumerate}
+
+\item If $x \xrightarrow{s} y$ then there exists a $y' \in
+  \mathcal{W}'$ such that $(y,y') \in Z$ and $x' \xrightarrow{s} y'$
+
+\item $\lambda'(x') \subseteq \lambda(x)$
+
+\end{enumerate}
+
+\NI A relation $Z \subseteq \mathcal{W} \times \mathcal{W}'$ is a {\bf
+  bisimulation} between $(\mathcal{W}, \rightarrow, \lambda)$ and
+$(\mathcal{W}', \rightarrow', \lambda')$ iff for all $(x,x') \in Z$
+and $s \in S$:
+
+\begin{enumerate}
+
+\item If $x \xrightarrow{s} y$ then there exists a $y' \in
+  \mathcal{W}'$ such that $(y,y') \in Z$ and $x' \xrightarrow{s} y'$
+
+\item If $x' \xrightarrow{s} y'$ then there exists a $y \in
+  \mathcal{W}$ such that $(y,y') \in Z$ and $x \xrightarrow{s} y$
+
+\item $\lambda(x) = \lambda'(x')$
+
+\end{enumerate}
+
+\begin{definition}
+Two states $w$ and $w'$, in $(\mathcal{W}, \rightarrow, \lambda)$ and
+$(\mathcal{W}', \rightarrow', \lambda')$ respectively, are {\bf
+  bisimilar}, written $w \BISIM w'$, iff there is a bisimulation $Z
+\subseteq \mathcal{W} \times \mathcal{W}'$ with $(w,w') \in Z$.
+\end{definition}
+

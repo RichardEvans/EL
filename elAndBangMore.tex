@@ -1,157 +1,125 @@
-\section{Core eremic logic: the EL$[\AND, !]$ fragment}
+\section{Further properties of the EL$[\AND, !]$ fragment}
 
-\subsection{Semantic Constructions}
-The following semantic constructions are used throughout the proofs that follow.
-\subsection{Simulations and Bisimulations}
-
-A relation $Z \subseteq \mathcal{W} \times \mathcal{W}'$ is a (one-way) {\bf simulation} from  $(\mathcal{W}, \rightarrow, \lambda)$ to $(\mathcal{W}', \rightarrow', \lambda')$ iff for all $(x,x') \in Z$ and $s \in S$:
-\begin{enumerate}
-\item
-If $x \xrightarrow{s} y$ then there exists a $y' \in \mathcal{W}'$ such that $(y,y') \in Z$ and $x' \xrightarrow{s} y'$
-\item
-$\lambda'(x') \subseteq \lambda(x)$
-\end{enumerate}
-A relation $Z \subseteq \mathcal{W} \times \mathcal{W}'$ is a {\bf bisimulation} between  $(\mathcal{W}, \rightarrow, \lambda)$ and $(\mathcal{W}', \rightarrow', \lambda')$ iff for all $(x,x') \in Z$ and $s \in S$:
-\begin{enumerate}
-\item
-If $x \xrightarrow{s} y$ then there exists a $y' \in \mathcal{W}'$ such that $(y,y') \in Z$ and $x' \xrightarrow{s} y'$
-\item
-If $x' \xrightarrow{s} y'$ then there exists a $y \in \mathcal{W}$ such that $(y,y') \in Z$ and $x \xrightarrow{s} y$
-\item
-$\lambda(x) = \lambda'(x')$
-\end{enumerate}
-
+In Section \ref{coreEL} we presented the core fragment of eremic logic
+and established key properties like completeness of the proof rules
+and compactness of satisfaction relation. This section investigates
+the core fragment further: first we give a linear-time decision
+pocedure. Then we give a logical characterisation of bisimilarity,
+following ideas from the theory of process calculi
+\cite{HennessyM:alglawfndac}.  The linear-time decision complexity is
+an indication that eremic logic can be useful as a query language in
+knowledge representation. Section \ref{kr} investigates this matter in
+more detail. The logical characterisation of a semantical equivalence
+on the other hand is an indication that our syntactic and semantical
+constructs cohere with each other.
 
 \subsection{Decision Procedure}
-Since EL has no connectives for disjunction or implication, its decision procedure is straightforward and efficient. 
-Although there are an infinite number of models which satisfy any expression, the satisfying models form a lattice with a least upper bound. 
-The $\mu$ function defined above gives us the minimal model satisfying an expression.
-Using this least upper bound, we can calculate entailment by checking a \emph{single model}.
-To decide whether $p \models q$,  we use the following theorem:
-\begin{theorem} $\forall m \; m \models p \Rightarrow m \models q \; \text{iff} \; \mu(p) \models q $
+
+\NI Since EL has no connectives for disjunction or implication, its
+decision procedure is straightforward and efficient.  Although there
+are an infinite number of models which satisfy any expression, the
+satisfying models form a lattice with a least upper bound.  The $\mu$
+function defined above gives us the minimal model satisfying an
+expression.  Using this least upper bound, we can calculate entailment
+by checking a \emph{single model}.  To decide whether $p \models q$,
+we use the following theorem:
+
+\begin{theorem}\label{theorem:decision}
+  Forall models $m$, the following are equivalent:
+  \begin{enumerate}
+    \item\label{theorem:decision:1} $m \models p \Rightarrow m \models q$.
+    \item\label{theorem:decision:2} $\mu(p) \models q$.
+  \end{enumerate}
+  \martin{Richard, is this rephrasing correct?}
 \end{theorem}
+
 \begin{proof}
-We first show left to right, and then show right to left.
-\setcounter{mycase}{0}
+We first show the implication from (\ref{theorem:decision:1}) to
+(\ref{theorem:decision:2}), and from (\ref{theorem:decision:2}) to
+(\ref{theorem:decision:1}).  \setcounter{mycase}{0}
 \begin{mycase}
 $\forall m \; m \models p \Rightarrow m \models q \; \text{implies} \; \mu(p) \models q$
 \end{mycase}
-Given that $\mu(p) \models p$, we substitute $\mu(p)$ for $m$ in $\forall m \; m \models p \Rightarrow m \models q$, to infer $\mu(p) \models q$.
+
+\NI Given that $\mu(p) \models p$, we substitute $\mu(p)$ for $m$ in
+$\forall m \; m \models p \Rightarrow m \models q$, to infer $\mu(p)
+\models q$.
+
 \begin{mycase}
 $\mu(p) \models q \; \text{implies} \; \forall m \; m \models p \Rightarrow m \models q$
 \end{mycase}
-Assume $m \models p$. We need to show $m \models q$.
-Now if $m \models p$ then $m \LEQ \mu(p)$ (by definition of $\mu$).
-Further, if $n \models x$ and $m \LEQ n$ then $m \models x$. So, substituting $q$ for $x$ and $\mu(p)$ for $n$, it follows that $m \models q$. 
-\qed
+
+\NI Assume $m \models p$. We need to show $m \models q$.  Now if $m
+\models p$ then $m \LEQ \mu(p)$ (by definition of $\mu$).  Further, if
+$n \models x$ and $m \LEQ n$ then $m \models x$. So, substituting $q$
+for $x$ and $\mu(p)$ for $n$, it follows that $m \models q$.  \qed
 \end{proof}
-Given this theorem, the decision procedure is straightforward: to test if $p \models q$, we construct $\mu(p)$, and then inspect whether $\mu(p) \models q$.
-Construction of $\mu(p)$ is linear in the size of $p$, and computing whether a model satisfies $q$ is linear in the size of $q$, so computing whether $p \models q$ is $O(|p|+|q|)$.
 
-\input{figure:elAndBangRules}
+\NI Given this theorem, the decision procedure is straightforward: to
+test if $p \models q$, we construct $\mu(p)$, and then inspect whether
+$\mu(p) \models q$.  Construction of $\mu(p)$ is linear in the size of
+$p$, and computing whether a model satisfies $q$ is linear in the size
+of $q$, so computing whether $p \models q$ is $O(|p|+|q|)$.
 
-
-\subsection{Incompatibility Semantics}
-
-Define the set of formulae\footnote{Brandom \cite{brandom} defines incompatibility slightly differently: he defines the set of \emph{sets} of formulae which are incompatible with a \emph{set} of formulae. 
-But in EL, if a set of formulae is incompatible, then there is an incompatible subset of that set with exactly two members.
-So we can work with the simpler definition in the text above.}
- incompatible with $p$ as:
-\[
-\mathcal{I}(p) = \{ q \; | \; \mu(p) \sqcap \mu(q) = \bot \}
-\]
-EL satisfies Robert Brandom's \textbf{incompatibility semantics}  property:
-\[
-p \models q \; \mbox{ iff } \; \mathcal{I}(q) \subseteq \mathcal{I}(p)
-\]
-Before proving this, I want to say something about why satisfying this incompatibility semantics property is important.
-Not all logics satisfy this property. 
-Brandom has shown that First Order Logic and S5 satisfy the incompatibility semantics property, but it is an open question which other logics satisfy it.
-HML satisfies it, but HML without negation does not.
-EL is the \emph{simplest logic we have found} that satisfies the property.
-
-To prove this, we need to first define a related incompatibility function on  models.
-$\mathcal{J}(m)$ is the set of models that are incompatible with $m$:
-\[
-\mathcal{J}(m) = \{ n \; | \; m \sqcap n = \bot \}
-\]
-We shall make use of three lemmas:
-\begin{lemma}
-$\mbox{if }p \models q \mbox{ then } \mu(p) \LEQ \mu(q)$
-\end{lemma}
-\begin{lemma}
-$\mbox{if }m \LEQ n \mbox{ then } x \sqcap m \LEQ x \sqcap n$
-\end{lemma}
-\begin{lemma}
-$\mbox{if }\mathcal{I}(q) \subseteq \mathcal{I}(p) \mbox{ then } \mathcal{J}(\mu(q)) \subseteq \mathcal{J}(\mu(p))$
-\end{lemma}
-
-\begin{theorem}
-$p \models q \; \mbox{ iff } \; \mathcal{I}(q) \subseteq \mathcal{I}(p)$
-\end{theorem}
-
-\begin{proof}
-
-Left to right: Assume $p \models q$ and $r \in \mathcal{I}(q)$.
-By Lemma 1, $\mu(p) \LEQ \mu(q)$.
-From $r \in \mathcal{I}(q)$, $\mu(r) \sqcap \mu(q) = \bot$.
-By Lemma 2, $\mu(r) \sqcap \mu(p) \LEQ \mu(r) \sqcap \mu(q)$ (substituting $\mu(r)$ for $x$, $\mu(p)$ for $m$, and $\mu(q)$ for $n$).
-But if $\mu(r) \sqcap \mu(q) = \bot$, and $\mu(r) \sqcap \mu(p) \LEQ \mu(r) \sqcap \mu(q)$, then $\mu(r) \sqcap \mu(p) = \bot$ also, because the only element that is $\LEQ \bot$ is $\bot$ itself.
-But if $\mu(r) \sqcap \mu(p) = \bot$, then $r \in \mathcal{I}(p)$.
-\qed
-
-Right to left: assume, for reductio, that $m \models p$ and $m \nvDash q$. we will show that $\mathcal{I}(q) \nsubseteq \mathcal{I}(p)$. 
-Assume $m \models p \mbox{ and } m \nvDash q$. We will construct another model $n$ such that $n \in \mathcal{J}(\mu(q))$ but $n \notin \mathcal{J}(\mu(p))$.
-This will entail, via Lemma 3, that $\mathcal{I}(q) \nsubseteq \mathcal{I}(p)$.
-
-If $m \nvDash q$, then there is a formula $q'$ that does not contain $\AND$ such that $q \models q'$ and $m \nvDash q'$. $q'$ must be either of the form (i) $\langle a_1 \rangle ... \langle a_n \rangle \top$ (for $n > 0$) or (ii) of the form $\langle a_1 \rangle ... \langle a_n \rangle \; !\{A\}$ where $A \subseteq \mathcal{S} \mbox{ and } n >= 0$.
-
-In case (i), there must be an $i$ between $0$ and $n$ such that $m \models \langle a_1 \rangle ... \langle a_i \rangle \top$ but $m \nvDash  \langle a_1 \rangle ... \langle a_{i+1} \rangle \top$. We need to construct another model $n$ such that $n \sqcap \mu(q) = \bot$, but $n \sqcap \mu(p) \neq \bot$. Letting $m = ((\mathcal{W},\rightarrow,\lambda),w)$, then $m \models \langle a_1 \rangle ... \langle a_i \rangle \top$ implies that there is at least one sequence of states of the form $w, w_1, ..., w_i$ such that $w \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_i$. 
-Now let $n$ be just like $m$ but with additional transition-restrictions on each $w_i$ that it not include $a_{i+1}$. 
-In other words, $\lambda_n(w_i) = \lambda_m(w_i)  - \{a_{i+1}\}$ for all $w_i$ in sequences of the form $w \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_i$. Now $n \sqcap \mu(q) = \bot$ because of the additional transition restriction we added to $n$, which rules out $\langle a_1 \rangle ... \langle a_{i+1} \rangle \top$, and a-forteriori $q$. But $n \sqcap \mu(p) \neq \bot$, because $m \models p$ and $n \LEQ m$ together imply $n \models p$. So $n$ is indeed the model we were looking for, that is incompatible with $\mu(q)$ while being compatible with $\mu(p)$.
-
-In case (ii), $m \models \langle a_1 \rangle ... \langle a_n \rangle \top$ but $m \nvDash \langle a_1 \rangle ... \langle a_n \rangle !A$ for some $A \subset \mathcal{S}$. We need to produce a model $n$ that is incompatible with $\mu(q)$ but not with $\mu(p)$. Given that $m \models \langle a_1 \rangle ... \langle a_n \rangle \top$, there is a sequence of states $w, w_1, ..., w_n$ such that $w \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_n$. Let $n$ be the model just like $n$ except it has an additional transition from each such $w_n$ with a symbol $s \notin A$. Clearly, $n \sqcap \mu(q') = \bot$ because of the additional $s$-transition, and given that $q \models q'$, it follows that $n \sqcap \mu(q) = \bot$. Also, $n \sqcap \mu(p) \neq \bot$, because $n \LEQ m$ and $m \models p$.
-
-
-\end{proof}
+\martin{Can we say more about the decision procedure? Example? Talk
+  about Haskell code?}
 
 \subsection{Hennessy-Milner Theorem for EL}
 
-\begin{definition}
-Two states $w$ and $w'$, in $(\mathcal{W}, \rightarrow, \lambda)$ and $(\mathcal{W}', \rightarrow', \lambda')$ respectively, are {\bf bisimilar}, written $w \sim w'$, iff there is a bisimulation $Z \subseteq  \mathcal{W} \times \mathcal{W}'$ with $(w,w') \in Z$.
-\end{definition}
+Bisimulations are an important concept in process theory and modal
+logics \cite{SangiorgiD:intbisac}. Bisimulations give a notion of
+equality of labelled transition systems. An interesting facett of
+bisimulation is it's co-inductive rather than inductive nature, which
+is helpful when working with infinite transition systems.
+
+Elementary equivalence is a natural notion of equality of models that
+can be defined for any logic: two models are \emph{elementarily
+  equivalent} exactly when they make the same formulae true. In eremic
+logic, this definition looks as follows.
 
 \begin{definition}
-Two states $w$ and $w'$ are {\bf equivalent}, written $w \equiv w'$, iff $\{\phi \; | \; w \models \phi\} = \{\phi \; | \; w' \models \phi\}$.
+Two states $w$ and $w'$ are {\bf equivalent}, written $w \equiv w'$,
+iff $\{\phi \; | \; w \models \phi\} = \{\phi \; | \; w' \models
+\phi\}$.
 \end{definition}
+
+\NI A natural question now is how bisimilarity and equivalence
+relate. We now show that the two notions of equivalence coincide in
+eremic logic.
+
 \begin{theorem}
-If two models are finitely-branching (if the set $\{y \fOr \exists s . x \xrightarrow{s} y\}$ is finite for all states $x$), $w \sim w' \mbox{ iff } w \equiv w' $.
+If two models are finitely-branching (if the set $\{y \fOr \exists s
+. x \xrightarrow{s} y\}$ is finite for all states $x$), $w \BISIM w'
+\mbox{ iff } w \equiv w' $.\martin{discuss the case of non-finitely-branching}
 \end{theorem}
 First, left to right.
 \begin{case}
-If $w \sim w'$, then $w \equiv w'$.
+If $w \BISIM w'$, then $w \equiv w'$.
 \end{case}
 \begin{proof}
-Proof is by induction on formulae.
-The only case which differs from the standard Hennessy-Milner Theorem is the case for $!A$, so this is the only case we shall consider.
-Assume $w \sim w'$ and $w \models !A$. We need to show $w' \models !A$.
+Proof is by induction on formulae.  The only case which differs from
+the standard Hennessy-Milner Theorem is the case for $!A$, so this is
+the only case we shall consider.  Assume $w \BISIM w'$ and $w \models
+!A$. We need to show $w' \models !A$.
 
 From the semantic clause for $!$,  $w \models !A$ implies $\lambda(w) \subseteq A$.
-If $w \sim w'$, then $\lambda(w) = \lambda'(w')$.
+If $w \BISIM w'$, then $\lambda(w) = \lambda'(w')$.
 Therefore $\lambda'(w') \subseteq A$, and hence $w' \models !A$.
 \qed
 \end{proof}
 
 \begin{case}
-Given two finitely-branching models $(\mathcal{W}, \rightarrow, \lambda)$ and $(\mathcal{W}', \rightarrow', \lambda')$, with $w \in \mathcal{W}$ and $w' \in \mathcal{W}'$,
-if $w \equiv w'$, then $w \sim w'$.
+Given two finitely-branching models $(\mathcal{W}, \rightarrow,
+\lambda)$ and $(\mathcal{W}', \rightarrow', \lambda')$, with $w \in
+\mathcal{W}$ and $w' \in \mathcal{W}'$, if $w \equiv w'$, then $w
+\BISIM w'$.
 \end{case}
 \begin{proof}
 We define the bisimilarity relation:
 \[
 Z = \{(x,x') \in \mathcal{W} \times \mathcal{W}' \fOr x \equiv x' \}
 \]
-To prove $w \sim w'$, we need to show:
+To prove $w \BISIM w'$, we need to show:
 \begin{itemize}
 \item
 $(w,w') \in Z$. This is immediate from the definition of Z.
@@ -246,16 +214,18 @@ $y \nvDash \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \ra
 \qed
 \end{proof}
 
-\subsection{Worked example of $\mathsf{neg}$}
-
 \input{figure:example:neg}
 
-Consider $y$ and $y'_j$ as in Figure \ref{figure:example:neg}.
-One formula that is true in $y'_j$ but not in $y$ is
+\NI We continue with a worked example of $\mathsf{neg}$.  Consider
+  $y$ and $y'_j$ as in Figure \ref{figure:example:neg}.  One formula
+  that is true in $y'_j$ but not in $y$ is
+
 \[
-\langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top)
+   \langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top)
 \]
-Now:
+
+\NI Now:
+
 \begin{eqnarray*}
 \lefteqn{\mathsf{neg}(y, \langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top))}\qquad \qquad \qquad  \\
 & = & \bigwedge\limits_{y \xrightarrow{a} z} \langle a \rangle \mathsf{neg}(z, \langle b \rangle \top \AND \langle c \rangle \top)  \\
@@ -268,8 +238,6 @@ Now:
 
 \NI The resulting formula is true in $y$ but not in $y'_j$.
 
-
-
 \subsection{Discussion}
 Consider the fragment of HML without negation:
 
@@ -279,7 +247,7 @@ Consider the fragment of HML without negation:
   \top \fOr \phi_1 \AND \phi_2  \fOr \langle a \rangle \phi
 \end{GRAMMAR}
 
-\NI Without negation, $p \equiv p'$ does \emph{not} entail $p \sim
+\NI Without negation, $p \equiv p'$ does \emph{not} entail $p \BISIM
 p'$, as Figure \ref{figure:hml} shows.
 
 \input{figure:hml}
@@ -336,9 +304,11 @@ t(\phi_1 \AND \phi_2) & = & t(\phi_1) \AND t(\phi_2)  \\
 t(\langle s \rangle \phi) & = & \langle s \rangle t(\phi)  \\
 t(! A) & = & \bigwedge_{s \in S - A} \neg \langle s \rangle \top 
 \end{eqnarray*}
-If $\mathcal{S}$ is an infinite set, then the translation of a $!$
+
+\NI If $\mathcal{S}$ is an infinite set, then the translation of a $!$
 formula will be an infinitary formula.  If $\mathcal{S}$ is finite,
-then the size of the HML formula will be of the order of $n *
+then the size\martin{Define the size of a formula. Maybe when formulae
+  are defined.} of the HML formula will be of the order of $n *
 |\mathcal{S}|$ larger than the original EL formula (where $n$ is the
 number of $!$ operators occurring in the EL formula).
 
