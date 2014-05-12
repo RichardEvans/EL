@@ -46,12 +46,12 @@ A model $(\mathcal{W}, \rightarrow, \lambda)$ is {\bf valid} iff for all $w \in 
 A {\bf  model} is a pair $(l,w)$, where $m$ is a \emph{valid} model of the form $(\mathcal{W}, \rightarrow, \lambda)$, and $w$ is a distinguished state in $\mathcal{W}$.
 \end{definition}
 Formulae are interpreted in a  model $(l,w)$:
-\begin{eqnarray}
-(l,w) & \models & \top  \mbox{ always } \nonumber \\
-(l,w) & \models & \phi_1 \AND \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2 \nonumber \\
-(l,w) & \models & \langle a \rangle \phi \mbox{ iff there is a } w \xrightarrow{a} w' \mbox { such that } (l,w') \models \phi \nonumber \\
-(l,w) & \models & \fBang A \mbox{ iff } \lambda(w) \subseteq A\nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+(l,w) & \models & \top  \mbox{ always }  \\
+(l,w) & \models & \phi_1 \AND \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2  \\
+(l,w) & \models & \langle a \rangle \phi \mbox{ iff there is a } w \xrightarrow{a} w' \mbox { such that } (l,w') \models \phi  \\
+(l,w) & \models & \fBang A \mbox{ iff } \lambda(w) \subseteq A
+\end{eqnarray*}
 Note that if a model is valid then $(l,w) \models \fBang A$ implies $\{s \fOr \exists w' \; w \xrightarrow{s} w'\} \subseteq A$.
 From now on, we will restrict ourselves to valid models.
 
@@ -166,7 +166,7 @@ useful in other contexts as well.
 
 \begin{itemize}
 
-\item An ordering $\leq$ on models, which enables us to speak of the
+\item An ordering $\LEQ$ on models, which enables us to speak of the
   simplest model satisfying a formula.
 
 \item An algorithm which gives the simplest model for a formula.
@@ -179,41 +179,50 @@ useful in other contexts as well.
 
 \subsubsection{A partial ordering on models}
 
-\NI We use the notion of simulation to define a partial ordering
-$\leq$ on models: \martin{Has this any connection with notions of
-  model ordering in conventional logic, like herbrand/term models?}
+\NI In logic it is often useful to speak about the simplest model
+satisfying a given formula, cf.~the term models and Herbrand universes
+of first-order logic. We use the notion of simulation to define an
+order $\LEQ$ on models, which gives rise to a bounded lattice of
+models.
 
 \begin{definition}
-$(l,w) \leq (l',w')$ if there is a simulation $\RRR$ from $l'$ to $l$
+$(l,w) \LEQ (l',w')$ if there is a simulation $\RRR$ from $l'$ to $l$
   with $(w',w) \in \RRR$
 \end{definition}
 
-\NI Intuitively, $m \leq n$ if $m$ can match all the transitions of
-$n$ while respecting the transitions-restrictions.
+\NI Intuitively, $m \LEQ n$ if $m$ can match all the transitions of
+$n$ while respecting the transitions-restrictions.\martin{this is
+  probably a standard construction on LTS, models of modal logics.}
 
-To make our models into a lattice, we add a bottom element $\bot$ and stipulate that $\bot \leq m$ for all  models $m$.
-The topmost element in the lattice is the  model $( (\{w\}, \{\}, \{w \mapsto \mathcal{S}\}), w)$ (for some state $w$): this is the model with no transitions and no transition restrictions.
+To make our models into a lattice\martin{do you mean a \emph{bounded}
+  lattice?}, we add a bottom element $\bot$ and stipulate that $\bot
+\LEQ m$ for all models $m$.  The topmost element in the lattice is the
+model $( (\{w\}, \{\}, \{w \mapsto \mathcal{S}\}), w)$ (for some state
+$w$): this is the model with no transitions and no transition
+restrictions.
 
-\subsubsection{Defining $\mu$ - the Simplest  Model Satisfying a Formula}
-We define a function $\mu$ which, given a formula $\phi$, produces the simplest\footnote{``Simplest'' as in the least upper bound, according to $\leq$, defined in formulae of simulation.} model which satisfies $\phi$:
-\begin{eqnarray}
-\mu (\top) & = & ( (\{v\}, \{\}, \{v \mapsto \mathcal{S}\}), v) \nonumber \\
-\mu (\fBang A) & = & ( (\{v\}, \{\}, \{v \mapsto A\}), v) \nonumber \\
-\mu (\phi_1 \AND \phi_2) & = & \mu(\phi_1) \sqcap \mu(\phi_2) \nonumber \\
-\mu (\langle a \rangle \phi) & = & ( (\mathcal{W} \cup \{w'\}, \rightarrow \cup (w' \xrightarrow{a} w), \lambda \cup \{w' \mapsto \mathcal{S}\}]), w') \nonumber \\
-		& & \mbox{where }\mu(\phi) = ( (\mathcal{W}, \rightarrow, \lambda), w) \nonumber \\
-		& & \mbox{and }w' \mbox{ is a new state not appearing in }\mathcal{W} \nonumber
-\end{eqnarray}
-The only complex case is the clause for $\mu (\phi_1 \AND \phi_2)$, which uses the $\sqcap$ function, defined as\footnote{We assume that the sets of states in the two  models are disjoint.}:
+\subsubsection{Computing the simplest  model satisfying a formula}
+
+Now that we have a notion of model simplicity, we compute $\mu(X)$,
+the simplest model w.r.t.~$\LEQ$ that satisfies $X$.
 
 \begin{eqnarray*}
-  \bot \sqcap X 
-     & = & 
-  \bot \nonumber 
-     \\
-  X \sqcap \bot 
-     & = & 
-  \bot \nonumber 
+  \mu (\top) &\ = \ & ( (\{v\}, \{\}, \{v \mapsto \mathcal{S}\}), v)  \\
+  \mu (\fBang A) & = & ( (\{v\}, \{\}, \{v \mapsto A\}), v)  \\
+  \mu (X_1 \AND X_2) & = & \mu(X_1) \sqcap \mu(X_2)  \\
+  \mu (\langle a \rangle X) 
+     & = & ( (\mathcal{W} \cup \{w'\}, \rightarrow \cup (w' \xrightarrow{a} w), \lambda \cup \{w' \mapsto \mathcal{S}\}]), w')  \\
+		& & \mbox{where }\mu(X) = ( (\mathcal{W}, \rightarrow, \lambda), w) \mbox{and } w' \mbox{ is a new state} \\
+                &&  \mbox{not appearing in }\mathcal{W} 
+\end{eqnarray*}
+
+\NI The only complex case is the clause for $\mu (X_1 \AND X_2)$,
+which uses the $\sqcap$ function, defined as follows, where we assume
+that the sets of states in the two models are disjoint.
+
+\begin{eqnarray*}
+  \bot \sqcap m  &\ =\ &  \bot  \\
+  m \sqcap \bot      & = &  \bot  
      \\
   m \sqcap n 
      & = & 
@@ -223,61 +232,115 @@ The only complex case is the clause for $\mu (\phi_1 \AND \phi_2)$, which uses t
   \end{cases}
 \end{eqnarray*}
 
-\noindent The $\mathsf{consistent}$ predicate is true of  models $m$ and $n$ if the out-transitions on $m$'s root node respect the labelling on $n$'s root node, and the out-transitions on $n$'s root node respect the labelling on $m$'s root node. In other words:
-\begin{eqnarray}
-\mathsf{consistent}(m, n) & \mbox{ iff } & \mathsf{out}(m) \subseteq \mathsf{restriction}(n) \mbox{ and} \nonumber \\
-& & \mathsf{out}(n) \subseteq \mathsf{restriction}(m) \nonumber
-\end{eqnarray}
-where:
-\begin{eqnarray}
-\mathsf{out}(((\mathcal{W},\rightarrow,\lambda),w)) & = & \{ s \fOr \exists x . w \xrightarrow{s} x \} \nonumber \\
-\mathsf{restriction}(((\mathcal{W},\rightarrow,\lambda),w)) & = & \lambda(w) \nonumber
-\end{eqnarray}
-Now the $\mathsf{merge}$ function fuses two  models together:
+\NI The $\mathsf{consistent}$ predicate is true of models $m$ and $n$ if
+the out-transitions on $m$'s root node respect the labelling on $n$'s
+root node, and the out-transitions on $n$'s root node respect the
+labelling on $m$'s root node. In other words:
+
+\begin{eqnarray*}
+  \mathsf{consistent}(m, n) 
+     &\ \mbox{ iff }\ & 
+  \begin{cases}
+    \mathsf{out}(m) \subseteq \mathsf{restriction}(n) \mbox{ and}  \\
+    \mathsf{out}(n) \subseteq \mathsf{restriction}(m) 
+  \end{cases}
+\end{eqnarray*}
+
+\NI Here:
+
 \[
-\mathsf{merge}( ( (\mathcal{W}, \rightarrow, \lambda), w),  ( (\mathcal{W}', \rightarrow', \lambda'), w')) = ((\mathcal{W} \cup \mathcal{W}', \rightarrow \cup \rightarrow'_2, \lambda_2 \cup \lambda'_2), w)
+\begin{array}{rcl}
+  \mathsf{out}(((\mathcal{W},\rightarrow,\lambda),w)) 
+     &\ =\ & \{ s \fOr \exists x . w \xrightarrow{s} x \}  \\
+  \mathsf{restriction}(((\mathcal{W},\rightarrow,\lambda),w)) 
+    & = & 
+  \lambda(w) 
+\end{array}
+\]
+
+\NI Now the $\mathsf{merge}$ function fuses two  models together:
+\[
+   \mathsf{merge}( ( (\mathcal{W}, \rightarrow, \lambda), w),  ( (\mathcal{W}', \rightarrow', \lambda'), w')) 
+      \ =\ 
+   ((\mathcal{W} \cup \mathcal{W}', \rightarrow \cup \rightarrow'_2, \lambda_2 \cup \lambda'_2), w)
 \]
 where:
-\begin{eqnarray}
-\rightarrow'_2 & = & \rightarrow' \mbox{ with } w' \mbox{ replaced by } w \nonumber \\
-\lambda_2 & = & \lambda \mbox{ with } w \mapsto \lambda(w) \cap \lambda'(w') \nonumber \\
-\lambda'_2 & = & \lambda' \mbox{ with } w' \mbox{ removed } \nonumber
-\end{eqnarray}
-It is easy to show that $\mu$ satisfies the following propositions:
-\begin{eqnarray}
-\mu(\phi) & \models & \phi \nonumber \\
-\mbox{if }n \models \phi \mbox{ and } m \leq n & \mbox{ then } & m \models \phi \nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+  \rightarrow'_2 &\ =\ & \rightarrow' \mbox{ with } w' \mbox{ replaced by } w  \\
+  \lambda_2 & = & \lambda \mbox{ with } w \mapsto \lambda(w) \cap \lambda'(w')  \\
+  \lambda'_2 & = & \lambda' \mbox{ with } w' \mbox{ removed } 
+\end{eqnarray*}
+
+\NI It is easy to show that $\mu$ has the following properties:
+
+\begin{itemize}
+
+\item $\mu(\phi) \models \phi$.
+
+\item If $n \models \phi$ and  $m \LEQ n$ then also  $m \models \phi$.
+ 
+\end{itemize}
 
 \subsubsection{Defining $\theta$ - a Formula that Characterises a Model}
-The inverse function $\theta$ produces a formula that characterises a given  model:
-\begin{eqnarray}
-\theta(\bot) & = & \langle a \rangle \top \AND ! \{ \} \mbox{ for some symbol }a \nonumber \\
-\theta(l, w) & = & \mathsf{bang}(l,w) \AND \bigwedge_{(s,w') \in \mathsf{trans}(l,w)} \langle s \rangle \theta(l, w') \nonumber 
-\end{eqnarray}
-Here:
-\begin{eqnarray}
-\mathsf{bang}((\mathcal{W},\rightarrow,\lambda),w) & = & \top \mbox{ if } \lambda(w) = \mathcal{S} \nonumber \\
-\mathsf{bang}((\mathcal{W},\rightarrow,\lambda),w) & = & ! \; \lambda(w) \mbox{ otherwise } \nonumber \\
-\mathsf{trans}((\mathcal{W},\rightarrow, \lambda),w) & = & \{(s,w') | w \xrightarrow{s} w' \} \nonumber
-\end{eqnarray}
-Note that $\theta(m)$ is finite if $m$ contains no cycles and if $\lambda(x)$ is either $\mathcal{S}$ or finite for all states $x$.
+
+The function $\mu(\cdot)$ goes form formulae to models. Now we go the
+other way: given a model $m$, we compute its characteristic formula
+$\theta(m)$. 
+
+
+ \cite{AcetoL:chaforfata}.
+
+\martin{In what sense does this characterise a model?}
+
+\NI The inverse function $\theta$ produces a formula that
+characterises a given model:
+
+\begin{eqnarray*}
+\theta(\bot) & = & \langle a \rangle \top \AND ! \{ \} \mbox{ for some symbol }a  \\
+\theta(l, w) & = & \mathsf{bang}(l,w) \AND \bigwedge_{(s,w') \in \mathsf{trans}(l,w)} \langle s \rangle \theta(l, w')  
+\end{eqnarray*}
+
+
+\NI Here:
+
+\begin{eqnarray*}
+\mathsf{bang}((\mathcal{W},\rightarrow,\lambda),w) & = & \top \mbox{ if } \lambda(w) = \mathcal{S}  \\
+\mathsf{bang}((\mathcal{W},\rightarrow,\lambda),w) & = & ! \; \lambda(w) \mbox{ otherwise }  \\
+\mathsf{trans}((\mathcal{W},\rightarrow, \lambda),w) & = & \{(s,w') | w \xrightarrow{s} w' \} 
+\end{eqnarray*}
+
+\NI Note that $\theta(m)$ is finite if $m$ contains no cycles and if
+$\lambda(x)$ is either $\mathcal{S}$ or finite for all states $x$.
 Note also that $\mu$ and $\theta$ are inverses of each other in that:
-\begin{eqnarray}
-\mu(\theta(m)) & = & m \nonumber \\
-\theta(\mu(p)) & \mbox{ iff } & p \nonumber
-\end{eqnarray}
 
+\begin{eqnarray*}
+\mu(\theta(m)) & = & m  \\
+\theta(\mu(p)) & \mbox{ iff } & p 
+\end{eqnarray*}
 
-We will show that $p \models q$ implies there is a derivation of $p
-\judge q$.  Our proof will make use of two lemmas:
-\begin{itemize}
-\item
-Lemma \ref{first-completeness-lemma}: if $m \models p$ then $\theta(m) \judge p$.
-\item
-Lemma \ref{second-completeness-lemma}: for all formulae $p$, $p \judge \theta(\mu(p))$.
-\end{itemize}
-With these two lemmas in hand, the proof is straightforward.
+\NI We are now ready to prove completeness.  We will show that $p
+\models q$ implies there is a derivation of $p \judge q$.  Our proof
+will make use of two key facts:
+
+\begin{lemma}\label{lemma:completeness:4}
+If $m \models p$ then $\theta(m) \judge p$.
+\end{lemma}
+
+\begin{lemma}\label{lemma:completeness:5}
+For all formulae $p$, we can derive $p \judge \theta(\mu(p))$.
+\end{lemma}
+
+\martin{Add short explanation of Lemma \ref{lemma:completeness:4}}.
+
+As to Lemma \ref{lemma:completeness:5}, $\mu(p)$ is the simplest model
+satisfying $p$, and $\theta(m)$ is the simplest formula describing
+$m$, so $\theta(\mu(p))$ is a simplified form of $p$. This lemma
+states that EL has the inferential capacity to transform any
+proposition into its simplified form.
+
+With these two lemmas in hand, the proof of completeness is
+straightforward.
+
 \begin{theorem}
 If $p \models q$ then $p \judge q$
 \end{theorem}
@@ -290,11 +353,7 @@ But we also have, by Lemma 2, $p \judge \theta(\mu(p)) $.
 So by transitivity, we have $p \judge q$.
 \qed
 \end{proof}
-Next we will prove Lemma \ref{first-completeness-lemma}.
-\begin{lemma}
-\label{first-completeness-lemma}
-If $m \models p$ then $\theta(m) \judge p$.
-\end{lemma}
+Next we will prove Lemma \ref{lemma:completeness:4}.
 \begin{proof}
 Induction on $p$.
 \setcounter{mycase}{0}
@@ -356,11 +415,8 @@ Now we can prove $! \; \lambda(w) \AND \phi \judge \fBang A$ using  {\bf $!$ Rig
 \qed
 \end{proof}
 
-\begin{lemma}
-\label{second-completeness-lemma}
-For all formulae $p$, we can derive $p \judge \theta(\mu(p))$.
-\end{lemma}
-Explanation: $\mu(p)$ is the simplest model satisfying $p$, and $\theta(m)$ is the simplest formula describing $m$, so $\theta(\mu(p))$ is a simplified form of $p$. This lemma states that EL has the inferential capacity to transform any proposition into its simplified form.
+Now we prove Lemma \ref{lemma:completeness:5}
+
 \begin{proof}
 Induction on $p$.
 
@@ -379,11 +435,11 @@ Using {\bf $\AND$ Left} and {\bf $\AND$ Right}, we can show:
 \[
 q \AND q' \judge \theta(\mu(q)) \AND \theta(\mu(q'))
 \]
-Lemma \ref{third-completeness-lemma}, proven below, states that, for all models $m$ and $n$:
+Lemma 6, proven below, states that, for all models $m$ and $n$:
 \[
 \theta(m) \AND \theta(n) \judge \theta (m \sqcap n)
 \]
-From Lemma \ref{third-completeness-lemma} (substituting $\mu(q)$ for $m$ and $\mu(q')$ for $n$), it follows that:
+From Lemma 6 (substituting $\mu(q)$ for $m$ and $\mu(q')$ for $n$), it follows that:
 \[
 \theta(\mu(q)) \AND \theta(\mu(q')) \judge \theta(\mu(q \AND q'))
 \]
@@ -436,7 +492,6 @@ We can prove $\fBang A \judge \fBang A \AND \top$ using {\bf $\AND$ Right}, {\bf
 \end{proof}
 Finally, to fill the hole in Case 2 above, we need to show that:
 \begin{lemma}
-\label{third-completeness-lemma}
 For all models $m$ and $n$, $\theta(m) \AND \theta(n) \judge \theta (m \sqcap n)$.
 \end{lemma}
 
@@ -490,7 +545,7 @@ We can derive $\theta((l,w)) \AND \theta((l',w')) \judge \; ! \; (\lambda(w) \ca
 
 To show $\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_2))$, observe from the definition of $\theta$ that $\theta((l,w))$ contains a conjunct $\langle s \rangle \theta((l, w_2))$, so the proof follows from  {\bf $\AND$ Right} and repeated applications of  {\bf $\AND$ Left}. The same procedure applies to show $\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_3))$ for all $s,w_3$ such that $w' \xrightarrow{s} w_3$.
 
-This completes Lemma \ref{third-completeness-lemma} and hence the Completeness Proof.
+This completes Lemma 6 and hence the Completeness Proof.
 \qed
 
 \end{proof}
@@ -517,12 +572,12 @@ With $x_1, x_2$ being state variables, $s$ a symbol in $\mathcal{S}$, and $A$ ra
 Notice that this fragment of FOL has no negation, disjunction, implication, or universal quantification.
 
 The translation of an EL formula is relative to a variable $x$ (which will be instantiated to the particular state at which we are evaluating the formula):
-\begin{eqnarray}
-T_x(\top) & = & \top \nonumber \\
-T_x(\phi_1 \AND \phi_2) & = & T_x(\phi_1) \AND T_x(\phi_2) \nonumber \\
-T_x(\langle s \rangle \phi) & = & \exists y \; . \; Arr_s(x,y) \AND T_y(\phi) \nonumber \\
-T_x(\fBang A) & = & Restrict_A(x) \nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+T_x(\top) & = & \top  \\
+T_x(\phi_1 \AND \phi_2) & = & T_x(\phi_1) \AND T_x(\phi_2)  \\
+T_x(\langle s \rangle \phi) & = & \exists y \; . \; Arr_s(x,y) \AND T_y(\phi)  \\
+T_x(\fBang A) & = & Restrict_A(x) 
+\end{eqnarray*}
 So, for example:
 \[
 T_x(\langle a \rangle \top \AND \fBang \{a\}) = \exists y \; . \; Arr_a(x,y) \AND \top \AND Restrict_{\{a\}}(x)

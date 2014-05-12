@@ -20,23 +20,23 @@ translating formulae into Disjunctive Normal Form.}:
 
 The semantics of EL$[\land, !, \neg]$ is just as in EL$[\land, !]$
 above, except for the obvious clause for negation:
-\begin{eqnarray}
-(l,w) & \models & \neg \phi \mbox{ iff } (l,w) \nvDash \phi \nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+(l,w) & \models & \neg \phi \mbox{ iff } (l,w) \nvDash \phi 
+\end{eqnarray*}
 
 \subsection{Negation}
 
 Negation can be translated away using the following rewrite rules,
 \emph{relative to a certain set $\Sigma$ of symbols}:
 
-\begin{eqnarray}
-  \neg_{\Sigma}(\top) & \ = \ & \bot \nonumber \\
-  \neg_\Sigma(\bot) & \ = \ & \top \nonumber \\
-  \neg_\Sigma(\phi_1 \land \phi_2) & \ = \ & \neg_\Sigma(\phi_1) \lor \neg_\Sigma(\phi_2) \nonumber \\
-  \neg_\Sigma(\phi_1 \lor \phi_2) & \ = \ & \neg_\Sigma(\phi_1) \land \neg_\Sigma(\phi_2) \nonumber \\
-  \neg_\Sigma(\langle a \rangle \phi) & \ = \ & \fBang(\Sigma-\{a\}) \lor \langle a \rangle \neg_\Sigma(\phi) \nonumber \\
-  \neg_\Sigma(\fBang A) & \ = \ & \bigvee_{a \in \Sigma - A} \langle a \rangle \top\nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+  \neg_{\Sigma}(\top) & \ = \ & \bot  \\
+  \neg_\Sigma(\bot) & \ = \ & \top  \\
+  \neg_\Sigma(\phi_1 \land \phi_2) & \ = \ & \neg_\Sigma(\phi_1) \lor \neg_\Sigma(\phi_2)  \\
+  \neg_\Sigma(\phi_1 \lor \phi_2) & \ = \ & \neg_\Sigma(\phi_1) \land \neg_\Sigma(\phi_2)  \\
+  \neg_\Sigma(\langle a \rangle \phi) & \ = \ & \fBang(\Sigma-\{a\}) \lor \langle a \rangle \neg_\Sigma(\phi)  \\
+  \neg_\Sigma(\fBang A) & \ = \ & \bigvee_{a \in \Sigma - A} \langle a \rangle \top
+\end{eqnarray*}
 
 \NI Note that, if $\Sigma$ is infinite, then the last two clauses will generate infinitary formulae.
 
@@ -110,25 +110,25 @@ Analogously, given an infinite set $\mathcal{S}$ of symbols, the negation of pro
 
 \section{A Naive Decision Procedure}
 Define $|\phi|$ as the degree of $\phi$:
-\begin{eqnarray}
-|\top| & = & 0 \nonumber \\
-|\bot| & = & 0 \nonumber \\
-|\neg \phi| & = & | \phi | \nonumber \\
-|\phi_1 \land \phi_2| & = & \mathsf{max}(| \phi_1 |, | \phi_2|) \nonumber \\
-|\phi_1 \lor \phi_2| & = & \mathsf{max}(| \phi_1 |, | \phi_2|) \nonumber \\
-|\langle a \rangle \phi | & = & 1 + | \phi | \nonumber \\
-| \fBang S | & = & 1 \nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+|\top| & = & 0  \\
+|\bot| & = & 0  \\
+|\neg \phi| & = & | \phi |  \\
+|\phi_1 \land \phi_2| & = & \mathsf{max}(| \phi_1 |, | \phi_2|)  \\
+|\phi_1 \lor \phi_2| & = & \mathsf{max}(| \phi_1 |, | \phi_2|)  \\
+|\langle a \rangle \phi | & = & 1 + | \phi |  \\
+| \fBang S | & = & 1 
+\end{eqnarray*}
 Define the $\mathsf{symbols}$ of a formula as:
-\begin{eqnarray}
-\mathsf{symbols}(\top) & = & \{\} \nonumber \\
-\mathsf{symbols}(\bot) & = & \{\} \nonumber \\
-\mathsf{symbols}(\neg \phi) & = & \mathsf{symbols}(\phi) \nonumber \\
-\mathsf{symbols}(\phi_1 \land \phi_2) & = &\mathsf{symbols}(\phi_1) \cup \mathsf{symbols}(\phi_2) \nonumber \\
-\mathsf{symbols}(\phi_1 \lor \phi_2) & = &\mathsf{symbols}(\phi_1) \cup \mathsf{symbols}(\phi_2) \nonumber \\
-\mathsf{symbols}(\langle a \rangle \phi) & = & \{a\} \cup \mathsf{symbols}(\phi) \nonumber \\
-\mathsf{symbols}(\fBang S) & = & S \nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+\mathsf{symbols}(\top) & = & \{\}  \\
+\mathsf{symbols}(\bot) & = & \{\}  \\
+\mathsf{symbols}(\neg \phi) & = & \mathsf{symbols}(\phi)  \\
+\mathsf{symbols}(\phi_1 \land \phi_2) & = &\mathsf{symbols}(\phi_1) \cup \mathsf{symbols}(\phi_2)  \\
+\mathsf{symbols}(\phi_1 \lor \phi_2) & = &\mathsf{symbols}(\phi_1) \cup \mathsf{symbols}(\phi_2)  \\
+\mathsf{symbols}(\langle a \rangle \phi) & = & \{a\} \cup \mathsf{symbols}(\phi)  \\
+\mathsf{symbols}(\fBang S) & = & S 
+\end{eqnarray*}
 Now define $\sigma(\phi)$ as:
 \[
 \sigma(\phi) = |\mathsf{symbols}(\phi)| + 1
@@ -148,7 +148,7 @@ Now $(l'',w)$ bisimulates $(l,w)$ to degree $|\phi|$.
 But (by Proposition 2.31 of ``Modal Logic''), if two models bisimulate to degree $|\phi|$, then they agree on all formulae of degree $|\phi|$. So the restriction of the tree-like model satisfies $\phi$.
 \end{proof}
 
-To use Theorem 1 as a decision procedure: if we have a claim $P_1, ..., P_n \models Q$,  let $ \phi = \bigwedge P_i \land \neg Q$, and look for a satisfying model of $\phi$. By Theorem 1, we only need to search a finite number of trees of height $\leq |\phi|$ and branching factor $\leq \sigma(\phi)$.
+To use Theorem 1 as a decision procedure: if we have a claim $P_1, ..., P_n \models Q$,  let $ \phi = \bigwedge P_i \land \neg Q$, and look for a satisfying model of $\phi$. By Theorem 1, we only need to search a finite number of trees of height $\LEQ |\phi|$ and branching factor $\LEQ \sigma(\phi)$.
 
 \subsection{The Need for an Additional Symbol}
 Note that the function $\sigma(\phi) = |\mathsf{symbols}(\phi)| + 1$ adds one additional symbol to the symbols in $\phi$. Why is this?
@@ -184,10 +184,10 @@ So the total number of models is no more than $2 ^ {\sum_{i=0}^{|\phi|} (\sigma(
 (In fact it is significantly less than this upper bound because there are restrictions on which combinations of nodes can be used and unused: a child cannot be used if any of its ancestors are unused).
 
 To get the exact number of trees for a given height $h$ and branching factor $b$, define the following recursive function:
-\begin{eqnarray}
-a(0) & = & 1\nonumber \\
-a(n+1) & = & (1+a(n))^b \nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+a(0) & = & 1 \\
+a(n+1) & = & (1+a(n))^b 
+\end{eqnarray*}
 Then the number of trees is $a(h)$.
 This quickly grows enormous, as the following table shows, for $b = 3$:
 \begin{center}
@@ -210,10 +210,10 @@ Given a claim $P \models Q$, let $\Sigma = \mathsf{symbols}(P) \cup \mathsf{symb
 First, translate away all negations in $P$ using $\neg_\Sigma()$ as defined in Section 1.4.
 Let the result be $P'$.
 Second, reduce $P'$ to Disjunctive Normal Form by repeated application of the rewrite rules:
-\begin{eqnarray}
-p \land (q \lor r) & \leadsto & (p \land q) \lor (p \land r) \nonumber \\
-(p \lor q) \land r & \leadsto & (p \land r) \lor (q \land r) \nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+p \land (q \lor r) & \leadsto & (p \land q) \lor (p \land r)  \\
+(p \lor q) \land r & \leadsto & (p \land r) \lor (q \land r) 
+\end{eqnarray*}
 Let the resulting disjuncts be $P_1, ..., P_n$. 
 Now 
 \[
@@ -289,12 +289,12 @@ Full HML  is more expressive than full PL.
 \end{proposition}
 To see this, fix a PL with the nullary operator $\top$ plus an infinite number of propositional atoms $P_{(i,j)}$, indexed by $i$ and $j$.
 Now translate each formula of HML via the rules:
-\begin{eqnarray}
-t(\top)  & = & \top \nonumber \\
-t(p \land q) & = & t(p) \land t(q) \nonumber \\
-t(\neg p) & = & \neg t(p)  \nonumber \\
-t(\langle a_i \rangle p_j) & = & P_{(i,j)} \nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+t(\top)  & = & \top  \\
+t(p \land q) & = & t(p) \land t(q)  \\
+t(\neg p) & = & \neg t(p)   \\
+t(\langle a_i \rangle p_j) & = & P_{(i,j)} 
+\end{eqnarray*}
 Now to show that HML is more expressive, we show that there are formulae $p$ and $q$ of HML such that
 \[
 p \models_{HML} q \mbox{ but } t(p) \nvDash_{PL} t(q)

@@ -1,5 +1,15 @@
+* Make sure we have \qed at the end of every proof. Better:
+  put it into the latex macro.
 
-* Finalise the name of the logic. I am going to check with my friend Tim Whitmarsh one more time that "Eremic Logic" is the best name for it.
+* Say what ranges over what, e.g. \frac{M} over models, X, Y over
+  formulae, etc.  Be consistent about this.
+
+* Use descriptive names, why \mu(X) for the simplest model satisfying
+  $X$?  would not simp(X) or something like that more readable?
+
+* Finalise the name of the logic. I am going to check with my friend
+  Tim Whitmarsh one more time that "Eremic Logic" is the best name for
+  it.
 
 * Find a better name for !A than "bang A".
 
