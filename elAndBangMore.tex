@@ -238,71 +238,65 @@ $y \nvDash \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \ra
 
 \NI The resulting formula is true in $y$ but not in $y'_j$.
 
-\subsection{Discussion}
-Consider the fragment of HML without negation:
-
-\begin{GRAMMAR}
-  \phi 
-    &\quad ::= \quad&
-  \top \fOr \phi_1 \AND \phi_2  \fOr \langle a \rangle \phi
-\end{GRAMMAR}
-
-\NI Without negation, $p \equiv p'$ does \emph{not} entail $p \BISIM
-p'$, as Figure \ref{figure:hml} shows.
-
-\input{figure:hml}
-
-Here, $x \equiv x'$ - they both satisfy the sub formulae of $\langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top)$.
-But there is no bisimulation between $x$ and $x'$ ($y_1$ cannot be matched with $y'$ because $y'$ has an additional outgoing $c$-transition). 
-
-If we remove negation, HML  is insufficiently expressive to distinguish between these two non-bisimilar models.
-When we restore negation, we can distinguish between these models via the formula:
-\[
-\langle a \rangle \neg \langle c \rangle \top
-\]
-Similarly, EL is able to distinguish between these models via the formula:
-\[
-\langle a \rangle ! \{b\}
-\]
-EL, also, has the expressive capacity to distinguish between non-bisimilar models. If the LTSs are finitely-branching, it can simulate negation (in innermost scope) via the width restriction operator !
 
 \subsection{Comparing EL with Hennessy-Milner Logic}
 
-Given a set $\mathcal{S}$ of symbols, with $s$ ranging over $\mathcal{S}$, the formulae of Hennessy-Milner Logic (HML) are given by:
+Section \ref{standardTranslation} investigated the relationship
+between eremic and first-order logic. Now we compare eremic logic with
+a logic that is much closer in spirit: Hennessy-Milner logic
+\cite{HennessyM:alglawfndac}, a modal logic designed to reason about
+process calculi. Indeed the present shape of eremic logic owes to
+Hennessy-Milner logic. We now contrast both by translation from eremic
+logic into Hennessy-Milner logic \martin{why not the other way?}. The
+this will reveal the more clearly than the translation into
+first-order logic the where eremic logic is novel.
+
+Given a set $\mathcal{S}$ of symbols, with $s$ ranging over
+$\mathcal{S}$, the \emph{formulae} of Hennessy-Milner logic are given
+by the following grammar:
 \begin{GRAMMAR}
   \phi 
      &\quad ::= \quad & 
   \top \fOr \phi_1 \AND \phi_2 \fOr \langle s \rangle \phi \fOr \neg \phi 
 \end{GRAMMAR}
-\subsection{Semantics}
-A {\bf Labelled Transition System} (LTS) is a pair $(\mathcal{W}, \rightarrow)$, where $\mathcal{W}$ is a set of states, and $\rightarrow$ is a set of transition relations: $\rightarrow \; \subseteq \; \mathcal{W} \times S \times \mathcal{W}$.
-We write $x \xrightarrow{s} y$ to abbreviate $(x,s,y) \in \rightarrow$.
 
-A {\bf  LTS} is a pair $(l, w)$, where $l$ is a LTS $(\mathcal{W}, \rightarrow)$ and $w$ is a distinguished state $w \in \mathcal{W}$.
+\NI Note that many presentations use infinite conjunction. However,
+that's not required in the present context.
 
-A formula of HML is evaluated in a  LTS $(l, w)$:
-\begin{eqnarray*}
-(l,w) & \models & \top  \\
-(l,w) & \models & \phi_1 \AND \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2  \\
-(l,w) & \models & \langle s \rangle \phi \mbox{ iff there is a } w \xrightarrow{s} w' \mbox { such that } (l,w') \models \phi  \\
-(l,w) & \models & \neg \phi \mbox{ iff } (l,w)  \nvDash \phi 
-\end{eqnarray*}
+ \emph{Models} of Hennessy-Milner logic are the pairs $(W,
+\rightarrow, w)$ where $(S, \rightarrow)$ is a labelled transition
+system over $S$, and $w \in W$.  The \emph{satisfaction relation} $(l,
+w) \models \phi$ is given by the following inductive clauses.
 
+\[
+\begin{array}{lclcl}
+  (l,w) & \models & \top  \\
+  (l,w) & \models & \phi_1 \AND \phi_2 &\  \mbox{ iff }\  & (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2  \\
+  (l,w) & \models & \langle s \rangle \phi & \mbox{ iff } & \mbox{ there is a } w \xrightarrow{s} w' \mbox { such that } (l,w') \models \phi  \\
+  (l,w) & \models & \neg \phi & \mbox{ iff } & (l,w)  \nvDash \phi 
+\end{array}
+\]
 
-\subsection{Translating EL into HML}
-The only differences between EL and HML are:
+\NI We can now see the two differences between eremic logic, and
+Hennessy-Milner logic, one syntacticm, the other semantic.
+
 \begin{itemize}
-\item
-Syntactically, EL has the transition-restriction operator ($!$) instead of logical negation ($\neg$)
-\item
-Semantically, an EL model has an additional node-labelling, describing the allowable transitions from each vertex
+
+\item Syntactically, EL has the transition-restriction operator ($!$)
+  instead of logical negation ($\neg$).
+
+\item Semantically, an EL model has an additional node-labelling,
+  describing the allowable transitions from each vertex.
+
 \end{itemize}
-We can translate formulae of EL into HML using the function $t$:
+
+\NI We translate formulae of EL into HML using the function $t$:\martin{maybe use $\SEMB{X}$ instead?}
+
 \begin{eqnarray*}
-t(\top) & = & \top  \\
-t(\phi_1 \AND \phi_2) & = & t(\phi_1) \AND t(\phi_2)  \\
-t(\langle s \rangle \phi) & = & \langle s \rangle t(\phi)  \\
-t(! A) & = & \bigwedge_{s \in S - A} \neg \langle s \rangle \top 
+  t(\top) & \ = \ & \top  \\
+  t(\phi_1 \AND \phi_2) & \ = \ & t(\phi_1) \AND t(\phi_2)  \\
+  t(\langle s \rangle \phi) & \ = \ & \langle s \rangle t(\phi)  \\
+  t(! A) & \ = \ & \bigwedge_{s \in S - A} \neg \langle s \rangle \top 
 \end{eqnarray*}
 
 \NI If $\mathcal{S}$ is an infinite set, then the translation of a $!$
@@ -312,3 +306,41 @@ then the size\martin{Define the size of a formula. Maybe when formulae
 |\mathcal{S}|$ larger than the original EL formula (where $n$ is the
 number of $!$ operators occurring in the EL formula).
 
+\martin{Say something more interesting about this translation!}
+
+We can now see why in Hennessy-Milner logic without negation $p \equiv
+p'$ does \emph{not} entail $p \BISIM p'$
+
+\begin{GRAMMAR}
+  \phi 
+    &\quad ::= \quad&
+  \top \fOr \phi_1 \AND \phi_2  \fOr \langle a \rangle \phi
+\end{GRAMMAR}
+
+\input{figure:hml}
+
+\NI Consider Figure \ref{figure:hml}.  Here, $x \equiv x'$ - they both
+satisfy the sub formulae of $\langle a \rangle (\langle b \rangle \top
+\AND \langle c \rangle \top)$.  But there is no bisimulation between
+$x$ and $x'$ ($y_1$ cannot be matched with $y'$ because $y'$ has an
+additional outgoing $c$-transition).
+
+If we remove negation, HML is insufficiently expressive to distinguish
+between these two non-bisimilar models.  When we restore negation, we
+can distinguish between these models via the formula:
+
+\[
+   \langle a \rangle \neg \langle c \rangle \top
+\]
+
+\NI Similarly, EL is able to distinguish between these models via the
+formula:
+
+\[
+  \langle a \rangle ! \{b\}
+\]
+
+\NI EL, also, has the expressive capacity to distinguish between
+non-bisimilar models. If the LTSs are finitely-branching, it can
+simulate negation (in innermost scope) via the width restriction
+operator !
