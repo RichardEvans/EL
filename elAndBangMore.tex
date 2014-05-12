@@ -41,8 +41,8 @@ Given that $\mu(p) \models p$, we substitute $\mu(p)$ for $m$ in $\forall m \; m
 $\mu(p) \models q \; \text{implies} \; \forall m \; m \models p \Rightarrow m \models q$
 \end{mycase}
 Assume $m \models p$. We need to show $m \models q$.
-Now if $m \models p$ then $m \leq \mu(p)$ (by definition of $\mu$).
-Further, if $n \models x$ and $m \leq n$ then $m \models x$. So, substituting $q$ for $x$ and $\mu(p)$ for $n$, it follows that $m \models q$. 
+Now if $m \models p$ then $m \LEQ \mu(p)$ (by definition of $\mu$).
+Further, if $n \models x$ and $m \LEQ n$ then $m \models x$. So, substituting $q$ for $x$ and $\mu(p)$ for $n$, it follows that $m \models q$. 
 \qed
 \end{proof}
 Given this theorem, the decision procedure is straightforward: to test if $p \models q$, we construct $\mu(p)$, and then inspect whether $\mu(p) \models q$.
@@ -77,10 +77,10 @@ $\mathcal{J}(m)$ is the set of models that are incompatible with $m$:
 \]
 We shall make use of three lemmas:
 \begin{lemma}
-$\mbox{if }p \models q \mbox{ then } \mu(p) \leq \mu(q)$
+$\mbox{if }p \models q \mbox{ then } \mu(p) \LEQ \mu(q)$
 \end{lemma}
 \begin{lemma}
-$\mbox{if }m \leq n \mbox{ then } x \sqcap m \leq x \sqcap n$
+$\mbox{if }m \LEQ n \mbox{ then } x \sqcap m \LEQ x \sqcap n$
 \end{lemma}
 \begin{lemma}
 $\mbox{if }\mathcal{I}(q) \subseteq \mathcal{I}(p) \mbox{ then } \mathcal{J}(\mu(q)) \subseteq \mathcal{J}(\mu(p))$
@@ -93,10 +93,10 @@ $p \models q \; \mbox{ iff } \; \mathcal{I}(q) \subseteq \mathcal{I}(p)$
 \begin{proof}
 
 Left to right: Assume $p \models q$ and $r \in \mathcal{I}(q)$.
-By Lemma 1, $\mu(p) \leq \mu(q)$.
+By Lemma 1, $\mu(p) \LEQ \mu(q)$.
 From $r \in \mathcal{I}(q)$, $\mu(r) \sqcap \mu(q) = \bot$.
-By Lemma 2, $\mu(r) \sqcap \mu(p) \leq \mu(r) \sqcap \mu(q)$ (substituting $\mu(r)$ for $x$, $\mu(p)$ for $m$, and $\mu(q)$ for $n$).
-But if $\mu(r) \sqcap \mu(q) = \bot$, and $\mu(r) \sqcap \mu(p) \leq \mu(r) \sqcap \mu(q)$, then $\mu(r) \sqcap \mu(p) = \bot$ also, because the only element that is $\leq \bot$ is $\bot$ itself.
+By Lemma 2, $\mu(r) \sqcap \mu(p) \LEQ \mu(r) \sqcap \mu(q)$ (substituting $\mu(r)$ for $x$, $\mu(p)$ for $m$, and $\mu(q)$ for $n$).
+But if $\mu(r) \sqcap \mu(q) = \bot$, and $\mu(r) \sqcap \mu(p) \LEQ \mu(r) \sqcap \mu(q)$, then $\mu(r) \sqcap \mu(p) = \bot$ also, because the only element that is $\LEQ \bot$ is $\bot$ itself.
 But if $\mu(r) \sqcap \mu(p) = \bot$, then $r \in \mathcal{I}(p)$.
 \qed
 
@@ -108,9 +108,9 @@ If $m \nvDash q$, then there is a formula $q'$ that does not contain $\AND$ such
 
 In case (i), there must be an $i$ between $0$ and $n$ such that $m \models \langle a_1 \rangle ... \langle a_i \rangle \top$ but $m \nvDash  \langle a_1 \rangle ... \langle a_{i+1} \rangle \top$. We need to construct another model $n$ such that $n \sqcap \mu(q) = \bot$, but $n \sqcap \mu(p) \neq \bot$. Letting $m = ((\mathcal{W},\rightarrow,\lambda),w)$, then $m \models \langle a_1 \rangle ... \langle a_i \rangle \top$ implies that there is at least one sequence of states of the form $w, w_1, ..., w_i$ such that $w \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_i$. 
 Now let $n$ be just like $m$ but with additional transition-restrictions on each $w_i$ that it not include $a_{i+1}$. 
-In other words, $\lambda_n(w_i) = \lambda_m(w_i)  - \{a_{i+1}\}$ for all $w_i$ in sequences of the form $w \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_i$. Now $n \sqcap \mu(q) = \bot$ because of the additional transition restriction we added to $n$, which rules out $\langle a_1 \rangle ... \langle a_{i+1} \rangle \top$, and a-forteriori $q$. But $n \sqcap \mu(p) \neq \bot$, because $m \models p$ and $n \leq m$ together imply $n \models p$. So $n$ is indeed the model we were looking for, that is incompatible with $\mu(q)$ while being compatible with $\mu(p)$.
+In other words, $\lambda_n(w_i) = \lambda_m(w_i)  - \{a_{i+1}\}$ for all $w_i$ in sequences of the form $w \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_i$. Now $n \sqcap \mu(q) = \bot$ because of the additional transition restriction we added to $n$, which rules out $\langle a_1 \rangle ... \langle a_{i+1} \rangle \top$, and a-forteriori $q$. But $n \sqcap \mu(p) \neq \bot$, because $m \models p$ and $n \LEQ m$ together imply $n \models p$. So $n$ is indeed the model we were looking for, that is incompatible with $\mu(q)$ while being compatible with $\mu(p)$.
 
-In case (ii), $m \models \langle a_1 \rangle ... \langle a_n \rangle \top$ but $m \nvDash \langle a_1 \rangle ... \langle a_n \rangle !A$ for some $A \subset \mathcal{S}$. We need to produce a model $n$ that is incompatible with $\mu(q)$ but not with $\mu(p)$. Given that $m \models \langle a_1 \rangle ... \langle a_n \rangle \top$, there is a sequence of states $w, w_1, ..., w_n$ such that $w \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_n$. Let $n$ be the model just like $n$ except it has an additional transition from each such $w_n$ with a symbol $s \notin A$. Clearly, $n \sqcap \mu(q') = \bot$ because of the additional $s$-transition, and given that $q \models q'$, it follows that $n \sqcap \mu(q) = \bot$. Also, $n \sqcap \mu(p) \neq \bot$, because $n \leq m$ and $m \models p$.
+In case (ii), $m \models \langle a_1 \rangle ... \langle a_n \rangle \top$ but $m \nvDash \langle a_1 \rangle ... \langle a_n \rangle !A$ for some $A \subset \mathcal{S}$. We need to produce a model $n$ that is incompatible with $\mu(q)$ but not with $\mu(p)$. Given that $m \models \langle a_1 \rangle ... \langle a_n \rangle \top$, there is a sequence of states $w, w_1, ..., w_n$ such that $w \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_n$. Let $n$ be the model just like $n$ except it has an additional transition from each such $w_n$ with a symbol $s \notin A$. Clearly, $n \sqcap \mu(q') = \bot$ because of the additional $s$-transition, and given that $q \models q'$, it follows that $n \sqcap \mu(q) = \bot$. Also, $n \sqcap \mu(p) \neq \bot$, because $n \LEQ m$ and $m \models p$.
 
 
 \end{proof}
@@ -193,10 +193,10 @@ Since there is a formula which $x$ and $x'$ do not agree on, $x$ and $x'$ are no
 But this proof cannot be used in EL because it relies on a formula $[s] (\phi_1 \lor ... \lor \phi_n)$ which cannot be expressed in EL. 
 EL does not include the box operator or disjunction, so this formula is ruled out on two accounts.
 But we can massage it into a form which is more amenable to EL's expressive resources:
-\begin{eqnarray}
-[s] (\phi_1 \lor ... \lor \phi_n) & = & \neg \langle s \rangle \neg (\phi_1 \lor ... \lor \phi_n) \nonumber \\
-	& = & \neg \langle s \rangle (\neg \phi_1\AND ... \AND \neg \phi_n) \nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+[s] (\phi_1 \lor ... \lor \phi_n) & = & \neg \langle s \rangle \neg (\phi_1 \lor ... \lor \phi_n)  \\
+	& = & \neg \langle s \rangle (\neg \phi_1\AND ... \AND \neg \phi_n) 
+\end{eqnarray*}
 Further, if the original formula $[s] (\phi_1 \lor ... \lor \phi_n)$ is true in $x'$ but not in $x$, then its negation will be true in $x$ but not in $x'$. 
 So we have the following formula, true in $x$ but not in $x'$:
 \[
@@ -208,10 +208,10 @@ But we are almost there: the remaining negation is in innermost scope, and inner
 
 We are assuming, for reductio, that of the $y'_1, ..., y'_n$, there is no $y'_i$ such that $y \equiv y'_i$.
 But in EL without negation, we cannot assume that each $y'_i$ has a formula $\phi_i$ which is satisfied by $y'_i$ but not by $y$ - it might instead be the other way round: $\phi_i$ may be satisfied by $y$ but not by $y'_i$. So, without loss of generality, assume that $y'_1, ..., y'_m$ fail to satisfy formulae $\phi_1, ..., \phi_m$ which $y$ does satisfy, and that $y'_{m+1}, ..., y'_n$ satisfy formulae $\phi_{m+1}, ..., \phi_n$ which $y$ does not:
-\begin{eqnarray}
-y \models \phi_i \mbox{ and } y'_i \nvDash \phi_i & & i = 1 \mbox{ to } m \nonumber \\
-y \nvDash \phi_j \mbox{ and } y'_j \models \phi_j & & j = m+1 \mbox{ to } n \nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+y \models \phi_i \mbox{ and } y'_i \nvDash \phi_i & & i = 1 \mbox{ to } m  \\
+y \nvDash \phi_j \mbox{ and } y'_j \models \phi_j & & j = m+1 \mbox{ to } n 
+\end{eqnarray*}
 The formula we will use to distinguish between $x$ and $x'$ is:
 \[
  \langle s \rangle ( \bigwedge_{i=1}^m \phi_i \; \AND \; \bigwedge_{j=m+1}^n \mathsf{neg}(y, \phi_j))
@@ -313,12 +313,12 @@ We write $x \xrightarrow{s} y$ to abbreviate $(x,s,y) \in \rightarrow$.
 A {\bf  LTS} is a pair $(l, w)$, where $l$ is a LTS $(\mathcal{W}, \rightarrow)$ and $w$ is a distinguished state $w \in \mathcal{W}$.
 
 A formula of HML is evaluated in a  LTS $(l, w)$:
-\begin{eqnarray}
-(l,w) & \models & \top \nonumber \\
-(l,w) & \models & \phi_1 \AND \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2 \nonumber \\
-(l,w) & \models & \langle s \rangle \phi \mbox{ iff there is a } w \xrightarrow{s} w' \mbox { such that } (l,w') \models \phi \nonumber \\
-(l,w) & \models & \neg \phi \mbox{ iff } (l,w)  \nvDash \phi \nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+(l,w) & \models & \top  \\
+(l,w) & \models & \phi_1 \AND \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2  \\
+(l,w) & \models & \langle s \rangle \phi \mbox{ iff there is a } w \xrightarrow{s} w' \mbox { such that } (l,w') \models \phi  \\
+(l,w) & \models & \neg \phi \mbox{ iff } (l,w)  \nvDash \phi 
+\end{eqnarray*}
 
 
 \subsection{Translating EL into HML}
@@ -330,12 +330,12 @@ Syntactically, EL has the transition-restriction operator ($!$) instead of logic
 Semantically, an EL model has an additional node-labelling, describing the allowable transitions from each vertex
 \end{itemize}
 We can translate formulae of EL into HML using the function $t$:
-\begin{eqnarray}
-t(\top) & = & \top \nonumber \\
-t(\phi_1 \AND \phi_2) & = & t(\phi_1) \AND t(\phi_2) \nonumber \\
-t(\langle s \rangle \phi) & = & \langle s \rangle t(\phi) \nonumber \\
-t(! A) & = & \bigwedge_{s \in S - A} \neg \langle s \rangle \top \nonumber
-\end{eqnarray}
+\begin{eqnarray*}
+t(\top) & = & \top  \\
+t(\phi_1 \AND \phi_2) & = & t(\phi_1) \AND t(\phi_2)  \\
+t(\langle s \rangle \phi) & = & \langle s \rangle t(\phi)  \\
+t(! A) & = & \bigwedge_{s \in S - A} \neg \langle s \rangle \top 
+\end{eqnarray*}
 If $\mathcal{S}$ is an infinite set, then the translation of a $!$
 formula will be an infinitary formula.  If $\mathcal{S}$ is finite,
 then the size of the HML formula will be of the order of $n *
