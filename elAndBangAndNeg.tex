@@ -5,9 +5,9 @@
 
 Given a set $\mathcal{S}$ of symbols, with $a$ ranging over
 $\mathcal{S}$, and $A$ ranging over (possibly empty) sequences of
-elements of $\mathcal{S}$, the sentences of EL$[\land, !, \neg]$ are
+elements of $\mathcal{S}$, the formulae of EL$[\land, !, \neg]$ are
 given by\footnote{We include $\lor$, even though it is definable in
-terms of $\neg$ and $\land$, because our decision procedure involves
+formulae of $\neg$ and $\land$, because our decision procedure involves
 translating formulae into Disjunctive Normal Form.}:
 
 \begin{GRAMMAR}
@@ -38,7 +38,7 @@ Negation can be translated away using the following rewrite rules,
   \neg_\Sigma(\fBang A) & \ = \ & \bigvee_{a \in \Sigma - A} \langle a \rangle \top\nonumber
 \end{eqnarray}
 
-\NI Note that, if $\Sigma$ is infinite, then the last two clauses will generate infinitary sentences.
+\NI Note that, if $\Sigma$ is infinite, then the last two clauses will generate infinitary formulae.
 
 \subsection{Restricting the Law of the Excluded Middle to a Determinate Set of Possibilities}
 
@@ -96,7 +96,7 @@ range of possible choices, there are an \emph{indefinite} number of
 ways in which this could be true.  But if we knew that the only
 possible teams Jack could support are Manchester United, Arsenal or
 Chelsea, then suddenly our negation has some determinate content.
-SNEL captures this intuition.  Once a negated sentence has been
+SNEL captures this intuition.  Once a negated formula has been
 precisified by specifying the range of allowable options (via the $!$
 operator), the negated claim can be made precise, and the law of
 excluded middle can be proven.
@@ -104,7 +104,7 @@ excluded middle can be proven.
 \subsubsection{Discussion: Negation as Infinitary Disjunction. }
 As is well known the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.
 
-Analogously, given an infinite set $\mathcal{S}$ of symbols, the negation of propositional logic can be translated into an infinitary disjunction of sentences in SNEL.
+Analogously, given an infinite set $\mathcal{S}$ of symbols, the negation of propositional logic can be translated into an infinitary disjunction of formulae in SNEL.
 
 
 
@@ -273,10 +273,10 @@ Every formula that is satisfiable has a simplest satisfying model
 There is a simple linear-time decision procedure
 \end{itemize}
 But there is one way in which EL[$\land, !$]  is significantly more expressive.
-No two sentences of PL[$\land$] (or HML[$\land$] ) are incompatible with each other. 
-But many pairs of sentences of EL[$\land, !$] are incompatible.
+No two formulae of PL[$\land$] (or HML[$\land$] ) are incompatible with each other. 
+But many pairs of formulae of EL[$\land, !$] are incompatible.
 (For example: $\langle a \rangle \top$ and $! []$). 
-Because EL[$\land, !$]  is expressive enough to be able to make incompatible claims, it satisfies Brandom's property of {\bf Incompatibility Semantics\footnote{$Inc(p)$ is the set of sets of sentences incompatible with $p$.}}:
+Because EL[$\land, !$]  is expressive enough to be able to make incompatible claims, it satisfies Brandom's property of {\bf Incompatibility Semantics\footnote{$Inc(p)$ is the set of sets of formulae incompatible with $p$.}}:
 \[
 p \models q \mbox{ iff } Inc(q) \subseteq Inc(p)
 \]
@@ -305,7 +305,7 @@ Clearly, $p \models_{HML} q$. But $t(p) = P_{(i,j)}$ and $t(q) = P_{(i',j')}$ fo
 \begin{proposition}
 EL [$\land, !, \neg$]  is more expressive than full HML
 \end{proposition}
-Given a background set $\mathcal{S}$ of symbols, the sentence $\fBang A$ of EL can be translated into HML as:
+Given a background set $\mathcal{S}$ of symbols, the formula $\fBang A$ of EL can be translated into HML as:
 \[
 \bigwedge_{a \in \mathcal{S} - A} \neg \langle a \rangle \top
 \]

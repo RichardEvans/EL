@@ -4,7 +4,7 @@
 
 \begin{definition} Given a set $\mathcal{S}$ of symbols, with $a$ ranging over
 $\mathcal{S}$, and $A$ ranging over finite subsets of $\mathcal{S}$,
-the sentences of EL$[\AND, !]$ are given by:
+the formulae of EL$[\AND, !]$ are given by:
 
 \begin{GRAMMAR}
   \phi 
@@ -61,12 +61,23 @@ From now on, we will restrict ourselves to valid models.
 \input{figure:elAndBangRules}
 
 \subsection{Inference Rules}
+
+This section presend the inference rules for EL.
 In EL, a judgement is of the form:
+
 \[
-A \judge B
+  A \judge B
 \]
-Here, $A$ and $B$ are \emph{single terms}.
-To avoid the need for structural inference rules, we restrict sequents to single terms on the left and right hand side.
+
+\NI Here, $A$ and $B$ are \emph{single formulae}, not sequents.  To
+avoid the need for structural inference rules, we restrict sequents to
+single formulae on the left and right hand side.
+EL proof rules can be grouped in two parts: standard rules and rules unique to EL.
+Standard rules are [\RULENAME{Identity}
+
+$\top$-Right]
+
+
 
 \subsection{Standard Rules}
 EL has the following standard axioms and inference-rules:
@@ -91,7 +102,7 @@ X \judge \top
 \bot \judge X
 }
 \]
-Note that $\bot$ is not a primitive symbol of EL - it is defined as one of the unsatisfiable terms, for example $\langle a \rangle \top \; \AND \; \fBang \{\}$. 
+Note that $\bot$ is not a primitive symbol of EL - it is defined as one of the unsatisfiable formulae, for example $\langle a \rangle \top \; \AND \; \fBang \{\}$. 
 
 EL has the standard transitivity inference rule:
 \begin{center}
@@ -196,7 +207,7 @@ Our proof will make use of two lemmas:
 \item
 Lemma 4: if $m \models p$ then $\theta(m) \judge p$.
 \item
-Lemma 5: for all terms $p$, $p \judge \theta(\mu(p))$.
+Lemma 5: for all formulae $p$, $p \judge \theta(\mu(p))$.
 \end{itemize}
 With these two lemmas in hand, the proof is straightforward.
 \begin{theorem}
@@ -277,7 +288,7 @@ Now we can prove $! \; \lambda(w) \AND \phi \judge \fBang A$ using  {\bf $!$ Rig
 \end{proof}
 
 \begin{lemma}
-For all terms $p$, we can derive $p \judge \theta(\mu(p))$.
+For all formulae $p$, we can derive $p \judge \theta(\mu(p))$.
 \end{lemma}
 Explanation: $\mu(p)$ is the simplest model satisfying $p$, and $\theta(m)$ is the simplest formula describing $m$, so $\theta(\mu(p))$ is a simplified form of $p$. This lemma states that EL has the inferential capacity to transform any proposition into its simplified form.
 \begin{proof}
@@ -426,7 +437,7 @@ A set of two-place predicates $Arr_s(x, y)$, one for each $s \in \mathcal{S}$, w
 A set of one-place predicates $Restrict_A$, one for each finite subset $A \subseteq \mathcal{S}$. 
 $Restrict_{A}(x)$ is true if $\lambda(x) = A$.
 \end{itemize}
-With $x_1, x_2$ being state variables, $s$ a symbol in $\mathcal{S}$, and $A$ ranging over subsets of $\mathcal{S}$, our restricted fragment of FOL has sentences of the form:
+With $x_1, x_2$ being state variables, $s$ a symbol in $\mathcal{S}$, and $A$ ranging over subsets of $\mathcal{S}$, our restricted fragment of FOL has formulae of the form:
 \begin{GRAMMAR}
   \phi 
      &\quad ::= \quad&

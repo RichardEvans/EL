@@ -1,7 +1,7 @@
 \section{Using Eremic Logic as a Knowledge Representation Language}
 Eremic Logic has been found to be a highly-ergonomic language for the representation of complex simulational state.
 It has been used as the representation language for a large, complex, highly-dynamic multi-agent simulation \cite{evans-and-short}.
-The entire world state is stored as a set of sentences - all other aspects of world state are transient and computed as needed.
+The entire world state is stored as a set of formulae - all other aspects of world state are transient and computed as needed.
 The entire world state is stored as a Labelled Rooted Tree, using the non-monotonic update mechanism described above.
 The application in which Eremic Logic has been proven is not a toy academic problem, but an industrial-sized application involving tens of thousands of rules and tens of thousands of atomic facts.
 
@@ -21,7 +21,7 @@ The $!$ operator provides additional information to the compiler, allowing signi
 I shall go through each of these in turn.
 
 \subsection{Using Sub-trees of Expressions to Represent Objects}
-Consider the following facts about Brown\footnote{The database is composed of Y-terms. For readability, the trailing $\star \top$ has been omitted. In Praxis, constants are identifiers starting with a lower-case letter while variables start with an upper-case letter.}:
+Consider the following facts about Brown\footnote{The database is composed of Y-formulae. For readability, the trailing $\star \top$ has been omitted. In Praxis, constants are identifiers starting with a lower-case letter while variables start with an upper-case letter.}:
 \begin{verbatim}
 brown *
     (
@@ -40,10 +40,10 @@ And all the facts which start with the prefix ``brown * friends'' form a sub-tre
 A sub-tree can be treated as an individual via its prefix.
 The whole sub-tree can be removed in one fell swoop by deleting its associated prefix.
 So we can e.g. remove Brown's friends just by deleting the prefix ``brown * friends\'.
-(Compare this with Prolog - where it is much harder to remove all sentences containing a particular symbol).
-A sub-tree of terms is the Eremic Logic equivalent of an \emph{object} in an object-oriented programming language.
+(Compare this with Prolog - where it is much harder to remove all formulae containing a particular symbol).
+A sub-tree of formulae is the Eremic Logic equivalent of an \emph{object} in an object-oriented programming language.
 
-The tree-structure of terms also allows us to express the \emph{life-time of data} in a natural way. 
+The tree-structure of formulae also allows us to express the \emph{life-time of data} in a natural way. 
 If we wish a piece of data $d$ to exist for just the duration of a proposition $t$, then we make $t$ be a sub-expression of $d$. 
 For example, if we want the friendships of an agent to exist just as long as the agent, then we place the relationships inside the agent: 
 \begin{verbatim}
@@ -59,7 +59,7 @@ So if, for example, Brown is married to Elizabeth, then the database would conta
 \begin{verbatim}
 brown * married ! elizabeth
 \end{verbatim}
-In Eremic Logic, if we want to find out whether Brown is married, we can query the sub-term directly -  we just ask if 
+In Eremic Logic, if we want to find out whether Brown is married, we can query the sub-formula directly -  we just ask if 
 \begin{verbatim}
 brown * married
 \end{verbatim}
@@ -83,7 +83,7 @@ action move(A, X, Y)
         add: at(A, Y) 
         remove: at(A, X)
 \end{verbatim}
-Here, we need to explicitly state that when $A$ moves from $X$ to $Y$, $A$ is no longer at $X$. It might seem obvious to us that if $A$ is now at $Y$, he is no longer at $X$ - but we need to explicitly tell the system this. This is unnecessary, cumbersome and error-prone. In Eremic Logic, by contrast, the exclusion operator means we do not need to specify the facts that are no longer true\footnote{Note that the rule is a horn-clause of Y-terms, not X-terms. Note also that the trailing $\star \top$ has been suppressed for readability.}:
+Here, we need to explicitly state that when $A$ moves from $X$ to $Y$, $A$ is no longer at $X$. It might seem obvious to us that if $A$ is now at $Y$, he is no longer at $X$ - but we need to explicitly tell the system this. This is unnecessary, cumbersome and error-prone. In Eremic Logic, by contrast, the exclusion operator means we do not need to specify the facts that are no longer true\footnote{Note that the rule is a horn-clause of Y-formulae, not X-formulae. Note also that the trailing $\star \top$ has been suppressed for readability.}:
 \begin{verbatim}
 action move * A * X * Y
     preconditions
@@ -118,7 +118,7 @@ married_couple_at_home(X, Y) :-
 Rules like this create a large search-space because we need to find all instances of $at\_home(X)$ and all instances of  $at\_home(Y)$ and take the cross-product \cite{smith-and-genesereth}. If there are $n$ instances of $at\_home$, then we will be searching $n^2$ instances of $(x,y)$ substitutions.
 
 If we express the rule in Eremic Logic, the compiler is able to use the extra information expressed in the $!$ operator to reorder the clauses to find the result significantly faster.
-Since someone can only have a single spouse at any moment, the rule is expressed in Eremic Logic as\footnote{Note that the rule is a horn-clause of Y-terms, not X-terms. Note also that the trailing $\star \top$ has been suppressed for readability.}:
+Since someone can only have a single spouse at any moment, the rule is expressed in Eremic Logic as\footnote{Note that the rule is a horn-clause of Y-formulae, not X-formulae. Note also that the trailing $\star \top$ has been suppressed for readability.}:
 \begin{verbatim}
 married_couple_at_home * X * Y :-
     at_home * X,

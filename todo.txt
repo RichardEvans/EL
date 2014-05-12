@@ -11,6 +11,8 @@
 
   - Term defined should always be \textbf{...} or \textsc{...} etc.
 
+  - FOrmulae vs terms vs sentences
+
 *  I recommend to use the following order of presentation in Chapters 2 and 3.
 
   - Formulae
@@ -63,3 +65,5 @@
   - Standard Modal Logic stuff
   - HM Logic
   - Linear logic (additive conjunction)
+
+* The rule (! left) is not used in the completeness proof. Why not?

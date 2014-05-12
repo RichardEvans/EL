@@ -31,8 +31,8 @@ Intuitively, $m \leq n$ if $m$ can match all the transitions of $n$ while respec
 To make our models into a lattice, we add a bottom element $\bot$ and stipulate that $\bot \leq m$ for all pointed models $m$.
 The topmost element in the lattice is the pointed model $( (\{w\}, \{\}, \{w \mapsto \mathcal{S}\}), w)$ (for some state $w$): this is the model with no transitions and no transition restrictions.
 
-\subsection{Defining $\mu$ - the Simplest Pointed Model Satisfying a Term}
-We define a function $\mu$ which, given a formula $\phi$, produces the simplest\footnote{``Simplest'' as in the least upper bound, according to $\leq$, defined in terms of simulation.} model which satisfies $\phi$:
+\subsection{Defining $\mu$ - the Simplest Pointed Model Satisfying a Formula}
+We define a function $\mu$ which, given a formula $\phi$, produces the simplest\footnote{``Simplest'' as in the least upper bound, according to $\leq$, defined in formulae of simulation.} model which satisfies $\phi$:
 \begin{eqnarray}
 \mu (\top) & = & ( (\{v\}, \{\}, \{v \mapsto \mathcal{S}\}), v) \nonumber \\
 \mu (\fBang A) & = & ( (\{v\}, \{\}, \{v \mapsto A\}), v) \nonumber \\
@@ -86,7 +86,7 @@ It is easy to show that $\mu$ satisfies the following propositions:
 \mbox{if }n \models \phi \mbox{ and } m \leq n & \mbox{ then } & m \models \phi \nonumber
 \end{eqnarray}
 
-\subsection{Defining $\theta$ - a Term that Characterises a Model}
+\subsection{Defining $\theta$ - a Formula that Characterises a Model}
 The inverse function $\theta$ produces a formula that characterises a given pointed model:
 \begin{eqnarray}
 \theta(\bot) & = & \langle a \rangle \top \AND ! \{ \} \mbox{ for some symbol }a \nonumber \\
@@ -136,8 +136,8 @@ Construction of $\mu(p)$ is linear in the size of $p$, and computing whether a m
 
 \subsection{Incompatibility Semantics}
 
-Define the set of terms\footnote{Brandom \cite{brandom} defines incompatibility slightly differently: he defines the set of \emph{sets} of sentences which are incompatible with a \emph{set} of sentences. 
-But in EL, if a set of sentences is incompatible, then there is an incompatible subset of that set with exactly two members.
+Define the set of formulae\footnote{Brandom \cite{brandom} defines incompatibility slightly differently: he defines the set of \emph{sets} of formulae which are incompatible with a \emph{set} of formulae. 
+But in EL, if a set of formulae is incompatible, then there is an incompatible subset of that set with exactly two members.
 So we can work with the simpler definition in the text above.}
  incompatible with $p$ as:
 \[
@@ -299,7 +299,7 @@ The formula we will use to distinguish between $x$ and $x'$ is:
 \[
  \langle s \rangle ( \bigwedge_{i=1}^m \phi_i \; \AND \; \bigwedge_{j=m+1}^n \mathsf{neg}(y, \phi_j))
  \]
- Here, $\mathsf{neg}$ is a meta-language function that, given a state y and a formula $\phi_j$, returns a sentence that is true in $y$ but incompatible with $\phi_j$. I will show that, since $y \nvDash \phi_j$, it is always possible to construct $ \mathsf{neg}(y, \phi_j)$ using the $!$ operator.
+ Here, $\mathsf{neg}$ is a meta-language function that, given a state y and a formula $\phi_j$, returns a formula that is true in $y$ but incompatible with $\phi_j$. I will show that, since $y \nvDash \phi_j$, it is always possible to construct $ \mathsf{neg}(y, \phi_j)$ using the $!$ operator.
 
 Consider the possible forms of $\phi_j$:
 \begin{itemize}
@@ -383,7 +383,7 @@ EL, also, has the expressive capacity to distinguish between non-bisimilar model
 
 \subsection{Comparing EL with Hennessy-Milner Logic}
 
-Given a set $\mathcal{S}$ of symbols, with $s$ ranging over $\mathcal{S}$, the sentences of Hennessy-Milner Logic (HML) are given by:
+Given a set $\mathcal{S}$ of symbols, with $s$ ranging over $\mathcal{S}$, the formulae of Hennessy-Milner Logic (HML) are given by:
 \begin{GRAMMAR}
   \phi 
      &\quad ::= \quad & 
@@ -395,7 +395,7 @@ We write $x \xrightarrow{s} y$ to abbreviate $(x,s,y) \in \rightarrow$.
 
 A {\bf pointed LTS} is a pair $(l, w)$, where $l$ is a LTS $(\mathcal{W}, \rightarrow)$ and $w$ is a distinguished state $w \in \mathcal{W}$.
 
-A sentence of HML is evaluated in a pointed LTS $(l, w)$:
+A formula of HML is evaluated in a pointed LTS $(l, w)$:
 \begin{eqnarray}
 (l,w) & \models & \top \nonumber \\
 (l,w) & \models & \phi_1 \AND \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2 \nonumber \\
@@ -419,6 +419,9 @@ t(\phi_1 \AND \phi_2) & = & t(\phi_1) \AND t(\phi_2) \nonumber \\
 t(\langle s \rangle \phi) & = & \langle s \rangle t(\phi) \nonumber \\
 t(! A) & = & \bigwedge_{s \in S - A} \neg \langle s \rangle \top \nonumber
 \end{eqnarray}
-If $\mathcal{S}$ is an infinite set, then the translation of a $!$ formula will be an infinitary sentence.
-If $\mathcal{S}$ is finite, then the size of the HML formula will be of the order of $n * |\mathcal{S}|$ larger than the original EL formula (where $n$ is the number of $!$ operators occurring in the EL formula).
+If $\mathcal{S}$ is an infinite set, then the translation of a $!$
+formula will be an infinitary formula.  If $\mathcal{S}$ is finite,
+then the size of the HML formula will be of the order of $n *
+|\mathcal{S}|$ larger than the original EL formula (where $n$ is the
+number of $!$ operators occurring in the EL formula).
 
