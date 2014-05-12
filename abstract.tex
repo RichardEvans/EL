@@ -1,5 +1,32 @@
 \begin{abstract}
-Eremic Logic is a simple modal logic for capturing inferences between ``atomic'' sentences. 
-It is the only Hennessy-Milner style logic satisfying the Hennessy-Milner theorem that has a linear-time decision procedure.
-It has been put to use in an industrial application, as the representational core of a new logic programming language. The resulting code is shorter, less error-prone, and more efficient than the corresponding code in traditional predicate logic.
+Eremic Logic is a simple modal logic for capturing inferences between
+``atomic'' sentences.  It is the only Hennessy-Milner style logic
+satisfying the Hennessy-Milner theorem that has a linear-time decision
+procedure\martin{We have not proved this fact. I suspect that it's
+  actually false!}.  It has been put to use in an industrial
+application, as the representational core of a new logic programming
+language. The resulting code is shorter, less error-prone, and more
+efficient than the corresponding code in traditional predicate
+logic.\martin{too subjective for an abstract in particular. Only state
+  proven facts!}
+
+\martin{here is an alternative abstract. What do you think?}
+
+Eremic Logic is a modal logic with a novel operator expressing
+\emph{exclusion} between sentences. Exclusion can be used to express
+the concept of negation.  We present the syntax, proof rules, and
+semantics of eremic logic, and establish key meta-theorems such as
+completeness and compactness.  We also show that the syntactic notion
+of elementary equivalence induced by the the formulae of eremic logic
+coincides with the semantic notion of bisimilarity on models.  Then we
+give a linear-time decision procedure for an important fragment of of
+eremic logic. This fragment has been used in an industrial
+application.  We argue that this fragment is a suitable query language
+for knowledge representation and logic programming. We also further
+elusidate eremic logic by translation to first-order logic as well as
+Hennessy-Milner logic. \martin{do we go the other way round?} We
+conclude with a discussion of using eremic logic to model features of
+natural language, such as inferences between ``atomic'' sentences,
+refining Brandom's incompatibility semantics.
+
 \end{abstract}
