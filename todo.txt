@@ -1,6 +1,5 @@
 
 * Finalise the name of the logic. I am going to check with my friend Tim Whitmarsh one more time that "Eremic Logic" is the best name for it.
-    
 
 * Find a better name for !A than "bang A".
 
