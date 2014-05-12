@@ -66,143 +66,207 @@ This section presend the inference rules for EL.
 In EL, a judgement is of the form:
 
 \[
-  A \judge B
+  X \judge Y
 \]
 
-\NI Here, $A$ and $B$ are \emph{single formulae}, not sequents.  To
+\NI Here, $X$ and $Y$ are \emph{single formulae}, not sequents.  To
 avoid the need for structural inference rules, we restrict sequents to
-single formulae on the left and right hand side.
-EL proof rules can be grouped in two parts: standard rules and rules unique to EL.
-Standard rules are [\RULENAME{Identity}
+single formulae on the left and right hand side. Figure
+\ref{figure:elAndBangRules} presents all rules.  EL proof rules can be
+grouped in two parts: standard rules and rules unique to EL.  Standard
+rules are [\RULENAME{Identity}], [\RULENAME{$\top$-Right}],
+[\RULENAME{$\bot$-Left}], [\RULENAME{Transitivity}],
+[\RULENAME{$\AND$-Left 1}], [\RULENAME{$\AND$-Left 2}] and
+[\RULENAME{$\AND$-Right}] hardly need explanation as they are variants
+of familiar rules for propositional logic, see
+e.g.~\cite{TroelstraAS:basprot,vanDalenD:logstr}.  We now explain the
+rules that give EL's its distinctive properties: the relations betwen
+$\langle \rangle$, $!$ and $\bot$.
 
-$\top$-Right]
+The rule [\RULENAME{$\bot$-Right 1}] axiom captures the core
+\emph{exclusion} property of !: for example if $A = \{male, female\}$
+then $\MAY{orange}{X}$ is incompatible with $!A$. Thus $!A \AND
+\MAY{orange}{X}$ must be false.
 
+The rule [\RULENAME{$\bot$-Right 2}] expresses that falsity is 'global'
+  and cannot be surpressed by prefixing. For example
+  $\MAY{orange}{\bot}$ is false, simply because $\bot$ is already
+  false.
 
-
-\subsection{Standard Rules}
-EL has the following standard axioms and inference-rules:
-Our first axiom is {\bf Identity}:
+Relatedly, the rule [\RULENAME{Transition Normal}] enables us to
+prefix an inference with a may-modality. For example \martin{add good
+  example here.}. Note that it is vital for soundness that $X$ in $X
+\judge Y$ is a single formula. If we used transitional sequents $X_1, ..., X_n \judge Y$,
+then the rule
 \[
-\boxed
-{
-X \judge X
-}
+   \ONEPREMISERULE
+   {
+     X_1, ..., X_n \judge Y
+   }
+   {
+     \MAY{a}{X_1}, ..., \MAY{a}{X_n} \judge \MAY{a}{Y}
+   }
 \]
-{\bf $\top$ Right} states that $\top$ is always provable:
+is unsound. \martin{explain why, and why this is significant}. This
+restriction is also in place in \cite{GaySJ:typcalosp} where a
+Curry-Howard corrospondence between a fragment of linear logic
+\cite{GirardJY:linlog,GirardJY:protyp} and a process calculus is
+introduced. We discuss the relationship between EL and linear logic in
+general, and linear logic's additive conjunction in Section
+\ref{conclusion}.
+
+
+The three rules [\RULENAME{!-Left}, \RULENAME{!-Right 1},
+  \RULENAME{!-Right 2}] jointly express of the subset relation
+$\subseteq$ on sets of symbols relates to provability. Readers
+familiar with object-oriented programming will recognise
+[\RULENAME{!-Left}] as contra-variant subtyping and [\RULENAME{!-Right
+    1}] as covariant subtyping. Honda \cite{HondaK:thetypftpc}
+develops a full theory of subtyping based on similar ideas.  All three
+rules embody the intuition that whenever $A \subseteq A'$ then
+asserting that $!A'$ is as strong as, or a stronger statement than
+$!A$. [\RULENAME{!-Left}] simply states that we can always strengthen
+our premise, while [\RULENAME{!-right 1}] allows us to weaken the
+premise. \martin{add an intuitive explanation for [\RULENAME{!-right 2}]!}!
+
+Note that the logic has no axioms. One reason for a purely rule-based
+presentation is the absence of implication in the present fragment of
+EL. \martin{explain in more detail!}
+
+We close this subsection with a key meta-theorem.
+
+\begin{theorem}\label{theorem:elAndBang:soundComplete}
+The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
+\begin{enumerate}
+
+\item\label{theorem:elAndBang:sound} (Soundness) $X \judge Y$ implies $X \models Y$.
+
+\item\label{theorem:elAndBang:complete} (Completeness) $X \models Y$ implies $X \judge Y$.
+
+\end{enumerate}
+\end{theorem}
+
+\NI Soundness is immediate from the definitions. Proof of completeness is
+deferred to Section \ref{completenessProof}. 
+
+\subsection{Example inferences}
+
+We give some example inferences that illustrate how EL is used in
+practise.
+\martin{Add some example assertions here, for example some of those we
+  use later.}
+
+\subsection{Proof of completeness}\label{completenessProof}
+
+\NI We now prove completeness of the rules in Figure
+\ref{figure:elAndBangRules} (Theorem
+\ref{theorem:elAndBang:soundComplete}.\ref{theorem:elAndBang:complete}).
+The proof requires the development of additional technology which is
+useful in other contexts as well.
+
+\begin{itemize}
+
+\item An ordering $\leq$ on models, which enables us to speak of the
+  simplest model satisfying a formula.
+
+\item An algorithm which gives the simplest model for a formula.
+
+\item An algorithm which gives the a formula characterising a model.
+
+\end{itemize}
+
+\NI We now develop these three in turn and then prove completeness.
+
+\subsubsection{A Partial Ordering on Pointed Models}
+
+\NI We use the notion of simulation to define a partial ordering
+$\leq$ on pointed models: \martin
+
+\begin{definition}
+$(l,w) \leq (l',w')$ if there is a simulation $Z$ from $l'$ to $l$ with $(w',w) \in Z$
+\end{definition}
+Intuitively, $m \leq n$ if $m$ can match all the transitions of $n$ while respecting the transitions-restrictions.
+
+To make our models into a lattice, we add a bottom element $\bot$ and stipulate that $\bot \leq m$ for all pointed models $m$.
+The topmost element in the lattice is the pointed model $( (\{w\}, \{\}, \{w \mapsto \mathcal{S}\}), w)$ (for some state $w$): this is the model with no transitions and no transition restrictions.
+
+\subsubsection{Defining $\mu$ - the Simplest Pointed Model Satisfying a Formula}
+We define a function $\mu$ which, given a formula $\phi$, produces the simplest\footnote{``Simplest'' as in the least upper bound, according to $\leq$, defined in formulae of simulation.} model which satisfies $\phi$:
+\begin{eqnarray}
+\mu (\top) & = & ( (\{v\}, \{\}, \{v \mapsto \mathcal{S}\}), v) \nonumber \\
+\mu (\fBang A) & = & ( (\{v\}, \{\}, \{v \mapsto A\}), v) \nonumber \\
+\mu (\phi_1 \AND \phi_2) & = & \mu(\phi_1) \sqcap \mu(\phi_2) \nonumber \\
+\mu (\langle a \rangle \phi) & = & ( (\mathcal{W} \cup \{w'\}, \rightarrow \cup (w' \xrightarrow{a} w), \lambda \cup \{w' \mapsto \mathcal{S}\}]), w') \nonumber \\
+		& & \mbox{where }\mu(\phi) = ( (\mathcal{W}, \rightarrow, \lambda), w) \nonumber \\
+		& & \mbox{and }w' \mbox{ is a new state not appearing in }\mathcal{W} \nonumber
+\end{eqnarray}
+The only complex case is the clause for $\mu (\phi_1 \AND \phi_2)$, which uses the $\sqcap$ function, defined as\footnote{We assume that the sets of states in the two pointed models are disjoint.}:
+
+\begin{eqnarray*}
+  \bot \sqcap X 
+     & = & 
+  \bot \nonumber 
+     \\
+  X \sqcap \bot 
+     & = & 
+  \bot \nonumber 
+     \\
+  m \sqcap n 
+     & = & 
+  \begin{cases}
+    \mathsf{merge}(m, n) & \text{if}\ \mathsf{consistent}(m, n) \\
+    \bot & \text{else}
+  \end{cases}
+\end{eqnarray*}
+
+\noindent The $\mathsf{consistent}$ predicate is true of pointed models $m$ and $n$ if the out-transitions on $m$'s root node respect the labelling on $n$'s root node, and the out-transitions on $n$'s root node respect the labelling on $m$'s root node. In other words:
+\begin{eqnarray}
+\mathsf{consistent}(m, n) & \mbox{ iff } & \mathsf{out}(m) \subseteq \mathsf{restriction}(n) \mbox{ and} \nonumber \\
+& & \mathsf{out}(n) \subseteq \mathsf{restriction}(m) \nonumber
+\end{eqnarray}
+where:
+\begin{eqnarray}
+\mathsf{out}(((\mathcal{W},\rightarrow,\lambda),w)) & = & \{ s \fOr \exists x . w \xrightarrow{s} x \} \nonumber \\
+\mathsf{restriction}(((\mathcal{W},\rightarrow,\lambda),w)) & = & \lambda(w) \nonumber
+\end{eqnarray}
+Now the $\mathsf{merge}$ function fuses two pointed models together:
 \[
-\boxed
-{
-X \judge \top
-}
+\mathsf{merge}( ( (\mathcal{W}, \rightarrow, \lambda), w),  ( (\mathcal{W}', \rightarrow', \lambda'), w')) = ((\mathcal{W} \cup \mathcal{W}', \rightarrow \cup \rightarrow'_2, \lambda_2 \cup \lambda'_2), w)
 \]
-{\bf $\bot$ Left} states that anything is provable from $\bot$:
-\[
-\boxed
-{
-\bot \judge X
-}
-\]
-Note that $\bot$ is not a primitive symbol of EL - it is defined as one of the unsatisfiable formulae, for example $\langle a \rangle \top \; \AND \; \fBang \{\}$. 
+where:
+\begin{eqnarray}
+\rightarrow'_2 & = & \rightarrow' \mbox{ with } w' \mbox{ replaced by } w \nonumber \\
+\lambda_2 & = & \lambda \mbox{ with } w \mapsto \lambda(w) \cap \lambda'(w') \nonumber \\
+\lambda'_2 & = & \lambda' \mbox{ with } w' \mbox{ removed } \nonumber
+\end{eqnarray}
+It is easy to show that $\mu$ satisfies the following propositions:
+\begin{eqnarray}
+\mu(\phi) & \models & \phi \nonumber \\
+\mbox{if }n \models \phi \mbox{ and } m \leq n & \mbox{ then } & m \models \phi \nonumber
+\end{eqnarray}
 
-EL has the standard transitivity inference rule:
-\begin{center}
-\fbox{
-\AxiomC{$X \judge Y$}
-\AxiomC{$Y \judge Z$}
-\LeftLabel{{\bf Transitivity: \quad}}
-\BinaryInfC{$X \judge Z$}
-\DisplayProof
-}
-\end{center}
-It has the standard three rules for handling conjunction:
-\begin{center}
-\fbox{
-\AxiomC{$X \judge Y$}
-\LeftLabel{{\bf $\AND$ Left 1: \quad}}
-\UnaryInfC{$X \AND Z \judge Y$}
-\DisplayProof
-}
-\end{center}
+\subsubsection{Defining $\theta$ - a Formula that Characterises a Model}
+The inverse function $\theta$ produces a formula that characterises a given pointed model:
+\begin{eqnarray}
+\theta(\bot) & = & \langle a \rangle \top \AND ! \{ \} \mbox{ for some symbol }a \nonumber \\
+\theta(l, w) & = & \mathsf{bang}(l,w) \AND \bigwedge_{(s,w') \in \mathsf{trans}(l,w)} \langle s \rangle \theta(l, w') \nonumber 
+\end{eqnarray}
+Here:
+\begin{eqnarray}
+\mathsf{bang}((\mathcal{W},\rightarrow,\lambda),w) & = & \top \mbox{ if } \lambda(w) = \mathcal{S} \nonumber \\
+\mathsf{bang}((\mathcal{W},\rightarrow,\lambda),w) & = & ! \; \lambda(w) \mbox{ otherwise } \nonumber \\
+\mathsf{trans}((\mathcal{W},\rightarrow, \lambda),w) & = & \{(s,w') | w \xrightarrow{s} w' \} \nonumber
+\end{eqnarray}
+Note that $\theta(m)$ is finite if $m$ contains no cycles and if $\lambda(x)$ is either $\mathcal{S}$ or finite for all states $x$.
+Note also that $\mu$ and $\theta$ are inverses of each other in that:
+\begin{eqnarray}
+\mu(\theta(m)) & = & m \nonumber \\
+\theta(\mu(p)) & \mbox{ iff } & p \nonumber
+\end{eqnarray}
 
-\begin{center}
-\fbox{
-\AxiomC{$X \judge Y$}
-\LeftLabel{{\bf $\AND$ Left 2: \quad}}
-\UnaryInfC{$Z \AND X \judge Y$}
-\DisplayProof
-}
-\end{center}
 
-\begin{center}
-\fbox{
-\AxiomC{$X \judge Y$}
-\AxiomC{$X \judge Z$}
-\LeftLabel{{\bf $\AND$ Right: \quad}}
-\BinaryInfC{$X \judge Y \AND Z$}
-\DisplayProof
-}
-\end{center}
-
-\subsection{Rules Unique to EL}
-EL has six rules for capturing its distinctive properties: the relations betwen $\langle \rangle$, $!$ and $\bot$.
-The {\bf Bottom Right 1} axiom captures how $\langle \rangle$ and $!$ interact:
-\[
-\boxed
-{
-\langle a \rangle X \AND \fBang A \judge \bot \mbox{ if } a \notin A
-}
-\]
-{\bf Bottom Right 2} is another axiom for deriving $\bot$ from inside $\langle \rangle$:
-\[
-\boxed
-{
-\langle a \rangle \bot \judge \bot
-}
-\]
-There is a rule for strengthening $\fBang$ on the left hand side: 
-\begin{center}
-\fbox{
-\AxiomC{$X \AND \fBang A \judge Y$}
-\LeftLabel{{\bf ! Left: \quad}}
-\RightLabel{where $A' \subseteq A $}
-\UnaryInfC{$X \AND \fBang A' \judge Y$}
-\DisplayProof
-}
-\end{center}
-There is a rule for weakening $\fBang$ on the right hand side: 
-\begin{center}
-\fbox{
-\AxiomC{$X \judge \fBang A$}
-\LeftLabel{{\bf ! Right 1: \quad}}
-\RightLabel{where $A \subseteq A'$}
-\UnaryInfC{$X \judge \fBang A'$}
-\DisplayProof
-}
-\end{center}
-There is a rule for taking the intersection of two $!$s on the right hand side:
-\begin{center}
-\fbox{
-\AxiomC{$X \judge \fBang A_1$}
-\AxiomC{$X \judge \fBang A_2$}
-\LeftLabel{{\bf ! Right 2: \quad}}
-\BinaryInfC{$X \judge \fBang (A_1 \cap A_2)$}
-\DisplayProof
-}
-\end{center}
-Finally, there is a rule for adding transitions to judgements:
-\begin{center}
-\fbox{
-\AxiomC{$X \judge Y$}
-\LeftLabel{{\bf Transition Normal: \quad}}
-\UnaryInfC{$\langle a \rangle X \judge \langle a \rangle Y$}
-\DisplayProof
-}
-\end{center}
-
-\subsection{Soundness and completeness}
-
-We will show that $p \models q$ implies there is a derivation of $p \judge q$.
-Our proof will make use of two lemmas:
+We will show that $p \models q$ implies there is a derivation of $p
+\judge q$.  Our proof will make use of two lemmas:
 \begin{itemize}
 \item
 Lemma 4: if $m \models p$ then $\theta(m) \judge p$.

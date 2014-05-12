@@ -9,16 +9,11 @@ Let $A$ be a set of \emph{actions}.  A \emph{labelled transition
 
 \begin{definition}
 Given a labelled transition system $\LLL = (S, \rightarrow)$ over $A$,
-a \emph{bisimulation} is a relation $\RRR \subseteq S \times S$ such
-that whenever $(s, s') \in \RRR$:
-\begin{itemize}
-
-\item If $s \TRANS{a} s'$ then there exists a transition $t \TRANS{a} t'$ with $(t, t') \in \RRR$.
-
-\item If $t \TRANS{a} t'$ then there exists a transition $s \TRANS{a} s'$ with $(t, t') \in \RRR$.
-
-\end{itemize}
-
+a \emph{simulation} is a relation $\RRR \subseteq S \times S$ such
+that whenever $(s, s') \in \RRR$: if $s \TRANS{a} s'$ then there
+exists a transition $t \TRANS{a} t'$ with $(t, t') \in \RRR$.  We say
+$\RRR$ is a \emph{bisimulation} if both, $\RRR$ and $\RRR^{-1}$ are
+simulations. Here $\RRR^{-1} = \{(y, x)\ |\ (x, y) \in \RRR\}$.
 \end{definition}
 
 \NI \textbf{To do: add more stuff}
