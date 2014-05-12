@@ -53,6 +53,31 @@
 	<array>
 		<dict>
 			<key>Bounds</key>
+			<string>{{254, 26.578955281889606}, {85, 79}}</string>
+			<key>Class</key>
+			<string>ShapedGraphic</string>
+			<key>ID</key>
+			<integer>41</integer>
+			<key>Shape</key>
+			<string>Circle</string>
+			<key>Style</key>
+			<dict>
+				<key>fill</key>
+				<dict>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>1</string>
+						<key>g</key>
+						<string>0.93371</string>
+						<key>r</key>
+						<string>0.86452</string>
+					</dict>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>Bounds</key>
 			<string>{{116.99993896484375, 52.57895565032959}, {56, 28}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
@@ -181,11 +206,11 @@ translation}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0.904214</string>
-						<key>g</key>
 						<string>1</string>
+						<key>g</key>
+						<string>0.93371</string>
 						<key>r</key>
-						<string>0.805021</string>
+						<string>0.86452</string>
 					</dict>
 				</dict>
 			</dict>
@@ -198,33 +223,6 @@ translation}</string>
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
 
 \f0\fs36 \cf0 EL}</string>
-			</dict>
-			<key>TextRelativeArea</key>
-			<string>{{0.10000000000000001, 0.14999999999999999}, {0.80000000000000004, 0.69999999999999996}}</string>
-		</dict>
-		<dict>
-			<key>Bounds</key>
-			<string>{{239.99993551947929, 26.578955281889606}, {85, 79}}</string>
-			<key>Class</key>
-			<string>ShapedGraphic</string>
-			<key>ID</key>
-			<integer>5</integer>
-			<key>Shape</key>
-			<string>Circle</string>
-			<key>Style</key>
-			<dict>
-				<key>fill</key>
-				<dict>
-					<key>Color</key>
-					<dict>
-						<key>b</key>
-						<string>0.904214</string>
-						<key>g</key>
-						<string>1</string>
-						<key>r</key>
-						<string>0.805021</string>
-					</dict>
-				</dict>
 			</dict>
 		</dict>
 		<dict>
@@ -297,7 +295,7 @@ translation}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2014-05-12 15:29:28 +0000</string>
+	<string>2014-05-12 18:17:53 +0000</string>
 	<key>Modifier</key>
 	<string>Martin Berger</string>
 	<key>NotesVisible</key>
