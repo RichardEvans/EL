@@ -43,9 +43,9 @@ A model $(\mathcal{W}, \rightarrow, \lambda)$ is {\bf valid} iff for all $w \in 
 \end{definition}
 
 \begin{definition}
-A {\bf pointed model} is a pair $(l,w)$, where $m$ is a \emph{valid} model of the form $(\mathcal{W}, \rightarrow, \lambda)$, and $w$ is a distinguished state in $\mathcal{W}$.
+A {\bf  model} is a pair $(l,w)$, where $m$ is a \emph{valid} model of the form $(\mathcal{W}, \rightarrow, \lambda)$, and $w$ is a distinguished state in $\mathcal{W}$.
 \end{definition}
-Formulae are interpreted in a pointed model $(l,w)$:
+Formulae are interpreted in a  model $(l,w)$:
 \begin{eqnarray}
 (l,w) & \models & \top  \mbox{ always } \nonumber \\
 (l,w) & \models & \phi_1 \AND \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2 \nonumber \\
@@ -177,20 +177,20 @@ useful in other contexts as well.
 
 \NI We now develop these three in turn and then prove completeness.
 
-\subsubsection{A Partial Ordering on Pointed Models}
+\subsubsection{A Partial Ordering on  Models}
 
 \NI We use the notion of simulation to define a partial ordering
-$\leq$ on pointed models: \martin
+$\leq$ on  models: \martin
 
 \begin{definition}
 $(l,w) \leq (l',w')$ if there is a simulation $Z$ from $l'$ to $l$ with $(w',w) \in Z$
 \end{definition}
 Intuitively, $m \leq n$ if $m$ can match all the transitions of $n$ while respecting the transitions-restrictions.
 
-To make our models into a lattice, we add a bottom element $\bot$ and stipulate that $\bot \leq m$ for all pointed models $m$.
-The topmost element in the lattice is the pointed model $( (\{w\}, \{\}, \{w \mapsto \mathcal{S}\}), w)$ (for some state $w$): this is the model with no transitions and no transition restrictions.
+To make our models into a lattice, we add a bottom element $\bot$ and stipulate that $\bot \leq m$ for all  models $m$.
+The topmost element in the lattice is the  model $( (\{w\}, \{\}, \{w \mapsto \mathcal{S}\}), w)$ (for some state $w$): this is the model with no transitions and no transition restrictions.
 
-\subsubsection{Defining $\mu$ - the Simplest Pointed Model Satisfying a Formula}
+\subsubsection{Defining $\mu$ - the Simplest  Model Satisfying a Formula}
 We define a function $\mu$ which, given a formula $\phi$, produces the simplest\footnote{``Simplest'' as in the least upper bound, according to $\leq$, defined in formulae of simulation.} model which satisfies $\phi$:
 \begin{eqnarray}
 \mu (\top) & = & ( (\{v\}, \{\}, \{v \mapsto \mathcal{S}\}), v) \nonumber \\
@@ -200,7 +200,7 @@ We define a function $\mu$ which, given a formula $\phi$, produces the simplest\
 		& & \mbox{where }\mu(\phi) = ( (\mathcal{W}, \rightarrow, \lambda), w) \nonumber \\
 		& & \mbox{and }w' \mbox{ is a new state not appearing in }\mathcal{W} \nonumber
 \end{eqnarray}
-The only complex case is the clause for $\mu (\phi_1 \AND \phi_2)$, which uses the $\sqcap$ function, defined as\footnote{We assume that the sets of states in the two pointed models are disjoint.}:
+The only complex case is the clause for $\mu (\phi_1 \AND \phi_2)$, which uses the $\sqcap$ function, defined as\footnote{We assume that the sets of states in the two  models are disjoint.}:
 
 \begin{eqnarray*}
   \bot \sqcap X 
@@ -219,7 +219,7 @@ The only complex case is the clause for $\mu (\phi_1 \AND \phi_2)$, which uses t
   \end{cases}
 \end{eqnarray*}
 
-\noindent The $\mathsf{consistent}$ predicate is true of pointed models $m$ and $n$ if the out-transitions on $m$'s root node respect the labelling on $n$'s root node, and the out-transitions on $n$'s root node respect the labelling on $m$'s root node. In other words:
+\noindent The $\mathsf{consistent}$ predicate is true of  models $m$ and $n$ if the out-transitions on $m$'s root node respect the labelling on $n$'s root node, and the out-transitions on $n$'s root node respect the labelling on $m$'s root node. In other words:
 \begin{eqnarray}
 \mathsf{consistent}(m, n) & \mbox{ iff } & \mathsf{out}(m) \subseteq \mathsf{restriction}(n) \mbox{ and} \nonumber \\
 & & \mathsf{out}(n) \subseteq \mathsf{restriction}(m) \nonumber
@@ -229,7 +229,7 @@ where:
 \mathsf{out}(((\mathcal{W},\rightarrow,\lambda),w)) & = & \{ s \fOr \exists x . w \xrightarrow{s} x \} \nonumber \\
 \mathsf{restriction}(((\mathcal{W},\rightarrow,\lambda),w)) & = & \lambda(w) \nonumber
 \end{eqnarray}
-Now the $\mathsf{merge}$ function fuses two pointed models together:
+Now the $\mathsf{merge}$ function fuses two  models together:
 \[
 \mathsf{merge}( ( (\mathcal{W}, \rightarrow, \lambda), w),  ( (\mathcal{W}', \rightarrow', \lambda'), w')) = ((\mathcal{W} \cup \mathcal{W}', \rightarrow \cup \rightarrow'_2, \lambda_2 \cup \lambda'_2), w)
 \]
@@ -246,7 +246,7 @@ It is easy to show that $\mu$ satisfies the following propositions:
 \end{eqnarray}
 
 \subsubsection{Defining $\theta$ - a Formula that Characterises a Model}
-The inverse function $\theta$ produces a formula that characterises a given pointed model:
+The inverse function $\theta$ produces a formula that characterises a given  model:
 \begin{eqnarray}
 \theta(\bot) & = & \langle a \rangle \top \AND ! \{ \} \mbox{ for some symbol }a \nonumber \\
 \theta(l, w) & = & \mathsf{bang}(l,w) \AND \bigwedge_{(s,w') \in \mathsf{trans}(l,w)} \langle s \rangle \theta(l, w') \nonumber 
@@ -308,17 +308,17 @@ The proof of $\theta(m) \judge q \AND q'$ follows immediately using {\bf $\AND$ 
 \begin{mycase}
 $p$ is $\langle a \rangle q$
 \end{mycase}
-If $m \models \langle a \rangle q$, then either $m = \bot$ or $m$ is a pointed model of the form $(l,w)$.
+If $m \models \langle a \rangle q$, then either $m = \bot$ or $m$ is a  model of the form $(l,w)$.
 \begin{subcase}
 $m = \bot$
 \end{subcase}
-In this case, $\theta(m) = \theta(\bot) = \bot$. (Recall, that we are overloading $\bot$ to mean both the pointed model at the bottom of our lattice and a formula (such as $\langle s \rangle \top \AND !\{\}$) which is always false).
+In this case, $\theta(m) = \theta(\bot) = \bot$. (Recall, that we are overloading $\bot$ to mean both the  model at the bottom of our lattice and a formula (such as $\langle s \rangle \top \AND !\{\}$) which is always false).
 In this case, $ \theta(\bot) \judge  \langle a \rangle q$ using {\bf $\bot$ Left}.
 
 \begin{subcase}
- $m$ is a pointed model of the form $(l,w)$
+ $m$ is a  model of the form $(l,w)$
  \end{subcase}
-Given $m \models \langle a \rangle q$, and that $m$ is a pointed model of the form $(l,w)$, we know that:
+Given $m \models \langle a \rangle q$, and that $m$ is a  model of the form $(l,w)$, we know that:
 \[
 (l,w) \models \langle a \rangle q
 \]
@@ -454,7 +454,7 @@ Neither $m$ nor $n$ are $\bot$, but together they are incompatible.
 If either $m$ or $n$ is $\bot$, then the proof is a simple application of {\bf Identity} followed by {\bf $\AND$ Left}.
 
 Next, let us consider the case where neither $m$ nor $n$ are $\bot$, but together they are incompatible.
-Let $m$ be the pointed model $(l, w)$ and let $n$ be $(l', w')$.
+Let $m$ be the  model $(l, w)$ and let $n$ be $(l', w')$.
 If $(l, w) \sqcap (l', w') = \bot$, then\footnote{The alternative, in which the $s$-transition is in $n$ and the transition-restriction is in $m$, is identical, swapping $m$ with $n$.} there exists a symbol $s$ and a state $w_2$ such that $w \xrightarrow{s} w_2$ but $s \notin \lambda'(w')$.
 
 In this case, by the definition of $\theta$, $\theta(m) \judge \langle s \rangle \top$, using  {\bf Identity} and repeated applications of {\bf $\AND$ Left}.

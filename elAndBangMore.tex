@@ -70,7 +70,7 @@ Brandom has shown that First Order Logic and S5 satisfy the incompatibility sema
 HML satisfies it, but HML without negation does not.
 EL is the \emph{simplest logic we have found} that satisfies the property.
 
-To prove this, we need to first define a related incompatibility function on pointed models.
+To prove this, we need to first define a related incompatibility function on  models.
 $\mathcal{J}(m)$ is the set of models that are incompatible with $m$:
 \[
 \mathcal{J}(m) = \{ n \; | \; m \sqcap n = \bot \}
@@ -310,9 +310,9 @@ Given a set $\mathcal{S}$ of symbols, with $s$ ranging over $\mathcal{S}$, the f
 A {\bf Labelled Transition System} (LTS) is a pair $(\mathcal{W}, \rightarrow)$, where $\mathcal{W}$ is a set of states, and $\rightarrow$ is a set of transition relations: $\rightarrow \; \subseteq \; \mathcal{W} \times S \times \mathcal{W}$.
 We write $x \xrightarrow{s} y$ to abbreviate $(x,s,y) \in \rightarrow$.
 
-A {\bf pointed LTS} is a pair $(l, w)$, where $l$ is a LTS $(\mathcal{W}, \rightarrow)$ and $w$ is a distinguished state $w \in \mathcal{W}$.
+A {\bf  LTS} is a pair $(l, w)$, where $l$ is a LTS $(\mathcal{W}, \rightarrow)$ and $w$ is a distinguished state $w \in \mathcal{W}$.
 
-A formula of HML is evaluated in a pointed LTS $(l, w)$:
+A formula of HML is evaluated in a  LTS $(l, w)$:
 \begin{eqnarray}
 (l,w) & \models & \top \nonumber \\
 (l,w) & \models & \phi_1 \AND \phi_2 \mbox{ iff } (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2 \nonumber \\
