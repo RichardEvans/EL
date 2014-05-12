@@ -33,6 +33,8 @@
 
 * Give more examples.
 
+* be consistent on capitalisation.
+
 * Timetable: 13.May to 16.May, can we finish it?
 
 * Find possible reviewers (please add more):
@@ -44,6 +46,7 @@
   - Graham White and Paulo Oliva at QMUL
   - Bernhard Reus at Sussex
   - Billiejoe Charlton
+  - Aram Lintzel
 
 * Could it make sense to prepare a little video presentation (using
   Screenflow, or recording professionally), maybe 15 minutes, to

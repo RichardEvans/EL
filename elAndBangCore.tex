@@ -177,15 +177,19 @@ useful in other contexts as well.
 
 \NI We now develop these three in turn and then prove completeness.
 
-\subsubsection{A Partial Ordering on  Models}
+\subsubsection{A partial ordering on models}
 
 \NI We use the notion of simulation to define a partial ordering
-$\leq$ on  models: \martin
+$\leq$ on models: \martin{Has this any connection with notions of
+  model ordering in conventional logic, like herbrand/term models?}
 
 \begin{definition}
-$(l,w) \leq (l',w')$ if there is a simulation $Z$ from $l'$ to $l$ with $(w',w) \in Z$
+$(l,w) \leq (l',w')$ if there is a simulation $\RRR$ from $l'$ to $l$
+  with $(w',w) \in \RRR$
 \end{definition}
-Intuitively, $m \leq n$ if $m$ can match all the transitions of $n$ while respecting the transitions-restrictions.
+
+\NI Intuitively, $m \leq n$ if $m$ can match all the transitions of
+$n$ while respecting the transitions-restrictions.
 
 To make our models into a lattice, we add a bottom element $\bot$ and stipulate that $\bot \leq m$ for all  models $m$.
 The topmost element in the lattice is the  model $( (\{w\}, \{\}, \{w \mapsto \mathcal{S}\}), w)$ (for some state $w$): this is the model with no transitions and no transition restrictions.
