@@ -1,0 +1,217 @@
+
+\section{Capturing Inferences Between Atomic Sentences}
+Eremic Logic arose as an attempt to answer the question: what is the simplest logic that can capture inferences between atomic sentences of natural language? 
+In this section, we first enumerate the sorts of inferences we are trying to capture.
+Then we show how EL$[\AND, !]$ can handle these inferences.
+Finally, we compare our approach with the various attempts to handle these inferences in First Order Logic.
+
+\subsection{Intra-Atomic Inferences in Natural Language}
+Natural language admits many types of inference between atomic sentences.
+First, incompatibility:
+\begin{quote}
+``Jack is male'' is incompatible with ``Jack is female''
+\end{quote}
+Second, entailment inferences from dyadic to monadic predicates:
+\begin{quote}
+``Jack loves Jill'' implies ``Jack loves''
+\end{quote}
+Third, adverbial inferences:
+\begin{quote}
+``Jack walks quickly'' implies ``Jack walks''
+\end{quote}
+Fourth, inferences from conjunctions of sentences to conjunctions of noun-phrases (and vice-versa):
+\begin{quote}
+``Jack loves Jill'' and ``Jack loves Joan'' together imply that ``Jack loves Jill and Joan''
+\end{quote}
+Fifth, inferences from conjunctions of sentences to conjunction of predicates\footnote{See \cite{sommers} p.282 for a spirited defence of predicate conjunction against Fregean regimentation.} (and vice-versa):
+\begin{quote}
+``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
+\end{quote}
+
+All these types of inference can be handled directly and naturally in EL$[\AND, !]$.
+To show this, we will define a notational variant of EL$[\AND, !]$, that we call {\bf EL-KR}, that is slightly more ergonomic as a knowledge-representation language. We will provide a translation from EL-KR to EL$[\AND, !]$
+Then we will show how these inferences between atomic sentences of natural language can be captured in EL-KR.
+
+\subsection{EL-KR as a Notational Variant of EL$[\AND, !]$}
+\begin{definition} Given a set $\mathcal{S}$ of symbols, with $a$ ranging over
+$\mathcal{S}$,
+the sentences of EL-KR are given by:
+
+\begin{GRAMMAR}
+  \phi 
+     &\quad ::= \quad & 
+  \phi_1 \AND \phi_2  
+     \VERTICAL 
+  a
+     \VERTICAL 
+  a \ast \phi
+     \VERTICAL 
+  a \fBang \phi  
+\end{GRAMMAR}
+\end{definition}
+We write sentences of EL-KR in Courier typeface, for example:
+\begin{verbatim}
+jack * loves * jill
+jack * gender ! male
+\end{verbatim}
+There is a simple translation function $t$ from EL-KR to EL$[\AND, !]$:
+\begin{eqnarray}
+t(\phi_1 \land \phi_2) & = & t(\phi_1) \land t(\phi_2) \nonumber \\
+t(a) & = & \MAY{a} \top \nonumber \\
+t(a \ast \phi) & = & \MAY{a} t(\phi) \nonumber \\
+t(a \fBang \phi) & = & \MAY{a} (\fBang h(\phi) \land t(\phi)) \nonumber
+\end{eqnarray}
+The $t$ function uses the auxiliary $h$ function which returns the set of topmost symbols in a formula:
+\begin{eqnarray}
+h(\phi_1 \land \phi_2) & = & h(\phi_1) \cup h(\phi_2) \nonumber \\
+h(a) & = & \{a\} \nonumber \\
+h(a \ast \phi) & = & \{a\} \nonumber \\
+t(a \fBang \phi) & = & \{a\} \nonumber
+\end{eqnarray}
+So, for example:
+\begin{eqnarray}
+t(jack \ast loves \ast jill ) & = & \MAY{jack} \MAY{loves} \MAY{jill} \top \nonumber \\
+t(jack \ast gender \fBang male ) & = & \MAY{jack} \MAY{gender} (\fBang \{jill\} \land \MAY{jill} \top) \nonumber
+\end{eqnarray}
+
+\subsection{Intra-Atomic Inferences in Eremic Logic}
+We shall show that each of the following inferences can be naturally expressed in EL-KR:
+\begin{itemize}
+\item
+``Jack is male'' is incompatible with ``Jack is female''
+\item
+``Jack loves Jill'' implies ``Jack loves''
+\item
+``Jack walks quickly'' implies ``Jack walks''
+\item
+``Jack loves Jill'' and ``Jack loves Joan'' together imply that ``Jack loves Jill and Joan''
+\item
+``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
+\end{itemize}
+First, incompatibility: ``Jack is male'' and ``Jack is female'' are translated into EL-KR as the pair of incompatible sentences:
+\begin{verbatim}
+jack * gender ! male
+jack * gender ! female
+\end{verbatim}
+Second, entailment from dyadic to monadic predicates:
+``Jack loves Jill'' is translated into KR-EL as:
+\begin{verbatim}
+jack * loves * jill
+\end{verbatim}
+This directly entails:
+\begin{verbatim}
+jack * loves
+\end{verbatim}
+Third, adverbial inferences: 
+\begin{verbatim}
+jack * walks * quickly
+\end{verbatim}
+entails:
+\begin{verbatim}
+jack * walks
+\end{verbatim}
+Fourth, EL-KR directly supports inferences from conjunctions of sentences to conjunctions of noun-phrases.
+From the general EL-KR rule that
+\[
+a \ast b \; \land \; a \ast c \; \models \; a \ast (b \land c)
+\]
+it follows that 
+\begin{verbatim}
+jack * loves * jill
+jack * loves * joan
+\end{verbatim}
+together imply
+\begin{verbatim}
+jack * loves * (jill /\ joan)
+\end{verbatim}
+Using the same rule, we can infer that
+\begin{verbatim}
+jack * bruised
+jack * humiliated
+\end{verbatim}
+together imply
+\begin{verbatim}
+jack * (bruised /\ humiliated)
+\end{verbatim}
+ 
+\subsection{Representing Incompatible Predicates in Predicate Logic}
+How are incompatible predicates represented in traditional Predicate Logic?
+Brachman and Levesque\cite{brachman} introduce the topic of incompatible predicates by remarking:
+\begin{quote}
+We would consider it quite ``obvious'' in this domain that if it were asserted that $John$ were a $Man$, then we should answer ``no'' to the query $Woman(John)$.
+\end{quote}
+They propose adding an extra axiom to express the incompatibility:
+\[
+(\forall x) Man(x) \rightarrow \neg Woman(x)
+\]   
+This proposal imposes an authoring burden on the knowledge-representer.
+We would have to add an extra axiom for every pair of incompatible predicates.
+This proposal becomes particularly burdensome when dealing with large sets of incompatible predicates. 
+For example, suppose there are 50 football teams, and a person can only support one team at a time. 
+We would need to add $C^{50}_2$ axioms:
+The incompatibility axioms start to get large and unwieldy:
+\begin{eqnarray}
+(\forall x) \neg (SupportsArsenal(x) \land SupportsLiverpool(x)) \nonumber \\
+(\forall x) \neg (SupportsArsenal(x) \land SupportsManUtd(x)) \nonumber \\
+(\forall x) \neg (SupportsLiverpool(x) \land SupportsManUtd(x)) \nonumber \\
+... \nonumber
+\end{eqnarray}   
+Or, if we treat the football-teams as objects, and have a two-place $Supports$ relation between people and teams, we could have:
+\[
+(\forall x,y,z) \; \; Supports(x,y) \land y \neq z \rightarrow \neg Supports(x,z)
+\]   
+Together with the Unique Names Assumption (which lets us assume that each football team is distinct from all the others), this certainly captures the desired uniqueness condition.
+But it does so by using relatively complex logical machinery.
+
+\subsection{Supporting Inferences from Dyadic to Monadic Predicates in Predicate Logic}
+If we want to capture the inference from ``Jack loves Jill`` to ``Jack loves'' in predicate logic, we have to add a non-logical axiom:
+\[
+(\forall x, y) Loves(x,y) \rightarrow Loves(x)
+\]
+We would have to add an extra non-logical axiom like this for every n-place predicate.
+This is cumbersome at best. 
+In EL, by contrast, we do not need to introduce any non-logical machinery at all to capture these inferences because they all follow from the general rule that $A \star B \models A$.
+
+\subsection{Supporting Adverbial Inferences in Predicate Logic}
+How can we represent verbs in traditional predicate logic so as to support adverbial inference?
+Davidson \cite{davidson2} proposed that every $n$-place action verb be analysed as an $n+1$-place predicate, with an additional slot representing an event.
+For example, he  analysed ``I flew my spaceship to the Morning Star'' as 
+\[
+(\exists x) Flew(I, MySpaceship, x) \land To(x, TheMorningStar)
+\]
+This implies 
+\[
+(\exists x) Flew(I, MySpaceship, x)
+\]
+This captures the inference from ``I flew my spaceship to the Morning Star'' to ``I flew my spaceship''.
+
+Predicate Logic cannot support logical inferences between elementary propositions. 
+If it is going to support inferences from adverbial sentences, it \emph{cannot} treat them as elementary propositions and must instead \emph{reinterpret} them as logically complex propositions.
+The cost of Davidson's proposal is that a seemingly simple sentence, such as ``Jones walks'', turns out on closer inspection not be elementary at all,  but to involve existential quantification:
+\[
+(\exists x) Walks(Jones, x)
+\]
+Although Predicate Logic can handle some of these inferences, it can only do so by reinterpreting the sentences as logically-complex compound propositions. 
+It uses more complex machinery to achieve the same results that Eremic Logic gets directly.
+
+\subsection{Comparison}
+We have been looking at five types of inference between atomic sentences:
+\begin{itemize}
+\item
+Incompatibility
+\item
+Inferences from dyadic predicates to monadic predicates
+\item
+Adverbial inferences
+\item
+Inferences from conjunctions of sentences to conjunctions of noun-phrases
+\item
+Inferences from conjunctions of sentences to conjunctions of predicates
+\end{itemize}
+Eremic Logic can handle all five types of inference directly and naturally.
+Traditional predicate logic has a harder time.
+Traditional predicate logic \emph{can} express incompatibility. But it can only do so by bringing in relatively complex machinery - a universal quantifier, a conditional, and a negation operator. Eremic Logic, by contrast, expresses the source of the incompatibility \emph{directly} using the $!$ operator.
+Again, predicate logic \emph{can} express adverbial inferences. But, again, it can only do so by introducing relatively complex machinery (quantification over events). 
+
+But when it comes to inferences from conjunctions of sentences to conjunctions of noun-phrases (or predicates), predicate logic has nothing to say because it has no way of expressing conjunctions between noun-phrases (or predicates) \emph{at all}. In predicate logic, ``Jack is bruised and humiliated'' has to be regimented into ``Jack is bruised and Jack is humiliated''. 
+This might seem, to anyone who has not already become desensitised to the differences between predicate logic and our ergonomic mother tongue, to be exactly the wrong way around.
