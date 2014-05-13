@@ -601,8 +601,14 @@ lubt5 = lub (mu ex5) (mu ex6)
 lubt6 = lub (mu ex6) (mu ex5)
 
 ex7 = ex5
-ex8 = Conj (Trans "c" (Bang ["z"])) (Bang ["a","y"])
+ex8 = Conj (Trans "c" (Bang ["z"])) (Bang ["c","y"])
 
 lubt7 = lub (mu ex7) (mu ex8)
 lubt8 = lub (mu ex8) (mu ex7)
+
+ex9 = Conj (Conj (Trans "a" (Bang ["x"])) (Trans "a" (Bang ["y"]))) (Bang ["a","w"])
+ex10 = Conj (Trans "a" (Bang ["z"])) (Bang ["a","w"])
+
+lubt9 = lub (mu ex9) (mu ex10)
+lubt10 = lub (mu ex10) (mu ex9)
 
