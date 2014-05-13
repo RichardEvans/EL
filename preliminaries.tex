@@ -4,30 +4,46 @@
 paper.
 
 \begin{definition}
+A \emph{partial order} is a pair $(S, \sqsubseteq)$ where $S$ is a
+set, and $\sqsubseteq$ is a binary relation on $S$ that is reflexive,
+transitive and anti-symmtertic.  Let $T \subseteq S$ and $x \in S$. We
+say $x$ is an \emph{upper bound} of $T$ provided $t \sqsubseteq x$ for
+all $t \in T$. If in addition $x \sqsubseteq y$ for all upper bounds
+$y$ of $T$, we say that $x$ is the \emph{least} upper bound of
+$T$. \emph{Lower bounds} and \emph{greatest lower bounds} are defined
+mutatis mutandis.  A partial order $(S, \sqsubseteq)$ is a
+\emph{complete lattice} if every subset of $S$ has a least upper and a
+greatest lower bound. \martin{Is that the right notion of lattice for
+  characterising $\SIM$ on models?  If not what is?}
+\end{definition}
+
+\begin{definition}
 Let $\Sigma$ be a set of \emph{actions}.  A \emph{labelled transition
   system over $\Sigma$} is a pair $(S, \rightarrow)$ where $S$ is a
 set of \emph{states} and $\rightarrow \subseteq S \times \Sigma \times
 S$ is the \emph{transition relation}.  We write $x \xrightarrow{s} y$
-to abbreviate $(x,s,y) \in \rightarrow$. We let $s, s', t, ...$ range
-over states, $a, a', b, ...$ range over actions and $\LLL, \LLL', ...$
-range over labelled transition systems. We usually speak of labelled
-transition systems (LTS) when the set of actions is clear from the
-context. If we want to emphasise that the set of actions is
-\emph{finite}, we use $A$ instead of $\Sigma$.
+to abbreviate $(x,s,y) \in \rightarrow$. We let $s, s', w, w', x, y,
+z, ...$ range over states, $a, a', b, ...$ range over actions and
+$\LLL, \LLL', ...$ range over labelled transition systems. We usually
+speak of labelled transition systems (LTS) when the set of actions is
+clear from the context. If we want to emphasise that the set of
+actions is \emph{finite}, we use $A$ instead of $\Sigma$.
 \end{definition}
 
 \begin{definition}
 Given two labelled transition systems $\LLL_i = (S_i, \rightarrow_i)$
-over $\Sigma$ for $i = 1, 2$, a \emph{simulation from $\LLL_1$ to $\LLL_2$}
-is a relation $\RRR \subseteq S_1 \times S_2$ such that whenever $(s,
-s') \in \RRR$: if $s \TRANS{a} s'$ then there exists a transition $t
-\TRANS{a} t'$ with $(t, t') \in \RRR$.  We say $\RRR$ is a
-\emph{bisimulation} if both, $\RRR$ and $\RRR^{-1}$ are
-simulations. Here $\RRR^{-1} = \{(y, x)\ |\ (x, y) \in \RRR\}$.
-We say two states $s, s'$ are \emph{bisimilar}, written $s \BISIM s'$
-if there is a bisimulation $\RRR$ with $(s, s') \in \RRR$.
+over $\Sigma$ for $i = 1, 2$, a \emph{simulation from $\LLL_1$ to
+  $\LLL_2$} is a relation $\RRR \subseteq S_1 \times S_2$ such that
+whenever $(s, s') \in \RRR$: if $s \TRANS{a} s'$ then there exists a
+transition $t \TRANS{a} t'$ with $(t, t') \in \RRR$.  We write $s \SIM
+t$ whenever $(s, t) \in \RRR$ for some simulation $\RRR$.  We say
+$\RRR$ is a \emph{bisimulation} if both, $\RRR$ and $\RRR^{-1}$ are
+simulations. Here $\RRR^{-1} = \{(y, x)\ |\ (x, y) \in \RRR\}$.  We
+say two states $s, s'$ are \emph{bisimilar}, written $s \BISIM s'$ if
+there is a bisimulation $\RRR$ with $(s, s') \in \RRR$.
 \end{definition}
 
-\NI For a fuller account on labelled transition systems, see
+\NI Partial orders are explored in \cite{DaveyBA:intlatao}. For a
+fuller account on labelled transition systems, see
 e.g.~\cite{SassoneV:modcontac,HennessyM:Algtheop}. Bisimulations are
 discussed in great detail in \cite{SangiorgiD:intbisac}.

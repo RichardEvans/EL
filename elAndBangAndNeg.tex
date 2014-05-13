@@ -171,17 +171,17 @@ Any satisfying counter model includes an extra transition from the root using a 
 
 \subsection{Doubly-Exponential Search Space}
 The number of trees grows at a rate which is doubly exponential.
-At level $0$, there is just one node.
-At level $1$, there are $\sigma(\phi)$ nodes.
-At level $h$, there are $\sigma(\phi)^h$ nodes.
-The total height of the tree is $|\phi|$, so the total number of nodes in the model is:
+At level $0$, there is just one state.
+At level $1$, there are $\sigma(\phi)$ states.
+At level $h$, there are $\sigma(\phi)^h$ states.
+The total height of the tree is $|\phi|$, so the total number of states in the model is:
 \[
 \sum_{i=0}^{|\phi|} (\sigma(\phi))^i
 \]
-The different models are distinguished by which of these nodes are used. 
-Each node is either used or unused.
+The different models are distinguished by which of these states are used. 
+Each state is either used or unused.
 So the total number of models is no more than $2 ^ {\sum_{i=0}^{|\phi|} (\sigma(\phi))^i}$.
-(In fact it is significantly less than this upper bound because there are restrictions on which combinations of nodes can be used and unused: a child cannot be used if any of its ancestors are unused).
+(In fact it is significantly less than this upper bound because there are restrictions on which combinations of states can be used and unused: a child cannot be used if any of its ancestors are unused).
 
 To get the exact number of trees for a given height $h$ and branching factor $b$, define the following recursive function:
 \begin{eqnarray*}
@@ -219,17 +219,17 @@ Now
 \[
 P \models Q \mbox{ iff } \forall P_{i=1}^n P_i \models Q
 \]
-Now, to check whether each $P_i \models Q$, we will construct an annotated model of $P_i$ which has labels on the vertices as well as on the edges of the LTS. We can construct this annotated model, $\mu(P_i)$ in linear time. 
-Now define the $\Sigma$ extensions of an annotated model $m$ as all models which extend the nodes of $m$ with extra transitions taken from $\Sigma$ which respect the node labelling on $m$.
-Now $P_i \models Q$ if and only if all $\Sigma$-extensions of $\mu(P_i)$ satisfy $Q$.
-So, to check whether $P_i \models Q$, we enumerate the $\Sigma$-extensions of $\mu(P_i)$ (there are a finite number of such extensions - the exact number is exponential in the size of $\mu(P_i)$) and check for each one whether it satisfies $Q$.
+Now, to check whether each $P_i \models Q$, we will construct an annotated model of $P_i$ which has labels on the vertices as well as on the edges of the LTS. We can construct this annotated model, $\SIMPL{P_i}$ in linear time. 
+Now define the $\Sigma$ extensions of an annotated model $m$ as all models which extend the states of $m$ with extra transitions taken from $\Sigma$ which respect the state labelling on $m$.
+Now $P_i \models Q$ if and only if all $\Sigma$-extensions of $\SIMPL{P_i}$ satisfy $Q$.
+So, to check whether $P_i \models Q$, we enumerate the $\Sigma$-extensions of $\SIMPL{P_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{P_i}$) and check for each one whether it satisfies $Q$.
 
 To fill out this sketch, I will describe the structure of the annotated model, define the $\mu$ function, and show how to compute the extensions of an annotated model relative to a set $\Sigma$ of symbols.
 
 
 \subsection{Computing the Extensions of a Model}
 
-Recall that, to check whether $P_i \models Q$, we enumerate the $\Sigma$-extensions of $\mu(P_i)$ (there are a finite number of such extensions - the exact number is exponential in the size of $\mu(P_i)$) and check for each one whether it satisfies $Q$.
+Recall that, to check whether $P_i \models Q$, we enumerate the $\Sigma$-extensions of $\SIMPL{P_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{P_i}$) and check for each one whether it satisfies $Q$.
 
 \begin{definition}
 Given a model LTS $(\mathcal{W},\rightarrow,\lambda)$,  and a set $\Sigma$ of symbols, then $(\mathcal{W'},\rightarrow',\lambda')$ is a {\bf $\Sigma$-extension} of $(\mathcal{W},\rightarrow,\lambda)$ if it is a valid LTS (recall Definition 1) and for all $(x,s,y) \in \rightarrow'$, either:

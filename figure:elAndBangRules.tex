@@ -3,55 +3,55 @@
 
   \ZEROPREMISERULENAMEDRIGHT
   {
-    X \judge X
+    \phi \judge \phi
   }{Identity}
     \quad
   \ZEROPREMISERULENAMEDRIGHT
   {
-    X \judge \top
+    \phi \judge \top
   }{$\top$-Right}
     \quad
   \ZEROPREMISERULENAMEDRIGHT
   {
-    \bot \judge X
+    \bot \judge \phi
   }{$\bot$-Left}
     \quad
   \TWOPREMISERULENAMEDRIGHT
   {
-    X \judge Y
+    \phi \judge \psi
   }
   {
-    Y \judge Z
+    \psi \judge \xi
   }
   {
-    X \judge Z
+    \phi \judge \xi
   }{Transitivity}
     \\\\
   \ONEPREMISERULENAMEDRIGHT
   {
-    X \judge Y
+    \phi \judge \psi
   }
   {
-    X \AND Z \judge Y
+    \phi \AND \xi \judge \psi
   }{$\AND$-Left 1}
      \quad
   \ONEPREMISERULENAMEDRIGHT
   {
-    X \judge Y
+    \phi \judge \psi
   }
   {
-    Z \AND X  \judge Y
+    \xi \AND \phi  \judge \psi
   }{$\AND$-Left 2}
      \quad
   \TWOPREMISERULENAMEDRIGHT
   {
-    X \judge Y
+    \phi \judge \psi
   }
   {
-    X \judge Z
+    \phi \judge \xi
   }
   {
-    X \judge Y \AND Z
+    \phi \judge \psi \AND \xi
   }{$\AND$-Right}
      \\\\
      \ONEPREMISERULENAMEDRIGHT
@@ -59,7 +59,7 @@
        a \notin A
      }
      {
-       !A \AND \MAY{a}{X} \judge \bot
+       !A \AND \MAY{a}{\phi} \judge \bot
      }{$\bot$-Right 1}
         \quad
      \ZEROPREMISERULENAMEDRIGHT
@@ -69,43 +69,43 @@
         \quad
      \TWOPREMISERULENAMEDRIGHT
      {
-       X \AND \, !A \judge Y
+       \phi \AND \, !A \judge \psi
      }
      {
        A' \subseteq A
      }
      {
-       X \AND\, !A' \judge Y
+       \phi \AND\, !A' \judge \psi
      }{!-Left}
      \\\\
      \TWOPREMISERULENAMEDRIGHT
      {
-       X \judge !A
+       \phi \judge !A
      }
      {
        A \subseteq A'
      }
      {
-       X \judge!A'
+       \phi \judge!A'
      }{!-Right 1}
      \quad
      \TWOPREMISERULENAMEDRIGHT
      {
-       X \judge !A
+       \phi \judge !A
      }
      {
-       X \judge !B
+       \phi \judge !B
      }
      {
-       X \judge !(A \cap B)
+       \phi \judge !(A \cap B)
      }{!-Right 2}
      \quad
      \ONEPREMISERULENAMEDRIGHT
      {
-       X \judge Y
+       \phi \judge \psi
      }
      {
-       \MAY{a}{X} \judge \MAY{a}{Y}
+       \MAY{a}{\phi} \judge \MAY{a}{\psi}
      }{Transition Normal}
 \end{RULES}
 \caption{Proof rules.}\label{figure:elAndBangRules}

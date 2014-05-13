@@ -1,3 +1,19 @@
+* Be consistent. In particular
+  - State vs node
+
+  - LTS vs labelled transition system
+
+  - FOL vs first-order logic, EL vs eremic logic
+
+  - Either all definitions are in an explicit \begin{definition}
+    environment or none.
+
+  - Term defined should always be \textbf{...} or \textsc{...} etc.
+
+  - FOrmulae vs terms vs sentences
+
+  - What kind of space ! puts between itself and its set. and also before !
+
 * Make sure we have \qed at the end of every proof. Better:
   put it into the latex macro.
 
@@ -12,17 +28,6 @@
   it.
 
 * Find a better name for !A than "bang A".
-
-* Be consistent. In particular
-
-  - FOL vs first-order logic, EL vs eremic logic
-
-  - Either all definitions are in an explicit \begin{definition}
-    environment or none.
-
-  - Term defined should always be \textbf{...} or \textsc{...} etc.
-
-  - FOrmulae vs terms vs sentences
 
 *  I recommend to use the following order of presentation in Chapters 2 and 3.
 

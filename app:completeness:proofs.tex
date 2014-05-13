@@ -80,30 +80,30 @@ Then we can prove  $\top \judge \top$ using either {\bf $\top$ Right} or {\bf Id
 \begin{mycase}
 $p$ is $q \AND q'$
 \end{mycase}
-By the induction hypothesis, $q \judge \theta(\mu(q))$ and $q' \judge \theta(\mu(q'))$.
+By the induction hypothesis, $q \judge \theta(\SIMPL{q})$ and $q' \judge \theta(\SIMPL{q'})$.
 Using {\bf $\AND$ Left} and {\bf $\AND$ Right}, we can show:
 \[
-q \AND q' \judge \theta(\mu(q)) \AND \theta(\mu(q'))
+q \AND q' \judge \theta(\SIMPL{q}) \AND \theta(\SIMPL{q'})
 \]
 Lemma 6, proven below, states that, for all models $m$ and $n$:
 \[
 \theta(m) \AND \theta(n) \judge \theta (m \sqcap n)
 \]
-From Lemma 6 (substituting $\mu(q)$ for $m$ and $\mu(q')$ for $n$), it follows that:
+From Lemma 6 (substituting $\SIMPL{q}$ for $m$ and $\SIMPL{q'}$ for $n$), it follows that:
 \[
-\theta(\mu(q)) \AND \theta(\mu(q')) \judge \theta(\mu(q \AND q'))
+\theta(\SIMPL{q}) \AND \theta(\SIMPL{q'}) \judge \theta(\SIMPL{q \AND q'})
 \]
 Our desired result follows using {\bf Transitivity}.
 
 \begin{mycase}
 $p$ is $\langle a \rangle q$
 \end{mycase}
-By the induction hypothesis, $q \judge \theta(\mu(q))$.
-Now there are two sub-cases to consider, depending on whether or not $\theta(\mu(q)) = \bot$.
+By the induction hypothesis, $q \judge \theta(\SIMPL{q})$.
+Now there are two sub-cases to consider, depending on whether or not $\theta(\SIMPL{q}) = \bot$.
 \begin{subcase}
-$\theta(\mu(q)) = \bot$
+$\theta(\SIMPL{q}) = \bot$
 \end{subcase}
-In this case, $\theta(\mu(\langle a \rangle q))$ also equals $\bot$. 
+In this case, $\theta(\SIMPL{\langle a \rangle q})$ also equals $\bot$. 
 By the induction hypothesis:
 \[
 q \judge \bot
@@ -122,21 +122,21 @@ The desired proof that:
 \]
 follows by {\bf Transitivity}.
 \begin{subcase}
-$\theta(\mu(q)) \neq \bot$
+$\theta(\SIMPL{q}) \neq \bot$
 \end{subcase}
-By the induction hypothesis, $q \judge \theta(\mu(q))$.
+By the induction hypothesis, $q \judge \theta(\SIMPL{q})$.
 So, by {\bf Transition Normal}:
 \[
-\langle a \rangle q \judge \langle a \rangle \theta(\mu(q))
+\langle a \rangle q \judge \langle a \rangle \theta(\SIMPL{q})
 \]
 The desired conclusion follows from noting that:
 \[
- \langle a \rangle \theta(\mu(q)) = \theta(\mu(\langle a \rangle q))
+ \langle a \rangle \theta(\SIMPL{q}) = \theta(\SIMPL{\langle a \rangle q})
  \]
  \begin{mycase}
 $p$ is $\fBang A$
 \end{mycase}
-If $p$ is $\fBang A$, then $ \theta(\mu(p))$ is $\fBang A \AND \top$.
+If $p$ is $\fBang A$, then $ \theta(\SIMPL{p})$ is $\fBang A \AND \top$.
 We can prove $\fBang A \judge \fBang A \AND \top$ using {\bf $\AND$ Right}, {\bf $\top$ Right} and {\bf Identity}.
 \qed
 \end{proof}

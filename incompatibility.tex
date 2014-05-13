@@ -8,7 +8,7 @@
   members.  So we can work with the simpler definition in the text
   above.}  incompatible with $p$ as:
 \[
-\mathcal{I}(p) = \{ q \; | \; \mu(p) \sqcap \mu(q) = \bot \}
+\mathcal{I}(p) = \{ q \; | \; \SIMPL{p} \sqcap \SIMPL{q} = \bot \}
 \]
 EL satisfies Robert Brandom's \textbf{incompatibility semantics}  property:
 \[
@@ -27,13 +27,13 @@ $\mathcal{J}(m)$ is the set of models that are incompatible with $m$:
 \]
 We shall make use of three lemmas:
 \begin{lemma}
-$\mbox{if }p \models q \mbox{ then } \mu(p) \LEQ \mu(q)$
+$\mbox{if }p \models q \mbox{ then } \SIMPL{p} \LEQ \SIMPL{q}$
 \end{lemma}
 \begin{lemma}
 $\mbox{if }m \LEQ n \mbox{ then } x \sqcap m \LEQ x \sqcap n$
 \end{lemma}
 \begin{lemma}
-$\mbox{if }\mathcal{I}(q) \subseteq \mathcal{I}(p) \mbox{ then } \mathcal{J}(\mu(q)) \subseteq \mathcal{J}(\mu(p))$
+$\mbox{if }\mathcal{I}(q) \subseteq \mathcal{I}(p) \mbox{ then } \mathcal{J}(\SIMPL{q}) \subseteq \mathcal{J}(\SIMPL{p})$
 \end{lemma}
 
 \begin{theorem}
@@ -42,25 +42,64 @@ $p \models q \; \mbox{ iff } \; \mathcal{I}(q) \subseteq \mathcal{I}(p)$
 
 \begin{proof}
 
-Left to right: Assume $p \models q$ and $r \in \mathcal{I}(q)$.
-By Lemma 1, $\mu(p) \LEQ \mu(q)$.
-From $r \in \mathcal{I}(q)$, $\mu(r) \sqcap \mu(q) = \bot$.
-By Lemma 2, $\mu(r) \sqcap \mu(p) \LEQ \mu(r) \sqcap \mu(q)$ (substituting $\mu(r)$ for $x$, $\mu(p)$ for $m$, and $\mu(q)$ for $n$).
-But if $\mu(r) \sqcap \mu(q) = \bot$, and $\mu(r) \sqcap \mu(p) \LEQ \mu(r) \sqcap \mu(q)$, then $\mu(r) \sqcap \mu(p) = \bot$ also, because the only element that is $\LEQ \bot$ is $\bot$ itself.
-But if $\mu(r) \sqcap \mu(p) = \bot$, then $r \in \mathcal{I}(p)$.
-\qed
+Left to right: Assume $p \models q$ and $r \in \mathcal{I}(q)$.  By
+Lemma 1, $\SIMPL{p} \LEQ \SIMPL{q}$.  From $r \in \mathcal{I}(q)$,
+$\SIMPL{r} \sqcap \SIMPL{q} = \bot$.  By Lemma 2, $\SIMPL{r} \sqcap
+\SIMPL{p} \LEQ \SIMPL{r} \sqcap \SIMPL{q}$ (substituting $\SIMPL{r}$
+for $x$, $\SIMPL{p}$ for $m$, and $\SIMPL{q}$ for $n$).  But if
+$\SIMPL{r} \sqcap \SIMPL{q} = \bot$, and $\SIMPL{r} \sqcap \SIMPL{p}
+\LEQ \SIMPL{r} \sqcap \SIMPL{q}$, then $\SIMPL{r} \sqcap \SIMPL{p} =
+\bot$ also, because the only element that is $\LEQ \bot$ is $\bot$
+itself.  But if $\SIMPL{r} \sqcap \SIMPL{p} = \bot$, then $r \in
+\mathcal{I}(p)$.  \qed
 
-Right to left: assume, for reductio, that $m \models p$ and $m \nvDash q$. we will show that $\mathcal{I}(q) \nsubseteq \mathcal{I}(p)$. 
-Assume $m \models p \mbox{ and } m \nvDash q$. We will construct another model $n$ such that $n \in \mathcal{J}(\mu(q))$ but $n \notin \mathcal{J}(\mu(p))$.
-This will entail, via Lemma 3, that $\mathcal{I}(q) \nsubseteq \mathcal{I}(p)$.
+Right to left: assume, for reductio, that $m \models p$ and $m \nvDash
+q$. we will show that $\mathcal{I}(q) \nsubseteq \mathcal{I}(p)$.
+Assume $m \models p \mbox{ and } m \nvDash q$. We will construct
+another model $n$ such that $n \in \mathcal{J}(\SIMPL{q})$ but $n
+\notin \mathcal{J}(\SIMPL{p})$.  This will entail, via Lemma 3, that
+$\mathcal{I}(q) \nsubseteq \mathcal{I}(p)$.
 
-If $m \nvDash q$, then there is a formula $q'$ that does not contain $\AND$ such that $q \models q'$ and $m \nvDash q'$. $q'$ must be either of the form (i) $\langle a_1 \rangle ... \langle a_n \rangle \top$ (for $n > 0$) or (ii) of the form $\langle a_1 \rangle ... \langle a_n \rangle \; !\{A\}$ where $A \subseteq \mathcal{S} \mbox{ and } n >= 0$.
+If $m \nvDash q$, then there is a formula $q'$ that does not contain
+$\AND$ such that $q \models q'$ and $m \nvDash q'$. $q'$ must be
+either of the form (i) $\langle a_1 \rangle ... \langle a_n \rangle
+\top$ (for $n > 0$) or (ii) of the form $\langle a_1 \rangle
+... \langle a_n \rangle \; !\{A\}$ where $A \subseteq \mathcal{S}
+\mbox{ and } n >= 0$.
 
-In case (i), there must be an $i$ between $0$ and $n$ such that $m \models \langle a_1 \rangle ... \langle a_i \rangle \top$ but $m \nvDash  \langle a_1 \rangle ... \langle a_{i+1} \rangle \top$. We need to construct another model $n$ such that $n \sqcap \mu(q) = \bot$, but $n \sqcap \mu(p) \neq \bot$. Letting $m = ((\mathcal{W},\rightarrow,\lambda),w)$, then $m \models \langle a_1 \rangle ... \langle a_i \rangle \top$ implies that there is at least one sequence of states of the form $w, w_1, ..., w_i$ such that $w \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_i$. 
-Now let $n$ be just like $m$ but with additional transition-restrictions on each $w_i$ that it not include $a_{i+1}$. 
-In other words, $\lambda_n(w_i) = \lambda_m(w_i)  - \{a_{i+1}\}$ for all $w_i$ in sequences of the form $w \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_i$. Now $n \sqcap \mu(q) = \bot$ because of the additional transition restriction we added to $n$, which rules out $\langle a_1 \rangle ... \langle a_{i+1} \rangle \top$, and a-forteriori $q$. But $n \sqcap \mu(p) \neq \bot$, because $m \models p$ and $n \LEQ m$ together imply $n \models p$. So $n$ is indeed the model we were looking for, that is incompatible with $\mu(q)$ while being compatible with $\mu(p)$.
+In case (i), there must be an $i$ between $0$ and $n$ such that $m
+\models \langle a_1 \rangle ... \langle a_i \rangle \top$ but $m
+\nvDash \langle a_1 \rangle ... \langle a_{i+1} \rangle \top$. We need
+to construct another model $n$ such that $n \sqcap \SIMPL{q} = \bot$,
+but $n \sqcap \SIMPL{p} \neq \bot$. Letting $m =
+((\mathcal{W},\rightarrow,\lambda),w)$, then $m \models \langle a_1
+\rangle ... \langle a_i \rangle \top$ implies that there is at least
+one sequence of states of the form $w, w_1, ..., w_i$ such that $w
+\xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_i$.  Now let
+$n$ be just like $m$ but with additional transition-restrictions on
+each $w_i$ that it not include $a_{i+1}$.  In other words,
+$\lambda_n(w_i) = \lambda_m(w_i) - \{a_{i+1}\}$ for all $w_i$ in
+sequences of the form $w \xrightarrow{a_1} w_1 \rightarrow
+... \xrightarrow{a_i} w_i$. Now $n \sqcap \SIMPL{q} = \bot$ because of
+the additional transition restriction we added to $n$, which rules out
+$\langle a_1 \rangle ... \langle a_{i+1} \rangle \top$, and
+a-forteriori $q$. But $n \sqcap \SIMPL{p} \neq \bot$, because $m
+\models p$ and $n \LEQ m$ together imply $n \models p$. So $n$ is
+indeed the model we were looking for, that is incompatible with
+$\SIMPL{q}$ while being compatible with $\SIMPL{p}$.
 
-In case (ii), $m \models \langle a_1 \rangle ... \langle a_n \rangle \top$ but $m \nvDash \langle a_1 \rangle ... \langle a_n \rangle !A$ for some $A \subset \mathcal{S}$. We need to produce a model $n$ that is incompatible with $\mu(q)$ but not with $\mu(p)$. Given that $m \models \langle a_1 \rangle ... \langle a_n \rangle \top$, there is a sequence of states $w, w_1, ..., w_n$ such that $w \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_n$. Let $n$ be the model just like $n$ except it has an additional transition from each such $w_n$ with a symbol $s \notin A$. Clearly, $n \sqcap \mu(q') = \bot$ because of the additional $s$-transition, and given that $q \models q'$, it follows that $n \sqcap \mu(q) = \bot$. Also, $n \sqcap \mu(p) \neq \bot$, because $n \LEQ m$ and $m \models p$.
+In case (ii), $m \models \langle a_1 \rangle ... \langle a_n \rangle
+\top$ but $m \nvDash \langle a_1 \rangle ... \langle a_n \rangle !A$
+for some $A \subset \mathcal{S}$. We need to produce a model $n$ that
+is incompatible with $\SIMPL{q}$ but not with $\SIMPL{p}$. Given that
+$m \models \langle a_1 \rangle ... \langle a_n \rangle \top$, there is
+a sequence of states $w, w_1, ..., w_n$ such that $w \xrightarrow{a_1}
+w_1 \rightarrow ... \xrightarrow{a_i} w_n$. Let $n$ be the model just
+like $n$ except it has an additional transition from each such $w_n$
+with a symbol $s \notin A$. Clearly, $n \sqcap \SIMPL{q'} = \bot$
+because of the additional $s$-transition, and given that $q \models
+q'$, it follows that $n \sqcap \SIMPL{q} = \bot$. Also, $n \sqcap
+\SIMPL{p} \neq \bot$, because $n \LEQ m$ and $m \models p$.
 
 
 \end{proof}

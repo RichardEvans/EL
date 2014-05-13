@@ -17,6 +17,7 @@
 \newcommand{\PARAGRAPH}[1]{\vspace{2mm}\NOVSPACEPARAGRAPH{#1}}
 \newcommand{\NI}{\noindent}
 \newcommand{\LEQ}{\sqsubseteq}
+\newcommand{\SIM}{\sqsubseteq}
 \newcommand{\BISIM}{\sim}
 \newcommand{\BIGLUB}{\bigsqcup}
 \newenvironment{FIGURE}{\begin{figure}[h]\rule{\linewidth}{0.5pt}
@@ -45,6 +46,8 @@
 \newcommand{\THREEPREMISERULENAMEDLEFT}[5]{\SMALLRULENAME{#5}\,\THREEPREMISERULE{#1}{#2}{#3}{#4}}
 \newcommand{\FOURPREMISERULENAMEDLEFT}[6]{\SMALLRULENAME{#6}\,\FOURPREMISERULE{#1}{#2}{#3}{#4}{#5}}
 
+\newcommand{\SIMPL}[1]{\mathsf{simpl}(#1)}
+\newcommand{\CHAR}[1]{\mathsf{char}(#1)}
 \newcommand{\MAY}[2]{\langle #1 \rangle #2}
 \newcommand{\NEG}[1]{\mathsf{neg}(#1)}
 \newcommand{\AND}{\land}
@@ -56,8 +59,7 @@
 \newcommand{\STATE}{\mathsf{State}}
 \newcommand{\SYMBOL}{\mathsf{Symbol}}
 \newcommand{\DEFEQ}{\stackrel{\text{\emph{def}}}{=}}
-\newcommand{\TRUTH}{\LOGIC{T}}
-\newcommand{\TRUE}{\LOGIC{t}}
+\newcommand{\TRUE}{\top}
 \newcommand{\LOGIC}[1]{\mathsf{#1}}
 \newcommand{\MMM}{\frak{M}}
 \newcommand{\SSS}{\CAL{S}}
