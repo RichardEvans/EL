@@ -1,0 +1,85 @@
+* Make sure we have \qed at the end of every proof. Better:
+  put it into the latex macro.
+
+* Say what ranges over what, e.g. \frac{M} over models, X, Y over
+  formulae, etc.  Be consistent about this.
+
+* Use descriptive names, why \mu(X) for the simplest model satisfying
+  $X$?  would not simp(X) or something like that more readable?
+
+* Finalise the name of the logic. I am going to check with my friend
+  Tim Whitmarsh one more time that "Eremic Logic" is the best name for
+  it.
+
+* Find a better name for !A than "bang A".
+
+* Be consistent. In particular
+
+  - FOL vs first-order logic, EL vs eremic logic
+
+  - Either all definitions are in an explicit \begin{definition}
+    environment or none.
+
+  - Term defined should always be \textbf{...} or \textsc{...} etc.
+
+  - FOrmulae vs terms vs sentences
+
+*  I recommend to use the following order of presentation in Chapters 2 and 3.
+
+  - Formulae
+  - Models and the satisfaction relation.
+  - Rules and axioms
+  - Soundness of rules and axioms
+  - Completeness of rules and axioms
+  - Other stuff (Translation into FOL, decision procedure etc).
+
+  I think it might also help if we relegate standard proofs to the
+  appendix.  For example we could just state the soundness theorem in
+  the main body of the paper, prove 2 or 3 interesting cases, and have
+  the rest in the appendix. I also prefer it if ther proof rules are
+  all in one figure, rather than distributed over a couple of pages.
+
+  - Rules and axioms in figures.
+
+  - Easy proof go in the appendix
+
+* Give more examples.
+
+* be consistent on capitalisation.
+
+* Timetable: 13.May to 16.May, can we finish it?
+
+* Find possible reviewers (please add more):
+
+  - Michael Wooldridge http://www.cs.ox.ac.uk/people/michael.wooldridge/
+  - Robert Brandom http://www.pitt.edu/~rbrandom/
+  - Marek Sergot http://www.doc.ic.ac.uk/~mjs/
+  - Marcus Kracht http://wwwhomes.uni-bielefeld.de/mkracht/index-en.html
+  - Graham White and Paulo Oliva at QMUL
+  - Bernhard Reus at Sussex
+  - Billiejoe Charlton
+  - Aram Lintzel
+
+* Could it make sense to prepare a little video presentation (using
+  Screenflow, or recording professionally), maybe 15 minutes, to
+  introduce the material? This could make it more accessible to
+  non-technical audiences.)
+
+* Prepare Haskell decision procedure. Put on Github. Write
+  instructions on how to use.
+
+* THink about how to interface the paper with Versu.  Versu—A
+  Simulationist Storytelling System
+
+* Think about seminars (Sussex, Imperial, Oxford, QMUL which others?)
+
+* Related work: 
+
+  - Investgations into negation
+  - Philosophical stuff
+  - Logics for knowledge representation
+  - Standard Modal Logic stuff
+  - HM Logic
+  - Linear logic (additive conjunction)
+
+* The rule (! left) is not used in the completeness proof. Why not?
