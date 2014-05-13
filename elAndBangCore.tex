@@ -207,8 +207,8 @@ contexts.
 \NI In logic it is often useful to speak about the simplest model
 satisfying a given formula, cf.~the term models and Herbrand universes
 of first-order logic\martin{is that true?}. We use the notion of
-simulation to define an order $\LEQ$ on models, which gives rise to a
-bounded lattice of models.
+simulation to define an order $\MODELLEQ$ on models, which gives rise
+to a bounded lattice of models.
 
 \begin{definition}
 The binary relation $\MODELLEQ$ on models is defined by the following
@@ -226,6 +226,18 @@ extension of the simulation relation of eremic transition systems.
 
 We now extends the notions of simulation and bisimulation to eremic
 transistion systems and models.
+
+\begin{theorem}
+Let $\MMM_i = (\LLL_i, w_i)$ be two models with underlying eremic
+transition systems $\LLL_i = (S_i, \rightarrow_i, \lambda_i)$. Then equivalent:
+\begin{enumerate}
+
+\item $\MMM_1 \MODELLEQ \MMM_2$.
+
+\item ... (something with a simulation on the underliyng LTS and a condition on $\lambda$s)
+
+\end{enumerate}
+\end{theorem}
 
 \begin{definition}
 Let $\LLL_i = (S_i, \rightarrow_i, \lambda_i)$ be eremic transition
