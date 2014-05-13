@@ -309,6 +309,53 @@ replaceState (states, trans, labels) (x, y) =
     in  (states', trans', labels')
     
     
+---------------------------- lub ----------------------------
+
+lub :: Model -> Model -> Model
+lub x Nothing = x
+lub Nothing x = x
+lub (Just (l, w)) (Just (l', w')) = Just (lub2 l l' topModel [(w, w', 0)])
+
+lubLabel :: Label -> Label -> Label
+lubLabel LStar _ = LStar
+lubLabel _ LStar = LStar
+lubLabel (LBang x) (LBang y) = LBang (nub (x ++ y))
+
+lub2 :: LTS -> LTS -> PointedLTS -> [(State, State, State)] -> PointedLTS
+lub2 _ _ result [] = result
+lub2 l@(ws, ts, ls) l'@(ws', ts', ls') (soFar, soFarRoot) ((w, w', n):as) =
+    let lw = fromJust $ lookup w ls
+        lw' = fromJust $ lookup w' ls'
+        nl = lw `lubLabel` lw'
+        soFar' = addOrReplaceLabel soFar n nl
+        outW = outTransitions (l, w)
+        outW' = outTransitions (l', w')
+        c = commonTransitions outW outW'
+        firstNewState = maxState (soFar, soFarRoot) + 1
+        newStates = makeNewStates firstNewState (length c)
+        symbols = map (\(s,_,_) ->s) c
+        f ((_,s,s'), ns) = (s, s', ns)
+        as' = map f (zip c newStates)
+        soFar'' = makeTransitions soFar' n (zip symbols newStates)
+    in  lub2 l l' (soFar'', soFarRoot) (as' ++ as)
+
+commonTransitions :: [(Symbol, State)] -> [(Symbol, State)] -> [(Symbol, State, State)]
+commonTransitions t t' = 
+    [(s, w, w') | (s, w) <- t, (s', w') <- t', s == s']
+
+makeNewStates :: Int -> Int -> [State]
+makeNewStates x n = [x..x+(n-1)]
+
+makeTransitions :: LTS -> State -> [(Symbol, State)] -> LTS
+makeTransitions l s ts = foldl (makeTransition s) l ts
+
+makeTransition :: State -> LTS -> (Symbol, State) -> LTS
+makeTransition x (states, trans, labels) (s, newState) =
+    let states' = newState : states
+        newTran = (s, [(x, newState)])
+        trans' = mergeTransitions trans [newTran]
+    in  (states', trans', labels)
+
 ---------------------------- theta ----------------------------
 
 theta :: Model -> Prop
@@ -530,57 +577,7 @@ r2 = restrictStatesToDepth m1 2
 
 
 
----
-
-
-lub :: Model -> Model -> Model
-lub x Nothing = x
-lub Nothing x = x
-lub (Just (l, w)) (Just (l', w')) = Just (lub2 l l' topModel [(w, w', 0)])
-
-lubLabel :: Label -> Label -> Label
-lubLabel LStar _ = LStar
-lubLabel _ LStar = LStar
-lubLabel (LBang x) (LBang y) = LBang (nub (x ++ y))
-
-lub2 :: LTS -> LTS -> PointedLTS -> [(State, State, State)] -> PointedLTS
-lub2 _ _ result [] = result
-lub2 l@(ws, ts, ls) l'@(ws', ts', ls') (soFar, soFarRoot) ((w, w', n):as) =
-    let lw = fromJust $ lookup w ls
-        lw' = fromJust $ lookup w' ls'
-        nl = lw `lubLabel` lw'
-        soFar' = addOrReplaceLabel soFar n nl
-        outW = outTransitions (l, w)
-        outW' = outTransitions (l', w')
-        c = commonTransitions outW outW'
-        firstNewState = maxState (soFar, soFarRoot) + 1
-        newStates = makeNewStates firstNewState (length c)
-        symbols = map (\(s,_,_) ->s) c
-        f ((_,s,s'), ns) = (s, s', ns)
-        as' = map f (zip c newStates)
-        soFar'' = makeTransitions soFar' n (zip symbols newStates)
-    in  lub2 l l' (soFar'', soFarRoot) (as' ++ as)
-
-commonTransitions :: [(Symbol, State)] -> [(Symbol, State)] -> [(Symbol, State, State)]
-commonTransitions t t' = 
-    [(s, w, w') | (s, w) <- t, (s', w') <- t', s == s']
-
-makeNewStates :: Int -> Int -> [State]
-makeNewStates x n = [x..x+(n-1)]
-
-makeTransitions :: LTS -> State -> [(Symbol, State)] -> LTS
-makeTransitions l s ts = foldl (makeTransition s) l ts
-
-makeTransition :: State -> LTS -> (Symbol, State) -> LTS
-makeTransition x (states, trans, labels) (s, newState) =
-    let states' = newState : states
-        newTran = (s, [(x, newState)])
-        trans' = mergeTransitions trans [newTran]
-    in  (states', trans', labels)
-
-
-
-
+--- lub - tests
 
 ex1 = Conj (Trans "a" (Bang ["x"])) (Bang ["a"])
 ex2 = Conj (Trans "b" (Bang ["y"])) (Bang ["b"])
