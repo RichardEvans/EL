@@ -61,7 +61,7 @@ also be true).  The main question this paper seeks to answer is:
 
 \subsection{Wittgenstein's vision of a logic of elementary propositions}
 
-\NI In the Tractatus \cite{wittgenstein-tractatus}, Wittgenstein
+\NI In the \emph{Tractatus} \cite{wittgenstein-tractatus}, Wittgenstein
 claimed that the world is a set of atomic sentences in an idealized
 logical language.  Each atomic sentence was supposed to be
 \emph{logically independent} of every other, so that they could be
@@ -81,7 +81,7 @@ independent:
 \NI At the time he was writing the Tractatus, he hoped that further
 analysis would reveal that these statements were not really atomic.
 
-But in the Philosophical Remarks \cite{wittgenstein-remarks}, he
+But in the \emph{Philosophical Remarks} \cite{wittgenstein-remarks}, he
 renounced the thesis of the logical independence of atomic
 propositions.  In \S 76, talking about incompatible colour predicates,
 he writes:
@@ -148,9 +148,9 @@ be satisfied in many different ways. This condition will be
 precisified in Section 2: a logic is ``simple'' if the set of
 satisfying models of every sentence has a unique least upper
 bound. Disjunction fails to be simple because there are two equally
-simple models of $p \lor q$. Similarly, negation fails to be simple
-because there are two equally simple models of $\neg (p \land
-q)$. Conjunction is the \emph{only} logical connective that is simple,
+simple models of $\phi \lor \psi$. Similarly, negation fails to be simple
+because there are two equally simple models of $\neg (\phi \land
+\psi)$. Conjunction is the \emph{only} logical connective that is simple,
 according to this criterion.
 
 \NI Imagine, then, a primitive people speaking a simple language of
@@ -172,18 +172,18 @@ incompatibility is introduced as a set of sets of sentences which are
 jointly incompatible.  Once the speakers of the primordial language
 learn this incompatibility relation (extensionally defined, as a set
 of sets), they can use it to make entailment inferences.  Given a
-sentence $p$ in a language $L$, define $\INC{p}$ as the set of sets of
-sentences in $L$ that are incompatible with $p$.  The speakers of the
+sentence $\phi$ in a language $L$, define $\INC{\phi}$ as the set of sets of
+sentences in $L$ that are incompatible with $\phi$.  The speakers of the
 primordial language can use $\INC{\cdot}$ to make inferences, using the
 equivalence\footnote{This equivalence is described in \cite{brandom2}:
   ``A relation of entailment, required for an inferential semantics,
   can be derived according to the principle that p entails q just in
   case everything incompatible with q is incompatible with p.'' For a
   further elaboration, see \cite{brandom}, especially Chapter 5 and
-  Appendices.}:
+  Appendices.\martin{should we change the $p$ and $q$ here to $\phi, \psi$ etc?}}:
 
 \[
-   p \mbox{ entails } q \mbox{ iff } \INC{q} \subseteq \INC{p}
+   \phi \mbox{ entails } \psi \quad \mbox{ iff }\quad \INC{\psi} \subseteq \INC{\phi}
 \]
 
 \NI This is a highly appealing picture of language development.  It
@@ -213,7 +213,7 @@ learnable. We need to know that
 
 \NI Even if we restrict our attention to one-place predicates, if
 there are $n$ objects and $p$ incompatible predicates, then there are
-$n C^p_2$ facts to learn.  This quickly becomes impractical as $n$ and
+$n\cdot C^p_2$ facts to learn\martin{what is $C_2$?}.  This quickly becomes impractical as $n$ and
 $p$ increases.  As Davidson has emphasized \cite{davidson}, for a
 language to be learnable, we must discern some sort of recursive
 structure so that the combinatorics can be tamed.

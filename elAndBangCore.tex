@@ -47,7 +47,7 @@ An \emph{eremic transition system} is a triple $(S, \rightarrow,
 \lambda)$, where $(S, \rightarrow)$ is a labelled transition system
 over $\Sigma$, and $\lambda$ is a function from states to sets of
 actions (not necessarily finite), subject to the following constraint:
-for all states $S \in S$ it is the case that $ \{a \fOr \exists t \; s
+for all states $s \in S$ it is the case that $ \{a \fOr \exists t \; s
 \xrightarrow{a} t\} \subseteq \lambda(s)$.
 
 \end{definition}
@@ -58,7 +58,7 @@ semantic counterpart of the $!$ operator.
 
 \begin{definition}
 A \emph{model}, ranged over by $\MMM, \MMM', ...$, is a pair $(\LLL,
-s)$, where $M$ is an eremic transition system $(S, \rightarrow,
+s)$, where $\LLL$ is an eremic transition system $(S, \rightarrow,
 \lambda)$, and $s$ is a state from $S$.
 \end{definition}
 

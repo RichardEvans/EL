@@ -14,6 +14,10 @@
 
   - What kind of space ! puts between itself and its set. and also before !
 
+  - Book titles always in \emph, e.g. \emph{Philosophical Remarks}?
+
+  - capitalisation, e.g. Eremic Logic vs Eremic logic vs eremic logic etc.
+
 * Make sure we have \qed at the end of every proof. Better:
   put it into the latex macro.
 
