@@ -73,8 +73,8 @@ inductively by the following clauses, where we assume that $\MMM =
 \begin{array}{lclcl}
   \MMM & \models & \top   \\
   \MMM & \models & \phi_1 \AND \phi_2 &\ \mbox{ iff } \ & \MMM  \models \phi_1 \mbox { and } \MMM \models \phi_2  \\
-  \MMM & \models & \langle a \rangle \phi & \mbox{ iff } & \text{there is a } w \xrightarrow{a} w' \mbox { such that } (l,w') \models \phi  \\
-  \MMM & \models & \fBang A &\mbox{ iff } & \lambda(w) \subseteq A
+  \MMM & \models & \langle a \rangle \phi & \mbox{ iff } & \text{there is a } s \xrightarrow{a} t \mbox { such that } (\LLL, t) \models \phi  \\
+  \MMM & \models & \fBang A &\mbox{ iff } & \lambda(s) \subseteq A
 \end{array}
 \]
 
@@ -191,8 +191,8 @@ contexts.
 
 \begin{itemize}
 
-\item An ordering $\LEQ$ on models, which enables us to speak of the
-  simplest model satisfying a formula.
+\item An ordering $\MODELLEQ$ on models, which enables us to speak of
+  the simplest model satisfying a formula.
 
 \item An algorithm which gives the simplest model for a formula.
 
@@ -209,6 +209,20 @@ satisfying a given formula, cf.~the term models and Herbrand universes
 of first-order logic\martin{is that true?}. We use the notion of
 simulation to define an order $\LEQ$ on models, which gives rise to a
 bounded lattice of models.
+
+\begin{definition}
+The binary relation $\MODELLEQ$ on models is defined by the following
+clause:
+\[
+   \MMM \MODELLEQ \MMM'
+      \qquad\text{iff}\qquad
+   \{\phi\ |\ \MMM \models \phi \} \subseteq  \{\phi\ |\ \MMM' \models \phi \}.
+\]
+\end{definition}
+
+\NI The definition of $\MODELLEQ$ makes reference to formulae. We are
+now developing a purely model-theoretic characterisation, based on an
+extension of the simulation relation of eremic transition systems.
 
 We now extends the notions of simulation and bisimulation to eremic
 transistion systems and models.

@@ -92,3 +92,4 @@
   - Linear logic (additive conjunction)
 
 * The rule (! left) is not used in the completeness proof. Why not?
+* go through old emails and list ideas and issues that we discussed
