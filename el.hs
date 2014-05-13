@@ -594,3 +594,15 @@ ex4 = Conj (Trans "a" (Bang ["z"])) (Bang ["a","y"])
 lubt3 = lub (mu ex3) (mu ex4)
 lubt4 = lub (mu ex4) (mu ex3)
 
+ex5 = Conj (Conj (Trans "a" (Bang ["x"])) (Trans "b" (Bang ["x2"]))) (Bang ["a","b","w"])
+ex6 = ex4
+
+lubt5 = lub (mu ex5) (mu ex6)
+lubt6 = lub (mu ex6) (mu ex5)
+
+ex7 = ex5
+ex8 = Conj (Trans "c" (Bang ["z"])) (Bang ["a","y"])
+
+lubt7 = lub (mu ex7) (mu ex8)
+lubt8 = lub (mu ex8) (mu ex7)
+

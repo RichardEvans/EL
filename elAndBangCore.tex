@@ -216,7 +216,7 @@ clause:
 \[
    \MMM \MODELLEQ \MMM'
       \qquad\text{iff}\qquad
-   \{\phi\ |\ \MMM \models \phi \} \subseteq  \{\phi\ |\ \MMM' \models \phi \}.
+   \{\phi\ |\ \MMM \models \phi \} \supseteq  \{\phi\ |\ \MMM' \models \phi \}.
 \]
 \end{definition}
 
@@ -245,7 +245,7 @@ a \emph{simulation from $\LLL_1$ to $\LLL_2$}, provided:
 
 \begin{itemize}
 
-\item $\RRR$ is a simulation from $\LLL_1$ to $\LLL_2$ as eremitc transition systems.
+\item $\RRR$ is a simulation from $\LLL_1$ to $\LLL_2$ as eremic transition systems.
 
 \item  $(s_1, s_2) \in \RRR$. 
 
@@ -270,24 +270,25 @@ $\MMM_1$ to $\MMM_2$.
 
 \begin{theorem}
 Let $\MMM_i = (\LLL_i, w_i)$ be two models with underlying eremic
-transition systems $\LLL_i = (S_i, \rightarrow_i, \lambda_i)$. Then equivalent:
+transition systems $\LLL_i = (S_i, \rightarrow_i, \lambda_i)$. Then the following are equivalent:
 \begin{enumerate}
 
 \item $\MMM_1 \MODELLEQ \MMM_2$.
 
-\item $\MMM_1 \LEQ \MMM_2$.
+\item $\MMM_2 \LEQ \MMM_1$.
 
 \end{enumerate}
 \end{theorem}
 
 
-It turns out that $\SIM$ on models is not just a partial order, but
+It turns out that $\MODELLEQ $ on models is not just a partial order, but
 almost a complete lattice, except that a bottom element is missing.
 
 \begin{definition}
-We extend the collection of models with a simgle \emph{bottom} element
-$\bot$. We extend the similarity relation $\SIM$  and stipulate that $\bot
-\SIM \MMM$ for all models $\MMM$.
+We extend the collection of models with a single \emph{bottom} element
+$\bot$, where $\bot \models \phi$ for all $\phi$. 
+We extend the relation $\MODELLEQ $  and stipulate that $\bot
+\MODELLEQ \MMM$ for all models $\MMM$.
 \end{definition}
 
 \begin{theorem}
