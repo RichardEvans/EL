@@ -259,6 +259,12 @@ combineLabels2 (LBang r1, out1) (LBang r2, out2) =
         True -> Just (LBang $ r1 `intersect` r2)
         False -> Nothing
 
+addOrReplaceLabel  :: LTS -> State -> Label -> LTS
+addOrReplaceLabel (s,t,l) x a =
+    case lookup x l of
+        Nothing -> (s,t,(x,a):l)
+        _ -> replaceLabel (s,t,l) x a
+
 replaceLabel :: LTS -> State -> Label -> LTS
 replaceLabel (ss, trans, ls) s l = 
     let f (s', l') | s == s' = (s', l)
@@ -526,30 +532,6 @@ r2 = restrictStatesToDepth m1 2
 
 ---
 
-ex1 = Conj (Trans "a" (Bang ["b"])) (Trans "a" (Bang ["c"]))
-ex2 = Trans "a" (Bang ["d"])
-
-lubt1 = lub (mu ex1) (mu ex2)
-lubt2 = lub (mu ex2) (mu ex1)
-
-ex3 = Conj (Trans "a" (Bang ["x"])) (Trans "b" (Bang ["y"]))
-ex4 = Conj (Trans "a" (Bang ["z"])) (Trans "c" (Bang ["w"]))
-
-lubt3 = lub (mu ex3) (mu ex4)
-lubt4 = lub (mu ex4) (mu ex3)
-
-ex5 = Conj (Trans "a" (Trans "b" Top)) (Bang ["x"])
-ex6 = Conj (Trans "a" (Trans "c" Top)) (Bang ["y"])
-
-lubt5 = lub (mu ex5) (mu ex6)
-lubt6 = lub (mu ex6) (mu ex5)
-
-ex7 = Conj (Trans "a" (Bang ["x"])) (Trans "a" (Bang ["y"]))
-ex8 = Conj (Trans "a" (Bang ["z"])) (Trans "a" (Bang ["w"]))
-
-lubt7 = lub (mu ex7) (mu ex8)
-lubt8 = lub (mu ex8) (mu ex7)
-
 
 lub :: Model -> Model -> Model
 lub x Nothing = x
@@ -567,11 +549,12 @@ lub2 l@(ws, ts, ls) l'@(ws', ts', ls') (soFar, soFarRoot) ((w, w', n):as) =
     let lw = fromJust $ lookup w ls
         lw' = fromJust $ lookup w' ls'
         nl = lw `lubLabel` lw'
-        soFar' = replaceLabel soFar n nl
+        soFar' = addOrReplaceLabel soFar n nl
         outW = outTransitions (l, w)
         outW' = outTransitions (l', w')
         c = commonTransitions outW outW'
-        newStates = makeNewStates (maxState (soFar, soFarRoot)) (length c)
+        firstNewState = maxState (soFar, soFarRoot) + 1
+        newStates = makeNewStates firstNewState (length c)
         symbols = map (\(s,_,_) ->s) c
         f ((_,s,s'), ns) = (s, s', ns)
         as' = map f (zip c newStates)
@@ -594,3 +577,20 @@ makeTransition x (states, trans, labels) (s, newState) =
         newTran = (s, [(x, newState)])
         trans' = mergeTransitions trans [newTran]
     in  (states', trans', labels)
+
+
+
+
+
+ex1 = Conj (Trans "a" (Bang ["x"])) (Bang ["a"])
+ex2 = Conj (Trans "b" (Bang ["y"])) (Bang ["b"])
+
+lubt1 = lub (mu ex1) (mu ex2)
+lubt2 = lub (mu ex2) (mu ex1)
+
+ex3 = Conj (Trans "a" (Bang ["x"])) (Bang ["a","w"])
+ex4 = Conj (Trans "a" (Bang ["z"])) (Bang ["a","y"])
+
+lubt3 = lub (mu ex3) (mu ex4)
+lubt4 = lub (mu ex4) (mu ex3)
+
