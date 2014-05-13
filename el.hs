@@ -45,6 +45,10 @@ satsArrow ((s,r,v), w) a t =
         findArrow (a',rel) = a == a' && any satsT rel
     in  any findArrow r
 
+topModel :: PointedLTS
+topModel = (([0], [], [(0, LStar)]), 0)
+
+
 ---------------------------- entailment ----------------------------
 
 infix 1 |=
@@ -550,8 +554,43 @@ lubt8 = lub (mu ex8) (mu ex7)
 lub :: Model -> Model -> Model
 lub x Nothing = x
 lub Nothing x = x
-lub (Just (l, w)) (Just (l', w')) = Just (lub2 l l' [(w', w)], w)
+lub (Just (l, w)) (Just (l', w')) = Just (lub2 l l' topModel [(w', w, 0)])
 
-lub2 :: LTS -> LTS -> [(State, State)] -> LTS
-lub2 (ws, ts, ls) (ws', ts', ls') assoc =
+lubLabel :: Label -> Label -> Label
+lubLabel LStar _ = LStar
+lubLabel _ LStar = LStar
+lubLabel (LBang x) (LBang y) = LBang (nub (x ++ y))
 
+lub2 :: LTS -> LTS -> PointedLTS -> [(State, State, State)] -> PointedLTS
+lub2 _ _ result [] = result
+lub2 l@(ws, ts, ls) l'@(ws', ts', ls') (soFar, soFarRoot) ((w, w', n):as) =
+    let lw = fromJust $ lookup w ls
+        lw' = fromJust $ lookup w' ls'
+        nl = lw `lubLabel` lw'
+        soFar' = replaceLabel soFar n nl
+        outW = outTransitions (l, w)
+        outW' = outTransitions (l', w')
+        c = commonTransitions outW outW'
+        newStates = makeNewStates (maxState (soFar, soFarRoot)) (length c)
+        symbols = map (\(s,_,_) ->s) c
+        f ((_,s,s'), ns) = (s, s', ns)
+        as' = map f (zip c newStates)
+        soFar'' = makeTransitions soFar' n (zip symbols newStates)
+    in  lub2 l l' (soFar'', soFarRoot) (as' ++ as)
+
+commonTransitions :: [(Symbol, State)] -> [(Symbol, State)] -> [(Symbol, State, State)]
+commonTransitions t t' = 
+    [(s, w, w') | (s, w) <- t, (s', w') <- t', s == s']
+
+makeNewStates :: Int -> Int -> [State]
+makeNewStates x n = [x..x+(n-1)]
+
+makeTransitions :: LTS -> State -> [(Symbol, State)] -> LTS
+makeTransitions l s ts = foldl (makeTransition s) l ts
+
+makeTransition :: State -> LTS -> (Symbol, State) -> LTS
+makeTransition x (states, trans, labels) (s, newState) =
+    let states' = newState : states
+        newTran = (s, [(x, newState)])
+        trans' = mergeTransitions trans [newTran]
+    in  (states', trans', labels)
