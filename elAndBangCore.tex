@@ -204,28 +204,7 @@ contexts.
 
 \subsubsection{A partial ordering on models}
 
-\NI In logic it is often useful to speak about the simplest model
-satisfying a given formula, cf.~the term models and Herbrand universes
-of first-order logic\martin{is that true?}. We use the notion of
-simulation to define an order $\MODELLEQ$ on models, which gives rise
-to a bounded lattice of models.
-
-\begin{definition}
-The binary relation $\MODELLEQ$ on models is defined by the following
-clause:
-\[
-   \MMM \MODELLEQ \MMM'
-      \qquad\text{iff}\qquad
-   \{\phi\ |\ \MMM \models \phi \} \supseteq  \{\phi\ |\ \MMM' \models \phi \}.
-\]
-\end{definition}
-
-\NI The definition of $\MODELLEQ$ makes reference to formulae. We are
-now developing a purely model-theoretic characterisation, based on an
-extension of the simulation relation of eremic transition systems.
-
-We now extends the notions of simulation and bisimulation to eremic
-transistion systems and models.
+We shall define a partial-ordering on models by extending the notion of simulation on labeled transition systems.
 
 \begin{definition}
 Let $\LLL_i = (S_i, \rightarrow_i, \lambda_i)$ be eremic transition
@@ -235,8 +214,8 @@ a \emph{simulation from $\LLL_1$ to $\LLL_2$}, provided:
 
 \item $\RRR$ is a simulation on the underlying transition systems. 
 
-\item Whenever $(s, t) \in \RRR$ then also $\lambda_2(t) \subseteq
-  \lambda_1(s)$.
+\item Whenever $(s, t) \in \RRR$ then also $\lambda_1(s) \supseteq
+  \lambda_2(t)$.
 
 \end{itemize}
 
@@ -251,8 +230,10 @@ a \emph{simulation from $\LLL_1$ to $\LLL_2$}, provided:
 
 \end{itemize}
 
-\NI We write $\MMM_1 \SIM \MMM_2$ provided there is a simulation from
-$\MMM_1$ to $\MMM_2$.  
+\NI We say $\MMM_2$ \emph{simulates} $\MMM_1$ if there is a simulation $\RRR$ 
+from $\MMM_1$ to $\MMM_2$.
+
+
 
 %% We say $\RRR$ is a \emph{bisimulation} on eremic transition systems
 %% and models, respectively, if $\RRR$ and $\RRR^{-1}$ are. We say
@@ -262,22 +243,23 @@ $\MMM_1$ to $\MMM_2$.
 %%   we break up this definition into several smaller parts?}
 \end{definition}
 
+We use the notion of
+simulation to define an order $\MODELLEQ$ on models, which gives rise
+to a bounded lattice of models.
 
-%% \NI Intuitively, $\MMM \LEQ \MMM'$ if $\MMM$ can match all the
-%% transitions of $\MMM'$ while respecting \martin{ strengthening?}  the
-%% transitions-restrictions. \martin{explain why we go contravariant on
-%%   the $\lambda$s in the definition on $\SIM$.}
+\begin{definition}
+The binary relation $\MODELLEQ$ on models is defined as
+\[
+   \MMM \MODELLEQ \MMM' \text{ iff } \MMM \text{ simulates } \MMM' .
+\]
+\end{definition}
 
 \begin{theorem}
-Let $\MMM_i = (\LLL_i, w_i)$ be two models with underlying eremic
-transition systems $\LLL_i = (S_i, \rightarrow_i, \lambda_i)$. Then the following are equivalent:
-\begin{enumerate}
-
-\item $\MMM_1 \MODELLEQ \MMM_2$.
-
-\item $\MMM_2 \LEQ \MMM_1$.
-
-\end{enumerate}
+\[
+\MMM \MODELLEQ \MMM'
+\qquad\text{iff}\qquad
+ \{\phi\ |\ \MMM \models \phi \} \supseteq  \{\phi\ |\ \MMM' \models \phi \}.
+\]
 \end{theorem}
 
 
@@ -292,7 +274,7 @@ We extend the relation $\MODELLEQ $  and stipulate that $\bot
 \end{definition}
 
 \begin{theorem}
-The collection of models together with $\bot$, and ordered by $\SIM$
+The collection of models together with $\bot$, and ordered by $\MODELLEQ $
 is a complete lattice.  \martin{strictly speaking this is NOT true, because we
   can simply rename states and get new models that break
   e.g. anti-symmetry. I guess we need to quotient somehow, e.g.  $(
@@ -310,8 +292,8 @@ restrictions.\martin{I think this is not well-defined if $\Sigma$ is
 
 \subsubsection{Computing the simplest model satisfying a formula}
 
-\NI In $\SIM$ we have a notion of model simplicity.  We can now
-compute $\SIMPL{\phi}$, the simplest model w.r.t.~$\LEQ$ that
+\NI In $\MODELLEQ $ we have a notion of model simplicity.  We can now
+compute $\SIMPL{\phi}$, the simplest model w.r.t.~$\MODELLEQ $ that
 satisfies $\phi$.
 
 \begin{eqnarray*}
@@ -385,7 +367,7 @@ where:
 
 \item $\SIMPL{\phi} \models \phi$.
 
-\item If $\MMM' \models \phi$ and  $\MMM \LEQ \MMM'$ then also  $\MMM \models \phi$.
+\item If $\MMM' \models \phi$ and  $\MMM \MODELLEQ \MMM'$ then also  $\MMM \models \phi$.
  
 \end{itemize}
 
@@ -401,7 +383,7 @@ $\MMM$ in the following sense. \martin{Check that they are
 
 \item  $\MMM \models \phi$ implies $\CHAR{\MMM} \models \phi$.
 
-\item  $\MMM \models \CHAR{ \MMM' }$ exactly when $\MMM \LEQ \MMM'$.
+\item  $\MMM \models \CHAR{ \MMM' }$ exactly when $\MMM \MODELLEQ \MMM'$.
 
 \item $\MMM = \BIGLUB \{\MMM' \ |\ \MMM' \models \CHAR{\MMM} \}$.
 
