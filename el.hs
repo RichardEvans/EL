@@ -536,7 +536,7 @@ r2 = restrictStatesToDepth m1 2
 lub :: Model -> Model -> Model
 lub x Nothing = x
 lub Nothing x = x
-lub (Just (l, w)) (Just (l', w')) = Just (lub2 l l' topModel [(w', w, 0)])
+lub (Just (l, w)) (Just (l', w')) = Just (lub2 l l' topModel [(w, w', 0)])
 
 lubLabel :: Label -> Label -> Label
 lubLabel LStar _ = LStar
@@ -612,3 +612,26 @@ ex10 = Conj (Trans "a" (Bang ["z"])) (Bang ["a","w"])
 lubt9 = lub (mu ex9) (mu ex10)
 lubt10 = lub (mu ex10) (mu ex9)
 
+ex11 = Conj (Conj (Trans "a" (Bang ["x"])) (Trans "b" (Bang ["y"]))) (Bang ["a","b","w"])
+ex12 = Conj (Conj (Trans "a" (Bang ["z1"])) (Trans "c" (Bang ["z2"]))) (Bang ["a","c","w"])
+
+lubt11 = lub (mu ex11) (mu ex12)
+lubt12 = lub (mu ex12) (mu ex11)
+
+ex13 = ex11
+ex14 = Conj (Conj (Trans "a" (Bang ["z1"])) (Trans "b" (Bang ["z2"]))) (Bang ["a","b","w"])
+
+lubt13 = lub (mu ex13) (mu ex14)
+lubt14 = lub (mu ex14) (mu ex13)
+
+ex15 = ex9
+ex16 = Conj (Conj (Trans "a" (Bang ["z1"])) (Trans "a" (Bang ["z2"]))) (Bang ["a","w"])
+
+lubt15 = lub (mu ex15) (mu ex16)
+lubt16 = lub (mu ex16) (mu ex15)
+
+ex17 = Trans "a" (Trans "b" (Bang ["x"]))
+ex18 = Trans "a" (Conj (Trans "c" (Bang ["y"])) (Trans "b" (Bang ["z"])))
+
+lubt17 = lub (mu ex17) (mu ex18)
+lubt18 = lub (mu ex18) (mu ex17)
