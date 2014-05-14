@@ -74,11 +74,15 @@ In traditional predicate logic, if married is a two-place predicate, then we nee
 
 \subsection{Automatic Garbage Collection}
 The $!$ operator supports automatic clean up of dead data.
-For example, an object $p$ might have two states: $a$ and $b$. State $a$ might have two pieces of information, $x1$ and $x2$. State $b$ might have three pieces of information $y1$, $y2$ and $y3$. Being in state $a$ would be represented as:
-\[p \; ! \; a \star  (x1 \land x2)\]
-State $b$ would be represented as:
-\[p \; ! \; b \star (y1 \land y2 \land y3)\]
-Now that if we are in state $a$, and we switch to state $b$ by inserting $p \fBang b$ into the database, all the local data from  state $a$ is \emph{automatically} removed from the database according to the update rules for Eremic Logic. Everything is cleaned up \emph{automatically}.
+For example, an object $p$ might have two states: $a$ and $b$. State $a$ might have two pieces of information, $x1$ and $x2$. State $b$ might have three pieces of information $y1$, $y2$ and $y3$. Being in state $a$ might be represented as:
+\begin{verbatim}
+s ! a \star  (x1 \land x2)
+\end{verbatim}
+State $b$ might be represented as:
+\begin{verbatim}
+s ! b \star (y1 \land y2 \land y3)
+\end{verbatim}
+Now if we are in state $a$, and we switch to state $b$ by inserting $s \fBang b$ into the database, all the local data from  state $a$ is \emph{automatically} removed from the database according to the update rules for Eremic Logic. Everything is cleaned up \emph{automatically}.
 
 \subsection{Simpler Postconditions}
 When expressing the pre- and post-conditions of an action, planners based on predicate logic\footnote{An early example is STRIPS \cite{strips}.} have to explicitly describe the propositions that are removed when an action is performed:
@@ -90,7 +94,7 @@ action move(A, X, Y)
         add: at(A, Y) 
         remove: at(A, X)
 \end{verbatim}
-Here, we need to explicitly state that when $A$ moves from $X$ to $Y$, $A$ is no longer at $X$. It might seem obvious to us that if $A$ is now at $Y$, he is no longer at $X$ - but we need to explicitly tell the system this. This is unnecessary, cumbersome and error-prone. In Eremic Logic, by contrast, the exclusion operator means we do not need to specify the facts that are no longer true\footnote{Note that the rule is a horn-clause of Y-formulae, not X-formulae. Note also that the trailing $\star \top$ has been suppressed for readability.}:
+Here, we need to explicitly state that when $A$ moves from $X$ to $Y$, $A$ is no longer at $X$. It might seem obvious to us that if $A$ is now at $Y$, he is no longer at $X$ - but we need to explicitly tell the system this. This is unnecessary, cumbersome and error-prone. In Eremic Logic, by contrast, the exclusion operator means we do not need to specify the facts that are no longer true:
 \begin{verbatim}
 action move * A * X * Y
     preconditions

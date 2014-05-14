@@ -1,116 +1,118 @@
 \section{Proofs for Lemmas \ref{lemma:completeness:4} and \ref{lemma:completeness:5}}\label{app:completeness:proofs}
 
-\subsection{Proofs for Lemmas \ref{lemma:completeness:4}}
+\subsection{Proof for Lemmas \ref{lemma:completeness:4}}
+If $\MMM\models \phi$ then $\CHAR{\MMM} \judge \phi$.
 
-\NI We proceed by induction on $p$.
+\NI We proceed by induction on $\phi$.
 
 \martin{no need to number cases if numbers are not referred to later.}
 \setcounter{mycase}{0}
 
 \begin{mycase}
-$p$ is $\top$
+$\phi$ is $\top$
 \end{mycase}
-Then we can prove  $\theta(m) \judge p$ immediately using axiom {\bf $\top$ Right}.
+Then we can prove  $ \CHAR{\MMM} \judge \phi$ immediately using axiom {\bf $\top$ Right}.
 
 \begin{mycase}
-$p$ is $q \AND q'$
+$\phi$ is $\psi \AND \psi'$
 \end{mycase}
-By the induction hypothesis, $\theta(m) \judge q$ and $\theta(m) \judge q'$.
-The proof of $\theta(m) \judge q \AND q'$ follows immediately using {\bf $\AND$ Right}.
+By the induction hypothesis, $  \CHAR{\MMM} \judge \psi$ and $  \CHAR{\MMM} \judge \psi'$.
+The proof of $  \CHAR{\MMM} \judge \psi \AND \psi'$ follows immediately using {\bf $\AND$ Right}.
 
 \begin{mycase}
-$p$ is $\langle a \rangle q$
+$\phi$ is $\langle a \rangle \psi$
 \end{mycase}
-If $m \models \langle a \rangle q$, then either $m = \bot$ or $m$ is a  model of the form $(l,w)$.
+If $\MMM \models \langle a \rangle \psi$, then either $\MMM = \bot$ or $\MMM$ is a  model of the form $(\CAL{L},w)$.
 \begin{subcase}
-$m = \bot$
+$\MMM = \bot$
 \end{subcase}
-In this case, $\theta(m) = \theta(\bot) = \bot$. (Recall, that we are overloading $\bot$ to mean both the  model at the bottom of our lattice and a formula (such as $\langle s \rangle \top \AND !\{\}$) which is always false).
-In this case, $ \theta(\bot) \judge  \langle a \rangle q$ using {\bf $\bot$ Left}.
+In this case, $  \CHAR{\MMM} =  \CHAR{\bot} = \bot$. (Recall, that we are overloading $\bot$ to mean both the  model at the bottom of our lattice and a formula (such as $\langle s \rangle \top \AND !\{\}$) which is always false).
+In this case, $  \CHAR{\bot} \judge  \langle a \rangle \psi$ using {\bf $\bot$ Left}.
 
 \begin{subcase}
- $m$ is a  model of the form $(l,w)$
+ $m$ is a  model of the form $(\CAL{L},w)$
  \end{subcase}
-Given $m \models \langle a \rangle q$, and that $m$ is a  model of the form $(l,w)$, we know that:
+Given $\MMM \models \langle a \rangle \psi$, and that $\MMM$ is a  model of the form $(\CAL{L},w)$, we know that:
 \[
-(l,w) \models \langle a \rangle q
+(\CAL{L},w) \models \langle a \rangle \psi
 \]
 From the satisfaction clause for $\langle a \rangle$, it follows that:
 \[
-\exists w' \mbox{ such that } w \xrightarrow{a} w' \mbox { and } (l,w') \models q
+\exists w' \mbox{ such that } w \xrightarrow{a} w' \mbox { and } (\CAL{L},w') \models \psi
 \]
 By the induction hypothesis:
 \[
-\theta( (l,w') ) \judge q
+ \CHAR{(\CAL{L},w')} \judge \psi
 \]
 Now by {\bf Transition Normal}:
 \[
-\langle a \rangle \theta( (l,w') ) \judge \langle a \rangle q
+\langle a \rangle  \CHAR{(\CAL{L},w')} \judge \langle a \rangle \psi
 \]
 Using repeated application of {\bf $\AND$ Left}, we can show:
 \[
-\theta((l,w)) \judge \langle a \rangle \theta((l,w'))
+ \CHAR{(\CAL{L},w)} \judge \langle a \rangle  \CHAR{(\CAL{L},w')}
 \]
 Finally, using {\bf Transitivity}, we derive:
 \[
-\theta((l,w)) \judge  \langle a \rangle q
+ \CHAR{(\CAL{L},w)} \judge  \langle a \rangle \psi
 \]
 \begin{mycase}
-$p$ is $\fBang q$
+$\phi$ is $\fBang \psi$
 \end{mycase}
-If $(l,w) \models \fBang A$, then $\lambda(w) \subseteq A$.
-Then $\theta(l,w) = ! \; \lambda(w) \AND \phi$.
+If $(\CAL{L},w) \models \fBang A$, then $\lambda(w) \subseteq A$.
+Then $ \CHAR{(\CAL{L},w)} = ! \; \lambda(w) \AND \phi$.
 Now we can prove $! \; \lambda(w) \AND \phi \judge \fBang A$ using  {\bf $!$ Right 1} and repeated applications of {\bf $\AND$ Left}.
 \qed
 
-\subsection{Proofs for Lemmas \ref{lemma:completeness:5}}
+\subsection{Proof for Lemmas \ref{lemma:completeness:5}}
 
-Now we prove Lemma \ref{lemma:completeness:5}
+Now we prove Lemma \ref{lemma:completeness:5}: 
+For all formulae $\phi$, we can derive $\phi \judge \CHAR{\SIMPL{\phi}}$.
 
 \begin{proof}
-Induction on $p$.
+Induction on $\phi$.
 
 \setcounter{mycase}{0}
 
 \begin{mycase}
-$p$ is $\top$
+$\phi$ is $\top$
 \end{mycase}
 Then we can prove  $\top \judge \top$ using either {\bf $\top$ Right} or {\bf Identity}.
 
 \begin{mycase}
-$p$ is $q \AND q'$
+$\phi$ is $\psi \AND \psi'$
 \end{mycase}
-By the induction hypothesis, $q \judge \theta(\SIMPL{q})$ and $q' \judge \theta(\SIMPL{q'})$.
+By the induction hypothesis, $\psi \judge  \CHAR{\SIMPL{\psi}}$ and $\psi' \judge  \CHAR{\SIMPL{\psi'}}$.
 Using {\bf $\AND$ Left} and {\bf $\AND$ Right}, we can show:
 \[
-q \AND q' \judge \theta(\SIMPL{q}) \AND \theta(\SIMPL{q'})
+\psi \AND \psi' \judge  \CHAR{\SIMPL{\psi}} \AND  \CHAR{\SIMPL{\psi'}}
 \]
-Lemma 6, proven below, states that, for all models $m$ and $n$:
+Lemma \ref{final_completeness_lemma}, proven below, states that, for all models $\MMM$ and $\MMM_2$:
 \[
-\theta(m) \AND \theta(n) \judge \theta (m \sqcap n)
+  \CHAR{\MMM} \AND  \CHAR{\MMM_2} \judge  \CHAR{\MMM \sqcap \MMM_2}
 \]
-From Lemma 6 (substituting $\SIMPL{q}$ for $m$ and $\SIMPL{q'}$ for $n$), it follows that:
+From Lemma \ref{final_completeness_lemma} (substituting $\SIMPL{\psi}$ for $\MMM$ and $\SIMPL{\psi'}$ for $\MMM_2$), it follows that:
 \[
-\theta(\SIMPL{q}) \AND \theta(\SIMPL{q'}) \judge \theta(\SIMPL{q \AND q'})
+ \CHAR{\SIMPL{\psi}} \AND  \CHAR{\SIMPL{\psi'}} \judge  \CHAR{\SIMPL{\psi \AND \psi'}}
 \]
 Our desired result follows using {\bf Transitivity}.
 
 \begin{mycase}
-$p$ is $\langle a \rangle q$
+$\phi$ is $\langle a \rangle \psi$
 \end{mycase}
-By the induction hypothesis, $q \judge \theta(\SIMPL{q})$.
-Now there are two sub-cases to consider, depending on whether or not $\theta(\SIMPL{q}) = \bot$.
+By the induction hypothesis, $\psi \judge  \CHAR{\SIMPL{\psi}}$.
+Now there are two sub-cases to consider, depending on whether or not $ \CHAR{\SIMPL{\psi}} = \bot$.
 \begin{subcase}
-$\theta(\SIMPL{q}) = \bot$
+$ \CHAR{\SIMPL{\psi}} = \bot$
 \end{subcase}
-In this case, $\theta(\SIMPL{\langle a \rangle q})$ also equals $\bot$. 
+In this case, $ \CHAR{\SIMPL{\langle a \rangle \psi}}$ also equals $\bot$. 
 By the induction hypothesis:
 \[
-q \judge \bot
+\psi \judge \bot
 \]
 By {\bf Transition Normal}:
 \[
-\langle a \rangle q \judge \langle a \rangle \bot
+\langle a \rangle \psi \judge \langle a \rangle \bot
 \]
 By {\bf Bottom Right 2}:
 \[
@@ -118,82 +120,83 @@ By {\bf Bottom Right 2}:
 \]
 The desired proof that:
 \[
-\langle a \rangle q \judge \bot
+\langle a \rangle \psi \judge \bot
 \]
 follows by {\bf Transitivity}.
 \begin{subcase}
-$\theta(\SIMPL{q}) \neq \bot$
+$ \CHAR{\SIMPL{\psi}} \neq \bot$
 \end{subcase}
-By the induction hypothesis, $q \judge \theta(\SIMPL{q})$.
+By the induction hypothesis, $\psi \judge  \CHAR{\SIMPL{\psi}}$.
 So, by {\bf Transition Normal}:
 \[
-\langle a \rangle q \judge \langle a \rangle \theta(\SIMPL{q})
+\langle a \rangle \psi \judge \langle a \rangle  \CHAR{\SIMPL{\psi}}
 \]
 The desired conclusion follows from noting that:
 \[
- \langle a \rangle \theta(\SIMPL{q}) = \theta(\SIMPL{\langle a \rangle q})
+ \langle a \rangle  \CHAR{\SIMPL{\psi}} =  \CHAR{\SIMPL{\langle a \rangle \psi}}
  \]
  \begin{mycase}
-$p$ is $\fBang A$
+$\phi$ is $\fBang A$
 \end{mycase}
-If $p$ is $\fBang A$, then $ \theta(\SIMPL{p})$ is $\fBang A \AND \top$.
+If $\phi$ is $\fBang A$, then $  \CHAR{\SIMPL{\phi}}$ is $\fBang A \AND \top$.
 We can prove $\fBang A \judge \fBang A \AND \top$ using {\bf $\AND$ Right}, {\bf $\top$ Right} and {\bf Identity}.
 \qed
 \end{proof}
 Finally, to fill the hole in Case 2 above, we need to show that:
 \begin{lemma}
-For all models $m$ and $n$, $\theta(m) \AND \theta(n) \judge \theta (m \sqcap n)$.
+\label{final_completeness_lemma}
+For all models $\MMM$ and $\MMM_2$, $  \CHAR{\MMM} \AND  \CHAR{\MMM_2} \judge  \CHAR{\MMM \sqcap \MMM_2}$.
 \end{lemma}
 
 \begin{proof}
 
-There are two cases to consider, depending on whether or not $(m \sqcap n) = \bot$.
+There are two cases to consider, depending on whether or not $(\MMM \sqcap \MMM_2) = \bot$.
 
 \setcounter{mycase}{0}
 
 \begin{mycase}
-$(m \sqcap n) = \bot$
+$(\MMM \sqcap \MMM_2) = \bot$
 \end{mycase}
-If $(m \sqcap n) = \bot$, there are three possibilities:
+If $(\MMM \sqcap \MMM_2) = \bot$, there are three possibilities:
 \begin{itemize}
 \item
-$m = \bot$
+$\MMM = \bot$
 \item
-$n = \bot$
+$\MMM_2 = \bot$
 \item
-Neither $m$ nor $n$ are $\bot$, but together they are incompatible. 
+Neither $\MMM$ nor $\MMM_2$ are $\bot$, but together they are incompatible. 
 \end{itemize}
-If either $m$ or $n$ is $\bot$, then the proof is a simple application of {\bf Identity} followed by {\bf $\AND$ Left}.
+If either $\MMM$ or $\MMM_2$ is $\bot$, then the proof is a simple application of {\bf Identity} followed by {\bf $\AND$ Left}.
 
-Next, let us consider the case where neither $m$ nor $n$ are $\bot$, but together they are incompatible.
-Let $m$ be the  model $(l, w)$ and let $n$ be $(l', w')$.
-If $(l, w) \sqcap (l', w') = \bot$, then\footnote{The alternative, in which the $s$-transition is in $n$ and the transition-restriction is in $m$, is identical, swapping $m$ with $n$.} there exists a symbol $s$ and a state $w_2$ such that $w \xrightarrow{s} w_2$ but $s \notin \lambda'(w')$.
+Next, let us consider the case where neither $\MMM$ nor $\MMM_2$ are $\bot$, but together they are incompatible.
+Let $\MMM$ be the  model $(\CAL{L}, w)$ and let $\MMM_2$ be $(\CAL{L}', w')$.
+If $(\CAL{L}, w) \sqcap (\CAL{L}', w') = \bot$, then\footnote{The alternative, in which the $a$-transition is in $n$ and the transition-restriction is in $\MMM$, is identical, swapping $\MMM$ with $\MMM_2$.} there exists a symbol $a$ and a state $w_2$ such that $w \xrightarrow{a} w_2$ but $a \notin \lambda'(w')$.
 
-In this case, by the definition of $\theta$, $\theta(m) \judge \langle s \rangle \top$, using  {\bf Identity} and repeated applications of {\bf $\AND$ Left}.
-Further, by the definition of $\theta$, $\theta(n) \judge \; ! \; \lambda'(w')$, using  {\bf Identity} and repeated applications of by {\bf $\AND$ Left}. Again, $s \notin  \lambda'(w')$.
+In this case, by the definition of $ \CHAR$, $  \CHAR{\MMM} \judge \langle a \rangle \top$, using  {\bf Identity} and repeated applications of {\bf $\AND$ Left}.
+Further, by the definition of $ \CHAR$, $ \CHAR{\MMM_2} \judge \; ! \; \lambda'(w')$, using  {\bf Identity} and repeated applications of by {\bf $\AND$ Left}. Again, $a \notin  \lambda'(w')$.
 
-Therefore,  $\theta(m) \AND \theta(n) \judge \bot$, using  {\bf $\AND$ Right} and  {\bf Bottom Right 1}.
+Therefore,  $  \CHAR{\MMM} \AND  \CHAR{\MMM_2} \judge \bot$, using  {\bf $\AND$ Right} and  {\bf Bottom Right 1}.
 \begin{mycase}
-$(m \sqcap n) \neq \bot$
+$(\MMM \sqcap \MMM_2) \neq \bot$
 \end{mycase}
-In this case, let $(l,w) = m$ and let $(l',w')=n$.
+In this case, let $(\CAL{L},w) = \MMM$ and let $(\CAL{L}',w')=\MMM_2$.
 Then, from the definition of $\mathsf{merge}$ above:
 \[
-\theta((l,w) \sqcap (l',w')) = \; ! \; (\lambda(w) \cap \lambda'(w')) \AND \bigwedge_{w \xrightarrow{s} w_2} \langle s \rangle \theta((l, w_2)) \AND \bigwedge_{w' \xrightarrow{s} w_3} \langle s \rangle \theta((l', w_3))
+ \CHAR{(\CAL{L},w) \sqcap (\CAL{L}',w')} = \; ! \; (\lambda(w) \cap \lambda'(w')) \AND \bigwedge_{w \xrightarrow{a} w_2} \langle a \rangle  \CHAR{(\CAL{L}, w_2)} \AND \bigwedge_{w' \xrightarrow{a} w_3} \langle a \rangle  \CHAR{(\CAL{L}', w_3)}
 \]
-We need to show that $\theta((l,w)) \AND \theta((l',w')) \judge \theta((l,w) \sqcap (l',w'))$ - or in other words, that:
+We need to show that $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge  \CHAR{(\CAL{L},w) \sqcap (\CAL{L}',w')}$ - or in other words, that:
 \begin{itemize}
 \item
-$\theta((l,w)) \AND \theta((l',w')) \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$
+$ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$
 \item
-$\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_2))$ for all $s,w_2$ such that $w \xrightarrow{s} w_2$
+$ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \langle a \rangle  \CHAR{(\CAL{L}, w_2)}$ for all $a,w_2$ such that $w \xrightarrow{a} w_2$
 \item
-$\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_3))$ for all $s,w_3$ such that $w' \xrightarrow{s} w_3$
+$ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \langle a \rangle  \CHAR{(\CAL{L}, w_3)}$ for all $a,w_3$ such that $w' \xrightarrow{a} w_3$
 \end{itemize}
-To show $\theta((l,w)) \AND \theta((l',w')) \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$, note that $\theta((l,w))  \judge \; ! \; \lambda(w)$ and $\theta((l',w')) \judge \; ! \;  \lambda'(w'))$.
-We can derive $\theta((l,w)) \AND \theta((l',w')) \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$ using {\bf $\AND$ Right} and {\bf $!$ Right 2}. 
+To show $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$, note that $ \CHAR{(\CAL{L},w)}  \judge \; ! \; \lambda(w)$ and $ \CHAR{(\CAL{L}',w')} \judge \; ! \;  \lambda'(w'))$.
+We can derive $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$ using {\bf $\AND$ Right} and {\bf $!$ Right 2}. 
 
-To show $\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_2))$, observe from the definition of $\theta$ that $\theta((l,w))$ contains a conjunct $\langle s \rangle \theta((l, w_2))$, so the proof follows from  {\bf $\AND$ Right} and repeated applications of  {\bf $\AND$ Left}. The same procedure applies to show $\theta((l,w)) \AND \theta((l',w')) \judge \langle s \rangle \theta((l, w_3))$ for all $s,w_3$ such that $w' \xrightarrow{s} w_3$.
+To show $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \langle a \rangle  \CHAR{(\CAL{L}, w_2)}$, observe from the definition of $ \CHAR$ that $ \CHAR{(\CAL{L},w)}$ contains a conjunct $\langle a \rangle  \CHAR{(\CAL{L}, w_2)}$, so the proof follows from  {\bf $\AND$ Right} and repeated applications of  {\bf $\AND$ Left}. The same procedure applies to show $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \langle a \rangle  \CHAR{(\CAL{L}, w_3)}$ for all $a,w_3$ such that $w' \xrightarrow{a} w_3$.
 
 This completes Lemma 6 and hence the Completeness Proof.
 \qed
