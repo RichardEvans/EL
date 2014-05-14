@@ -43,7 +43,29 @@ say two states $s, s'$ are \emph{bisimilar}, written $s \BISIM s'$ if
 there is a bisimulation $\RRR$ with $(s, s') \in \RRR$.
 \end{definition}
 
+\begin{definition}
+A \emph{first-order signature} is specified by the following data.
+ A set of \emph{function symbols} with associated \emph{arities},
+i.e.~a positive integer $\#(f)$ for each function symbol $f$;  a
+set of \emph{relation symbols} with associated \emph{arities}, i.e.~a
+positive integer $\#(R)$ for each relation symbol $R$;  a set of
+\emph{constant symbols}.  A signature $\SSS$ with no function symbols
+is called a \emph{relational signature}.
+
+Let $\SSS$ be a signature. An \emph{$\SSS$-model} $\CAL{M}$ is an
+object with the following components.  A set $U$ called
+\emph{universe}.  The members of $U$ are called \emph{elements} of
+$\CAL{M}$; an element $c^\CAL{M}$ for each constant $c$; a function
+$f^\CAL{M} : U^{\#f} \rightarrow U$ for each function symbol $f$; a
+relation $R^\CAL{M} \subseteq U^{\#R}$ for each relation symbol $R$.
+
+
+\end{definition}
+
 \NI Partial orders are explored in \cite{DaveyBA:intlatao}. For a
 fuller account on labelled transition systems, see
 e.g.~\cite{SassoneV:modcontac,HennessyM:Algtheop}. Bisimulations are
-discussed in great detail in \cite{SangiorgiD:intbisac}.
+discussed in great detail in \cite{SangiorgiD:intbisac} and
+\cite{EndertonHB:matinttl} is one of many good books on First-order
+logic.
+
