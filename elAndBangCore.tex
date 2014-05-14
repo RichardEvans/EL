@@ -495,7 +495,7 @@ predicate:
 
 \item A set of one-place predicates $Restrict_A$, one for each finite
   subset $A \subseteq \Sigma$.  $Restrict_{A}(x)$ is true if
-  $\lambda(x) = A$.
+  $\lambda(x) \subseteq A$.
 
 \end{itemize}
 
@@ -594,43 +594,6 @@ follows.
 \NI We denote this model by $\SEMB{\MMM}$. The correctness of the
 standard translation is given by the following theorem.
 
-\begin{theorem}[Correspondence theorem]\label{correspondence:theorem}
-Let $\phi$ be an eremic formula, and $\MMM = (\LLL, s)$ a model, then:
-\[
-   \MMM \models \phi \quad  \text{iff} \quad \SEMB{\LLL} \models_{x \mapsto s} \SEMB{\phi}_x.
-\]
-\end{theorem}
-\begin{proof}
-By induction on the structure of $\phi$. The cases $\top$ and $\phi_1
-\AND \phi_2$ are straightfoward. The case $\MAY{a}\psi$ is handeled as
-follows.
-\begin{eqnarray*}
-  \lefteqn{
-  \SEMB{\LLL} \models_{x \mapsto s} \SEMB{\MAY{a}\psi}_x}\hspace{5mm} 
-     \\
-     &\quad \text{iff}\quad &
-  \SEMB{\LLL} \models_{x \mapsto s} \exists y.(\ARROW{a}{x}{y} \AND \SEMB{\psi}_y) 
-     \\
-     &\text{iff}&
-  \text{exists}\ t \in S. \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t} \ARROW{a}{x}{y} \AND \SEMB{\psi}_y
-     \\
-     &\text{iff}&
-  \text{exists}\ t \in S. \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t} \ARROW{a}{x}{y} \ \text{and}\ \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t}  \SEMB{\psi}_y
-     \\
-     &\text{iff}&
-  \text{exists}\ t \in S. s \TRANS{a} t \ \text{and}\ \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t}  \SEMB{\psi}_y
-     \\
-     &\text{iff}&
-  \text{exists}\ t \in S. s \TRANS{a} t \ \text{and}\ \SEMB{\LLL} \models_{y \mapsto t}  \SEMB{\psi}_y \qquad (\text{as $x$ is not free in $\psi$})
-     \\
-     &\text{iff}&
-  \text{exists}\ t \in S. s \TRANS{a} t \ \text{and}\ \MMM \models \psi
-     \\
-     &\text{iff}&
-  \MMM \models \MAY{a}\psi  
-\end{eqnarray*}
-\end{proof}
-
 We have just shown how to convert eremic to first-order models.
 Clearly we can also go the other way and start out with a first-order
 model for the signature defined above, and convert it
@@ -659,6 +622,78 @@ eremic transition system $\CAL{M}^{\sharp} = (S, \rightarrow,
 \martin{The constructions of $\SEMB{\LLL}$ and $\CAL{M}^{\sharp}$ are
   kind of trivial.  Do we need to spell them out explicitly?}
 
+\begin{theorem}[Correspondence theorem]\label{correspondence:theorem}
+Let $\phi$ be an eremic formula.
+\begin{enumerate}
+ 
+\item\label{correspondence:theorem:1} Let $\MMM = (\LLL, s)$ be an
+  eremic model, then:
+\[
+   \MMM \models \phi \quad  \text{iff} \quad \SEMB{\LLL} \models_{x \mapsto s} \SEMB{\phi}_x.
+\]
+
+\item\label{correspondence:theorem:2} Let $\CAL{M}$ be a first-order
+  model, then:
+\[
+   \CAL{M} \models_{x \mapsto s} \SEMB{\phi}_x 
+      \quad  \text{iff} \quad  
+   (\CAL{M}^{\sharp}, s) \models \phi.
+\]
+
+\end{enumerate}
+
+\end{theorem}
+\begin{proof}
+By induction on the structure of $\phi$. The cases $\top$ and $\phi_1
+\AND \phi_2$ are straightfoward. For (\ref{correspondence:theorem:1})
+the case $\MAY{a}\psi$ is handeled as follows.
+\begin{eqnarray*}
+  \lefteqn{
+  \SEMB{\LLL} \models_{x \mapsto s} \SEMB{\MAY{a}\psi}_x}\hspace{5mm} 
+     \\
+     &\quad \text{iff}\quad &
+  \SEMB{\LLL} \models_{x \mapsto s} \exists y.(\ARROW{a}{x}{y} \AND \SEMB{\psi}_y) 
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t} \ARROW{a}{x}{y} \AND \SEMB{\psi}_y
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t} \ARROW{a}{x}{y} \ \text{and}\ \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t}  \SEMB{\psi}_y
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. s \TRANS{a} t \ \text{and}\ \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t}  \SEMB{\psi}_y
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. s \TRANS{a} t \ \text{and}\ \SEMB{\LLL} \models_{y \mapsto t}  \SEMB{\psi}_y \qquad (\text{as $x$ is not free in $\psi$})
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. s \TRANS{a} t \ \text{and}\ \MMM \models \psi
+     \\
+     &\text{iff}&
+  \MMM \models \MAY{a}\psi  
+\end{eqnarray*}
+
+\NI Finally, if $\phi$ is $!A$ the derivation comes straight from the definitions.
+\begin{eqnarray*}
+  \SEMB{\LLL} \models_{x \mapsto s} \SEMB{!A}_x
+    &\quad \text{iff}\quad &
+  \SEMB{\LLL} \models_{x \mapsto s} \RESTRICT{A}{x}
+     \\
+     &\text{iff}&
+  \lambda(s) \subseteq A
+     \\
+     &\text{iff}&
+  \MMM \models\ !A.
+\end{eqnarray*}
+
+\NI This concludes the proof for (\ref{correspondence:theorem:1}).
+The derivation for (\ref{correspondence:theorem:2}) is similar and
+omitted.
+\end{proof}
+\martin{The proof is too trivial, move to appendix.}
+
+
+\martin{do we need to keep the lemma below?}
 \begin{lemma}\label{modelIso:lemma}
 For all $\SSS$-models $\CAL{M}$: $\SEMB{\CAL{M}^{\sharp}} = \CAL{M}$.
 Likewise, for all eremic models $\MMM$: 
@@ -668,33 +703,53 @@ Likewise, for all eremic models $\MMM$:
 To do.
 \end{proof}
 
-\begin{theorem}[Compactness of propositional eremic logic]
+\begin{definition}
+Let $T$ be a set of eremic formulae, and $\MMM$ an eremic model.  We
+write $\MMM \models T$ provided $\MMM \models \phi$ for all $\phi \in
+T$.  We say $T$ is \emph{satisfiable} provided $\MMM \models T$.
+\end{definition}
+
+\begin{theorem}[Compactness of eremic logic]
 A set $T$ of eremic formulae is satisfiable iff each finite subset of
 $T$ is satisfiable.
 \end{theorem}
 \begin{proof}
-Let $T$ be a set of eremic formulae.  For any finite subset $T'$ of
-$T$, assume that $T'$ is satisfiable.  Hence an eremic model $\MMM$
-with state $s$ exists such that
+For the non-trivial direction, let $T$ be a set of eremic formulae.
+For any finite subset $T'$ of $T$, assume that $T'$ is satisfiable.
+Hence an eremic model $\MMM = (\LLL, s)$ exists such that
 \[
-   \MMM \models_s A
+   \MMM \models T'
 \]
-for each $A \in T'$. By Theorem \ref{correspondence:theorem} we know that
+Hence 
 \[
-   \SEMB{\MMM} \models_{x \mapsto s} \SEMB{A}_x.
+   \MMM \models \phi
 \]
-By compactness of FOL (Theorem \ref{compactnessFOL:theorem}) we thus know
-that the set
+for each $\phi \in T'$. By Theorem \ref{correspondence:theorem}.\ref{correspondence:theorem:1} we know that
 \[
-   \{ \SEMB{A}_x\ |\ A \in T\}
+   \SEMB{\MMM} \models_{x \mapsto s} \SEMB{\phi}_x.
 \]
-has a model, say $\MMM_{T}$. Hence for all $A \in T$:
+for all appropriate $\phi$. Hence the set 
 \[
-   \MMM_T \models_{x \mapsto s} \SEMB{A}_x
+   \{ \SEMB{\phi}_x\ |\ \phi \in T'\}
 \]
-Using Lemma \ref{modelIso:lemma}, we conclude that
+of first-order formulae has a first-order model for all finite $T'$.
+By compactness of first-order logic we thus know that the set
 \[
-   \MMM_T^{\sharp} \models_s A
+   \{ \SEMB{\phi}_x\ |\ \phi \in T\}
+\]
+has a first-order model $\CAL{M}$. Hence for all $\phi \in T$:
+\[
+   \CAL{M} \models_{x \mapsto s} \SEMB{\phi}_x
+\]
+Using Theorem
+\ref{correspondence:theorem}.\ref{correspondence:theorem:2}, we
+conclude that
+\[
+   (\CAL{M}^{\sharp}, s) \models \phi
+\]
+for all $\phi \in T$. In other words:
+\[
+   (\CAL{M}^{\sharp}, s) \models T
 \]
 and $T$ is satisfiable.
 \end{proof}
