@@ -579,8 +579,12 @@ follows.
   \begin{itemize}
 
     \item $\top$ always holds.
-    \item Each relation $\RESTRICT{A}{\cdot}$ is interpreted by the set $\{s \in S\ |\ \lambda (s) = A\}$.
-    \item Each  relation $\ARROW{a}{\cdot}{\cdot}$ is given as $\{( s, t )\in S^2\ |\ s \TRANS{a} t\}$.
+
+    \item Each relation $\RESTRICT{A}{\cdot}$ is interpreted by the
+      set $\{s \in S\ |\ \lambda (s) = A\}$.
+
+    \item Each relation $\ARROW{a}{\cdot}{\cdot}$ is given as $\{( s,
+      t )\in S^2\ |\ s \TRANS{a} t\}$.
 
   \end{itemize}
 \end{itemize}
@@ -590,14 +594,41 @@ follows.
 \NI We denote this model by $\SEMB{\MMM}$. The correctness of the
 standard translation is given by the following theorem.
 
-\begin{theorem}[Local and global correspondence theorem]\label{correspondence:theorem}
-Let $A$ be an eremic formula, and $\MMM = (\LLL, s)$ a model, then:
+\begin{theorem}[Correspondence theorem]\label{correspondence:theorem}
+Let $\phi$ be an eremic formula, and $\MMM = (\LLL, s)$ a model, then:
 \[
    \MMM \models \phi \quad  \text{iff} \quad \SEMB{\LLL} \models_{x \mapsto s} \SEMB{\phi}_x.
 \]
 \end{theorem}
 \begin{proof}
-By induction on the structure of $\phi$.\martin{do a few cases, put in appendix.}
+By induction on the structure of $\phi$. The cases $\top$ and $\phi_1
+\AND \phi_2$ are straightfoward. The case $\MAY{a}\psi$ is handeled as
+follows.
+\begin{eqnarray*}
+  \lefteqn{
+  \SEMB{\LLL} \models_{x \mapsto s} \SEMB{\MAY{a}\psi}_x}\hspace{5mm} 
+     \\
+     &\quad \text{iff}\quad &
+  \SEMB{\LLL} \models_{x \mapsto s} \exists y.(\ARROW{a}{x}{y} \AND \SEMB{\psi}_y) 
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t} \ARROW{a}{x}{y} \AND \SEMB{\psi}_y
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t} \ARROW{a}{x}{y} \ \text{and}\ \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t}  \SEMB{\psi}_y
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. s \TRANS{a} t \ \text{and}\ \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t}  \SEMB{\psi}_y
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. s \TRANS{a} t \ \text{and}\ \SEMB{\LLL} \models_{y \mapsto t}  \SEMB{\psi}_y \qquad (\text{as $x$ is not free in $\psi$})
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. s \TRANS{a} t \ \text{and}\ \MMM \models \psi
+     \\
+     &\text{iff}&
+  \MMM \models \MAY{a}\psi  
+\end{eqnarray*}
 \end{proof}
 
 We have just shown how to convert eremic to first-order models.
@@ -606,8 +637,9 @@ model for the signature defined above, and convert it
 to an eremic model.
 
 \begin{definition}
-Let $\CAL{M}$ be a first-order model for $\SSS$. We construct an eremic transition system
- $\CAL{M}^{\sharp} = (S, \rightarrow, \lambda)$. 
+Let $\CAL{M}$ be a first-order model for $\SSS$. We construct an
+eremic transition system $\CAL{M}^{\sharp} = (S, \rightarrow,
+\lambda)$.
 
 \begin{itemize}
 
@@ -624,11 +656,11 @@ Let $\CAL{M}$ be a first-order model for $\SSS$. We construct an eremic transiti
 
 \end{definition}
 
-\martin{The constructions of $\SEMB{\LLL}$ and $\CAL{M}^{\sharp}$ are kind of trivial. 
-Do we need to spell them out explicitly?}
+\martin{The constructions of $\SEMB{\LLL}$ and $\CAL{M}^{\sharp}$ are
+  kind of trivial.  Do we need to spell them out explicitly?}
 
 \begin{lemma}\label{modelIso:lemma}
-For all $\LLL$ models $\MMM$: $\SEMB{\MMM^{\sharp}} = \MMM$.
+For all $\SSS$-models $\CAL{M}$: $\SEMB{\CAL{M}^{\sharp}} = \CAL{M}$.
 Likewise, for all eremic models $\MMM$: 
  $\SEMB{\MMM}^{\sharp} = \MMM$.
 \end{lemma}

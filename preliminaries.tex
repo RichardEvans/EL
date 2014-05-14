@@ -13,8 +13,7 @@ $y$ of $T$, we say that $x$ is the \emph{least} upper bound of
 $T$. \emph{Lower bounds} and \emph{greatest lower bounds} are defined
 mutatis mutandis.  A partial order $(S, \sqsubseteq)$ is a
 \emph{complete lattice} if every subset of $S$ has a least upper and a
-greatest lower bound. \martin{Is that the right notion of lattice for
-  characterising $\SIM$ on models?  If not what is?}
+greatest lower bound.
 \end{definition}
 
 \begin{definition}
@@ -62,7 +61,7 @@ relation $R^\CAL{M} \subseteq U^{\#R}$ for each relation symbol $R$.
 The \emph{terms} and \emph{first-order formulae} for $\SSS$ are given
 by the following grammar
 \begin{GRAMMAR}
-  t &\ ::=\ & x \VERTICAL c \VERTICAL f(t_1, ..., t_n) \\
+  t &\ ::=\ & x \VERTICAL c \VERTICAL f(t_1, ..., t_n) \\[1mm]
   \phi &::=& t = t' \VERTICAL R(t_1, ..., t_n) \VERTICAL \neg \phi \VERTICAL \phi \AND \psi \VERTICAL \forall x.A
 \end{GRAMMAR}
 
@@ -70,7 +69,7 @@ by the following grammar
 constants, $R$ over $n$-ary relational symbols and $f$ over $n$-ary
 function symbols from $\SSS$.  Other logical constructs such as
 disjunction or existential quantification are given by de Morgan
-duality.
+duality, and truth $\top$ is an abbreviation for $x = x$.
 
 Given an $\SSS$-model $\CAL{M}$, an \emph{environment}, ranged over by
 $\sigma$, is a partial function from variables to $\CAL{M}$'s
@@ -107,6 +106,12 @@ of $\sigma$ contains all free variables of $\phi$:
   universe of $\CAL{M}$ we have $\CAL{M} \models_{\sigma, x \mapsto v} \phi$.
 
 \end{itemize}
+
+\NI Note that if $\sigma$ and $\sigma'$ agree on the free variables of
+$t$, then $\SEMB{t}_{\CAL{M}, \sigma} =\SEMB{t}_{\CAL{M},
+  \sigma'}$. Likewise $\CAL{M} \models_{\sigma} \phi$ if and only iff
+$\CAL{M} \models_{\sigma'} \phi$, provided $\sigma$ and $\sigma'$agree
+on the free variables of $\phi$.
 
 \end{definition}
 
