@@ -1,0 +1,26 @@
+\section{Computing Least Upper Bound ($\sqcup$)}
+
+\begin{eqnarray*}
+\MMM \sqcup \bot & = & \MMM \\
+\bot \sqcup \MMM & = & \MMM \\
+(\CAL{L},w) \sqcup (\CAL{L}',w') & = & \mathsf{lub}(\CAL{L}, \CAL{L}', (\MMM_\top, z), \{(w, w', z)\})
+\end{eqnarray*}
+where $\MMM_\top$ is the topmost model $(\mathcal{W}=\{z\}, \rightarrow=\{\}, \lambda=\{z \mapsto \Sigma\})$ for some state $z$.
+$\mathsf{lub}$ takes four parameters: the two eremic transition systems $\CAL{L}$ and $\CAL{L}'$, an accumulator representing the constructed result so far, and a list of state triples (each triple contains one state from each of the two input models plus the state of the accumulated result) to consider next.
+It is defined as:
+\begin{eqnarray*}
+\mathsf{lub}(\CAL{L}, \CAL{L}', \MMM, \{\}) & = & \MMM \\
+\mathsf{lub}(\CAL{L}, \CAL{L}', ((\mathcal{W}, \rightarrow, \lambda), y), \{(w,w',x)\} \cup R) & = & \mathsf{lub}(\CAL{L}, \CAL{L}', ((\mathcal{W} \cup \mathcal{W}', \rightarrow \cup \rightarrow', \lambda'), y), R' \cup R\}
+\end{eqnarray*}
+where:
+\begin{eqnarray*}
+\{(a_i, w_i, w'_i) \;|\; i = 1 ... n\} & = & \mathsf{sharedT}((\CAL{L},w), (\CAL{L}',w')) \\
+\mathcal{W}' & = & \{x_i \;|\; i = 1 ... n\} \\
+\rightarrow' & = & \{(x, a_i, x_i) \;|\; i = 1 ... n\} \\
+\lambda' & = & \lambda [x \mapsto \lambda(w) \cup \lambda(w)'] \\
+R' & = & \{(w_i, w'_i, x_i) \;|\; i = 1 ... n\}
+\end{eqnarray*}
+Here, $\mathsf{sharedT}$ returns the shared transitions between two models, and is defined as:
+\[
+\mathsf{sharedT}(((\mathcal{W}, \rightarrow, \lambda),w) ((\mathcal{W}', \rightarrow', \lambda'),w')) =  \{(a, x, x') \;|\; w \xrightarrow{a} x \land w' \xrightarrow{a}' x'\}
+\]
