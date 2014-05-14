@@ -253,6 +253,14 @@ The binary relation $\MODELLEQ$ on models is defined as
    \MMM \MODELLEQ \MMM' \text{ iff } \MMM \text{ simulates } \MMM' .
 \]
 \end{definition}
+It turns out that $\MODELLEQ $ on models is not just a partial order, but
+almost a complete lattice, except that a bottom element is missing.
+\begin{definition}
+We extend the collection of models with a single \emph{bottom} element
+$\bot$, where $\bot \models \phi$ for all $\phi$. 
+We extend the relation $\MODELLEQ $  and stipulate that $\bot
+\MODELLEQ \MMM$ for all models $\MMM$.
+\end{definition}
 
 \begin{theorem}
 \[
@@ -261,17 +269,6 @@ The binary relation $\MODELLEQ$ on models is defined as
  \{\phi\ |\ \MMM \models \phi \} \supseteq  \{\phi\ |\ \MMM' \models \phi \}.
 \]
 \end{theorem}
-
-
-It turns out that $\MODELLEQ $ on models is not just a partial order, but
-almost a complete lattice, except that a bottom element is missing.
-
-\begin{definition}
-We extend the collection of models with a single \emph{bottom} element
-$\bot$, where $\bot \models \phi$ for all $\phi$. 
-We extend the relation $\MODELLEQ $  and stipulate that $\bot
-\MODELLEQ \MMM$ for all models $\MMM$.
-\end{definition}
 
 \begin{theorem}
 The collection of models together with $\bot$, and ordered by $\MODELLEQ $
@@ -492,9 +489,9 @@ predicate:
 
 \item A 0-place predicate $\top$, which is true in all models.
 
-\item A set of two-place predicates $Arr_s(x, y)$, one for each $s \in
-  \Sigma$, where $x$ and $y$ are of type $State$. $Arr_s(x, y)$
-  is true if $x \xrightarrow{s} y$.
+\item A set of two-place predicates $Arr_a(x, y)$, one for each $a \in
+  \Sigma$, where $x$ and $y$ are of type $State$. $Arr_a(x, y)$
+  is true if $x \xrightarrow{a} y$.
 
 \item A set of one-place predicates $Restrict_A$, one for each finite
   subset $A \subseteq \Sigma$.  $Restrict_{A}(x)$ is true if
@@ -502,15 +499,15 @@ predicate:
 
 \end{itemize}
 
-\NI Choose two fixed variables $x_1, x_2$, let $s$ range over symbols
-in $\Sigma$, and $A$ over \martin{finite?} subsets of
+\NI Choose two fixed variables $x_1, x_2$, let $a$ range over actions
+in $\Sigma$, and $A$ over finite subsets of
 $\Sigma$. Then the restricted fragment of FOL that is the target
-of our translation is given by the followign grammar.
+of our translation is given by the following grammar.
 
 \begin{GRAMMAR}
   \phi 
      &\quad ::= \quad&
-  \top \fOr Arr_{s}(x_1, x_2)\fOr Restrict_A(x_1) \fOr \phi_1 \AND \phi_2 \fOr \exists x_1 . \phi 
+  \top \fOr Arr_{a}(x_1, x_2)\fOr Restrict_A(x_1) \fOr \phi_1 \AND \phi_2 \fOr \exists x_1 . \phi 
 \end{GRAMMAR}
 
 \NI Notice that this fragment of FOL has no negation, disjunction,
@@ -524,7 +521,7 @@ evaluating the formula):
 \begin{eqnarray*}
   T_x(\top) & \ = \ & \top  \\
   T_x(\phi_1 \AND \phi_2) & \ = \ & T_x(\phi_1) \AND T_x(\phi_2)  \\
-  T_x(\langle s \rangle \phi) & \ = \ & \exists y \; . \; Arr_s(x,y) \AND T_y(\phi)  \\
+  T_x(\langle a \rangle \phi) & \ = \ & \exists y \; . \; Arr_a(x,y) \AND T_y(\phi)  \\
   T_x(\fBang A) & \ = \ & Restrict_A(x) 
 \end{eqnarray*}
 

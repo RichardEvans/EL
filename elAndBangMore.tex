@@ -25,12 +25,11 @@ by checking a \emph{single model}.  To decide whether $p \models q$,
 we use the following theorem:
 
 \begin{theorem}\label{theorem:decision}
-  Forall models $m$, the following are equivalent:
+  The following are equivalent:
   \begin{enumerate}
-    \item\label{theorem:decision:1} $m \models p \Rightarrow m \models q$.
-    \item\label{theorem:decision:2} $\SIMPL{p} \models q$.
+    \item\label{theorem:decision:1} For all models $\MMM$,  $\MMM \models \phi \Rightarrow \MMM \models \psi$.
+    \item\label{theorem:decision:2} $\SIMPL{\phi} \models \psi$.
   \end{enumerate}
-  \martin{Richard, is this rephrasing correct?}
 \end{theorem}
 
 \begin{proof}
@@ -38,28 +37,28 @@ We first show the implication from (\ref{theorem:decision:1}) to
 (\ref{theorem:decision:2}), and from (\ref{theorem:decision:2}) to
 (\ref{theorem:decision:1}).  \setcounter{mycase}{0}
 \begin{mycase}
-$\forall m \; m \models p \Rightarrow m \models q \; \text{implies} \; \SIMPL{p} \models q$
+If $\forall \MMM \; \MMM \models \phi \Rightarrow \MMM \models \psi \; \text{then} \; \SIMPL{\phi} \models \psi$
 \end{mycase}
 
-\NI Given that $\SIMPL{p} \models p$, we substitute $\SIMPL{p}$ for $m$ in
-$\forall m \; m \models p \Rightarrow m \models q$, to infer $\SIMPL{p}
-\models q$.
+\NI Given that $\SIMPL{\phi} \models \phi$, we substitute $\SIMPL{\phi}$ for $\MMM $ in
+$\forall \MMM \; \MMM \models \phi \Rightarrow \MMM \models \psi$, to infer $\SIMPL{\phi}
+\models \psi$.
 
 \begin{mycase}
-$\SIMPL{p} \models q \; \text{implies} \; \forall m \; m \models p \Rightarrow m \models q$
+If $\SIMPL{\phi} \models \psi \; \text{then} \; \forall \MMM \; \MMM \models \phi \Rightarrow \MMM \models \psi$
 \end{mycase}
 
-\NI Assume $m \models p$. We need to show $m \models q$.  Now if $m
-\models p$ then $m \LEQ \SIMPL{p}$ (by definition of $\mu$).  Further, if
-$n \models x$ and $m \LEQ n$ then $m \models x$. So, substituting $q$
-for $x$ and $\SIMPL{p}$ for $n$, it follows that $m \models q$.  \qed
+\NI Assume $\MMM \models \phi$. We need to show $\MMM \models \psi$.  Now if $\MMM
+\models \phi$ then $\MMM \MODELLEQ \SIMPL{\phi}$ (by definition of $\SIMPL$).  Further, if
+$\MMM' \models \xi $ and $\MMM \MODELLEQ \MMM'$ then $\MMM \models \xi $. So, substituting $\psi$
+for $\xi $ and $\SIMPL{\phi}$ for $\MMM'$, it follows that $\MMM \models \psi$.  \qed
 \end{proof}
 
 \NI Given this theorem, the decision procedure is straightforward: to
-test if $p \models q$, we construct $\SIMPL{p}$, and then inspect whether
-$\SIMPL{p} \models q$.  Construction of $\SIMPL{p}$ is linear in the size of
-$p$, and computing whether a model satisfies $q$ is linear in the size
-of $q$, so computing whether $p \models q$ is $O(|p|+|q|)$.
+test if $\phi \models \psi$, we construct $\SIMPL{\phi}$, and then inspect whether
+$\SIMPL{\phi} \models \psi$.  Construction of $\SIMPL{\phi}$ is linear in the size of
+$\phi$, and computing whether a model satisfies $\psi$ is linear in the size
+of $\psi$, so computing whether $\phi \models \psi$ is $O(|\phi|+|\psi|)$.
 
 \martin{Can we say more about the decision procedure? Example? Talk
   about Haskell code?}
