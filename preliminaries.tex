@@ -59,6 +59,54 @@ $\CAL{M}$; an element $c^\CAL{M}$ for each constant $c$; a function
 $f^\CAL{M} : U^{\#f} \rightarrow U$ for each function symbol $f$; a
 relation $R^\CAL{M} \subseteq U^{\#R}$ for each relation symbol $R$.
 
+The \emph{terms} and \emph{first-order formulae} for $\SSS$ are given
+by the following grammar
+\begin{GRAMMAR}
+  t &\ ::=\ & x \VERTICAL c \VERTICAL f(t_1, ..., t_n) \\
+  \phi &::=& t = t' \VERTICAL R(t_1, ..., t_n) \VERTICAL \neg \phi \VERTICAL \phi \AND \psi \VERTICAL \forall x.A
+\end{GRAMMAR}
+
+\NI Here $x$ ranges over an infinite set of \emph{variables}, $c$ over
+constants, $R$ over $n$-ary relational symbols and $f$ over $n$-ary
+function symbols from $\SSS$.  Other logical constructs such as
+disjunction or existential quantification are given by de Morgan
+duality.
+
+Given an $\SSS$-model $\CAL{M}$, an \emph{environment}, ranged over by
+$\sigma$, is a partial function from variables to $\CAL{M}$'s
+universe.  We write $x \mapsto u$ for the environment that maps $x$ to
+$u$ and is undefined for all other variables. Moreover, if $\sigma, x
+\mapsto u$ is the environment that is exactly like $\sigma$, except
+that it also maps $x$ to $u$, assuming that $x$ is not in the domain
+of $\sigma$.  The \emph{interpretation} $\SEMB{t}_{\CAL{M}, \sigma}$
+of a term $t$ w.r.t. $\CAL{M}$ and $\sigma$ is given by the following
+clauses, assuming that the domain of $\sigma$ contains all free
+variables of $t$:
+\begin{itemize}
+
+\item $\SEMB{x}_{\CAL{M}, \sigma} = \sigma(x)$.
+\item $\SEMB{c}_{\CAL{M}, \sigma} = c^{\CAL{M}}$.
+\item $\SEMB{f(t_1, ..., t_n)}_{\CAL{M}, \sigma} =
+  f^{\CAL{M}}(\SEMB{t_1}_{\CAL{M}, \sigma}, ..., \SEMB{t_n}_{\CAL{M},
+    \sigma})$.
+
+\end{itemize}
+
+\NI The \emph{satisfaction relation} $\CAL{M} \models_{\sigma} \phi$
+is given by the following clauses, this time assuming that the domain
+of $\sigma$ contains all free variables of $\phi$:
+\begin{itemize}
+
+\item $\CAL{M} \models_{\sigma} t = t'$ iff $\SEMB{t}_{\CAL{M}, \sigma} = \SEMB{t'}_{\CAL{M}, \sigma}$.
+\item $\CAL{M} \models_{\sigma} R(t_1, ..., t_n)$ iff
+  $R^{\CAL{M}}(\SEMB{t_1}_{\CAL{M}, \sigma}, ..., \SEMB{t_n}_{\CAL{M},
+  \sigma})$.
+\item $\CAL{M} \models_{\sigma} \neg \phi$ iff $\CAL{M} \not\models_{\sigma} \phi$.
+\item $\CAL{M} \models_{\sigma} \phi \AND \psi$ iff $\CAL{M} \models_{\sigma} \phi$ and $\CAL{M} \models_{\sigma} \psi$.
+\item $\CAL{M} \models_{\sigma} \forall x.\phi$ iff for all $u$ in the
+  universe of $\CAL{M}$ we have $\CAL{M} \models_{\sigma, x \mapsto v} \phi$.
+
+\end{itemize}
 
 \end{definition}
 
@@ -66,6 +114,6 @@ relation $R^\CAL{M} \subseteq U^{\#R}$ for each relation symbol $R$.
 fuller account on labelled transition systems, see
 e.g.~\cite{SassoneV:modcontac,HennessyM:Algtheop}. Bisimulations are
 discussed in great detail in \cite{SangiorgiD:intbisac} and
-\cite{EndertonHB:matinttl} is one of many good books on First-order
+\cite{EndertonHB:matinttl} is one of many good books on first-order
 logic.
 
