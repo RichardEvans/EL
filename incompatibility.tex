@@ -6,13 +6,13 @@
   formulae.  But in EL, if a set of formulae is incompatible, then
   there is an incompatible subset of that set with exactly two
   members.  So we can work with the simpler definition in the text
-  above.}  incompatible with $p$ as:
+  above.}  incompatible with $\phi$ as:
 \[
-\mathcal{I}(p) = \{ q \; | \; \SIMPL{p} \sqcap \SIMPL{q} = \bot \}
+\mathcal{I}(\phi) = \{ \psi \; | \; \SIMPL{\phi} \sqcap \SIMPL{\psi} = \bot \}
 \]
 EL satisfies Robert Brandom's \textbf{incompatibility semantics}  property:
 \[
-p \models q \; \mbox{ iff } \; \mathcal{I}(q) \subseteq \mathcal{I}(p)
+\phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
 \]
 Before proving this, I want to say something about why satisfying this incompatibility semantics property is important.
 Not all logics satisfy this property. 
@@ -21,85 +21,86 @@ HML satisfies it, but HML without negation does not.
 EL is the \emph{simplest logic we have found} that satisfies the property.
 
 To prove this, we need to first define a related incompatibility function on  models.
-$\mathcal{J}(m)$ is the set of models that are incompatible with $m$:
+$\mathcal{J}(\MMM)$ is the set of models that are incompatible with $\MMM$:
 \[
-\mathcal{J}(m) = \{ n \; | \; m \sqcap n = \bot \}
+\mathcal{J}(\MMM) = \{ \MMM_2 \; | \; \MMM \sqcap \MMM_2 = \bot \}
 \]
 We shall make use of three lemmas:
 \begin{lemma}
-$\mbox{if }p \models q \mbox{ then } \SIMPL{p} \LEQ \SIMPL{q}$
+$\mbox{if }\phi \models \psi \mbox{ then } \SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$
 \end{lemma}
 \begin{lemma}
-$\mbox{if }m \LEQ n \mbox{ then } x \sqcap m \LEQ x \sqcap n$
+$\mbox{if }\MMM \MODELLEQ \MMM_2 \mbox{ then } \MMM_3 \sqcap \MMM \MODELLEQ \MMM_3 \sqcap \MMM_2$
 \end{lemma}
 \begin{lemma}
-$\mbox{if }\mathcal{I}(q) \subseteq \mathcal{I}(p) \mbox{ then } \mathcal{J}(\SIMPL{q}) \subseteq \mathcal{J}(\SIMPL{p})$
+$\mbox{if }\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi) \mbox{ then } \mathcal{J}(\SIMPL{\psi}) \subseteq \mathcal{J}(\SIMPL{\phi})$
 \end{lemma}
 
 \begin{theorem}
-$p \models q \; \mbox{ iff } \; \mathcal{I}(q) \subseteq \mathcal{I}(p)$
+$\phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)$
 \end{theorem}
 
 \begin{proof}
 
-Left to right: Assume $p \models q$ and $r \in \mathcal{I}(q)$.  By
-Lemma 1, $\SIMPL{p} \LEQ \SIMPL{q}$.  From $r \in \mathcal{I}(q)$,
-$\SIMPL{r} \sqcap \SIMPL{q} = \bot$.  By Lemma 2, $\SIMPL{r} \sqcap
-\SIMPL{p} \LEQ \SIMPL{r} \sqcap \SIMPL{q}$ (substituting $\SIMPL{r}$
-for $x$, $\SIMPL{p}$ for $m$, and $\SIMPL{q}$ for $n$).  But if
-$\SIMPL{r} \sqcap \SIMPL{q} = \bot$, and $\SIMPL{r} \sqcap \SIMPL{p}
-\LEQ \SIMPL{r} \sqcap \SIMPL{q}$, then $\SIMPL{r} \sqcap \SIMPL{p} =
-\bot$ also, because the only element that is $\LEQ \bot$ is $\bot$
-itself.  But if $\SIMPL{r} \sqcap \SIMPL{p} = \bot$, then $r \in
-\mathcal{I}(p)$.  \qed
+Left to right: Assume $\phi \models \psi$ and $\xi \in \mathcal{I}(\psi)$.  By
+Lemma 1, $\SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$.  From $\xi \in \mathcal{I}(\psi)$,
+$\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$.  By Lemma 2, $\SIMPL{\xi} \sqcap
+\SIMPL{\phi} \MODELLEQ \SIMPL{\xi} \sqcap \SIMPL{\psi}$ (substituting $\SIMPL{\xi}$
+for $x$, $\SIMPL{\phi}$ for $m$, and $\SIMPL{\psi}$ for $n$).  But if
+$\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$, and $\SIMPL{\xi} \sqcap \SIMPL{\phi}
+\MODELLEQ \SIMPL{\xi} \sqcap \SIMPL{\psi}$, then $\SIMPL{\xi} \sqcap \SIMPL{\phi} =
+\bot$ also, because the only element that is $\MODELLEQ \bot$ is $\bot$
+itself.  But if $\SIMPL{\xi} \sqcap \SIMPL{\phi} = \bot$, then $\xi \in
+\mathcal{I}(\phi)$.  \qed
 
-Right to left: assume, for reductio, that $m \models p$ and $m \nvDash
-q$. we will show that $\mathcal{I}(q) \nsubseteq \mathcal{I}(p)$.
-Assume $m \models p \mbox{ and } m \nvDash q$. We will construct
-another model $n$ such that $n \in \mathcal{J}(\SIMPL{q})$ but $n
-\notin \mathcal{J}(\SIMPL{p})$.  This will entail, via Lemma 3, that
-$\mathcal{I}(q) \nsubseteq \mathcal{I}(p)$.
+Right to left: assume, for reductio, that $\MMM \models \phi$ and $\MMM \nvDash
+\psi$. we will show that $\mathcal{I}(\psi) \nsubseteq \mathcal{I}(\phi)$.
+Assume $\MMM \models \phi \mbox{ and } \MMM \nvDash \psi$. We will construct
+another model $\MMM_2$ such that $\MMM_2 \in \mathcal{J}(\SIMPL{\psi})$ but $\MMM_2
+\notin \mathcal{J}(\SIMPL{\phi})$.  This will entail, via Lemma 3, that
+$\mathcal{I}(\psi) \nsubseteq \mathcal{I}(\phi)$.
 
-If $m \nvDash q$, then there is a formula $q'$ that does not contain
-$\AND$ such that $q \models q'$ and $m \nvDash q'$. $q'$ must be
+If $\MMM \nvDash \psi$, then there is a formula $\psi'$ that does not contain
+$\AND$ such that $\psi \models \psi'$ and $\MMM \nvDash \psi'$. $\psi'$ must be
 either of the form (i) $\langle a_1 \rangle ... \langle a_n \rangle
 \top$ (for $n > 0$) or (ii) of the form $\langle a_1 \rangle
 ... \langle a_n \rangle \; !\{A\}$ where $A \subseteq \mathcal{S}
 \mbox{ and } n >= 0$.
 
-In case (i), there must be an $i$ between $0$ and $n$ such that $m
-\models \langle a_1 \rangle ... \langle a_i \rangle \top$ but $m
+In case (i), there must be an $i$ between $0$ and $n$ such that $\MMM
+\models \langle a_1 \rangle ... \langle a_i \rangle \top$ but $\MMM
 \nvDash \langle a_1 \rangle ... \langle a_{i+1} \rangle \top$. We need
-to construct another model $n$ such that $n \sqcap \SIMPL{q} = \bot$,
-but $n \sqcap \SIMPL{p} \neq \bot$. Letting $m =
-((\mathcal{W},\rightarrow,\lambda),w)$, then $m \models \langle a_1
+to construct another model $\MMM_2$ such that $\MMM_2 \sqcap \SIMPL{\psi} = \bot$,
+but $\MMM_2 \sqcap \SIMPL{\phi} \neq \bot$. Letting $\MMM =
+((\mathcal{W},\rightarrow,\lambda),w)$, then $\MMM \models \langle a_1
 \rangle ... \langle a_i \rangle \top$ implies that there is at least
 one sequence of states of the form $w, w_1, ..., w_i$ such that $w
 \xrightarrow{a_1} w_1 \rightarrow ... \xrightarrow{a_i} w_i$.  Now let
-$n$ be just like $m$ but with additional transition-restrictions on
+$\MMM_2$ be just like $\MMM$ but with additional transition-restrictions on
 each $w_i$ that it not include $a_{i+1}$.  In other words,
-$\lambda_n(w_i) = \lambda_m(w_i) - \{a_{i+1}\}$ for all $w_i$ in
+$\lambda_{\MMM_2}(w_i) = \lambda_\MMM(w_i) - \{a_{i+1}\}$ for all $w_i$ in
 sequences of the form $w \xrightarrow{a_1} w_1 \rightarrow
-... \xrightarrow{a_i} w_i$. Now $n \sqcap \SIMPL{q} = \bot$ because of
-the additional transition restriction we added to $n$, which rules out
+... \xrightarrow{a_i} w_i$. Now $\MMM_2 \sqcap \SIMPL{\psi} = \bot$ because of
+the additional transition restriction we added to $\MMM_2$, which rules out
 $\langle a_1 \rangle ... \langle a_{i+1} \rangle \top$, and
-a-forteriori $q$. But $n \sqcap \SIMPL{p} \neq \bot$, because $m
-\models p$ and $n \LEQ m$ together imply $n \models p$. So $n$ is
+a-forteriori $\psi$. But $\MMM_2 \sqcap \SIMPL{\phi} \neq \bot$, because $\MMM
+\models \phi$ and $\MMM_2 \MODELLEQ \MMM$ together imply $\MMM_2 \models \phi$. So $\MMM_2$ is
 indeed the model we were looking for, that is incompatible with
-$\SIMPL{q}$ while being compatible with $\SIMPL{p}$.
+$\SIMPL{\psi}$ while being compatible with $\SIMPL{\phi}$.
 
-In case (ii), $m \models \langle a_1 \rangle ... \langle a_n \rangle
-\top$ but $m \nvDash \langle a_1 \rangle ... \langle a_n \rangle !A$
-for some $A \subset \mathcal{S}$. We need to produce a model $n$ that
-is incompatible with $\SIMPL{q}$ but not with $\SIMPL{p}$. Given that
-$m \models \langle a_1 \rangle ... \langle a_n \rangle \top$, there is
+In case (ii), $\MMM \models \langle a_1 \rangle ... \langle a_n \rangle
+\top$ but $\MMM \nvDash \langle a_1 \rangle ... \langle a_n \rangle !A$
+for some $A \subset \mathcal{S}$. We need to produce a model $\MMM_2$ that
+is incompatible with $\SIMPL{\psi}$ but not with $\SIMPL{\phi}$. Given that
+$\MMM \models \langle a_1 \rangle ... \langle a_n \rangle \top$, there is
 a sequence of states $w, w_1, ..., w_n$ such that $w \xrightarrow{a_1}
-w_1 \rightarrow ... \xrightarrow{a_i} w_n$. Let $n$ be the model just
-like $n$ except it has an additional transition from each such $w_n$
-with a symbol $s \notin A$. Clearly, $n \sqcap \SIMPL{q'} = \bot$
-because of the additional $s$-transition, and given that $q \models
-q'$, it follows that $n \sqcap \SIMPL{q} = \bot$. Also, $n \sqcap
-\SIMPL{p} \neq \bot$, because $n \LEQ m$ and $m \models p$.
+w_1 \rightarrow ... \xrightarrow{a_i} w_n$. Let $\MMM_2$ be the model just
+like $\MMM$ except it has an additional transition from each such $w_n$
+with a symbol $a \notin A$. 
+Clearly, $\MMM_2 \sqcap \SIMPL{\psi'} = \bot$
+because of the additional $a$-transition, and given that $\psi \models
+\psi'$, it follows that $\MMM_2 \sqcap \SIMPL{\psi} = \bot$. Also, $\MMM_2 \sqcap
+\SIMPL{\phi} \neq \bot$, because $\MMM_2 \MODELLEQ \MMM$ and $\MMM \models \phi$.
 
 
 \end{proof}

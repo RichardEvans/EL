@@ -87,8 +87,8 @@ relate. We now show that the two notions of equivalence coincide in
 eremic logic.
 
 \begin{theorem}
-If two models are finitely-branching (if the set $\{y \fOr \exists s
-. x \xrightarrow{s} y\}$ is finite for all states $x$), $w \BISIM w'
+If two models are finitely-branching (if the set $\{y \fOr \exists a
+. x \xrightarrow{a} y\}$ is finite for all states $x$), $w \BISIM w'
 \mbox{ iff } w \equiv w' $.\martin{discuss the case of non-finitely-branching}
 \end{theorem}
 First, left to right.
@@ -125,9 +125,9 @@ $(w,w') \in Z$. This is immediate from the definition of Z.
 \item
 The relation $Z$ respects the transition-restrictions: if $(x,x') \in Z$ then $\lambda(x) = \lambda'(x')$
 \item
-The forth condition: if $(x,x') \in Z$ and $x \xrightarrow{s} y$, then there exists a $y'$ such that $x' \xrightarrow{s} y'$
+The forth condition: if $(x,x') \in Z$ and $x \xrightarrow{a} y$, then there exists a $y'$ such that $x' \xrightarrow{a} y'$
 \item
-The back condition: if $(x,x') \in Z$ and $x' \xrightarrow{s} y'$, then there exists a $y$ such that $x \xrightarrow{s} y$
+The back condition: if $(x,x') \in Z$ and $x' \xrightarrow{a} y'$, then there exists a $y$ such that $x \xrightarrow{a} y$
 \end{itemize}
 To show that $(x,x') \in Z$ implies $\lambda(x) = \lambda'(x')$, we will argue by contraposition.
 Assume $\lambda(x) \neq \lambda'(x')$.
@@ -138,10 +138,10 @@ Similarly, if $\lambda(x) \nsubseteq  \lambda'(x')$ then $x \nvDash \fBang \lamb
 But $x' \models \fBang \lambda'(x')$, so again $x$ and $x'$ satisfy different sets of propositions and are not equivalent.
 
 I will show the forth condition in detail. The back condition is very similar.
-To show the forth condition, assume that  $x \xrightarrow{s} y$ and that $(x,x') \in Z$ (i.e. $x \equiv x'$).
-We need to show that $\exists y'$ such that $x' \xrightarrow{s} y'$ and $(y,y') \in Z$ (i.e. $y \equiv y'$).
+To show the forth condition, assume that  $x \xrightarrow{a} y$ and that $(x,x') \in Z$ (i.e. $x \equiv x'$).
+We need to show that $\exists y'$ such that $x' \xrightarrow{a} y'$ and $(y,y') \in Z$ (i.e. $y \equiv y'$).
 
-Consider the set of $y'_i$ such that $x' \xrightarrow{s} y'_i$. Since $x \xrightarrow{s} y$, $x \models \langle s \rangle \top$, and as $x \equiv x'$,  $x' \models \langle s \rangle \top$, so we know this set is non-empty.
+Consider the set of $y'_i$ such that $x' \xrightarrow{a} y'_i$. Since $x \xrightarrow{a} y$, $x \models \langle a \rangle \top$, and as $x \equiv x'$,  $x' \models \langle a \rangle \top$, so we know this set is non-empty.
 Further, since $(\mathcal{W}', \rightarrow')$ is finitely-branching, there is only a finite set of such $y'_i$, so we can list them $y'_1, ..., y'_n$,  where $n >= 1$.
 
 Now, in the Hennessy-Milner theorem for HML, the proof proceeds as follows:
@@ -152,22 +152,22 @@ y'_i \models \phi_i \mbox{ and } y \nvDash \phi_i
 \]
 Now consider the formula:
 \[
-[s] (\phi_1 \lor ... \lor \phi_n)
+[a] (\phi_1 \lor ... \lor \phi_n)
 \]
-As each $y'_i \models \phi_i$, $x' \models [s] (\phi_1 \lor ... \lor \phi_n)$, but $x$ does not satisfy this formula, as each $\phi_i$ is not satisfied at $y$.
+As each $y'_i \models \phi_i$, $x' \models [a] (\phi_1 \lor ... \lor \phi_n)$, but $x$ does not satisfy this formula, as each $\phi_i$ is not satisfied at $y$.
 Since there is a formula which $x$ and $x'$ do not agree on, $x$ and $x'$ are not equivalent, contradicting our initial assumption.
 
-But this proof cannot be used in EL because it relies on a formula $[s] (\phi_1 \lor ... \lor \phi_n)$ which cannot be expressed in EL. 
+But this proof cannot be used in EL because it relies on a formula $[a] (\phi_1 \lor ... \lor \phi_n)$ which cannot be expressed in EL: 
 EL does not include the box operator or disjunction, so this formula is ruled out on two accounts.
 But we can massage it into a form which is more amenable to EL's expressive resources:
 \begin{eqnarray*}
-[s] (\phi_1 \lor ... \lor \phi_n) & = & \neg \langle s \rangle \neg (\phi_1 \lor ... \lor \phi_n)  \\
-	& = & \neg \langle s \rangle (\neg \phi_1\AND ... \AND \neg \phi_n) 
+[a] (\phi_1 \lor ... \lor \phi_n) & = & \neg \langle a \rangle \neg (\phi_1 \lor ... \lor \phi_n)  \\
+	& = & \neg \langle a \rangle (\neg \phi_1\AND ... \AND \neg \phi_n) 
 \end{eqnarray*}
-Further, if the original formula $[s] (\phi_1 \lor ... \lor \phi_n)$ is true in $x'$ but not in $x$, then its negation will be true in $x$ but not in $x'$. 
+Further, if the original formula $[a] (\phi_1 \lor ... \lor \phi_n)$ is true in $x'$ but not in $x$, then its negation will be true in $x$ but not in $x'$. 
 So we have the following formula, true in $x$ but not in $x'$:
 \[
- \langle s \rangle (\neg \phi_1\AND ... \AND \neg \phi_n)
+ \langle a \rangle (\neg \phi_1\AND ... \AND \neg \phi_n)
  \]
 The reason for massaging the formula in this way is so we can express it in EL (which does not have the box operator or disjunction).
 At this moment, the revised formula is \emph{still} outside EL because it uses negation. 
@@ -181,7 +181,7 @@ y \nvDash \phi_j \mbox{ and } y'_j \models \phi_j & & j = m+1 \mbox{ to } n
 \end{eqnarray*}
 The formula we will use to distinguish between $x$ and $x'$ is:
 \[
- \langle s \rangle ( \bigwedge_{i=1}^m \phi_i \; \AND \; \bigwedge_{j=m+1}^n \mathsf{neg}(y, \phi_j))
+ \langle a \rangle ( \bigwedge_{i=1}^m \phi_i \; \AND \; \bigwedge_{j=m+1}^n \mathsf{neg}(y, \phi_j))
  \]
  Here, $\mathsf{neg}$ is a meta-language function that, given a state y and a formula $\phi_j$, returns a formula that is true in $y$ but incompatible with $\phi_j$. I will show that, since $y \nvDash \phi_j$, it is always possible to construct $ \mathsf{neg}(y, \phi_j)$ using the $!$ operator.
 
@@ -200,7 +200,7 @@ $y \models \phi_1$ and $y \nvDash \phi_2$. In this case, $\mathsf{neg}(y, \phi_1
 $y \nvDash \phi_1$ and $y \nvDash \phi_2$. In this case, $\mathsf{neg}(y, \phi_1 \AND \phi_2) =  \mathsf{neg}(y, \phi_1) \AND \mathsf{neg}(y, \phi_2)$.
 \end{enumerate}
 \item
-$!A$: if $y \nvDash !A \mbox{ and } y'_j \models !A$, then there is a symbol $a \in \mathcal{S}-A$ such that $y \xrightarrow{a} z$ for some $z$ but there is no such $z$ such that $y'_j \xrightarrow{a} z$. In this case, let $\mathsf{neg}(y, \phi_j) = \langle a \rangle \top$.
+$!A$: if $y \nvDash !A \mbox{ and } y'_j \models !A$, then there is a symbol $a \in \Sigma-A$ such that $y \xrightarrow{a} z$ for some $z$ but there is no such $z$ such that $y'_j \xrightarrow{a} z$. In this case, let $\mathsf{neg}(y, \phi_j) = \langle a \rangle \top$.
 \item
 $\langle a \rangle \phi$. There are two possibilities:
 \begin{enumerate}
@@ -246,12 +246,12 @@ a logic that is much closer in spirit: Hennessy-Milner logic
 \cite{HennessyM:alglawfndac}, a modal logic designed to reason about
 process calculi. Indeed the present shape of eremic logic owes to
 Hennessy-Milner logic. We now contrast both by translation from eremic
-logic into Hennessy-Milner logic \martin{why not the other way?}. The
-this will reveal the more clearly than the translation into
-first-order logic the where eremic logic is novel.
+logic into Hennessy-Milner logic \martin{why not the other way?}. 
+This will reveal more clearly than the translation into
+first-order logic where eremic logic is novel.
 
-Given a set $\mathcal{S}$ of symbols, with $s$ ranging over
-$\mathcal{S}$, the \emph{formulae} of Hennessy-Milner logic are given
+Given a set $\Sigma$ of symbols, with $s$ ranging over
+$\Sigma$, the \emph{formulae} of Hennessy-Milner logic are given
 by the following grammar:
 \begin{GRAMMAR}
   \phi 
@@ -271,13 +271,13 @@ w) \models \phi$ is given by the following inductive clauses.
 \begin{array}{lclcl}
   (l,w) & \models & \top  \\
   (l,w) & \models & \phi_1 \AND \phi_2 &\  \mbox{ iff }\  & (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2  \\
-  (l,w) & \models & \langle s \rangle \phi & \mbox{ iff } & \mbox{ there is a } w \xrightarrow{s} w' \mbox { such that } (l,w') \models \phi  \\
+  (l,w) & \models & \langle a \rangle \phi & \mbox{ iff } & \mbox{ there is a } w \xrightarrow{a} w' \mbox { such that } (l,w') \models \phi  \\
   (l,w) & \models & \neg \phi & \mbox{ iff } & (l,w)  \nvDash \phi 
 \end{array}
 \]
 
 \NI We can now see the two differences between eremic logic, and
-Hennessy-Milner logic, one syntacticm, the other semantic.
+Hennessy-Milner logic, one syntactic, the other semantic.
 
 \begin{itemize}
 
@@ -294,15 +294,15 @@ Hennessy-Milner logic, one syntacticm, the other semantic.
 \begin{eqnarray*}
   t(\top) & \ = \ & \top  \\
   t(\phi_1 \AND \phi_2) & \ = \ & t(\phi_1) \AND t(\phi_2)  \\
-  t(\langle s \rangle \phi) & \ = \ & \langle s \rangle t(\phi)  \\
-  t(! A) & \ = \ & \bigwedge_{s \in S - A} \neg \langle s \rangle \top 
+  t(\langle a \rangle \phi) & \ = \ & \langle a \rangle t(\phi)  \\
+  t(! A) & \ = \ & \bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top 
 \end{eqnarray*}
 
-\NI If $\mathcal{S}$ is an infinite set, then the translation of a $!$
-formula will be an infinitary formula.  If $\mathcal{S}$ is finite,
+\NI If $\Sigma$ is an infinite set, then the translation of a $!$
+formula will be an infinitary formula.  If $\Sigma$ is finite,
 then the size\martin{Define the size of a formula. Maybe when formulae
   are defined.} of the HML formula will be of the order of $n *
-|\mathcal{S}|$ larger than the original EL formula (where $n$ is the
+| \Sigma |$ larger than the original EL formula (where $n$ is the
 number of $!$ operators occurring in the EL formula).
 
 \martin{Say something more interesting about this translation!}
