@@ -533,68 +533,99 @@ T_x(\langle a \rangle \top \AND \fBang \{a\}) = \exists y \; . \; Arr_a(x,y) \AN
 
 \subsection{Compactness}
 
-First-order logic has compactness: a set $S$ of sentences has a model
-exactly when every finite subset of $S$ does \cite[Chapter
-  4.3]{EndertonHB:matinttl}. We now establish compactness for EL. Our
-proof uses the standard translation into first-order logic, following
-ideas from modal logic.
+\NI First-order logic has compactness: a set $S$ of sentences has a
+model exactly when every finite subset of $S$ does \cite[Chapter
+  4.3]{EndertonHB:matinttl}. What about eremic logic?  We now
+establish compactness for EL. Our proof adapts compactness proofs from
+modal logics \cite{BlackburnP:modlog} to the standard translation from
+eremic logic into first-order logic, introduced in Section
+\ref{standardTranslation}.
 
-\martin{What follows below is from a really old draft and totally inconsistent with the rest of the text.
-Need to make consistent!!}
 
-
-\NI Clearly each eremic model $\MMM = (V, \RED)$ gives rise to a
-first-order model as follows.
+\begin{definition} 
+Eremic logic with a set $\Sigma$ of actions induces a first-order
+signature $\SSS$ as follows.
 
 \begin{itemize}
 
-\item The universe for $\SYMBOL$ is $\SSS$.
+\item There are no constants.
 
-\item The universe for $\STATE$ is $V$.
+\item We have the following relations:
 
-\item The relation $R$ is given by $\RED$.
+  \begin{itemize}
 
-\item The constants $c_{\alpha}$ are given by $\alpha$.
+    \item A 0-ary relation $\top$.
+    \item For each finite subset $A$ of $\Sigma$ a relation $\RESTRICT{A}{\cdot}$.
+    \item For each action $a \in \Sigma$ a binary relation $\ARROW{a}{\cdot}{\cdot}$.
 
-\item The two forms of equality are given by the respective
-  set-theoretic equalites.
+  \end{itemize}
+
+\item No functions, the signature is relational.
 
 \end{itemize}
+
+\end{definition}
+
+\begin{definition}
+Let $\LLL = (S, \rightarrow, \lambda)$ be an eremic transition
+system. Clearly $\LLL$ gives rise to an $\SSS$-model $\SEMB{\LLL}$ as
+follows.
+\begin{itemize}
+
+\item The universe is the set $S$ of states.
+
+\item The relation symbols are interpreted as follows.
+
+  \begin{itemize}
+
+    \item $\top$ always holds.
+    \item Each relation $\RESTRICT{A}{\cdot}$ is interpreted by the set $\{s \in S\ |\ \lambda (s) = A\}$.
+    \item Each  relation $\ARROW{a}{\cdot}{\cdot}$ is given as $\{( s, t )\in S^2\ |\ s \TRANS{a} t\}$.
+
+  \end{itemize}
+\end{itemize}
+
+\end{definition}
 
 \NI We denote this model by $\SEMB{\MMM}$. The correctness of the
 standard translation is given by the following theorem.
 
 \begin{theorem}[Local and global correspondence theorem]\label{correspondence:theorem}
-Let $A$ be an eremic formula.
-\begin{enumerate}
-
-\item For all eremic models $\MMM$ and states $s$: $\MMM \models_s A$
-  iff $\SEMB{\MMM} \models_{x \mapsto s} \SEMB{A}_x$.
-
-\item For all eremic models $\MMM$: $\MMM \models A$ iff $\SEMB{\MMM}
-  \models \forall x.\SEMB{A}_x$.
-
-\end{enumerate}
+Let $A$ be an eremic formula, and $\MMM = (\LLL, s)$ a model, then:
+\[
+   \MMM \models \phi \quad  \text{iff} \quad \SEMB{\LLL} \models_{x \mapsto s} \SEMB{\phi}_x.
+\]
 \end{theorem}
 \begin{proof}
-By induction on the structure of $A$.
+By induction on the structure of $\phi$.\martin{do a few cases, put in appendix.}
 \end{proof}
 
+We have just shown how to convert eremic to first-order models.
+Clearly we can also go the other way and start out with a first-order
+model for the signature defined above, and convert it
+to an eremic model.
 
-Clearly we can also start out with a model $\MMM$ of the FOL language,
-and convert it to an eremic model $\MMM^{\sharp} = (V, \RED)$ as
-follows.
+\begin{definition}
+Let $\CAL{M}$ be a first-order model for $\SSS$. We construct an eremic transition system
+ $\CAL{M}^{\sharp} = (S, \rightarrow, \lambda)$. 
 
 \begin{itemize}
 
 \item The states $V$ are given by the $\MMM$ interpretation of states.
 
 \item The reduction relation $s \TRANS{\alpha} t$ holds exactly when
-  $R^{\MMM}$, the interpretation of $R$ in $\MMM$ satisfies
-  $R^{\MMM}(s, c^{\MMM}_{\alpha}, t)$. Here $c^{\MMM}_{\alpha}$ is the
-  $\MMM$ interpretation of $c_{\alpha}$.
+  $\mathsf{Arrow}^{\CAL{M}}_a(x, y)$ is true.
+
+\item The function $\lambda$ is given by the following clause:
+  $\lambda(s) = A$ exactly when $\mathsf{Restrict}_{A}^{\CAL{M}}(x)$
+  holds.
 
 \end{itemize}
+
+\end{definition}
+
+\martin{The constructions of $\SEMB{\LLL}$ and $\CAL{M}^{\sharp}$ are kind of trivial. 
+Do we need to spell them out explicitly?}
 
 \begin{lemma}\label{modelIso:lemma}
 For all $\LLL$ models $\MMM$: $\SEMB{\MMM^{\sharp}} = \MMM$.
@@ -602,28 +633,8 @@ Likewise, for all eremic models $\MMM$:
  $\SEMB{\MMM}^{\sharp} = \MMM$.
 \end{lemma}
 \begin{proof}
-To do\footnote{I have not actually proved this, maybe the statement of
-  the theorem needs to be weakened a bit like so: $\MMM \models_{x
-    \mapsto s} \SEMB{A}_x$ iff $\MMM^{\sharp} \models_s A$}.
+To do.
 \end{proof}
-
-\begin{theorem}[Local and global correspondence theorem]
-Let $A$ be an eremic formula.
-\begin{enumerate}
-
-\item For all eremic models $\MMM$ and states $s$: $\MMM \models_s A$
-  iff $\SEMB{\MMM} \models_{x \mapsto s} \SEMB{A}_x$.
-
-\item For all eremic models $\MMM$: $\MMM \models A$ iff $\SEMB{\MMM}
-  \models \forall x.\SEMB{A}_x$.
-
-\end{enumerate}
-\end{theorem}
-\begin{proof}
-By induction on the structure of $A$.
-\end{proof}
-
-
 
 \begin{theorem}[Compactness of propositional eremic logic]
 A set $T$ of eremic formulae is satisfiable iff each finite subset of
