@@ -3,9 +3,9 @@
 
 \subsection{Syntax}
 
-Given a set $\mathcal{S}$ of symbols, with $a$ ranging over
-$\mathcal{S}$, and $A$ ranging over (possibly empty) sequences of
-elements of $\mathcal{S}$, the formulae of EL$[\land, !, \neg]$ are
+Given a set $\Sigma$ of symbols, with $a$ ranging over
+$\Sigma$, and $A$ ranging over (possibly empty) sequences of
+elements of $\Sigma$, the formulae of EL$[\land, !, \neg]$ are
 given by\footnote{We include $\lor$, even though it is definable in
 formulae of $\neg$ and $\land$, because our decision procedure involves
 translating formulae into Disjunctive Normal Form.}:
@@ -19,41 +19,42 @@ translating formulae into Disjunctive Normal Form.}:
 \subsection{Semantics}
 
 The semantics of EL$[\land, !, \neg]$ is just as in EL$[\land, !]$
-above, except for the obvious clause for negation:
+above, except for the obvious clauses for negation and disjunction:
 \begin{eqnarray*}
-(l,w) & \models & \neg \phi \mbox{ iff } (l,w) \nvDash \phi 
+(l,w) & \models & \neg \phi \mbox{ iff } (l,w) \nvDash \phi \\
+(l,w) & \models & \phi \lor \psi \mbox{ iff } (l,w) \models \phi \text{ or }   (l,w) models \psi
 \end{eqnarray*}
 
 \subsection{Negation}
 
 Negation can be translated away using the following rewrite rules,
-\emph{relative to a certain set $\Sigma$ of symbols}:
+\emph{relative to a certain set $\mathcal{S} \subseteq \Sigma$ of symbols}:
 
 \begin{eqnarray*}
-  \neg_{\Sigma}(\top) & \ = \ & \bot  \\
-  \neg_\Sigma(\bot) & \ = \ & \top  \\
-  \neg_\Sigma(\phi_1 \land \phi_2) & \ = \ & \neg_\Sigma(\phi_1) \lor \neg_\Sigma(\phi_2)  \\
-  \neg_\Sigma(\phi_1 \lor \phi_2) & \ = \ & \neg_\Sigma(\phi_1) \land \neg_\Sigma(\phi_2)  \\
-  \neg_\Sigma(\langle a \rangle \phi) & \ = \ & \fBang(\Sigma-\{a\}) \lor \langle a \rangle \neg_\Sigma(\phi)  \\
-  \neg_\Sigma(\fBang A) & \ = \ & \bigvee_{a \in \Sigma - A} \langle a \rangle \top
+  \neg_{\mathcal{S}}(\top) & \ = \ & \bot  \\
+  \neg_\mathcal{S}(\bot) & \ = \ & \top  \\
+  \neg_\mathcal{S}(\phi_1 \land \phi_2) & \ = \ & \neg_\mathcal{S}(\phi_1) \lor \neg_\mathcal{S}(\phi_2)  \\
+  \neg_\mathcal{S}(\phi_1 \lor \phi_2) & \ = \ & \neg_\mathcal{S}(\phi_1) \land \neg_\mathcal{S}(\phi_2)  \\
+  \neg_\mathcal{S}(\langle a \rangle \phi) & \ = \ & \fBang(\mathcal{S}-\{a\}) \lor \langle a \rangle \neg_\mathcal{S}(\phi)  \\
+  \neg_\mathcal{S}(\fBang A) & \ = \ & \bigvee_{a \in \mathcal{S} - A} \langle a \rangle \top
 \end{eqnarray*}
 
-\NI Note that, if $\Sigma$ is infinite, then the last two clauses will generate infinitary formulae.
+\NI Note that, if $\mathcal{S}$ is infinite, then the last two clauses will generate infinitary formulae.
 
 \subsection{Restricting the Law of the Excluded Middle to a Determinate Set of Possibilities}
 
-Given a formula $p$ and particular set $\Sigma$ of symbols, then we
+Given a formula $p$ and particular set $\mathcal{S}$ of symbols, then we
 cannot hope to prove
 
 \[
-\models p \lor \neg_\Sigma(p)
+\models p \lor \neg_\mathcal{S}(p)
 \]
 
-\NI For example, let $p$ be $\langle a \rangle \top$ and $\Sigma = \{a,
+\NI For example, let $p$ be $\langle a \rangle \top$ and $\mathcal{S} = \{a,
 b\}$.  Now
 
 \[
-\neg_\Sigma(\langle a \rangle \top) \; = \; ! \{b\} \lor \langle a \rangle \neg_\Sigma(\top) \; =  \; ! \{b\} \lor \langle a \rangle \bot
+\neg_\mathcal{S}(\langle a \rangle \top) \; = \; ! \{b\} \lor \langle a \rangle \neg_\mathcal{S}(\top) \; =  \; ! \{b\} \lor \langle a \rangle \bot
 \]
 
 \NI So, in this case:
@@ -63,10 +64,10 @@ p \lor \neg p \; = \; \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \lang
 
 \NI Now this will not in general be valid - it will be false in any model
 which contains a transition from the root to any other symbol not in
-$\Sigma$, for example: $c$.
+$\mathcal{S}$, for example: $c$.
 
 But if we \emph{fix in advance the set of available options} (in this
-case restricting to the set $\Sigma$), then we can prove the excluded
+case restricting to the set $\mathcal{S}$), then we can prove the excluded
 middle:
 \[
 !\{a, b\} \models \; \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
@@ -80,10 +81,10 @@ symbol-sequences in $\phi$.  So for example:
 \]
 
 \NI Then the following is valid for any formula $\phi$ (letting
-$\Sigma = \sigma(\phi)$):
+$\mathcal{S} = \sigma(\phi)$):
 
 \[
-\bigwedge_{(a_1, ..., a_n) \in \mathsf{path}(\phi)} \langle a_1 \rangle ... \langle a_n \rangle \fBang \Sigma \models \phi \lor \neg_\Sigma (\phi)
+\bigwedge_{(a_1, ..., a_n) \in \mathsf{path}(\phi)} \langle a_1 \rangle ... \langle a_n \rangle \fBang \mathcal{S} \models \phi \lor \neg_\mathcal{S} (\phi)
 \]
 
 \subsubsection{Discussion: Precisifying the Negation. }
@@ -206,48 +207,48 @@ h & a(h) \\
 \section{A More Efficient DecisionProcedure}
 We can use the fact that the $[\land, \fBang]$ fragment of SNEL has a linear-time decision procedure to build an exponential-time decision procedure for EL $[\land, \fBang, \neg]$:
 
-Given a claim $P \models Q$, let $\Sigma = \mathsf{symbols}(P) \cup \mathsf{symbols}(Q) \cup \{\nu\}$ (where $\nu$ is a new symbol which does not occur in $P$ or $Q$).
-First, translate away all negations in $P$ using $\neg_\Sigma()$ as defined in Section 1.4.
-Let the result be $P'$.
-Second, reduce $P'$ to Disjunctive Normal Form by repeated application of the rewrite rules:
+Given a claim $\phi \models \psi$, let $\mathcal{S} = \mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{\nu\}$ (where $\nu$ is a new symbol which does not occur in $\phi$ or $\psi$).
+First, translate away all negations in $\phi$ using $\neg_\mathcal{S}()$ as defined in Section 1.4.
+Let the result be $\phi'$.
+Second, reduce $\phi'$ to Disjunctive Normal Form by repeated application of the rewrite rules:
 \begin{eqnarray*}
-p \land (q \lor r) & \leadsto & (p \land q) \lor (p \land r)  \\
-(p \lor q) \land r & \leadsto & (p \land r) \lor (q \land r) 
+\phi \land (\psi \lor \xi) & \leadsto & (\phi \land \psi) \lor (\phi \land \xi)  \\
+(\phi \lor \psi) \land \xi & \leadsto & (\phi \land \xi) \lor (\psi \land \xi) 
 \end{eqnarray*}
-Let the resulting disjuncts be $P_1, ..., P_n$. 
+Let the resulting disjuncts be $\phi_1, ..., \phi_n$. 
 Now 
 \[
-P \models Q \mbox{ iff } \forall P_{i=1}^n P_i \models Q
+\phi \models \psi \mbox{ iff } \forall \phi_{i=1}^n \phi_i \models \psi
 \]
-Now, to check whether each $P_i \models Q$, we will construct an annotated model of $P_i$ which has labels on the vertices as well as on the edges of the LTS. We can construct this annotated model, $\SIMPL{P_i}$ in linear time. 
-Now define the $\Sigma$ extensions of an annotated model $m$ as all models which extend the states of $m$ with extra transitions taken from $\Sigma$ which respect the state labelling on $m$.
-Now $P_i \models Q$ if and only if all $\Sigma$-extensions of $\SIMPL{P_i}$ satisfy $Q$.
-So, to check whether $P_i \models Q$, we enumerate the $\Sigma$-extensions of $\SIMPL{P_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{P_i}$) and check for each one whether it satisfies $Q$.
+Now, to check whether each $\phi_i \models \psi$, we will construct a model of $\psi_i$ (in linear time). 
+Now define the $\mathcal{S}$ extensions of an annotated model $\MMM$ as all models which extend the states of $\MMM$ with extra transitions taken from $\mathcal{S}$ which respect the state labelling on $\MMM$.
+Now $\phi_i \models \psi$ if and only if all $\mathcal{S}$-extensions of $\SIMPL{\phi_i}$ satisfy $\psi$.
+So, to check whether $\phi_i \models \psi$, we enumerate the $\mathcal{S}$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{\phi_i}$) and check for each one whether it satisfies $\psi$.
 
-To fill out this sketch, I will describe the structure of the annotated model, define the $\mu$ function, and show how to compute the extensions of an annotated model relative to a set $\Sigma$ of symbols.
+To fill out this sketch, I will describe the structure of the annotated model, define the $\mu$ function, and show how to compute the extensions of an annotated model relative to a set $\mathcal{S}$ of symbols.
 
 
 \subsection{Computing the Extensions of a Model}
 
-Recall that, to check whether $P_i \models Q$, we enumerate the $\Sigma$-extensions of $\SIMPL{P_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{P_i}$) and check for each one whether it satisfies $Q$.
+Recall that, to check whether $\phi_i \models \psi$, we enumerate the $\mathcal{S}$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{\phi_i}$) and check for each one whether it satisfies $\psi$.
 
 \begin{definition}
-Given a model LTS $(\mathcal{W},\rightarrow,\lambda)$,  and a set $\Sigma$ of symbols, then $(\mathcal{W'},\rightarrow',\lambda')$ is a {\bf $\Sigma$-extension} of $(\mathcal{W},\rightarrow,\lambda)$ if it is a valid LTS (recall Definition 1) and for all $(x,s,y) \in \rightarrow'$, either:
+Given an eremic transition system $(\mathcal{W},\rightarrow,\lambda)$,  and a set $\mathcal{S}$ of symbols, then $(\mathcal{W'},\rightarrow',\lambda')$ is a {\bf $\mathcal{S}$-extension} of $(\mathcal{W},\rightarrow,\lambda)$ if it is a valid LTS (recall Definition 1) and for all $(x,a,y) \in \rightarrow'$, either:
 \begin{itemize} 
 \item
-$(x, s, y) \in \rightarrow$,  or;
+$(x, a, y) \in \rightarrow$,  or;
 \item
- $x \in \mathcal{W}$ and $s \in \Sigma$ and $y$ is a new state not appearing elsewhere in $\mathcal{W}$ or $\mathcal{W'}$.
+ $x \in \mathcal{W}$ and $a \in \mathcal{S}$ and $y$ is a new state not appearing elsewhere in $\mathcal{W}$ or $\mathcal{W'}$.
 \end{itemize}
 \end{definition}
-In other words, $m'$ is an extension of an annotated model $m$, if all its transitions are either from $m$ or involve states of $m$ transitioning via elements of $\Sigma$ to new states not appearing in $m$ or $m'$.
+In other words, $\MMM'$ is an extension of an annotated model $\MMM$, if all its transitions are either from $\MMM$ or involve states of $\MMM$ transitioning via elements of $\mathcal{S}$ to new states not appearing in $\MMM$ or $\MMM'$.
 
 The number of extensions can quickly grow very large.
-If annotated LTS $m$ has $n$ states, then the number of possible extensions is:
+If the model $\MMM$ has $n$ states, then the number of possible extensions is:
 \[
-({2^{|\Sigma|}})^n
+({2^{|\mathcal{S}|}})^n
 \] 
-But recall that we are computing these extensions in order to verify $q$. So we can make a significant optimisation by restricting the height of each tree to $|q|$.
+But recall that we are computing these extensions in order to verify $\psi$. So we can make a significant optimisation by restricting the height of each tree to $|\psi|$.
 
 \section{Relating EL to Propositional Logic and Hennessy-Milner Logic}
 Consider the following six languages:
@@ -272,7 +273,11 @@ Every formula that is satisfiable has a simplest satisfying model
 \item
 There is a simple linear-time decision procedure
 \end{itemize}
-But there is one way in which EL[$\land, !$]  is significantly more expressive.
+But there are two ways in which EL[$\land, !$]  is significantly more expressive.
+
+Firstly, EL[$\land, !$], unlike either PL[$\land$] or HML[$\land$] , is expressive enough to be able to distinguish between any two models that are not bisimilar. (See Theorem \ref{hennessymilnertheorem}).
+
+The second way in which EL[$\land, !$] is significantly more expressive than both PL[$\land$] and HML[$\land$] is in its ability to express incompatibility.
 No two formulae of PL[$\land$] (or HML[$\land$] ) are incompatible with each other. 
 But many pairs of formulae of EL[$\land, !$] are incompatible.
 (For example: $\langle a \rangle \top$ and $! []$). 
@@ -291,36 +296,36 @@ To see this, fix a PL with the nullary operator $\top$ plus an infinite number o
 Now translate each formula of HML via the rules:
 \begin{eqnarray*}
 t(\top)  & = & \top  \\
-t(p \land q) & = & t(p) \land t(q)  \\
-t(\neg p) & = & \neg t(p)   \\
-t(\langle a_i \rangle p_j) & = & P_{(i,j)} 
+t(\phi \land \psi) & = & t(\phi) \land t(\psi)  \\
+t(\neg \phi) & = & \neg t(\phi)   \\
+t(\langle a_i \rangle \phi_j) & = & P_{(i,j)} 
 \end{eqnarray*}
-Now to show that HML is more expressive, we show that there are formulae $p$ and $q$ of HML such that
+Now to show that HML is more expressive, we show that there are formulae $\phi$ and $\psi$ of HML such that
 \[
-p \models_{HML} q \mbox{ but } t(p) \nvDash_{PL} t(q)
+\phi \models_{HML} \psi \mbox{ but } t(\phi) \nvDash_{PL} t(\psi)
 \]
-For example, let $p = \langle a \rangle \langle b \rangle \top$ and $q = \langle a \rangle \top$.
-Clearly, $p \models_{HML} q$. But $t(p) = P_{(i,j)}$ and $t(q) = P_{(i',j')}$ for some $i,j,i',j'$, and there are no entailments in PL between arbitrary propositional atoms.
+For example, let $\phi = \langle a \rangle \langle b \rangle \top$ and $\psi = \langle a \rangle \top$.
+Clearly, $\phi \models_{HML} \psi$. But $t(\phi) = P_{(i,j)}$ and $t(\psi) = P_{(i',j')}$ for some $i,j,i',j'$, and there are no entailments in PL between arbitrary propositional atoms.
 
 \begin{proposition}
 EL [$\land, !, \neg$]  is more expressive than full HML
 \end{proposition}
-Given a background set $\mathcal{S}$ of symbols, the formula $\fBang A$ of EL can be translated into HML as:
+Given a background set $\Sigma$ of symbols, the formula $\fBang A$ of EL can be translated into HML as:
 \[
-\bigwedge_{a \in \mathcal{S} - A} \neg \langle a \rangle \top
+\bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top
 \]
-But if $\mathcal{S}$ is infinite, then this is an infinitary disjunction.
+But if $\Sigma$ is infinite, then this is an infinitary disjunction.
 
 \section{EL With Quantifiers}
 Now that $!$ is a nullary operator on sequences of symbols (rather than a unary operator on propositions, as it was before), we can expand EL to include quantifiers in the obvious way.
 
 Using quantifiers, we can now express typing judgements directly in the language. For example, to say that a person's gender can only be male or female, we would write:
 \[
-\forall X \langle X \rangle \langle gender \rangle \rightarrow \langle X \rangle \langle gender \rangle ![male, female]
+\forall X \langle X \rangle \langle gender \rangle \rightarrow \langle X \rangle \langle gender \rangle !\{male, female\}
 \]
 To say that every person must have exactly one gender, we can write:
 \[
-\forall X  \langle X \rangle \langle gender \rangle \rightarrow \exists Y \langle X \rangle \langle gender \rangle (\langle Y \rangle \top \land \fBang [Y])
+\forall X  \langle X \rangle \langle gender \rangle \rightarrow \exists Y \langle X \rangle \langle gender \rangle (\langle Y \rangle \top \land \fBang \{Y\})
 \]
 
 
