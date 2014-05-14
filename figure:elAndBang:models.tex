@@ -7,17 +7,17 @@
   			  fill=black!20,minimum size=4mm]
   \tikzstyle{every label}=[red]
   \begin{scope}[xshift=0cm]
-    \node [place] (w1) {$S$};
-    \node [place] (e1) [below of=w1] {$\mathcal{S}$}
+    \node [place] (w1) {$\Sigma$};
+    \node [place] (e1) [below of=w1] {$\Sigma$}
       edge [pre]  node[swap] {a}                 (w1);
-    \node [place] (e2) [below of=e1] {$\mathcal{S}$}
+    \node [place] (e2) [below of=e1] {$\Sigma$}
       edge [pre]  node[swap] {b}                 (e1);
   \end{scope}   
   \begin{scope}[xshift=4cm]
-    \node [place] (w1) {$\mathcal{S}$};
+    \node [place] (w1) {$\Sigma$};
     \node [place] (e1) [below of=w1] {$\{a,b,c\}$}
       edge [pre]  node[swap] {a}                 (w1);
-    \node [place] (e2) [below of=e1] {$\mathcal{S}$}
+    \node [place] (e2) [below of=e1] {$\Sigma$}
       edge [pre]  node[swap] {b}                 (e1);
   \end{scope}   
   \begin{scope}[xshift=8cm]
