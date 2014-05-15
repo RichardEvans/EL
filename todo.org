@@ -18,6 +18,7 @@
 
   - capitalisation, e.g. Eremic Logic vs Eremic logic vs eremic logic etc.
 
+* Talk about binding and precedence in EL formulae.
 * Make sure we have \qed at the end of every proof. Better:
   put it into the latex macro.
 
