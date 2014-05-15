@@ -53,6 +53,43 @@
 	<array>
 		<dict>
 			<key>Bounds</key>
+			<string>{{194.49999310927109, 305.15791056377918}, {131.5, 132.84208679199219}}</string>
+			<key>Class</key>
+			<string>ShapedGraphic</string>
+			<key>ID</key>
+			<integer>43</integer>
+			<key>Shape</key>
+			<string>Circle</string>
+			<key>Style</key>
+			<dict>
+				<key>fill</key>
+				<dict>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>1</string>
+						<key>g</key>
+						<string>0.93371</string>
+						<key>r</key>
+						<string>0.86452</string>
+					</dict>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>Bounds</key>
+			<string>{{120.99999655463557, 279.15791056377918}, {323, 261.84210205078125}}</string>
+			<key>Class</key>
+			<string>ShapedGraphic</string>
+			<key>ID</key>
+			<integer>42</integer>
+			<key>Shape</key>
+			<string>Circle</string>
+			<key>Style</key>
+			<dict/>
+		</dict>
+		<dict>
+			<key>Bounds</key>
 			<string>{{254, 26.578955281889606}, {85, 79}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
@@ -227,6 +264,31 @@ translation}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
+			<string>{{237, 72}, {131.5, 132.84208679199219}}</string>
+			<key>Class</key>
+			<string>ShapedGraphic</string>
+			<key>ID</key>
+			<integer>44</integer>
+			<key>Shape</key>
+			<string>Circle</string>
+			<key>Style</key>
+			<dict>
+				<key>fill</key>
+				<dict>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>1</string>
+						<key>g</key>
+						<string>0.93371</string>
+						<key>r</key>
+						<string>0.86452</string>
+					</dict>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>Bounds</key>
 			<string>{{172.99993551947935, 15.578955281889606}, {235, 215}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
@@ -236,16 +298,6 @@ translation}</string>
 			<string>Circle</string>
 			<key>Style</key>
 			<dict/>
-			<key>Text</key>
-			<dict>
-				<key>Text</key>
-				<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf190
-\cocoascreenfonts1{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
-
-\f0\fs36 \cf0 First-order logic}</string>
-			</dict>
 		</dict>
 	</array>
 	<key>GridInfo</key>
@@ -295,7 +347,7 @@ translation}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2014-05-12 18:17:53 +0000</string>
+	<string>2014-05-15 19:55:55 +0000</string>
 	<key>Modifier</key>
 	<string>Martin Berger</string>
 	<key>NotesVisible</key>

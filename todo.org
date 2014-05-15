@@ -1,6 +1,9 @@
 * Be consistent. In particular
   - State vs node
 
+  - Make sure always to be precise about eremic model vs eremic
+    transition system
+
   - LTS vs labelled transition system
 
   - FOL vs first-order logic, EL vs eremic logic

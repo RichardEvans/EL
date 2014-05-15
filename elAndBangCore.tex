@@ -568,38 +568,54 @@ is true if
 
 \end{itemize}
 
-\NI Choose two fixed variables $x_1, x_2$, let $a$ range over actions
-in $\Sigma$, and $A$ over finite subsets of
-$\Sigma$. Then the restricted fragment of FOL that is the target
-of our translation is given by the following grammar.
+\NI Choose two fixed variables $x, y$, let $a$ range over actions in
+$\Sigma$, and $A$ over finite subsets of $\Sigma$. Then the restricted
+fragment of FOL that is the target of our translation is given by the
+following grammar, where $w, z$ range over $x, y$.
 
 \begin{GRAMMAR}
   \phi 
      &\quad ::= \quad&
-  \top \fOr \ARROW{a}{x_1}{x_2}\fOr \RESTRICT{A}{x_1} \fOr \phi_1 \AND \phi_2 \fOr \exists x_1 . \phi 
+  \top \fOr \ARROW{a}{w}{z}\fOr \RESTRICT{A}{z} \fOr \phi \AND \psi \fOr \exists x. \phi 
 \end{GRAMMAR}
 
 \NI Notice that this fragment of FOL has no negation, disjunction,
-implication, or universal quantification. Notice also that two
-variables suffice.
+implication, or universal quantification. 
 
-The translation of an EL formula is relative to a variable $x$ (which
-will be instantiated to the particular state at which we are
-evaluating the formula):
+The translations $\SEMB{\phi}_x$ and $\SEMB{\phi}_y$ of an EL formula
+$\phi$ are given relative to a state, denoted by either $x$ or $y$.
 
-\begin{eqnarray*}
-  \SEMB{\top}_x & \ = \ & \top  \\
-  \SEMB{\phi_1 \AND \phi_2}_x & \ = \ & \SEMB{\phi_1}_x \AND \SEMB{\phi_2}_x  \\
-  \SEMB{\langle a \rangle \phi}_x & \ = \ & \exists y.(\ARROW{a}{x}{y} \AND \SEMB{\phi}_y)  \\
-  \SEMB{\fBang A}_x & \ = \ & \RESTRICT{A}{x}
-\end{eqnarray*}
+\[
+\begin{array}{rclcrcl}
+  \SEMB{\top}_x & \ = \ & \top  
+     &\quad& 
+  \SEMB{\top}_y & \ = \ & \top 
+     \\
+  \SEMB{\phi \AND \psi}_x & = & \SEMB{\phi}_x \AND \SEMB{\psi}_x  
+     && 
+  \SEMB{\phi \AND \psi}_y & = & \SEMB{\phi}_y \AND \SEMB{\psi}_y  
+     \\
+  \SEMB{\langle a \rangle \phi}_x & = & \exists y.(\ARROW{a}{x}{y} \AND \SEMB{\phi}_y)  
+     &&
+  \SEMB{\langle a \rangle \phi}_y & = & \exists x.(\ARROW{a}{y}{x} \AND \SEMB{\phi}_x)  
+     \\
+  \SEMB{\fBang A}_x & = & \RESTRICT{A}{x}
+     &&
+  \SEMB{\fBang A}_y & = & \RESTRICT{A}{y}
+\end{array}
+\]
 
-\NI So, for example:
+\NI The translations on the left and right are identical except for
+switching $x$ and $y$. We continue with some example translations.
+
 \[
    \SEMB{\langle a \rangle \top \AND \fBang \{a\}}_x 
       = 
    \exists y.(\ARROW{a}{x}{y} \AND \top ) \AND \RESTRICT{\{a\}}{x}
 \]
+
+\martin{Shall we discuss 1 or 2 more? Maybe one that illustrates the
+variable switching?}
 
 \NI We now establish the correctness of the encoding. The key issue
 issue is that not every first-order model of our first-order signature
@@ -610,20 +626,20 @@ point of view of eremic logic.
 
 We deal with this problem following ideas from modal logic
 \cite{BlackburnP:modlog}: we add a translation $\SEMB{\LLL}$ for
-eremic transition systems, and then prove the following correspondence
-theorem.
+eremic transition systems, and then prove the following theorem.
 
-\begin{theorem}\label{correspondence:theorem:1}
+\begin{theorem}[correspondence theorem]\label{correspondence:theorem:1}
 Let $\phi$ be an eremic formula and $\MMM = (\LLL, s)$ an eremic
 model.
 \[
    \MMM \models \phi \quad  \text{iff} \quad \SEMB{\LLL} \models_{x \mapsto s} \SEMB{\phi}_x.
 \]
+And likewise for $\SEMB{\phi}_y$.
 \end{theorem}
 
 \NI Before proving the theorem, we define $\SEMB{\LLL}$, which, given
-an eremic transition system, produces a corresponding first-order
-model for the signature $\SSS$.
+an eremic transition system $\LLL$, produces a corresponding
+first-order model for the signature $\SSS$ introduced above.
 
 \begin{definition}
 Let $\LLL = (S, \rightarrow, \lambda)$ be an eremic transition
@@ -694,14 +710,50 @@ definitions.
 \qed
 \end{proof}
 
-\NI We are now ready to reap the benefits of reducing eremic to
-first-order logic.
-
 \subsection{Compactness}
 
 \NI First-order logic has compactness: a set $S$ of sentences has a
 model exactly when every finite subset of $S$ does \cite[Chapter
-  4.3]{EndertonHB:matinttl}. What about eremic logic?  We now use the
+  4.3]{EndertonHB:matinttl}. What about eremic logic? 
+
+We can prove compactness of modal logics using the standard
+translation from modal to first-order logic \cite{BlackburnP:modlog}:
+we assume that we have a set of modal formula such that each finite
+subset has a model. We translate the modal formulae and models to
+first-order logic, getting a set of formulae such that each finite
+subset has a first-order model by compactness of first-order
+logic. Then we translate the first-order model back to modal logic,
+obtaining a model for all modal formulae, as required.
+
+Unfortunately we cannot do the same with the translation from eremic
+to first-order logic presented in the previous section. The problem
+are the first-order models termed 'junk' above: they do not correspond
+to eremic transistion systems.  For example the constraint $s
+\TRANS{a} t$ implies $a \in \lambda(s)$ might be violated. After all,
+merely having signature $\SSS$ is not strong enough a constraint. The
+target language of the translation from the previous section is not
+expressive enough to express such constraints.  As we have no reason
+to belive that the first-order model whose existence is guarnateed by
+compactness isn't 'junk', we cannot use this translation.
+
+We solve this problem with a second translation from eremic to
+first-order logic, this time into a more expressive fragment were we
+can constrain first-order models enough to ensure that they always can
+be translated back to eremic logic.
+
+The second embedding translates eremic logic to two-sorted first-order
+logic. The many-sorted first-order signature $\SSS'$ has two sorts,
+states and actions. It has a nullary predicate $\top$, an binary
+predicate $\RESTRICTTWO{}{\cdot}{\cdot}$ and a ternary predicate
+$\ARROWTHREE{}{\cdot}{\cdot}{\cdot}$. The intended interpretation
+should should be clear.
+
+%\begin{eqnarray*}
+
+%\end{eqnarray*}
+
+
+ We now use the
 translation $\SEMB{\phi}_x$ to show that eremic logic must also have
 compactness.  In order to carry out the proof, we need an inverse to
 $\SEMB{\LLL}$.  Clearly we can also go the other way and start out
