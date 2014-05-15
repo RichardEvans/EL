@@ -28,7 +28,7 @@ The $!$ operator provides additional information to the compiler, allowing signi
 I shall go through each of these in turn.
 
 \subsection{Using Sub-trees of Expressions to Represent Objects}
-Consider the following facts about Brown\footnote{The database is composed of Y-formulae. For readability, the trailing $\star \top$ has been omitted. In Praxis, constants are identifiers starting with a lower-case letter while variables start with an upper-case letter.}:
+Consider the following facts about a gentleman named Brown:
 \begin{verbatim}
 brown *
     (
@@ -129,7 +129,7 @@ married_couple_at_home(X, Y) :-
 Rules like this create a large search-space because we need to find all instances of $at\_home(X)$ and all instances of  $at\_home(Y)$ and take the cross-product \cite{smith-and-genesereth}. If there are $n$ instances of $at\_home$, then we will be searching $n^2$ instances of $(x,y)$ substitutions.
 
 If we express the rule in Eremic Logic, the compiler is able to use the extra information expressed in the $!$ operator to reorder the clauses to find the result significantly faster.
-Since someone can only have a single spouse at any moment, the rule is expressed in Eremic Logic as\footnote{Note that the rule is a horn-clause of Y-formulae, not X-formulae. Note also that the trailing $\star \top$ has been suppressed for readability.}:
+Since someone can only have a single spouse at any moment, the rule is expressed in Eremic Logic as:
 \begin{verbatim}
 married_couple_at_home * X * Y :-
     at_home * X,
