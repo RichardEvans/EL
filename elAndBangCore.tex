@@ -52,10 +52,12 @@ for all states $s \in S$ it is the case that $ \{a \fOr \exists t \; s
 
 \end{definition}
 
-\NI The intended interpretation is that $\lambda(w)$ is the set of allowed
-transition symbols emanating from $w$.  The $\lambda$ function is the
-semantic counterpart of the $!$ operator.
-We restrict the codomain of $\lambda$ so that $\lambda(w)$ is always either a finite subset of $\Sigma$, or $\Sigma$ itself.
+\NI The intended interpretation is that $\lambda(w)$ is the set of
+allowed transition symbols emanating from $w$.  The $\lambda$ function
+is the semantic counterpart of the $!$ operator.  We restrict the
+codomain of $\lambda$ so that $\lambda(w)$ is always either a finite
+subset of $\Sigma$, or $\Sigma$ itself.\martin{we need to motivate
+  this restriction!}
 
 \begin{definition}
 A \emph{model}, ranged over by $\MMM, \MMM', ...$, is a pair $(\LLL,
@@ -514,7 +516,8 @@ also have, by Lemma \ref{lemma:completeness:5}, $\phi \judge
 \CHAR{\SIMPL{\phi}} $.  So by transitivity, we have $\phi \judge \psi$.  \qed
 
 
-\subsection{The standard translation from  eremic logic into first-order logic}\label{standardTranslation}
+\subsection{The standard translation from  eremic logic into 
+            first-order logic}\label{standardTranslation}
 
 We now present a translation from EL to first-order logic. We have two
 key purposes in mind:
@@ -540,21 +543,28 @@ key purposes in mind:
 
 \input{figure:embedding}
 
-\NI We will translate EL into a restricted fragment of FOL \martin{one-sorted FOL?} (cf.~Figure
-\ref{figure:embedding}). The translation makes use of three types of
-predicate:
+\NI We will translate EL into a restricted fragment of first-order
+logic (cf.~Figure \ref{figure:embedding}). The first-order signature
+$\SSS$ has a nullary predicate $\top$, a family of unary predicates
+$\RESTRICT{A}{\cdot}$, one for each finite subset $A \subseteq
+\Sigma$, and a family of binary predicates $\ARROW{a}{x}{y}$, one for
+each action $a \in \Sigma$.  The intended interpretation is as
+follows.
 
 \begin{itemize}
 
-\item A 0-place predicate $\top$, which is true in all models.
+\item The universe is composed of states.
+
+\item The predicate $\top$, which is true everywhere.
+
+\item For each finite $A \subseteq \Sigma$ and each state $s$,  $\RESTRICT{A}{s}$
+is true if 
+  $\lambda(x) \subseteq A$.
 
 \item A set of two-place predicates $\ARROW{a}{x}{y}$, one for each $a
   \in \Sigma$, where $x$ and $y$ range over states. $\ARROW{a}{x}{y}$
   is true if $x \xrightarrow{a} y$.
 
-\item A set of one-place predicates $\RESTRICT{A}{\cdot}$, one for each finite
-  subset $A \subseteq \Sigma$.  $\RESTRICT{A}{x}$ is true if
-  $\lambda(x) \subseteq A$.
 
 \end{itemize}
 
@@ -578,52 +588,42 @@ will be instantiated to the particular state at which we are
 evaluating the formula):
 
 \begin{eqnarray*}
-  T_x(\top) & \ = \ & \top  \\
-  T_x(\phi_1 \AND \phi_2) & \ = \ & T_x(\phi_1) \AND T_x(\phi_2)  \\
-  T_x(\langle a \rangle \phi) & \ = \ & \exists y \; . \; \ARROW{a}{x}{y} \AND T_y(\phi)  \\
-  T_x(\fBang A) & \ = \ & \RESTRICT{A}{x}
+  \SEMB{\top}_x & \ = \ & \top  \\
+  \SEMB{\phi_1 \AND \phi_2}_x & \ = \ & \SEMB{\phi_1}_x \AND \SEMB{\phi_2}_x  \\
+  \SEMB{\langle a \rangle \phi}_x & \ = \ & \exists y.(\ARROW{a}{x}{y} \AND \SEMB{\phi}_y)  \\
+  \SEMB{\fBang A}_x & \ = \ & \RESTRICT{A}{x}
 \end{eqnarray*}
 
 \NI So, for example:
 \[
-T_x(\langle a \rangle \top \AND \fBang \{a\}) = \exists y \; . \; \ARROW{a}{x}{y} \AND \top \AND \RESTRICT{\{a\}}{x}
+   \SEMB{\langle a \rangle \top \AND \fBang \{a\}}_x 
+      = 
+   \exists y.(\ARROW{a}{x}{y} \AND \top ) \AND \RESTRICT{\{a\}}{x}
 \]
 
+\NI We now establish the correctness of the encoding. The key issue
+issue is that not every first-order model of our first-order signature
+corresponds to an eremic model. The problem is that eremic models have
+constraints that are not enforced by our signature, e.g.~$s \TRANS{a}
+t$ implies that $a \in \lambda(s)$. Such models are 'junk' from the
+point of view of eremic logic. 
 
-\subsection{Compactness}
+We deal with this problem following ideas from modal logic
+\cite{BlackburnP:modlog}: we add a translation $\SEMB{\LLL}$ for
+eremic transition systems, and then prove the following correspondence
+theorem.
 
-\NI First-order logic has compactness: a set $S$ of sentences has a
-model exactly when every finite subset of $S$ does \cite[Chapter
-  4.3]{EndertonHB:matinttl}. What about eremic logic?  We now
-establish compactness for EL. Our proof adapts compactness proofs from
-modal logics \cite{BlackburnP:modlog} to the standard translation from
-eremic logic into first-order logic, introduced in Section
-\ref{standardTranslation}.
+\begin{theorem}\label{correspondence:theorem:1}
+Let $\phi$ be an eremic formula and $\MMM = (\LLL, s)$ an eremic
+model.
+\[
+   \MMM \models \phi \quad  \text{iff} \quad \SEMB{\LLL} \models_{x \mapsto s} \SEMB{\phi}_x.
+\]
+\end{theorem}
 
-
-\begin{definition} 
-Eremic logic with a set $\Sigma$ of actions induces a first-order
-signature $\SSS$ as follows.
-
-\begin{itemize}
-
-\item There are no constants.
-
-\item We have the following relations:
-
-  \begin{itemize}
-
-    \item A 0-ary relation $\top$.
-    \item For each finite subset $A$ of $\Sigma$ a relation $\RESTRICT{A}{\cdot}$.
-    \item For each action $a \in \Sigma$ a binary relation $\ARROW{a}{\cdot}{\cdot}$.
-
-  \end{itemize}
-
-\item No functions, the signature is relational.
-
-\end{itemize}
-
-\end{definition}
+\NI Before proving the theorem, we define $\SEMB{\LLL}$, which, given
+an eremic transition system, produces a corresponding first-order
+model for the signature $\SSS$.
 
 \begin{definition}
 Let $\LLL = (S, \rightarrow, \lambda)$ be an eremic transition
@@ -637,31 +637,81 @@ follows.
 
   \begin{itemize}
 
-    \item $\top$ always holds.
+    \item $\top^{\SEMB{\LLL}}$ always holds.
 
-    \item Each relation $\RESTRICT{A}{\cdot}$ is interpreted by the
-      set $\{s \in S\ |\ \lambda (s) = A\}$.
+    \item $\mathsf{Restrict}_{A}^{\SEMB{\LLL}} = \{ s \in S\ |\ \lambda(s) \subseteq A\}$.
 
-    \item Each relation $\ARROW{a}{\cdot}{\cdot}$ is given as $\{( s,
-      t )\in S^2\ |\ s \TRANS{a} t\}$.
+    \item $\mathsf{Arrow^{\SEMB{\LLL}}}_{a} = \{(s, t) \in S \times S\ |\ s \TRANS{a} t\}$.
 
   \end{itemize}
 \end{itemize}
-
 \end{definition}
 
-\NI We denote this model by $\SEMB{\MMM}$. The correctness of the
-standard translation is given by the following theorem.
+\NI We are now ready to prove Theorem \ref{correspondence:theorem:1}.
+\begin{proof}
+By induction on the structure of $\phi$. The cases $\top$ and $\phi_1
+\AND \phi_2$ are straightfoward.  The case $\MAY{a}\psi$ is handeled
+as follows.
+\begin{eqnarray*}
+  \lefteqn{
+  \SEMB{\LLL} \models_{x \mapsto s} \SEMB{\MAY{a}\psi}_x}\hspace{5mm} 
+     \\
+     &\quad \text{iff}\quad &
+  \SEMB{\LLL} \models_{x \mapsto s} \exists y.(\ARROW{a}{x}{y} \AND \SEMB{\psi}_y) 
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t} \ARROW{a}{x}{y} \AND \SEMB{\psi}_y
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t} \ARROW{a}{x}{y} \ \text{and}\ \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t}  \SEMB{\psi}_y
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. s \TRANS{a} t \ \text{and}\ \SEMB{\LLL} \models_{x \mapsto s, y \mapsto t}  \SEMB{\psi}_y
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. s \TRANS{a} t \ \text{and}\ \SEMB{\LLL} \models_{y \mapsto t}  \SEMB{\psi}_y \qquad (\text{as $x$ is not free in $\psi$})
+     \\
+     &\text{iff}&
+  \text{exists}\ t \in S. s \TRANS{a} t \ \text{and}\ \MMM \models \psi
+     \\
+     &\text{iff}&
+  \MMM \models \MAY{a}\psi  
+\end{eqnarray*}
 
-We have just shown how to convert eremic to first-order models.
-Clearly we can also go the other way and start out with a first-order
-model for the signature defined above, and convert it
-to an eremic model.
+\NI Finally, if $\phi$ is $!A$ the derivation comes straight from the
+definitions.
+\begin{eqnarray*}
+  \SEMB{\LLL} \models_{x \mapsto s} \SEMB{!A}_x
+    &\quad \text{iff}\quad &
+  \SEMB{\LLL} \models_{x \mapsto s} \RESTRICT{A}{x}
+     \\
+     &\text{iff}&
+  \lambda(s) \subseteq A
+     \\
+     &\text{iff}&
+  \MMM \models\ !A.
+\end{eqnarray*}
+\qed
+\end{proof}
+
+\NI We are now ready to reap the benefits of reducing eremic to
+first-order logic.
+
+\subsection{Compactness}
+
+\NI First-order logic has compactness: a set $S$ of sentences has a
+model exactly when every finite subset of $S$ does \cite[Chapter
+  4.3]{EndertonHB:matinttl}. What about eremic logic?  We now use the
+translation $\SEMB{\phi}_x$ to show that eremic logic must also have
+compactness.  In order to carry out the proof, we need an inverse to
+$\SEMB{\LLL}$.  Clearly we can also go the other way and start out
+with a first-order model for the signature defined above, and convert
+it to an eremic model.
 
 \begin{definition}
-Let $\CAL{M}$ be a first-order model for $\SSS$. We construct an
-eremic transition system $\CAL{M}^{\sharp} = (S, \rightarrow,
-\lambda)$.
+Let $\CAL{M}$ be a first-order model for the signature $\SSS$ defined
+in the previous section. We construct an eremic transition system
+$\CAL{M}^{\sharp} = (S, \rightarrow, \lambda)$.
 
 \begin{itemize}
 
