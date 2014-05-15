@@ -1,0 +1,103 @@
+\section{Related Work}
+
+\subsection{Brandom's Incompatibility Semantics}
+In \cite{brandom} and \cite{brandom2}, Brandom has emphasised that logical negation is a degenerate case of material incompatibility:
+\begin{quote}
+Incompatible sentences are Aristotelian \emph{contraries}. A sentence and its negation are \emph{contradictories}. What is the relation between these? Well, the contradictory is a contrary: any sentence is incompatible with its negation. What distinguishes the contradictory of a sentence  from all the rest of its contraries? The contradictory is the \emph{minimal} contrary: the one that is entailed by all the rest. Thus every contrary of ``Plane figure $f$ is a circle'' - for instance ``$f$ is a triangle'', ``$f$ is an octagon'', and so on - entails ``$f$ is \emph{not} a circle''.
+\end{quote}
+In \cite{brandom}, Chapter 5, Appendix I, Brandom developed a new type of semantics, Incompatibility Semantics, that takes material incompatibility - rather than truth-assignment - as the semantically primitive notion.
+
+Incompatibility Semantics applies to any language, $\mathcal{L}$, given as a set of sentences. 
+It uses an incompatibility function $\mathcal{I}$, that, given a set of sentences $S \subseteq \mathcal{L}$, produces the set of sets of sentences that are incompatible with $S$.
+We assume that $\mathcal{I}$ satisfies the monotonicity requirement (Brandom calls it ``Persistence''):
+\[
+\text{If } X \in \mathcal{I}(Y) \text{ and } X \subseteq X' \text{ then } X' \in \mathcal{I}(Y)
+\]
+Now Brandom defines entailment in terms of the incompatiblity function. Given a set $X \subseteq \mathcal{L}$ and an individual sentence $\phi \in \mathcal{L}$:
+\[
+X \models \phi \text{ iff } \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
+\]
+Now, given material incompatibility (as captured by the $\mathcal{I}$ function) and entailment, he introduces logical negation as a \emph{derived} concept. Using $N \phi$ for the negation of $\phi$, he introduces negation via the rule:
+\[
+\{N \phi\} \in \mathcal{I}(X) \text{ iff } X \models \phi
+\]
+Brandom goes on to show that the $N$ operator, as defined, satisfies the laws of classical negation. 
+He also introduces a modal operator, again defined in terms of material incompatibility, and shows that this operator satisfies the laws of $S5$.
+
+Eremic Logic was inspired by Brandom's vision that material incompatibility is conceptually prior to logical negation:
+in other words, it is possible for a community of language users to deploy a language including a material incompatibility relation, even if that language has no explicit logical operators such as negation.
+The language users of this simple language may go on to introduce logical operators, in order to make certain inferential properties explicit - but this is an optional further development. 
+The language before that addition was already in order as it is.
+
+The approach taken in this paper takes Brandom's original insight in a different direction.
+While Brandom defines an unusual (non truth-conditional) semantics that applies to any language, we have defined a unusual logic with a standard (truth-conditional) semantics.
+
+
+
+
+
+
+\subsection{Other Related work}
+
+Here is a brief list of things that I suggest we compare EL with.
+
+\begin{itemize}
+
+\item Linear logic \cite{GirardJY:linlog,GirardJY:protyp}. Especially
+  interesting in the context of eremic logic is the additive
+  conjunction $A \& B$ which has been interpreted
+  \cite{AbramskyS:comintoll} as an external choice operation in the
+  terminology of CSP \cite{HoareC:comseq}. External, because the
+  choice is offered to the environment. This interpretation has been
+  influential in the study of types for process calculus,
+  e.g.~\cite{HondaK:unitypsfsifLONG,TakeuchiK:intbaslaits,HondaK:lanpriatdfscbp}. 
+
+  Simplifying a great deal, a key difference between $!A$ and additive
+  conjunction $A \& B$ is that the individual actions in $!A$ have no
+  continuation, while they do with $A \& B$: $!{\mathsf{left},
+    \mathsf{right}}$ says that at this point the only available
+  actions are $\mathsf{left}$ and $\mathsf{right}$, while $A \& B$
+  says that at this point the only available actions are
+  $\mathsf{left}$ and $\mathsf{right}$, and if we do $\mathsf{left}$,
+  then $A$ holds, while doing $\mathsf{right}$ guarantees $B$.
+
+  So both, eremic and linear logic offer an operator that restricts
+  the available options. How are they related? Linear logic has an
+  explicit linear negation $(\cdot)^{\bot}$ which, unlike classical
+  negation, is constructive. In constrast, eremic logic defines
+  negation from $!A$. Can these two perspectives be frutifully
+  reconciled?
+
+  In this context it is also worth noting that linear logic has been
+  used for logic programming
+  \cite{HodasJS:logproiafoill,WinikoffMD:logprowll,PymDJ:uniprotiollp,HarlandJ:prolygao,MillerD:surlinlp}
+  and as a programming language for narrative generation
+  \cite{BosserAG:linlogpfng}, see references therein.
+
+
+\item Process calculi traditionally 
+  have sums which in their most general form are:
+  \[
+     \sum_{i \in I} P_i
+  \]
+  But input-guarded sums are much better behaved (and strictly less
+  expressive):
+  \[
+     \sum_{i \in I} x_{i}(v_i)P_i
+  \]
+  and they are even better behaved if they are all using the same
+  input channel and have only finitely many alternatives:
+  \[
+     \sum_{i = 1}^n x(v)P_i
+  \]
+  Simplifying a great deal, this can be seen as a proof for linear
+  logic's additive conjunction
+  \[
+     \&_{i = 1}^n x(v)A_i
+  \]
+  provided each $P_i$ is a proof of $A_i$.  As with linear logic's
+  additive conjunction, sums in process calculi have continuations.
+  
+\end{itemize}
+
+
