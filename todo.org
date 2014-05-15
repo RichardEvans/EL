@@ -32,6 +32,20 @@
   it.
 
 * Find a better name for !A than "bang A".
+About the question how to name !A I think the obvious names are
+something like this:
+
+   Just A
+   Only A
+   Nothing but A
+   Solely A 
+
+Whatever we choose, we should also have a scientific sounding term
+that relates to !  as conjunction relates to /\ as well as disjunction
+to \/.  In Latin we can choose tantum, nisi, solo, solus and in Greek:
+mono (μόνο). If we go creative we could simply say
+
+   Erem A
 
 *  I recommend to use the following order of presentation in Chapters 2 and 3.
 
@@ -65,6 +79,7 @@
   - Marek Sergot http://www.doc.ic.ac.uk/~mjs/
   - Marcus Kracht http://wwwhomes.uni-bielefeld.de/mkracht/index-en.html
   - Graham White and Paulo Oliva at QMUL
+  - Database people like Moshe Vardi (who else?)
   - Bernhard Reus at Sussex
   - Billiejoe Charlton
   - Aram Lintzel
