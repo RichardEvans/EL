@@ -27,12 +27,15 @@ $\mathcal{J}(\MMM)$ is the set of models that are incompatible with $\MMM$:
 \]
 We shall make use of three lemmas:
 \begin{lemma}
+\label{inc1}
 $\mbox{if }\phi \models \psi \mbox{ then } \SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$
 \end{lemma}
 \begin{lemma}
+\label{inc2}
 $\mbox{if }\MMM \MODELLEQ \MMM_2 \mbox{ then } \MMM_3 \sqcap \MMM \MODELLEQ \MMM_3 \sqcap \MMM_2$
 \end{lemma}
 \begin{lemma}
+\label{inc3}
 $\mbox{if }\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi) \mbox{ then } \mathcal{J}(\SIMPL{\psi}) \subseteq \mathcal{J}(\SIMPL{\phi})$
 \end{lemma}
 
@@ -43,8 +46,8 @@ $\phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\p
 \begin{proof}
 
 Left to right: Assume $\phi \models \psi$ and $\xi \in \mathcal{I}(\psi)$.  By
-Lemma 1, $\SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$.  From $\xi \in \mathcal{I}(\psi)$,
-$\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$.  By Lemma 2, $\SIMPL{\xi} \sqcap
+Lemma \ref{inc1}, $\SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$.  From $\xi \in \mathcal{I}(\psi)$,
+$\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$.  By Lemma \ref{inc2}, $\SIMPL{\xi} \sqcap
 \SIMPL{\phi} \MODELLEQ \SIMPL{\xi} \sqcap \SIMPL{\psi}$ (substituting $\SIMPL{\xi}$
 for $x$, $\SIMPL{\phi}$ for $m$, and $\SIMPL{\psi}$ for $n$).  But if
 $\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$, and $\SIMPL{\xi} \sqcap \SIMPL{\phi}
@@ -57,7 +60,7 @@ Right to left: assume, for reductio, that $\MMM \models \phi$ and $\MMM \nvDash
 \psi$. we will show that $\mathcal{I}(\psi) \nsubseteq \mathcal{I}(\phi)$.
 Assume $\MMM \models \phi \mbox{ and } \MMM \nvDash \psi$. We will construct
 another model $\MMM_2$ such that $\MMM_2 \in \mathcal{J}(\SIMPL{\psi})$ but $\MMM_2
-\notin \mathcal{J}(\SIMPL{\phi})$.  This will entail, via Lemma 3, that
+\notin \mathcal{J}(\SIMPL{\phi})$.  This will entail, via Lemma \ref{inc3}, that
 $\mathcal{I}(\psi) \nsubseteq \mathcal{I}(\phi)$.
 
 If $\MMM \nvDash \psi$, then there is a formula $\psi'$ that does not contain
