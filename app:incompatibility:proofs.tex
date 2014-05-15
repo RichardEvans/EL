@@ -1,0 +1,19 @@
+\section{Proofs for Lemmas \ref{inc1}, \ref{inc2} and \ref{inc3}}\label{app:completeness:proofs}
+
+\subsection{Proof for Lemma \ref{inc1}}
+$\mbox{if }\phi \models \psi \mbox{ then } \SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$
+
+\begin{proof}
+By Theorem \ref{theorem:completeLattice}, $ \SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$ iff $\THEORY{\SIMPL{\psi}} \subseteq  \THEORY{\SIMPL{\phi}}$.
+Assume $\phi \models \psi$, and assume $\xi \in \THEORY{\SIMPL{\psi}} $. We must show $\xi \in \THEORY{\SIMPL{\phi}} $.
+Now $\SIMPL$ is constructed so that:
+\[
+\SIMPL{\psi} = \bigsqcup \{ \MMM \; | \; \MMM \models \psi \}
+\]
+So  $\xi \in \THEORY{\SIMPL{\psi}} $ iff for all models $\MMM$, $\MMM \models \psi$ implies $\MMM \models \xi$.
+We must show that $\MMM \models \phi$ implies $\MMM \models \xi$ for all models $\MMM$.
+Assume $\MMM \models \phi$. Then since $\phi \models \psi$,  $\MMM \models \psi$. 
+But since $\xi \in \THEORY{\SIMPL{\psi}} $, $\MMM \models \xi$ also.
+\qed
+\end{proof}
+
