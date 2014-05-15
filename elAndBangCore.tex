@@ -21,7 +21,7 @@ by the following grammar.
      &\quad ::= \quad & 
   \TRUE 
      \VERTICAL 
-  \phi \AND \psi
+  \phi_1 \AND \phi_2  
      \VERTICAL 
   \MAY{a}{\phi}
      \VERTICAL 
@@ -72,7 +72,7 @@ inductively by the following clauses, where we assume that $\MMM =
 \[
 \begin{array}{lclcl}
   \MMM & \models & \top   \\
-  \MMM & \models & \phi \AND \psi &\ \mbox{ iff } \ & \MMM  \models \phi \mbox { and } \MMM \models \psi  \\
+  \MMM & \models & \phi_1 \AND \phi_2 &\ \mbox{ iff } \ & \MMM  \models \phi_1 \mbox { and } \MMM \models \phi_2  \\
   \MMM & \models & \langle a \rangle \phi & \mbox{ iff } & \text{there is a } s \xrightarrow{a} t \mbox { such that } (\LLL, t) \models \phi  \\
   \MMM & \models & \fBang A &\mbox{ iff } & \lambda(s) \subseteq A
 \end{array}
@@ -204,10 +204,7 @@ contexts.
 
 \subsubsection{A partial ordering on models}
 
-We shall define a partial-ordering $\MODELLEQ$ on models by extending
-the notion of simulation on labeled transition systems. We then give
-an alternative characterisation of $\MODELLEQ$ in terms of
-set-inclusion of the theories induced by models.
+We shall define a partial-ordering on models by extending the notion of simulation on labeled transition systems.
 
 \begin{definition}
 Let $\LLL_i = (S_i, \rightarrow_i, \lambda_i)$ be eremic transition
@@ -253,7 +250,7 @@ to a bounded lattice of models.
 \begin{definition}
 The binary relation $\MODELLEQ$ on models is defined as
 \[
-   \MMM \MODELLEQ \MMM' \quad \text{ iff }\quad \MMM \text{ simulates } \MMM' .
+   \MMM \MODELLEQ \MMM' \text{ iff } \MMM \text{ simulates } \MMM' .
 \]
 \end{definition}
 It turns out that $\MODELLEQ $ on models is not just a partial order, but
@@ -265,27 +262,63 @@ We extend the relation $\MODELLEQ $  and stipulate that $\bot
 \MODELLEQ \MMM$ for all models $\MMM$.
 \end{definition}
 
-\begin{theorem}\label{theorem:completeLattice}
-Let $\THEORY{\MMM}$ be the set of formulae made true by $\MMM$,
-i.e.~$\THEORY{\MMM} = \{\phi\ |\ \MMM \models \phi \}$.
+\begin{definition}
+Let $Th(\MMM) =  \{\phi\ |\ \MMM \models \phi \}$.
+\end{definition}
+
+\begin{theorem}
 \[
-   \MMM \MODELLEQ \MMM' 
-      \quad \text{iff} \quad 
-   \THEORY{\MMM} \supseteq  \THEORY{\MMM'}.
+\MMM' \MODELLEQ \MMM
+\qquad\text{iff}\qquad
+Th(\MMM) \subseteq Th(\MMM') .
 \]
 \end{theorem}
-\begin{proof}
-\martin{To do?}
-\end{proof}
 
-Theorem \ref{theorem:completeLattice} illustrates from a
-model-theoretic point of view how classical and eremic logic
-differ. In classical logic the theory of each model is complete, and
-$\THEORY{\CAL{M}} \subseteq \THEORY{\CAL{N}}$ already implies that
-$\THEORY{\CAL{M}} = \THEORY{\CAL{N}}$, i.e.~$\CAL{M}$ and $\CAL{N}$
-are elementarily equivalent. Eremic logic's lack of negation changes
-this drastically, and gives $\MODELLEQ$ the structure of a non-trivial
-complete lattice\martin{proof?}.
+\begin{proof}
+\begin{case}
+Left to right
+\end{case}
+Assume $\MMM' \MODELLEQ \MMM$ and $\MMM \models \phi$.
+We must show $\MMM' \models \phi$.
+Let $\MMM = (\LLL, w)$ and $\MMM' = (\LLL', w')$.
+The proof proceeds by induction on $\phi$.
+The cases for $\top$ and $\land$ are trivial.
+
+Assume $\phi = \MAY{a}\psi$ and assume  $(\LLL, w) \models  \MAY{a}\psi$.
+Then $w \xrightarrow{a} x$ and $(\LLL, x) \models  \psi$.
+As $\MMM'$ simulates $\MMM$, there is an $x'$ such that $(x,x') \in R$ and $w' \xrightarrow{a} x'$.
+By the induction hypothesis, $(\LLL', x') \models \psi$.
+Therefore, by the semantic clause for $!$, $(\LLL', w') \models  \MAY{a}\psi$.
+
+Assume now that $\phi = \; ! \; A$, for some finite $A \subseteq \Sigma$, and that $(\LLL, w) \models \; ! \; A$.
+By the semantic clause for $!$, $\lambda(w) \subseteq A$.
+Since $(\LLL', w') \MODELLEQ (\LLL, w)$, by the definition of simulation of eremic transition systems, $\lambda(w) \supseteq \lambda'(w')$.
+Therefore, $\lambda'(w') \subseteq \lambda(w) \subseteq A$.
+Therefore, by the semantic clause for $!$, $(\LLL', w') \models  \; ! \; A$.
+
+\begin{case}
+Right to left.
+\end{case}
+Let $\MMM = (\LLL, w)$ and $\MMM' = (\LLL', w')$.
+Assume $Th(\MMM) \subseteq Th(\MMM') $. We need to show that $\MMM'$ simulates $\MMM$.
+In other words, we need to produce a relation $R \subseteq \mathcal{W} \times \mathcal{W}'$ where $(w,w') \in R$ and $R$ is a simulation from $(\LLL, w)$ to $ (\LLL', w')$.
+Define $R = \{(x,x') \; | \; Th( (\LLL, x)) \subseteq Th( (\LLL', x'))\}$.
+Clearly, $(w,w') \in R$, as $Th((\LLL, w)) \subseteq Th((\LLL', w')) $.
+To show that $R$ is a simulation,  assume $x \xrightarrow{a} y$ in $\LLL$ and $(x,x') \in R$. We need to provide a $y'$ such that $x' \xrightarrow{a} y'$ in $\LLL'$.
+Consider the formula $\MAY{a}\top$. Now $(\LLL, x) \models \MAY{a}\top$ because $x \xrightarrow{a} y$.
+But as $(x,x') \in R$, $Th((\LLL, x)) \subseteq Th((\LLL', x')) $, so  $(\LLL', x') \models \MAY{a}\top$.
+But, by the semantic clause for $\MAY{a}$, this means there is a $y'$ such that $x' \xrightarrow{a} y'$ in $\LLL'$,
+
+Finally, we need to show that whenever $(x,x') \in R$, then $\lambda(x) \supseteq \lambda'(x')$.
+Assume, first, that $\lambda(x)$ is finite. 
+Then $(\LLL, x) \models \; ! \; \lambda(x)$.
+But as $(x,x') \in R$, $Th((\LLL, x)) \subseteq Th((\LLL', x')) $, so  $(\LLL', x') \models \; ! \; \lambda(x)$.
+But, by the semantic clause for $!$, $(\LLL', x') \models \; ! \; \lambda(x)$ iff $\lambda'(x') \subseteq \lambda(x)$.
+Therefore $\lambda(x) \supseteq \lambda'(x')$.
+If, on the other hand, $\lambda(x)$ is infinite, then $\lambda(x) = \Sigma$ (because the only infinite node labelling that we allow is $\Sigma$). Every node labelling is a subset of $\Sigma$, so in this case too, $\lambda(x) = \Sigma \supseteq \lambda'(x')$.
+
+
+\end{proof}
 
 \begin{theorem}
 The collection of models together with $\bot$, and ordered by $\MODELLEQ $
@@ -472,7 +505,7 @@ also have, by Lemma \ref{lemma:completeness:5}, $\phi \judge
 \CHAR{\SIMPL{\phi}} $.  So by transitivity, we have $\phi \judge \psi$.  \qed
 
 
-\subsection{The standard translation from  eremic logic into first-order logic}\label{standardTranslation}
+\subsection{The standard translation from  EL into FOL}\label{standardTranslation}
 
 We now present a translation from EL to first-order logic. We have two
 key purposes in mind:
@@ -506,12 +539,12 @@ predicate:
 
 \item A 0-place predicate $\top$, which is true in all models.
 
-\item A set of two-place predicates $\ARROW{a}{x}{y}$, one for each $a
-  \in \Sigma$, where $x$ and $y$ range over states. $\ARROW{a}{x}{y}$
+\item A set of two-place predicates $Arr_a(x, y)$, one for each $a \in
+  \Sigma$, where $x$ and $y$ are of type $State$. $Arr_a(x, y)$
   is true if $x \xrightarrow{a} y$.
 
-\item A set of one-place predicates $\RESTRICT{A}{\cdot}$, one for each finite
-  subset $A \subseteq \Sigma$.  $\RESTRICT{A}{x}$ is true if
+\item A set of one-place predicates $Restrict_A$, one for each finite
+  subset $A \subseteq \Sigma$.  $Restrict_{A}(x)$ is true if
   $\lambda(x) \subseteq A$.
 
 \end{itemize}
@@ -524,7 +557,7 @@ of our translation is given by the following grammar.
 \begin{GRAMMAR}
   \phi 
      &\quad ::= \quad&
-  \top \fOr \ARROW{a}{x_1}{x_2}\fOr \RESTRICT{A}{x_1} \fOr \phi_1 \AND \phi_2 \fOr \exists x_1 . \phi 
+  \top \fOr Arr_{a}(x_1, x_2)\fOr Restrict_A(x_1) \fOr \phi_1 \AND \phi_2 \fOr \exists x_1 . \phi 
 \end{GRAMMAR}
 
 \NI Notice that this fragment of FOL has no negation, disjunction,
@@ -538,13 +571,13 @@ evaluating the formula):
 \begin{eqnarray*}
   T_x(\top) & \ = \ & \top  \\
   T_x(\phi_1 \AND \phi_2) & \ = \ & T_x(\phi_1) \AND T_x(\phi_2)  \\
-  T_x(\langle a \rangle \phi) & \ = \ & \exists y \; . \; \ARROW{a}{x}{y} \AND T_y(\phi)  \\
-  T_x(\fBang A) & \ = \ & \RESTRICT{A}{x}
+  T_x(\langle a \rangle \phi) & \ = \ & \exists y \; . \; Arr_a(x,y) \AND T_y(\phi)  \\
+  T_x(\fBang A) & \ = \ & Restrict_A(x) 
 \end{eqnarray*}
 
 \NI So, for example:
 \[
-T_x(\langle a \rangle \top \AND \fBang \{a\}) = \exists y \; . \; \ARROW{a}{x}{y} \AND \top \AND \RESTRICT{\{a\}}{x}
+T_x(\langle a \rangle \top \AND \fBang \{a\}) = \exists y \; . \; Arr_a(x,y) \AND \top \AND Restrict_{\{a\}}(x)
 \]
 
 
