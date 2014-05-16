@@ -190,6 +190,20 @@ The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
 \NI Soundness is immediate from the definitions. Proof of completeness is
 deferred to Section \ref{completenessProof}. 
 
+\begin{definition}
+Let $\Gamma$ be an arbitrary set of formulae. We say \emph{$\Gamma$
+  semantically implies $\phi$}, written $\Gamma \models \phi$,
+provided for all eremic models $\MMM$ if it is the case that $\MMM
+\models \Gamma$ implies $\MMM \models \phi$. We write $\phi_1, ...,
+\phi_n \judge \psi$ whenever $\BIGAND_{i}\phi_i \judge \psi$.  For
+arbitrary sets $\Gamma$ of formulae, we write $\Gamma \judge \psi$
+provided there are $\phi_1, ..., \phi_n \in \Gamma$ such that $\phi_1,
+..., \phi_n \judge \psi$.
+\end{definition}
+
+\martin{TO DO: show completeness in the sense of $\Gamma \models
+  \phi$, then also $\Gamma \judge \phi$.}
+
 \subsection{Example inferences}
 
 We give some example inferences that illustrate how EL is used in
@@ -718,3 +732,4 @@ definitions.
 \qed
 \end{proof}
 
+\input{compactness}

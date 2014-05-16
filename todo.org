@@ -29,6 +29,7 @@ about Core etc?
 * Make sure we have \qed at the end of every proof. Better:
   put it into the latex macro.
 
+* Remove macros that are not used.
 * Put a full stop after \proof
 * Say what ranges over what, e.g. \frac{M} over models, X, Y over
   formulae, etc.  Be consistent about this.
