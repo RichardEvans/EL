@@ -10,11 +10,11 @@ section.
 
 
 
-\begin{definition} Let $\Sigma$ be a set of \emph{actions}.
+\begin{definition} Let $\Sigma$ be a non-empty set of \emph{actions}.\martin{Sketch why we require $\Sigma$ to be non-empty.}
 Actions are ranged over by $a, a', a_1, b, ...$, and $A$ ranges over
-finite subsets of $\Sigma$. The \emph{formulae}, ranged over by
-$\phi, \psi, \xi ...$, of the \emph{EL$[\AND, !]$-fragment} are given
-by the following grammar.
+finite subsets of $\Sigma$. The \emph{formulae}, ranged over by $\phi,
+\psi, \xi ...$, of the \emph{EL$[\AND, !]$-fragment} are given by the
+following grammar.
 
 \begin{GRAMMAR}
   \phi 
@@ -34,6 +34,11 @@ coming out of a state.  Intuitively, $\fBang A$ means that the
 specified in $A$.
 
 \martin{Add better explanation of $\fBang$, and some examples?}
+
+\martin{Explain why $\Sigma$ must be non-empty, and why $A$ in $!A$
+  must be finite. What goes wrong if we drop those assumptions? Why do
+  we allow $\Sigma$ be infinite anyway?}
+
 \end{definition}
 
 \subsection{Semantics}
@@ -50,6 +55,9 @@ actions (not necessarily finite), subject to the following constraint:
 for all states $s \in S$ it is the case that $ \{a \fOr \exists t \; s
 \xrightarrow{a} t\} \subseteq \lambda(s)$.
 
+\martin{Why do we not allow $\lambda(s)$ to be an arbitrary subset of
+  $\Sigma$?  What goes wrong if we do? Why do we need the possibility
+  that $\Sigma(s) = \Sigma$?}
 \end{definition}
 
 \NI The intended interpretation is that $\lambda(w)$ is the set of
@@ -63,7 +71,7 @@ subset of $\Sigma$, or $\Sigma$ itself.\martin{we need to motivate
 A \emph{model}, ranged over by $\MMM, \MMM', ...$, is a pair $(\LLL,
 s)$, where $\LLL$ is an eremic transition system $(S, \rightarrow,
 \lambda)$, and $s$ is a state from $S$.
-\end{definition}
+\end{definition}\martin{maybe we should call it eremic model to distinguish it from FOL models}
 
 \input{figure:elAndBang:models}
 
@@ -235,38 +243,18 @@ a \emph{simulation from $\LLL_1$ to $\LLL_2$}, provided:
 \item  $(s_1, s_2) \in \RRR$. 
 
 \end{itemize}
-
-\NI We say $\MMM_2$ \emph{simulates} $\MMM_1$ if there is a simulation $\RRR$ 
-from $\MMM_1$ to $\MMM_2$.
-
-
-
-%% We say $\RRR$ is a \emph{bisimulation} on eremic transition systems
-%% and models, respectively, if $\RRR$ and $\RRR^{-1}$ are. We say
-%% $\LLL_1$ and $\LLL_2$ are \emph{bisimilar}, written $\LLL_1 \BISIM
-%% \LLL_2$, if there is a bisimulation $\RRR$, relating $\LLL_1$ and
-%% $\LLL_2$.  Bisimilarity is defined likewise for models. \martin{should
-%%   we break up this definition into several smaller parts?}
 \end{definition}
-
-We use the notion of
-simulation to define an order $\MODELLEQ$ on models, which gives rise
-to a bounded lattice of models.
 
 \begin{definition}
-The binary relation $\MODELLEQ$ on models is defined as
-\[
-   \MMM \MODELLEQ \MMM' \quad \text{ iff }\quad \MMM \text{ simulates } \MMM' .
-\]
+The largest simulation from $\MMM_1$ to $\MMM_2$ is denoted $\MMM_1
+\MODELLEQ \MMM_2$.  It is easy to see that $\MODELLEQ$ is itself a
+simulation from $\MMM_1$ to $\MMM_2$, and the union of all such
+simulations.  If $\MMM_1 \MODELLEQ \MMM_2$ we say $\MMM_2$
+\emph{simulates} $\MMM_1$.
 \end{definition}
-It turns out that $\MODELLEQ $ on models is not just a partial order, but
-almost a complete lattice, except that a bottom element is missing.
-\begin{definition}
-We extend the collection of models with a single \emph{bottom} element
-$\bot$, where $\bot \models \phi$ for all $\phi$. 
-We extend the relation $\MODELLEQ $  and stipulate that $\bot
-\MODELLEQ \MMM$ for all models $\MMM$.
-\end{definition}
+
+\NI We give an alternative characterisation on $\MODELLEQ$ in terms of
+theories of models.
 
 \begin{definition}
 Let $\THEORY{\MMM}$ be the formulae made true by $\MMM$,
@@ -279,47 +267,50 @@ $\THEORY{\MMM} \subseteq  \THEORY{\MMM'}$.
 \end{theorem}
 
 \begin{proof}
-\begin{case}
-Left to right
-\end{case}
-Assume $\MMM' \MODELLEQ \MMM$ and $\MMM \models \phi$.
-We must show $\MMM' \models \phi$.
-Let $\MMM = (\LLL, w)$ and $\MMM' = (\LLL', w')$.
-The proof proceeds by induction on $\phi$.
-The cases for $\top$ and $\land$ are trivial.
+Assume $\MMM' \MODELLEQ \MMM$ and $\MMM \models \phi$.  We must show
+$\MMM' \models \phi$.  Let $\MMM = (\LLL, w)$ and $\MMM' = (\LLL',
+w')$.  The proof proceeds by induction on $\phi$.  The cases for
+$\top$ and $\land$ are trivial.  Assume $\phi = \MAY{a}\psi$ and
+assume $(\LLL, w) \models \MAY{a}\psi$.  Then $w \xrightarrow{a} x$
+and $(\LLL, x) \models \psi$.  As $\MMM'$ simulates $\MMM$, there is
+an $x'$ such that $(x,x') \in R$ and $w' \xrightarrow{a} x'$.  By the
+induction hypothesis, $(\LLL', x') \models \psi$.  Therefore, by the
+semantic clause for $!$, $(\LLL', w') \models \MAY{a}\psi$.  Assume
+now that $\phi = \; ! \; A$, for some finite $A \subseteq \Sigma$, and
+that $(\LLL, w) \models \; ! \; A$.  By the semantic clause for $!$,
+$\lambda(w) \subseteq A$.  Since $(\LLL', w') \MODELLEQ (\LLL, w)$, by
+the definition of simulation of eremic transition systems, $\lambda(w)
+\supseteq \lambda'(w')$.  Therefore, $\lambda'(w') \subseteq
+\lambda(w) \subseteq A$.  Therefore, by the semantic clause for $!$,
+$(\LLL', w') \models \; ! \; A$.
 
-Assume $\phi = \MAY{a}\psi$ and assume  $(\LLL, w) \models  \MAY{a}\psi$.
-Then $w \xrightarrow{a} x$ and $(\LLL, x) \models  \psi$.
-As $\MMM'$ simulates $\MMM$, there is an $x'$ such that $(x,x') \in R$ and $w' \xrightarrow{a} x'$.
-By the induction hypothesis, $(\LLL', x') \models \psi$.
-Therefore, by the semantic clause for $!$, $(\LLL', w') \models  \MAY{a}\psi$.
-
-Assume now that $\phi = \; ! \; A$, for some finite $A \subseteq \Sigma$, and that $(\LLL, w) \models \; ! \; A$.
-By the semantic clause for $!$, $\lambda(w) \subseteq A$.
-Since $(\LLL', w') \MODELLEQ (\LLL, w)$, by the definition of simulation of eremic transition systems, $\lambda(w) \supseteq \lambda'(w')$.
-Therefore, $\lambda'(w') \subseteq \lambda(w) \subseteq A$.
-Therefore, by the semantic clause for $!$, $(\LLL', w') \models  \; ! \; A$.
-
-\begin{case}
-Right to left.
-\end{case}
-Let $\MMM = (\LLL, w)$ and $\MMM' = (\LLL', w')$.
-Assume $Th(\MMM) \subseteq Th(\MMM') $. We need to show that $\MMM'$ simulates $\MMM$.
-In other words, we need to produce a relation $R \subseteq \mathcal{W} \times \mathcal{W}'$ where $(w,w') \in R$ and $R$ is a simulation from $(\LLL, w)$ to $ (\LLL', w')$.
-Define $R = \{(x,x') \; | \; Th( (\LLL, x)) \subseteq Th( (\LLL', x'))\}$.
-Clearly, $(w,w') \in R$, as $Th((\LLL, w)) \subseteq Th((\LLL', w')) $.
-To show that $R$ is a simulation,  assume $x \xrightarrow{a} y$ in $\LLL$ and $(x,x') \in R$. We need to provide a $y'$ such that $x' \xrightarrow{a} y'$ in $\LLL'$.
-Consider the formula $\MAY{a}\top$. Now $(\LLL, x) \models \MAY{a}\top$ because $x \xrightarrow{a} y$.
-But as $(x,x') \in R$, $Th((\LLL, x)) \subseteq Th((\LLL', x')) $, so  $(\LLL', x') \models \MAY{a}\top$.
-But, by the semantic clause for $\MAY{a}$, this means there is a $y'$ such that $x' \xrightarrow{a} y'$ in $\LLL'$,
-
-Finally, we need to show that whenever $(x,x') \in R$, then $\lambda(x) \supseteq \lambda'(x')$.
-Assume, first, that $\lambda(x)$ is finite. 
-Then $(\LLL, x) \models \; ! \; \lambda(x)$.
-But as $(x,x') \in R$, $Th((\LLL, x)) \subseteq Th((\LLL', x')) $, so  $(\LLL', x') \models \; ! \; \lambda(x)$.
-But, by the semantic clause for $!$, $(\LLL', x') \models \; ! \; \lambda(x)$ iff $\lambda'(x') \subseteq \lambda(x)$.
-Therefore $\lambda(x) \supseteq \lambda'(x')$.
-If, on the other hand, $\lambda(x)$ is infinite, then $\lambda(x) = \Sigma$ (because the only infinite node labelling that we allow is $\Sigma$). Every node labelling is a subset of $\Sigma$, so in this case too, $\lambda(x) = \Sigma \supseteq \lambda'(x')$.
+For the other direction, let $\MMM = (\LLL, w)$ and $\MMM' = (\LLL',
+w')$.  Assume $\THEORY{\MMM} \subseteq \THEORY{\MMM'} $. We need to
+show that $\MMM'$ simulates $\MMM$.  In other words, we need to
+produce a relation $R \subseteq S \times S'$ where $S$ is the state
+set of $\LLL$, $S'$ is the state set for $\LLL'$ and $(w,w') \in R$
+and $R$ is a simulation from $(\LLL, w)$ to $ (\LLL', w')$.  Define $R
+= \{(x,x') \; | \; \THEORY{ (\LLL, x)} \subseteq \THEORY{ (\LLL',
+  x')}\}$.  Clearly, $(w,w') \in R$, as $\THEORY{(\LLL, w)} \subseteq
+\THEORY{(\LLL', w')} $.  To show that $R$ is a simulation, assume $x
+\xrightarrow{a} y$ in $\LLL$ and $(x,x') \in R$. We need to provide a
+$y'$ such that $x' \xrightarrow{a} y'$ in $\LLL'$.  Consider the
+formula $\MAY{a}\top$. Now $(\LLL, x) \models \MAY{a}\top$ because $x
+\xrightarrow{a} y$.  But as $(x,x') \in R$, $\THEORY{(\LLL, x)}
+\subseteq \THEORY{(\LLL', x')} $, so $(\LLL', x') \models
+\MAY{a}\top$.  But, by the semantic clause for $\MAY{a}$, this means
+there is a $y'$ such that $x' \xrightarrow{a} y'$ in $\LLL'$, Finally,
+we need to show that whenever $(x,x') \in R$, then $\lambda(x)
+\supseteq \lambda'(x')$.  Assume, first, that $\lambda(x)$ is finite.
+Then $(\LLL, x) \models \; ! \; \lambda(x)$.  But as $(x,x') \in R$,
+$\THEORY{(\LLL, x)} \subseteq \THEORY{(\LLL', x')} $, so $(\LLL', x')
+\models \; ! \; \lambda(x)$.  But, by the semantic clause for $!$,
+$(\LLL', x') \models \; ! \; \lambda(x)$ iff $\lambda'(x') \subseteq
+\lambda(x)$.  Therefore $\lambda(x) \supseteq \lambda'(x')$.  If, on
+the other hand, $\lambda(x)$ is infinite, then $\lambda(x) = \Sigma$
+(because the only infinite node labelling that we allow is
+$\Sigma$). Every node labelling is a subset of $\Sigma$, so here too,
+$\lambda(x) = \Sigma \supseteq \lambda'(x')$.  \qed
 \end{proof}
 
 \NI Theorem \ref{theorem:completeLattice} illustrates from a
@@ -329,7 +320,20 @@ $\THEORY{\CAL{M}} \subseteq \THEORY{\CAL{N}}$ already implies that
 $\THEORY{\CAL{M}} = \THEORY{\CAL{N}}$, i.e.~$\CAL{M}$ and $\CAL{N}$
 are elementarily equivalent. Eremic logic's lack of negation changes
 this drastically, and gives $\MODELLEQ$ the structure of a non-trivial
-complete lattice\martin{proof?}.
+complete lattice as we shall demonstrate now.
+
+It turns out that $\MODELLEQ $ on (equivalence classes of) models is
+not just a partial order, but almost a complete lattice, except that a
+bottom element is missing.
+
+\begin{definition}
+We extend the collection of models with a single \emph{bottom} element
+$\bot$, where $\bot \models \phi$ for all $\phi$. 
+We extend the relation $\MODELLEQ $  and stipulate that $\bot
+\MODELLEQ \MMM$ for all models $\MMM$.
+\end{definition}
+
+
 
 \begin{theorem}
 The collection of models together with $\bot$, and ordered by $\MODELLEQ $

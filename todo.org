@@ -4,6 +4,8 @@
   - Make sure always to be precise about eremic model vs eremic
     transition system
 
+  - POV vs point of view vs point-of-view
+
   - LTS vs labelled transition system
 
   - FOL vs first-order logic, EL vs eremic logic
@@ -22,9 +24,12 @@
   - capitalisation, e.g. Eremic Logic vs Eremic logic vs eremic logic etc.
 
 * Talk about binding and precedence in EL formulae.
+* Find better names for fragments: e.g. EL[∧, !] isn't exactly snappy. What
+about Core etc?
 * Make sure we have \qed at the end of every proof. Better:
   put it into the latex macro.
 
+* Put a full stop after \proof
 * Say what ranges over what, e.g. \frac{M} over models, X, Y over
   formulae, etc.  Be consistent about this.
 
@@ -112,3 +117,4 @@ mono (μόνο). If we go creative we could simply say
 
 * The rule (! left) is not used in the completeness proof. Why not?
 * go through old emails and list ideas and issues that we discussed
+* Remove all commented out LaTeX including macros.
