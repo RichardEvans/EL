@@ -59,6 +59,7 @@ something like this:
    Only A
    Nothing but A
    Solely A 
+   At most
 
 Whatever we choose, we should also have a scientific sounding term
 that relates to !  as conjunction relates to /\ as well as disjunction
@@ -66,8 +67,12 @@ to \/.  In Latin we can choose tantum, nisi, solo, solus and in Greek:
 mono (μόνο). If we go creative we could simply say
 
    Erem A
-
-*  I recommend to use the following order of presentation in Chapters 2 and 3.
+* What about the dual "at least A" operator? We should have a discussion.
+* Given the size of the paper, maybe we can have a table of content and/or
+  an index?
+* What about quantification over actions? Section 11 just quantifies over individuals.
+* Should we have proof in the appendix at all?
+* I recommend to use the following order of presentation in Chapters 2 and 3.
 
   - Formulae
   - Models and the satisfaction relation.
