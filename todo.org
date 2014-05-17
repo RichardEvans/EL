@@ -26,6 +26,16 @@
 * Talk about binding and precedence in EL formulae.
 * Find better names for fragments: e.g. EL[∧, !] isn't exactly snappy. What
 about Core etc?
+* We have too many correspondence theorems, remove names.
+* If we remove [!-Left] from the rules, then prove it as a lemma
+  or use it as an example of derivable rules.
+* Should we have a section about material incompatibility and how
+  Gamma |- phi iff Gamma, not phi inconsistent does not hold in EL?
+* Factor out the stuff that I use in compactness by translation and Richard
+  in the theorem that states "If a formula φ is satisfiable, then
+  there is a finite tree-like model of height |φ| and branching factor
+  σ(φ) that satisfies φ."
+  I mean the stuff about erasing superfluous labels.
 * Make sure we have \qed at the end of every proof. Better:
   put it into the latex macro.
 
