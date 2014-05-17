@@ -6,12 +6,13 @@ model exactly when every finite subset of $S$ does \cite[Chapter
 
 We can prove compactness of modal logics using the standard
 translation from modal to first-order logic \cite{BlackburnP:modlog}:
-we assume that we have a set of modal formula such that each finite
-subset has a model. We translate the modal formulae and models to
-first-order logic, getting a set of formulae such that each finite
-subset has a first-order model by compactness of first-order
-logic. Then we translate the first-order model back to modal logic,
-obtaining a model for all modal formulae, as required.
+we start from a set of modal formula such that each finite subset has
+a model. We translate the modal formulae and models to first-order
+logic, getting a set of first-order formulae such that each finite
+subset has a first-order model. By compactness of first-order logic we
+obtain a first-order model of the translated modal formulae. Then we
+translate that first-order model back to modal logic, obtaining a
+model for the original modal formulae, as required.
 
 Unfortunately we cannot do the same with the translation from eremic
 to first-order logic presented in the previous section. The problem
@@ -46,13 +47,13 @@ $\SEMBTWO{\phi}_x$ of eremic formulae.
      \\
   \SEMBTWO{\phi \AND \psi}_x & = & \SEMBTWO{\phi}_x \AND \SEMBTWO{\psi}_x
      \\
-  \SEMBTWO{\langle a \rangle \phi}_x & = & \exists^{S} y.(\ARROW{a}{x}{y} \AND \SEMBTWO{\phi}_y)
+  \SEMBTWO{\langle a \rangle \phi}_x & = & \exists^{state} y.(\ARROW{a}{x}{y} \AND \SEMBTWO{\phi}_y)
      \\
-  \SEMBTWO{\fBang A}_x & = & \forall^{\Sigma} a.(\ALLOWED{}{x}{a} \IMPLIES a \in A) 
+  \SEMBTWO{\fBang A}_x & = & \forall^{action} a.(\ALLOWED{}{x}{a} \IMPLIES a \in A) 
 \end{eqnarray*}
 
-\NI Here we use $\exists^{S}$ to indicate that the quantifier ranges
-of the sort of states, and $\forall^{\Sigma}$ for a quantifier ranging
+\NI Here we use $\exists^{state}$ to indicate that the quantifier ranges
+of the sort of states, and $\forall^{action}$ for a quantifier ranging
 over actions. The expression $a \in A$ is a shorthand for the
 first-order formula
 \[
@@ -144,10 +145,10 @@ are admissible.
 \begin{eqnarray*}
    \phi_{admis} 
       & \ =\ &
-   \forall^{S} s.\forall^{\Sigma} a.\forall^{S} t.( \ARROWTWO{}{s}{a}{t} \IMPLIES \ALLOWED{}{s}{a})
+   \forall^{state} s.\forall^{action} a.\forall^{state} t.( \ARROWTWO{}{s}{a}{t} \IMPLIES \ALLOWED{}{s}{a})
 \end{eqnarray*}
 
-\begin{lemma}\label{compactness:lemma:233}
+\begin{lemma}\label{compactness:lemma:23399}
 If $\LLL$ is an eremic transistion system then $\SEMBTWO{\LLL} \models
 \phi_{admis}$.
 \end{lemma}
@@ -167,7 +168,7 @@ First we add a formula $\phi_a$ for each action $a \in \Sigma$.
 \begin{eqnarray*}
    \phi_{a} 
       & = &
-   \exists^{\Sigma} c. a = c 
+   \exists^{action} c. a = c 
 \end{eqnarray*}
 
 \begin{lemma}\label{compactness:lemma:666}
@@ -268,43 +269,55 @@ A set $T$ of eremic formulae is satisfiable iff each finite subset of
 $T$ is satisfiable.
 \end{theorem}
 \begin{proof}
-For the non-trivial direction, let $T$ be a set of eremic formulae.
-For any finite subset $T'$ of $T$, assume that $T'$ is satisfiable.
-Hence an eremic model $\MMM = (\LLL, s)$ exists such that
+For the non-trivial direction, let $T$ be a set of eremic formulae
+such that any finite subset has an eremic model. Define 
 \[
-   \MMM \models T'
+  \SEMBTWO{T} 
+     \ =\ 
+  \{\SEMBTWO{\phi}\ |\ \phi \in T\} 
+     \qquad\qquad
+  T^*
+     \ =\ 
+  \SEMBTWO{T} \cup \{\phi_{admis}\} \cup \{ \phi_a\ |\ a \in \Sigma\}
 \]
-Hence 
+which both are sets of first-order formulae. Clearly each finite subset $T'$ of 
+$T^*$ has a first-order model. Why? First consider the subset $T'_{EL}$ of $T'$
+which is given as follows.
 \[
-   \MMM \models \phi
+   T'_{EL} \ =\ \{ \phi \in T\ |\ \SEMBTWO{\phi} \in T' \}
 \]
-for each $\phi \in T'$. By Theorem \ref{correspondence:theorem}.\ref{correspondence:theorem:1} we know that
+Since $T'_{EL}$ is finite, by assumption there is an eremic model 
 \[
-   \SEMB{\MMM} \models_{x \mapsto s} \SEMB{\phi}_x.
+   (\LLL, s) \models T'_{EL}
 \]
-for all appropriate $\phi$. Hence the set 
+which means we can apply Theorem \ref{correspondence:theorem:223} to get
 \[
-   \{ \SEMB{\phi}_x\ |\ \phi \in T'\}
+   \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{T'_{EL}},
 \]
-of first-order formulae has a first-order model for all finite $T'$.
-By compactness of first-order logic we thus know that the set
+By construction $T' \setminus \SEMBTWO{T'_{EL}} \subseteq
+\{\phi_{admis}\} \cup \{ \phi_a\ |\ a \in \Sigma\}$, so all we have to
+show for $T'$ to have a model is that
 \[
-   \{ \SEMB{\phi}_x\ |\ \phi \in T\}
+    \SEMBTWO{\LLL} \models_{x \mapsto s} \{\phi_{admis}\} \cup \{ \phi_a\ |\ a \in \Sigma\},
 \]
-has a first-order model $\CAL{M}$. Hence for all $\phi \in T$:
+but that is a direct consequence of Lemmas
+\ref{compactness:lemma:23399} and \ref{compactness:lemma:666}.  That
+means each finite subset of $T^*$ has a model and by appealing to
+compactness of first-order many-sorted logic (which is an immediate
+consequence of compactenss of one-sorted first-order logic
+\cite{EndertonHB:matinttl}), we know there must be a first-order model
+$\CAL{M}$ of $T^*$, i.e.
 \[
-   \CAL{M} \models_{x \mapsto s} \SEMB{\phi}_x
+   \CAL{M} \models T^*.
 \]
-Using Theorem
-\ref{correspondence:theorem}.\ref{correspondence:theorem:2}, we
-conclude that
+Since $\CAL{M} \models \phi_{admis}$ and $\CAL{M} \models \phi_a$ for all actions $a$, 
+we can apply Theorem \ref{correspondence:theorem:223} that also
 \[
-   (\CAL{M}^{\sharp}, s) \models \phi
+   (\CAL{M}^{\sharp} \setminus X, s) \models T
 \]
-for all $\phi \in T$. In other words:
-\[
-   (\CAL{M}^{\sharp}, s) \models T
-\]
-and $T$ is satisfiable.
+where $X$ is the set of all actions in $\CAL{M}^{\sharp}$ that are not
+in $\Sigma$. Hence $T$ is satisfiable.
+ \qed
 \end{proof}
+
 
