@@ -311,14 +311,20 @@ and $R$ is a simulation from $(\LLL, w)$ to $ (\LLL', w')$.  Define $R
 = \{(x,x') \; | \; \THEORY{ (\LLL, x)} \subseteq \THEORY{ (\LLL',
   x')}\}$.  Clearly, $(w,w') \in R$, as $\THEORY{(\LLL, w)} \subseteq
 \THEORY{(\LLL', w')} $.  To show that $R$ is a simulation, assume $x
-\xrightarrow{a} y$ in $\LLL$ and $(x,x') \in R$. We need to provide a
-$y'$ such that $x' \xrightarrow{a} y'$ in $\LLL'$.  Consider the
-formula $\MAY{a}\top$. Now $(\LLL, x) \models \MAY{a}\top$ because $x
-\xrightarrow{a} y$.  But as $(x,x') \in R$, $\THEORY{(\LLL, x)}
-\subseteq \THEORY{(\LLL', x')} $, so $(\LLL', x') \models
-\MAY{a}\top$.  But, by the semantic clause for $\MAY{a}$, this means
-there is a $y'$ such that $x' \xrightarrow{a} y'$ in $\LLL'$, Finally,
-we need to show that whenever $(x,x') \in R$, then $\lambda(x)
+\xrightarrow{a} y$ in $\LLL$ and $(x,x') \in R$. 
+We need to provide a
+$y'$ such that $x' \xrightarrow{a} y'$ in $\LLL'$ and $(y,y') \in R$.  
+Consider the formula $\MAY{a}\CHAR{(\LLL, y)}$. 
+Now $x \models \MAY{a}\CHAR{(\LLL, y)}$, and since $(x,x') \in R$, $x' \models \MAY{a}\CHAR{(\LLL, y)}$.
+By the semantic clause for $\MAY{a}$, if $x' \models \MAY{a}\CHAR{(\LLL, y)}$ then there is a $y'$ such that 
+$y' \models \CHAR{(\LLL, y)}$.
+We need to show $(y,y') \in R$, i.e. that $y \models \phi$ implies $y' \models \phi$ for all $\phi$.
+Assume $y \models \phi$. 
+Then by the definition of $\CHAR$, $\CHAR{(\LLL, y)} \models \phi$.
+Since $y' \models \CHAR{(\LLL, y)}$, $y' \models \phi$. 
+So $(y,y') \in R$, as required.
+
+Finally,we need to show that whenever $(x,x') \in R$, then $\lambda(x)
 \supseteq \lambda'(x')$.  Assume, first, that $\lambda(x)$ is finite.
 Then $(\LLL, x) \models \; ! \; \lambda(x)$.  But as $(x,x') \in R$,
 $\THEORY{(\LLL, x)} \subseteq \THEORY{(\LLL', x')} $, so $(\LLL', x')
