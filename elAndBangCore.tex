@@ -265,19 +265,28 @@ a \emph{simulation from $\LLL_1$ to $\LLL_2$}, provided:
 
 \begin{definition}
 The largest simulation from $\MMM_1$ to $\MMM_2$ is denoted $\MMM_1
-\MODELLEQ \MMM_2$.  It is easy to see that $\MODELLEQ$ is itself a
+\SIM \MMM_2$.  It is easy to see that $\SIM$ is itself a
 simulation from $\MMM_1$ to $\MMM_2$, and the union of all such
-simulations.  If $\MMM_1 \MODELLEQ \MMM_2$ we say $\MMM_2$
+simulations.  If $\MMM_1 \SIM \MMM_2$ we say $\MMM_2$
 \emph{simulates} $\MMM_1$.
 \end{definition}
 
+\begin{definition}
+Let $\THEORY{\MMM}$ be the \emph{theory} of $\MMM$, i.e.~the formulae
+made true by $\MMM$, i.e.~$\THEORY{\MMM} = \{\phi\ |\ \MMM \models
+\phi \}$.
+\end{definition}
+
 \NI We give an alternative characterisation on $\MODELLEQ$ in terms of
-theories of models.
+theories of models. In what f`ollows, we will mostly be interested in
+$\SIM^{-1}$, so we give it its own symbol.
 
 \begin{definition}
-Let $\THEORY{\MMM}$ be the formulae made true by $\MMM$,
-i.e.~$\THEORY{\MMM} = \{\phi\ |\ \MMM \models \phi \}$.
+Let $\MODELLEQ$  be short for $\SIM^{-1}$.
 \end{definition}
+
+
+
 
 \begin{theorem}\label{theorem:completeLattice}
 $\MMM' \MODELLEQ \MMM$ if and only if
@@ -549,7 +558,7 @@ Note also that $\SIMPL{\cdot}$ and $\CHAR{\cdot}$ are inverses of each other in 
 will make use of two key facts:
 
 \begin{lemma}\label{lemma:completeness:4}
-If $m \models \phi$ then $\CHAR{\MMM} \judge \phi$.
+If $\MMM \models \phi$ then $\CHAR{\MMM} \judge \phi$.
 \end{lemma}
 
 \begin{lemma}\label{lemma:completeness:5}

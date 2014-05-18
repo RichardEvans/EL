@@ -41,12 +41,18 @@ about Core etc?
 
 * Remove macros that are not used.
 * Put a full stop after \proof
+* Ask philosophers about historical precursors for using exlusion
+  to approach human language
 * Say what ranges over what, e.g. \frac{M} over models, X, Y over
   formulae, etc.  Be consistent about this.
 
 * Use descriptive names, why \mu(X) for the simplest model satisfying
   $X$?  would not simp(X) or something like that more readable?
 
+* EL allows us to do  intra-atomic inferences that are not possible in FOL.
+But are we capturing all intra-atomic inferences or is EL missing
+some? What is the expressivity of EL? This question might not have
+a clear answer but it might be worthwhile considering.
 * Finalise the name of the logic. I am going to check with my friend
   Tim Whitmarsh one more time that "Eremic Logic" is the best name for
   it.
@@ -70,6 +76,7 @@ mono (μόνο). If we go creative we could simply say
 * What about the dual "at least A" operator? We should have a discussion.
 * Given the size of the paper, maybe we can have a table of content and/or
   an index?
+* Add generous acknowledgements (in particular if we get feedback from others)
 * What about quantification over actions? Section 11 just quantifies over individuals.
 * Should we have proof in the appendix at all?
 * I recommend to use the following order of presentation in Chapters 2 and 3.
