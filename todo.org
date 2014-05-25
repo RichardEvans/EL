@@ -56,7 +56,6 @@ a clear answer but it might be worthwhile considering.
 * Finalise the name of the logic. I am going to check with my friend
   Tim Whitmarsh one more time that "Eremic Logic" is the best name for
   it.
-
 * Find a better name for !A than "bang A".
 About the question how to name !A I think the obvious names are
 something like this:
@@ -123,7 +122,6 @@ mono (μόνο). If we go creative we could simply say
 
 * Prepare Haskell decision procedure. Put on Github. Write
   instructions on how to use.
-
 * THink about how to interface the paper with Versu.  Versu—A
   Simulationist Storytelling System
 
