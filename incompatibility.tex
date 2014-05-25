@@ -30,6 +30,19 @@ We shall make use of three lemmas:
 \label{inc1}
 $\mbox{if }\phi \models \psi \mbox{ then } \SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$
 \end{lemma}
+\begin{proof}
+We shall show
+\[
+\mbox{if } \phi \models \psi \mbox{ then } Th(\SIMPL{\psi}) \subseteq Th(\SIMPL{\phi})
+\]
+The desired result will then follow immediately from Theorem \ref{theorem:completeLattice}.
+Assume $\phi \models \psi$ and $\xi \in Th(\SIMPL{\psi})$ i.e. $\SIMPL{\psi} \models \xi$. 
+We need to show $\xi \in Th(\SIMPL{\phi})$ i.e. $\SIMPL{\phi} \models \xi$.
+Now $\SIMPL{\phi} \models \xi$ iff $\phi \models \xi$, so $\phi \models \xi$.
+Now, by transitivity of $\models$, $\phi \models \xi$.
+Now $\phi \models \xi$ iff $\SIMPL{\phi} \models \xi$, so $\SIMPL{\phi} \models \xi$.
+\qed
+\end{proof}
 \begin{lemma}
 \label{inc2}
 $\mbox{if }\MMM \MODELLEQ \MMM_2 \mbox{ then } \MMM_3 \sqcap \MMM \MODELLEQ \MMM_3 \sqcap \MMM_2$
@@ -38,6 +51,16 @@ $\mbox{if }\MMM \MODELLEQ \MMM_2 \mbox{ then } \MMM_3 \sqcap \MMM \MODELLEQ \MMM
 \label{inc3}
 $\mbox{if }\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi) \mbox{ then } \mathcal{J}(\SIMPL{\psi}) \subseteq \mathcal{J}(\SIMPL{\phi})$
 \end{lemma}
+\begin{proof}
+Assume $\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)$ and $\MMM \sqcap \SIMPL{\psi} = \bot$.
+We need to show $\MMM \sqcap \SIMPL{\phi} = \bot$.
+If $\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)$ then for all formulae $\xi$, if $\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$ then $\SIMPL{\xi} \sqcap \SIMPL{\phi} = \bot$.
+Let $\xi$ be $\CHAR{\MMM}$.
+Given that $\MMM \sqcap \SIMPL{\psi} = \bot$ and $\SIMPL{\CHAR{\MMM}} \MODELLEQ \MMM$, $\SIMPL{\CHAR{\MMM}} \sqcap \SIMPL{\psi} = \bot$.
+Then as $\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)$, $\SIMPL{\CHAR{\MMM}} \sqcap \SIMPL{\phi} = \bot$.
+Now as $\MMM  \MODELLEQ \SIMPL{\CHAR{\MMM}}$, $\MMM \sqcap \SIMPL{\phi} = \bot$.
+\qed
+\end{proof}
 
 \begin{theorem}
 $\phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)$
