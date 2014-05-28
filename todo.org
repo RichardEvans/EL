@@ -41,6 +41,10 @@ about Core etc?
 
 * Remove macros that are not used.
 * Put a full stop after \proof
+* Since most (all) examples don't use the change over time
+of the structure of exclusion, we have an even more basic 
+fragment where all !A is not under a may. (Or something like
+that.) Discuss and investigate
 * Ask philosophers about historical precursors for using exlusion
   to approach human language
 * Say what ranges over what, e.g. \frac{M} over models, X, Y over
