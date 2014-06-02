@@ -1,5 +1,5 @@
 \section{Proofs for Lemmas \ref{inc1}, \ref{inc2} and \ref{inc3}}\label{app:completeness:proofs}
-
+\label{inc-appendix}
 \subsection{Proof for Lemma \ref{inc1}}
 $\mbox{if }\phi \models \psi \mbox{ then } \SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$
 
@@ -17,3 +17,14 @@ But since $\xi \in \THEORY{\SIMPL{\psi}} $, $\MMM \models \xi$ also.
 \qed
 \end{proof}
 
+\subsection{Proof for Lemma \ref{inc3}}
+\begin{proof}
+Assume $\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)$ and $\MMM \sqcap \SIMPL{\psi} = \bot$.
+We need to show $\MMM \sqcap \SIMPL{\phi} = \bot$.
+If $\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)$ then for all formulae $\xi$, if $\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$ then $\SIMPL{\xi} \sqcap \SIMPL{\phi} = \bot$.
+Let $\xi$ be $\CHAR{\MMM}$.
+Given that $\MMM \sqcap \SIMPL{\psi} = \bot$ and $\SIMPL{\CHAR{\MMM}} \MODELLEQ \MMM$, $\SIMPL{\CHAR{\MMM}} \sqcap \SIMPL{\psi} = \bot$.
+Then as $\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)$, $\SIMPL{\CHAR{\MMM}} \sqcap \SIMPL{\phi} = \bot$.
+Now as $\MMM  \MODELLEQ \SIMPL{\CHAR{\MMM}}$, $\MMM \sqcap \SIMPL{\phi} = \bot$.
+\qed
+\end{proof}
