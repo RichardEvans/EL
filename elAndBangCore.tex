@@ -156,20 +156,6 @@ introduced. We discuss the relationship between EL and linear logic in
 general, and linear logic's additive conjunction in Section
 \ref{conclusion}.
 
-
-The three rules [\RULENAME{!-Left}, \RULENAME{!-Right 1},
-  \RULENAME{!-Right 2}] jointly express of the subset relation
-$\subseteq$ on sets of symbols relates to provability. Readers
-familiar with object-oriented programming will recognise
-[\RULENAME{!-Left}] as contra-variant subtyping and [\RULENAME{!-Right
-    1}] as covariant subtyping. Honda \cite{HondaK:thetypftpc}
-develops a full theory of subtyping based on similar ideas.  All three
-rules embody the intuition that whenever $A \subseteq A'$ then
-asserting that $!A'$ is as strong as, or a stronger statement than
-$!A$. [\RULENAME{!-Left}] simply states that we can always strengthen
-our premise, while [\RULENAME{!-right 1}] allows us to weaken the
-premise. \martin{add an intuitive explanation for [\RULENAME{!-right 2}]!}!
-
 Note that the logic has no axioms. One reason for a purely rule-based
 presentation is the absence of implication in the present fragment of
 EL. \martin{explain in more detail!}
@@ -204,13 +190,66 @@ provided there are $\phi_1, ..., \phi_n \in \Gamma$ such that $\phi_1,
 \martin{TO DO: show completeness in the sense of $\Gamma \models
   \phi$, then also $\Gamma \judge \phi$.}
 
+\subsection{\RULENAME{!-Left} and \RULENAME{!-Right}}
+We have an inference rule for weakening $!$ on the right hand side:
+
+\[
+     \TWOPREMISERULENAMEDRIGHT
+     {
+       \phi \judge !A
+     }
+     {
+       A \subseteq A'
+     }
+     {
+       \phi \judge!A'
+     }{!-Right 1}
+\]
+But we do not need a corresponding inference rule for strengthening $!$ on the left hand side :
+\[
+   \TWOPREMISERULENAMEDRIGHT
+     {
+       \phi \AND \, !A \judge \psi
+     }
+     {
+       A' \subseteq A
+     }
+     {
+       \phi \AND\, !A' \judge \psi
+     }{!-Left}
+\]
+because the latter can be derived from the former:        
+\begin{center}
+\AxiomC{$\phi \AND\, !A'  \judge  \phi \AND\, !A'$}
+\AxiomC{$A' \subseteq A$}
+\LeftLabel{\RULENAME{!-Right 1}}
+\BinaryInfC{$\phi \AND\, !A'  \judge  \phi \AND\, !A$}
+\AxiomC{$\phi \AND\, !A  \judge  \psi$}
+\LeftLabel{Transitivity: \quad}
+\BinaryInfC{$\phi \AND\, !A'  \judge  \psi$}
+\DisplayProof
+\end{center}
+
+The three rules [\RULENAME{!-Left}, \RULENAME{!-Right 1},
+  \RULENAME{!-Right 2}] jointly express how the subset relation
+$\subseteq$ on sets of symbols relates to provability. Readers
+familiar with object-oriented programming will recognise
+[\RULENAME{!-Left}] as contra-variant subtyping and [\RULENAME{!-Right
+    1}] as covariant subtyping. Honda \cite{HondaK:thetypftpc}
+develops a full theory of subtyping based on similar ideas.  All three
+rules embody the intuition that whenever $A \subseteq A'$ then
+asserting that $!A'$ is as strong as, or a stronger statement than
+$!A$. [\RULENAME{!-Left}] simply states that we can always strengthen
+our premise, while [\RULENAME{!-right 1}] allows us to weaken the
+premise. \martin{add an intuitive explanation for [\RULENAME{!-right 2}]!}!
+
 \subsection{Example inferences}
 
 We give some example inferences that illustrate how EL is used in
 practise.
 \martin{Add some example assertions here, for example some of those we
   use later.}
-
+  
 \subsection{Proof of completeness}\label{completenessProof}
 
 \NI We now prove completeness of the rules in Figure
@@ -513,6 +552,7 @@ $\MMM$ in the following sense. \martin{Check that they are
 \end{itemize}
 
 \martin{we must define $\BIGLUB$!}
+\richard{It is defined below. Should we move it up?}
 
 \NI This notion of characteristic formula is closely related to
 characteristic formulae in Hennessy-Milner logic
@@ -555,7 +595,7 @@ Note also that $\SIMPL{\cdot}$ and $\CHAR{\cdot}$ are inverses of each other in 
 
 \NI We are now ready to prove completeness.  We will show that $\phi
 \models \psi$ implies there is a derivation of $\phi \judge \psi$.  Our proof
-will make use of two key facts:
+will make use of two key facts\footnote{These lemmas are proved in the Appendices.}:
 
 \begin{lemma}\label{lemma:completeness:4}
 If $\MMM \models \phi$ then $\CHAR{\MMM} \judge \phi$.
