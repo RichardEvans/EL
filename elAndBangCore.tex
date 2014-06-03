@@ -69,6 +69,9 @@ allowed transition symbols emanating from $w$.  The $\lambda$ function
 is the semantic counterpart of the $!$ operator. 
 
 \martin{motivate well-sizedness!}
+\richard{The reason for the well-sizedness constraint is this: we want some states to have a restriction on the allowable transitions emanating from them, and we want some states to have no such restriction.
+But we don't want to represent the labelling by a disjunctive data-type (e.g. Maybe or Either in Haskell) - we would prefer a single unitary datatype for the labelling to simplify exposition and computation. 
+So, we say that the labelling on a state is always a subset of $\Sigma$: if a particular state has a restriction on the allowable transitions, then its labelling is a finite subset of $\Sigma$; if a particular state has no restriction on the allowable transitions, then its labelling is the whole of $\Sigma$. What we do \emph{not} want to allow is states that are labelled with an infinite subset of $\Sigma$ - for instance, if $\Sigma$ is the natural numbers, we do not want to allow a state that is labelled with all the even numbers. The reason is that a state labelled with an infinite subset could not have its restriction expressed in the syntax of \ELABR{} - recall that the $\fBang$ operator takes a emph{finite} set of symbols as argument - and we do not want the expressive range of our semantics to outstrip the syntax.}
 
 \begin{definition}
 A \emph{model}, ranged over by $\MMM, \MMM', ...$, is a pair $(\LLL,
