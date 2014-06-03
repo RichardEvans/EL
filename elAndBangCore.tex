@@ -426,6 +426,7 @@ restrictions.\martin{I think this is not well-defined if $\Sigma$ is
 
 
 \subsubsection{Computing the simplest model satisfying a formula}
+\label{simpl}
 
 \NI In $\MODELLEQ $ we have a notion of model simplicity.  We can now
 compute $\SIMPL{\phi}$, the simplest model w.r.t.~$\MODELLEQ $ that
@@ -507,7 +508,7 @@ where:
 \end{itemize}
 
 \subsubsection{Computing Least Upper Bound ($\sqcup$)}
-
+Define the least upper bound ($\sqcup$) of two models as:
 \begin{eqnarray*}
 \MMM \sqcup \bot & = & \MMM \\
 \bot \sqcup \MMM & = & \MMM \\

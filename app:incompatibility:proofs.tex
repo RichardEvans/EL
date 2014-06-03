@@ -1,7 +1,7 @@
-\section{Proofs for Lemmas \ref{inc1}, \ref{inc2} and \ref{inc3}}\label{app:completeness:proofs}
+\section{Proofs for Lemmas \ref{inc1} and \ref{inc3}}\label{app:completeness:proofs}
 \label{inc-appendix}
 \subsection{Proof for Lemma \ref{inc1}}
-$\mbox{if }\phi \models \psi \mbox{ then } \SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$
+If $\phi \models \psi \mbox{ then } \SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$
 
 \begin{proof}
 By Theorem \ref{theorem:completeLattice}, $ \SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$ iff $\THEORY{\SIMPL{\psi}} \subseteq  \THEORY{\SIMPL{\phi}}$.
@@ -18,6 +18,7 @@ But since $\xi \in \THEORY{\SIMPL{\psi}} $, $\MMM \models \xi$ also.
 \end{proof}
 
 \subsection{Proof for Lemma \ref{inc3}}
+If $\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi) \mbox{ then } \mathcal{J}(\SIMPL{\psi}) \subseteq \mathcal{J}(\SIMPL{\phi})$
 \begin{proof}
 Assume $\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)$ and $\MMM \sqcap \SIMPL{\psi} = \bot$.
 We need to show $\MMM \sqcap \SIMPL{\phi} = \bot$.
