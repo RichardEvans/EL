@@ -21,9 +21,10 @@ to eremic transistion systems.  For example the constraint $s
 \TRANS{a} t$ implies $a \in \lambda(s)$ might be violated. After all,
 merely having signature $\SSS$ is not strong enough a constraint. The
 target language of the translation from the previous section is not
-expressive enough to express such constraints.  As we have no reason
-to belive that the first-order model whose existence is guarnateed by
-compactness isn't 'junk', we cannot use this translation.
+expressive enough to have formulae that can guarantee such
+constraints.  As we have no reason to belive that the first-order
+model whose existence is guarnateed by compactness isn't 'junk', we
+cannot use this translation.
 
 We solve this problem with a second translation from eremic to
 first-order logic, this time into a more expressive fragment were we
@@ -31,13 +32,30 @@ can constrain first-order models enough to ensure that they always can
 be translated back to eremic logic.
 
 The second embedding translates eremic logic to two-sorted first-order
-logic. The many-sorted first-order signature $\SSS'$ has two sorts,
-states and actions. The action constants are given by $\Sigma$. There
-are no state constants. The signature has a nullary predicate $\top$,
-an binary predicate $\ALLOWED{}{\cdot}{\cdot}$ and a ternary predicate
-$\ARROWTWO{}{\cdot}{\cdot}{\cdot}$.  $\SSS'$ has no functions, i.e.~is
-a relational signature.  The intended interpretation should should be
-clear.
+logic. The many-sorted first-order signature $\SSS'$ is given as follows.
+\begin{itemize}
+
+\item $\SSS'$ has two sorts, states and actions. 
+
+\item The action constants are given by $\Sigma$. There
+are no state constants. 
+
+\item $\SSS'$ has a nullary predicate $\top$.
+
+\item A binary predicate $\ALLOWED{}{\cdot}{\cdot}$. The intended
+  meaning of $\ALLOWED{}{x}{a}$ is that at the state denoted by $x$ we
+  are allowed to do the action $a$.
+
+\item A ternary predicate $\ARROWTWO{}{\cdot}{\cdot}{\cdot}$ where
+  $\ARROWTWO{}{x}{a}{y}$ means that there is a transition from the
+  state denoted by $x$ to the state denoted by $y$, and that
+  transition is labelled $a$.
+
+\end{itemize}
+
+\NI So $\SSS'$ is a relational signature, i.e.~has no function
+symbols.  The intended interpretation should should be
+clear.\martin{Phrase this better.}
 
 With the target logic in place, we can now present a second encoding
 $\SEMBTWO{\phi}_x$ of eremic formulae.
@@ -47,7 +65,7 @@ $\SEMBTWO{\phi}_x$ of eremic formulae.
      \\
   \SEMBTWO{\phi \AND \psi}_x & = & \SEMBTWO{\phi}_x \AND \SEMBTWO{\psi}_x
      \\
-  \SEMBTWO{\langle a \rangle \phi}_x & = & \exists^{state} y.(\ARROW{a}{x}{y} \AND \SEMBTWO{\phi}_y)
+  \SEMBTWO{\langle a \rangle \phi}_x & = & \exists^{state} y.(\ARROWTWO{}{x}{a}{y} \AND \SEMBTWO{\phi}_y)
      \\
   \SEMBTWO{\fBang A}_x & = & \forall^{action} a.(\ALLOWED{}{x}{a} \IMPLIES a \in A) 
 \end{eqnarray*}
@@ -59,7 +77,8 @@ first-order formula
 \[
    a = a_1 \OR a = a_2 \OR \cdots \OR a = a_n
 \]
-assuming that $A = \{a_1, ..., a_n\}$.
+assuming that $A = \{a_1, ..., a_n\}$. Since by definition, $A$ is always a finite
+set, this is well-defined.
 
 Note that the translation above could be restricted to a two-variable
 fragment. Moreover, the standard reduction from many-sorted to
@@ -109,7 +128,36 @@ model.
 \end{theorem}
 \begin{proof}
 The proof proceeds by induction on the structure of $\phi$ and is
-similar to that of Theorem \ref{correspondence:theorem:2}.  \qed
+similar to that of Theorem \ref{correspondence:theorem:2}.
+The case for the may modality proceeds as follows.  
+
+\begin{alignat*}{2}
+  \MMM \models \MAY{a}\phi
+     &\quad\text{iff}\quad 
+  \text{exists state $t$ with }\ s \TRANS{a} t\ \text{and}\ (\LLL, t) \models \phi \\
+     &\quad\text{iff}\quad
+  \text{exists state $t$ with }\ s \TRANS{a} t\ \text{and}\ \SEMBTWO{\LLL} \models_{y \mapsto t} \SEMBTWO{\phi}_y &\qquad& \text{by (IH)}\\
+     &\quad\text{iff}\quad
+  \SEMBTWO{\LLL} \models_{x \mapsto s} \exists^{state} y.(\ARROWTWO{}{x}{a}{y} \AND \SEMBTWO{\phi}_y) \\
+     &\quad\text{iff}\quad
+   \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{\MAY{a}{\phi}}_x
+\end{alignat*}
+\martin{the 2nd to last inference may need elaboration!}
+
+Finally $!A$.
+\begin{alignat*}{2}
+  \MMM \models !A
+     &\quad\text{iff}\quad
+  \lambda (s) \subseteq A \\
+      &\quad\text{iff}\quad
+  \text{for all }\ a \in \Sigma. a \in A \\
+     &\quad\text{iff}\quad
+  \SEMBTWO{\LLL} \models_{x \mapsto s} \forall^{action} a. (\ALLOWED{}{x}{a} \IMPLIES a \in A) \\
+     &\quad\text{iff}\quad
+  \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{!A}_x
+\end{alignat*}
+\martin{again, some steps need elaboration? Also should this go in the appendix?}
+\qed
 \end{proof}
 
 \NI We now use the translation $\SEMBTWO{\phi}_x$ to show that eremic
@@ -162,24 +210,24 @@ Straightforward from the definitions.
 any set of first-order formulae that has a model that is the
 translation of an eremic model.
 
-We deal with the absence of well-sizedness by 
+%% We deal with the absence of well-sizedness by 
 
-First we add a formula $\phi_a$ for each action $a \in \Sigma$.
-\begin{eqnarray*}
-   \phi_{a} 
-      & = &
-   \exists^{action} c. a = c 
-\end{eqnarray*}
+%% First we add a formula $\phi_a$ for each action $a \in \Sigma$.
+%% \begin{eqnarray*}
+%%    \phi_{a} 
+%%       & = &
+%%    \exists^{action} c. a = c 
+%% \end{eqnarray*}
 
-\begin{lemma}\label{compactness:lemma:666}
-If $\LLL$ is an eremic transistion system then $\SEMBTWO{\LLL} \models
-\phi_{a}$ for all $a \in \Sigma$.
-\end{lemma}
+%% \begin{lemma}\label{compactness:lemma:666}
+%% If $\LLL$ is an eremic transistion system then $\SEMBTWO{\LLL} \models
+%% \phi_{a}$ for all $a \in \Sigma$.
+%% \end{lemma}
 
-\begin{proof}
-Straightforward from the definitions.
-\qed
-\end{proof}
+%% \begin{proof}
+%% Straightforward from the definitions.
+%% \qed
+%% \end{proof}
 
 \begin{definition}
 Let $\LLL = (S, \rightarrow, \lambda)$ be an eremic transition system
@@ -208,8 +256,9 @@ occuring in $\phi$ is in $X$. Then:
 \]
 \end{lemma}
 \begin{proof}
-By straightforward induction on the structure of $\phi$.
-\qed
+By straightforward induction on the structure of $\phi$, using the
+fact that by assumption $X$ only contains actions not occuring in
+$\phi$.  \qed
 \end{proof}
 
 \begin{definition}
@@ -226,26 +275,34 @@ $\CAL{M}^{\sharp} = (S, \rightarrow, \lambda)$.
   $\ARROWTWO{\CAL{M}}{s}{a}{t}$.
 
 \item The function $\lambda$ is given by the following clause:
-  $\lambda(s) = A$ exactly when $\mathsf{Restrict}_{A}^{\CAL{M}}(x)$
-  holds.
+  \[
+     \lambda(s) 
+        =
+     \begin{cases} 
+       X & \text{whenever}\ X = \{a \ |\ \ALLOWED{\CAL{M}}{s}{a} \}\ \text{ is finite} \\
+       \Sigma & \text{otherwise}
+     \end{cases}
+  \]
 
 \end{itemize}
 
 \end{definition}
 
+\begin{lemma}
+If $\CAL{M}$ be a first-order model for $\SSS'$ such that $\CAL{M}
+\models \phi_{admis}$.  Then $\CAL{M}^{\sharp}$ is an eremic
+transition system with actions $\Sigma$.
+\end{lemma}
+\begin{proof}
+Immediate from the definitions.
+\qed
+\end{proof}
+
 \begin{theorem}[correspondence theorem]\label{correspondence:theorem:223}
 Let $\CAL{M}$ be a first-order model for the signature $\SSS'$ such that
-\begin{itemize}
-
-\item $\CAL{M} \models \phi_{admis}$.
- 
-\item $\CAL{M} \models \phi_{a}$ for all $a \in \Sigma$.
-
-\end{itemize}
-
-\NI Then $\CAL{M}^{\sharp}$ is an eremic transition system with
-actions $\Sigma$. Moreover, for all eremic formulae $\phi$ with
-actions from $\Sigma$ we have:
+ $\CAL{M} \models \phi_{admis}$.
+Then we have for all eremic formulae $\phi$ with
+actions from $\Sigma$:
 \[
    \CAL{M} \models_{x \mapsto s} \SEMBTWO{\phi}_x 
         \quad  \text{iff} \quad 
@@ -300,8 +357,8 @@ show for $T'$ to have a model is that
 \[
     \SEMBTWO{\LLL} \models_{x \mapsto s} \{\phi_{admis}\} \cup \{ \phi_a\ |\ a \in \Sigma\},
 \]
-but that is a direct consequence of Lemmas
-\ref{compactness:lemma:23399} and \ref{compactness:lemma:666}.  That
+but that is a direct consequence of Lemma
+\ref{compactness:lemma:23399}.  That
 means each finite subset of $T^*$ has a model and by appealing to
 compactness of first-order many-sorted logic (which is an immediate
 consequence of compactenss of one-sorted first-order logic
