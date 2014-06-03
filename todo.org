@@ -2,6 +2,8 @@
 * Be consistent. In particular
   - State vs node
 
+  - Names: R Brandom vs Brandom etc
+
   - What symbols to we use for implication? \rightarrow vs horseshoe
 
   - Make sure always to be precise about eremic model vs eremic
@@ -149,3 +151,17 @@ mono (μόνο). If we go creative we could simply say
 * The rule (! left) is not used in the completeness proof. Why not?
 * go through old emails and list ideas and issues that we discussed
 * Remove all commented out LaTeX including macros.
+* Put the footnote on complexity of binders in main intro body.
+add later something about how this is reflected in EL queries.
+
+   Yes. (We currently use one-way pattern matching rather than
+   unification).  When inserting a statement in a database based on
+   FOPL (e.g. inserting the statement that the traffic light is
+   green), the inference engine has to make forward-chaining
+   inferences to see which statements to delete (e.g. it needs to use
+   your FOPL rules for traffic lights only being one colour to infer
+   that the traffic light is no longer orange).  But in EL, the
+   removal of incompatible propositions happens without the need for
+   inference over universally quantified propositions. We can see
+   directly from the node labelling of the current node which
+   statements can no longer be true.

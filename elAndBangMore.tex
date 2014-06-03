@@ -51,7 +51,7 @@ If $\SIMPL{\phi} \models \psi \; \text{then} \; \forall \MMM \; \MMM \models \ph
 \NI Assume $\MMM \models \phi$. We need to show $\MMM \models \psi$.  Now if $\MMM
 \models \phi$ then $\MMM \MODELLEQ \SIMPL{\phi}$ (by definition of $\SIMPL$).  Further, if
 $\MMM' \models \xi $ and $\MMM \MODELLEQ \MMM'$ then $\MMM \models \xi $. So, substituting $\psi$
-for $\xi $ and $\SIMPL{\phi}$ for $\MMM'$, it follows that $\MMM \models \psi$.  \qed
+for $\xi $ and $\SIMPL{\phi}$ for $\MMM'$, it follows that $\MMM \models \psi$.  
 \end{proof}
 
 \NI Given this theorem, the decision procedure is straightforward: to
@@ -104,7 +104,7 @@ the only case we shall consider.  Assume $w \BISIM w'$ and $w \models
 From the semantic clause for $!$,  $w \models !A$ implies $\lambda(w) \subseteq A$.
 If $w \BISIM w'$, then $\lambda(w) = \lambda'(w')$.
 Therefore $\lambda'(w') \subseteq A$, and hence $w' \models !A$.
-\qed
+
 \end{proof}
 
 \begin{case}
@@ -210,7 +210,7 @@ $y \models \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \ra
 $y \nvDash \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \rangle \phi) = \fBang \{ b \fOr \exists z. y \xrightarrow{b} z\}$. This set of $b$s is finite since we are assuming the LTS is finitely-branching.
 \end{enumerate}
 \end{itemize}
-\qed
+
 \end{proof}
 
 \input{figure:example:neg}

@@ -1,16 +1,17 @@
 \section{\ELFULL}\label{coreEL}
 
-In this section we introduce the syntax and semantics of \ELFULL{} (hereafter \ELABR{}) .
-Then we establish key completeness of the the proof rules and prove a
-the compactness theorem via a translation into first-order logic. We
-focus on a small core of \ELABR{}, leaving extensions to later
-section.
+In this section we introduce the syntax and semantics of \ELFULL{}
+(hereafter \ELABR{}).  Then we establish key completeness of the the
+proof rules and prove a the compactness theorem via a translation into
+first-order logic. We focus on a small core of \ELABR{}, leaving
+extensions to later section.
 
 \subsection{Syntax}
 
+\NI Syntactically, eremic logic is a multi-modal logic with one new
+operator.
 
-
-\begin{definition} Let $\Sigma$ be a non-empty set of \emph{actions}.\martin{Sketch why we require $\Sigma$ to be non-empty.}
+\begin{definition} Let $\Sigma$ be a non-empty set of \emph{actions}.
 Actions are ranged over by $a, a', a_1, b, ...$, and $A$ ranges over
 finite subsets of $\Sigma$. The \emph{formulae}, ranged over by $\phi,
 \psi, \xi ...$, of \ELABR{} are given by the
@@ -27,23 +28,42 @@ following grammar.
      \VERTICAL 
   \fBang A 
 \end{GRAMMAR}
-
-\NI The $!$ operator is used to restrict the allowable transitions
-coming out of a state.  
-Just as $\MAY{a}\top$ says that the transitions coming out of the current state include \emph{at least} $\{a\}$,
-$\fBang A$ says that the transitions coming out of the current state are \emph{at most} $A$.
-
-\martin{Explain why $\Sigma$ must be non-empty, and why $A$ in $!A$
-  must be finite. What goes wrong if we drop those assumptions? Why do
-  we allow $\Sigma$ be infinite anyway?}
-
 \end{definition}
+
+\NI  Before presenting models and the satisfaction relation, we sketch
+the meaning of formulae informally. $\TRUE$ is truth and $\phi \AND
+\psi$ is the conjunction of formulae $\phi$ and $\psi$. Clearly
+$\MAY{a}{\phi}$ is the may-modality which asserts that the current
+state may do action $a$ and in doing $a$ transitions into a now state
+at which $\phi$ holds.  The key novelty of eremic logic is $!A$,
+pronounced ``just $A$, or ``tantum $A$. The core intuition about $!A$
+is that if a model validates $!A$ at the current state, then the only
+modalities $\MAY{a}{}$ available at the corrent state are those with
+$a \in A$. 
+
+The set of actions must be non-empty to avoid that the logic is
+trivial. The restriction to finite subsets of action substantially
+simplifies the meta-theory of the logic.
+
+We often abbreviate $\MAY{a}{\TRUE}$ to $\MAY{a}{}$. We define falsity
+$\FALSE$ as $!\emptyset \AND \MAY{a}{}$ where $a$ is an arbitrary
+action. Note that in the absence of conventional negation, we cannot
+readily define disjunction, implication, or must-modalities by de
+Morgan duality. We discuss later \martin{Where?} how some of the usual
+propositional connectives can be (partially) recovered. \martin{What
+  about must modalities?}
+
+\begin{convention}
+From now on we assume a fixed set $\Sigma$ of actions, except where
+stated otherwise.
+\end{convention}
 
 \subsection{Semantics}
 
-\NI We now give the semantics of \ELABR{} formulae using
-transition systems, as described in Section \ref{preliminaries}, but
-augmented with labels on states.
+\NI The semantics of eremic logic is close to Hennessy-Milner logic
+\cite{HennessyM:alglawfndac} and uses labelled transition systems, as
+described in Section \ref{preliminaries}, but augmented with labels on
+states.
 
 \begin{definition}
 An \emph{eremic transition system} is a triple $(S, \rightarrow,
@@ -65,17 +85,39 @@ actions (not necessarily finite), subject to the following constraints:
 
 \NI The intended interpretation is that $\lambda(w)$ is the set of
 allowed transition symbols emanating from $w$.  The $\lambda$ function
-is the semantic counterpart of the $!$ operator. 
+is the semantic counterpart of the $!$ operator.  The admissibility
+restriction is in place because transitions $s \TRANS{a} t$ where $a
+\notin \lambda(s)$ would be saying that an $a$ action is possible at
+$s$ but at the same time prohibit $a$ actions at that state.
+Well-sizedness is not a fundamental restriction but rather a
+convenient trick. Essentially eremic transition systems have two kinds
+of nodes:
 
-\martin{motivate well-sizedness!}
+\begin{itemize}
+
+\item Nodes $s$ without restrictions on outgoing transitions. Those are
+  labelled with $\lambda ( s) = \Sigma$.
+
+\item Nodes $s$ with restriction on outgoing transitions. Those are
+  labelled by a finite set $\lambda ( s)$ of actions.
+
+\end{itemize}
+
+\NI Defining $\lambda$ on all nodes and not just on those with
+restrictions makes some definitions and proofs slightly easier.
+
+As with outher modal logics, satisfaction of formulae is defined
+relative to a state in the ambient eremic transition system, giving
+rise to the following definition.
 
 \begin{definition}
-A \emph{model}, ranged over by $\MMM, \MMM', ...$, is a pair $(\LLL,
+A \emph{eremic model}, ranged over by $\MMM, \MMM', ...$, is a pair $(\LLL,
 s)$, where $\LLL$ is an eremic transition system $(S, \rightarrow,
 \lambda)$, and $s$ is a state from $S$.
-\end{definition}\martin{maybe we should call it eremic model to distinguish it from FOL models}
+\end{definition}
 
-\input{figure:elAndBang:models}
+\NI With eremic models at hand, we can finally formalise the
+satisfaction relation for eremic formulae.
 
 \begin{definition}
 The \emph{satisfaction relation} $\MMM \models \phi$ is defined
@@ -93,21 +135,37 @@ inductively by the following clauses, where we assume that $\MMM =
 
 \end{definition}
 
-\NI Figure \ref{figure:elAndBang:models} gives examples of models for
-the formula $\MAY{a}{\MAY{b}{\TRUE}}$. \martin{Add more examples/discussion.}
+\NI The first three clauses are standard, and Figure
+\ref{figure:elAndBang:models} gives examples of models for the formula
+$\MAY{a}{\MAY{b}{\TRUE}}$.  The last clause enforces the intended
+meaning of $!A$: the available modalities in the model are \emph{at
+  least as constrainted} as required by $!A$. They may even be more
+constrainted, if the inclusion $\lambda(s) \subseteq A$ is proper. We
+note in the case where the set $\Sigma$ of actions is infinite,
+allowing $\lambda(s)$ to return arbitrary inifinite sets in addition
+to $\sigma$ does not make a difference because $A$ is finite by
+construction, so $\lambda(s) \subseteq A$ can never hold when
+$\lambda(s)$ is infinite. Figure \ref{figure:elAndBang:moreMdels}
+presents examples of validating (and otherwise) the formula $!\{a, b,
+c\}$.
+
+\input{figure:elAndBang:models}
+\input{figure:elAndBang:moreMdels}
+
+\martin{We could Add more examples, maybe ones that we do something with later.}
 
 \subsection{Inference Rules}
 
 \input{figure:elAndBangRules}
 
-\NI We now present the inference rules for \ELFULL{}. 
+\NI We now present the inference rules for \ELFULL{}. There are no
+axioms.
 
 \begin{definition} Judgements are of the following form.
 \[
   \phi \judge \psi.
 \]
-Figure \ref{figure:elAndBangRules} presents all proof rules. There are
-no axioms.
+Figure \ref{figure:elAndBangRules} presents all proof rules. 
 \end{definition}
 
 \NI Note that $\phi$ and $\psi$ are single formulae, not sequents.  By
@@ -380,7 +438,7 @@ $(\LLL', x') \models \; ! \; \lambda(x)$ iff $\lambda'(x') \subseteq
 the other hand, $\lambda(x)$ is infinite, then $\lambda(x) = \Sigma$
 (because the only infinite node labelling that we allow is
 $\Sigma$). Every node labelling is a subset of $\Sigma$, so here too,
-$\lambda(x) = \Sigma \supseteq \lambda'(x')$.  \qed
+$\lambda(x) = \Sigma \supseteq \lambda'(x')$.  
 \end{proof}
 
 \NI Theorem \ref{theorem:completeLattice} illustrates from a
@@ -665,7 +723,7 @@ straightforward.  Assume $\phi \models \psi$.  Then all models which satisfy
 $\phi$ also satisfy $\psi$.  In particular, $\SIMPL{\phi} \models \psi$.  Then
 $\CHAR{\SIMPL{\phi}} \judge \psi$ by Lemma \ref{lemma:completeness:4}.  But we
 also have, by Lemma \ref{lemma:completeness:5}, $\phi \judge
-\CHAR{\SIMPL{\phi}} $.  So by transitivity, we have $\phi \judge \psi$.  \qed
+\CHAR{\SIMPL{\phi}} $.  So by transitivity, we have $\phi \judge \psi$.  
 
 
 \subsection{The standard translation from  \ELABR{} into 
@@ -864,7 +922,7 @@ definitions.
      &\text{iff}&
   \MMM \models\ !A.
 \end{eqnarray*}
-\qed
+
 \end{proof}
 
 \subsection{Compactness}
@@ -1026,7 +1084,7 @@ Finally $!A$.
   \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{!A}_x
 \end{alignat*}
 \martin{again, some steps need elaboration? Also should this go in the appendix?}
-\qed
+
 \end{proof}
 
 \NI We now use the translation $\SEMBTWO{\phi}_x$ to show that \ELABR{} must also have compactness. The key steps in the proof are
@@ -1071,7 +1129,7 @@ If $\LLL$ is an eremic transistion system then $\SEMBTWO{\LLL} \models
 
 \begin{proof}
 Straightforward from the definitions.
-\qed
+
 \end{proof}
 
 \NI We can now add, without changing satisfiability, $\phi_{admis}$ to
@@ -1094,7 +1152,7 @@ translation of an eremic model.
 
 %% \begin{proof}
 %% Straightforward from the definitions.
-%% \qed
+%% 
 %% \end{proof}
 
 \begin{definition}
@@ -1126,7 +1184,7 @@ occuring in $\phi$ is in $X$. Then:
 \begin{proof}
 By straightforward induction on the structure of $\phi$, using the
 fact that by assumption $X$ only contains actions not occuring in
-$\phi$.  \qed
+$\phi$.  
 \end{proof}
 
 \begin{definition}
@@ -1163,7 +1221,7 @@ transition system with actions $\Sigma$.
 \end{lemma}
 \begin{proof}
 Immediate from the definitions.
-\qed
+
 \end{proof}
 
 \begin{theorem}[correspondence theorem]\label{correspondence:theorem:223}
@@ -1242,7 +1300,7 @@ we can apply Theorem \ref{correspondence:theorem:223} that also
 \]
 where $X$ is the set of all actions in $\CAL{M}^{\sharp}$ that are not
 in $\Sigma$. Hence $T$ is satisfiable.
- \qed
+ 
 \end{proof}
 
 

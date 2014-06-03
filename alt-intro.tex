@@ -1,0 +1,158 @@
+\subsection{V1}
+
+First-order logic is \emph{the} logic, the dominant formalism that all
+other logics relate to in some form or other. However, for many
+purposes first-order logic is unwieldy and better alternatives have
+been proposed. Two examples are modal logic and many-sorted
+first-order logic.  Both have a distinct advantage over first-order
+logic in their respective domain of application.
+
+\begin{itemize}
+
+\item Modal logic leads to shorter formulae and proofs when 
+reasoning 'locally' meaning that all quantifiers are
+bound \cite{BlackburnP:modlog}, because (simplifying a great deal)
+first-order statements like for example $\forall y. ( x R
+y \IMPLIES \phi)$ can be abbreviated to $\diamond \phi$.
+
+\item Many-sorted first-order logic leads to shorter 
+formulae and proofs when reasoning about things in mutually exclusive
+domains, because simplifying a great deal)
+first-order statements like for example statements like
+\[
+     \forall x. \exists ab.( person(x) \AND name (a) \AND isCalled( x, a ) \AND age(b) \AND isAge(x,b))
+\]
+can be abbreviated to
+\[
+     \forall x. \exists ab.( isCalled( x, a ) \AND isAge(x,b))
+\]
+assuming the meta-language conventions that $x$ ranges over the
+universe of people, $a$ over names and $b$ over ages.
+
+\end{itemize}
+
+\NI In short, such specialised logics \martin{dare we say DSLs = domain
+specific logics?}  are more succinct.  
+
+Based on intutions from the philosophy of language, in particular on
+theories of negation, and from from knowlege representation/logic
+programming, the present work explores what is gained when we combine
+the two abbreviation mechanism above: modalities and
+
+
+
+\subsection{V2}
+Logic can be seen as a formalisation and simplification of key
+structure found in natural language, in particular of formally valid
+inferences such as that from ``all scientific texts are error free''
+and ``the present work is scientific'' to ``the present work is error
+free''. Aristotle, in particular his ``Prior Analytics'', is often
+taken to be the begining of a scientific approach towards ..., the
+most famous outcome of which might be the formalisation, nearly two
+millenia later, of first-order logic by Frege.  The cornerstone of
+first-order logic, and key advance over earlier formalisations of
+propositional logic, is quantification over individuals which refines
+the analysis of atomic propositions.  The key idea of propositional
+logic, already is to combine, in an algebraic manner, atomic
+propositions. The key algebraic combinators are, on one hand unary
+negation, and on the other, binary operators such as conjunction,
+disjunction and implication.
+
+Let us consider some examples of formalisation: Humans are either male or female,
+could become
+\[
+   \begin{array}{l}
+   \forall x. (human(x) \IMPLIES gender(x, male) \OR gender(x, female)) \\
+   \qquad\AND        \\
+   \forall x.( \exists y.gender(y, x) \IMPLIES ( x = male \OR x = female )) \\
+   \qquad\AND \\
+   male \neq female
+   \end{array}
+\]
+A similar analysis can conducted for the political statement ``you are
+either with us, or with the terrorists.
+\[
+   \begin{array}{l}
+   \forall x.(group(x) \IMPLIES ( supports(x, us) \OR supports(x, terrorists)) \\
+   \qquad\AND\\
+   \forall x.( \exists y.supports(y, x) \IMPLIES ( x = us \OR x = terrorists )) \\
+   \qquad\AND\\
+   ( us \neq terrorists)
+   \end{array}
+\]
+Mutually exclusive alternatives do note have to be binary, for traffic
+lights in most countries feature three colours, red, amber and green:
+\[
+   \begin{array}{l}
+   \forall x.(colour(x) \IMPLIES ( colour(x, green) \OR colour(x, red) \OR colour(x, amber)) \\
+   \qquad\AND\\
+   \forall x.( \exists y.colour(y, x) \IMPLIES ( x = green \OR x = red \OR x = amber )) \\
+   \qquad\AND\\
+   ( green \neq red \AND green \neq amber \AND red \neq amber)
+   \end{array}
+\]
+
+\NI We could easily present a near unlimited number of similar
+examples because the choice of a limited number of exclusive opions is
+an ubiquitous and important feature of the world, and that importance
+is reflected in how frequently we discus such matters.
+
+Because of the importance of this phenomenon, let us term it
+``exclusion'' and reflect on the features of its formalisations in
+first-order logic: exclusion is a derived concept and reduced to a
+combination of universal quantification and propositional connectives
+including negation. This is several interesting and related
+consequences.
+
+\begin{itemize}
+
+
+\item Quantification is an expensive concept in the sense that it comes with
+      many rules governing it's behaviour such as the distinction
+      between free and bound variables with its
+      ramifications\footnote{As of 2014 there is a substantial amount
+      of ongoing research regarding good formalisations of handling
+      free/bound variables, see e.g.~nominal approaches to
+      logic \cite{PittsAM:newaas,PittsAM:nomsetnasics}. The problem
+      was put in focus in recent years with the rise in intrest in the
+      compuational cost of syntax manipluation in languages with
+      binders. While these matters used to swept under the carpet of
+      informality, the rise in mechanical verification has rendered
+      this option problematic.} The costs of quantification have to be
+      borne every time one uses exclusion, even though exclusion does
+      not, prima facie, appear to have anything to do with the
+      free/bound variable distinction.
+
+\item Negation and quantification introduce issues into the formalisation
+      that are not germane to exclusion, making reasoning about
+      exclusion more cumbersome.
+
+\end{itemize}
+
+\NI The present paper propses a different approach. Instead seeing exclusion as
+a derived concept, it sees exclusion as a first-class or atomic
+concept that is directly backed into the logic. For this purpose a
+logical connective
+
+\[
+   !A
+\]
+called \emph{just} $A$, or \emph{tantum} $A$ is used and its behaviour
+axiomatised. Here $A$ is a finite set of alternatives that exhaust all
+possibilities. For example:
+\[
+   !\{male, female\}
+      \qquad
+   !\{red, amber, green\}.
+\]
+In addition, we can state that something is the case, using a modal operator.
+\[
+   !\{male, female\} \AND male
+\]
+Any statement of a fact that exceed what tantum $A$ allows to exist is
+false:
+\[
+   !\{red, amber, green\} \AND blue
+\]
+is false.
+

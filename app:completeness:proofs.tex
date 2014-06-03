@@ -62,7 +62,7 @@ $\phi$ is $\fBang \psi$
 If $(\CAL{L},w) \models \fBang A$, then $\lambda(w) \subseteq A$.
 Then $ \CHAR{(\CAL{L},w)} = ! \; \lambda(w) \AND \phi$.
 Now we can prove $! \; \lambda(w) \AND \phi \judge \fBang A$ using  {\bf $!$ Right 1} and repeated applications of {\bf $\AND$ Left}.
-\qed
+
 
 \subsection{Proof for Lemmas \ref{lemma:completeness:5}}
 
@@ -140,7 +140,7 @@ $\phi$ is $\fBang A$
 \end{mycase}
 If $\phi$ is $\fBang A$, then $  \CHAR{\SIMPL{\phi}}$ is $\fBang A \AND \top$.
 We can prove $\fBang A \judge \fBang A \AND \top$ using {\bf $\AND$ Right}, {\bf $\top$ Right} and {\bf Identity}.
-\qed
+
 \end{proof}
 Finally, to fill the hole in Case 2 above, we need to show that:
 \begin{lemma}
@@ -199,6 +199,6 @@ We can derive $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \; ! \; (\l
 To show $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \langle a \rangle  \CHAR{(\CAL{L}, w_2)}$, observe from the definition of $ \CHAR$ that $ \CHAR{(\CAL{L},w)}$ contains a conjunct $\langle a \rangle  \CHAR{(\CAL{L}, w_2)}$, so the proof follows from  {\bf $\AND$ Right} and repeated applications of  {\bf $\AND$ Left}. The same procedure applies to show $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \langle a \rangle  \CHAR{(\CAL{L}, w_3)}$ for all $a,w_3$ such that $w' \xrightarrow{a} w_3$.
 
 This completes Lemma 6 and hence the Completeness Proof.
-\qed
+
 
 \end{proof}
