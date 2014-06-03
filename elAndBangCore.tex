@@ -633,7 +633,11 @@ is true if
 
 \end{itemize}
 
-\NI Choose two fixed variables $x, y$, let $a$ range over actions in
+\NI Note that if $\Sigma$ is infinite, then $\RESTRICT{A}{\cdot}$ and
+$\ARROW{a}{\cdot}{\cdot}$ are infinite families of relations.
+
+
+ Choose two fixed variables $x, y$, let $a$ range over actions in
 $\Sigma$, and $A$ over finite subsets of $\Sigma$. Then the restricted
 fragment of FOL that is the target of our translation is given by the
 following grammar, where $w, z$ range over $x, y$.
@@ -704,7 +708,8 @@ And likewise for $\SEMB{\phi}_y$.
 
 \NI Before proving the theorem, we define $\SEMB{\LLL}$, which, given
 an eremic transition system $\LLL$, produces a corresponding
-first-order model for the signature $\SSS$ introduced above.
+first-order model for the signature $\SSS$ introduced above. The
+translation is simple.
 
 \begin{definition}
 Let $\LLL = (S, \rightarrow, \lambda)$ be an eremic transition
