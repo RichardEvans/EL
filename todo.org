@@ -2,6 +2,8 @@
 * Be consistent. In particular
   - State vs node
 
+  - What symbols to we use for implication? \rightarrow vs horseshoe
+
   - Make sure always to be precise about eremic model vs eremic
     transition system
 
