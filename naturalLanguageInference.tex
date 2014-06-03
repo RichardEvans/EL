@@ -1,8 +1,8 @@
 
 \section{Capturing Inferences Between Atomic Sentences}
-Eremic Logic arose as an attempt to answer the question: what is the simplest logic that can capture inferences between atomic sentences of natural language? 
+\ELFULL{} arose as an attempt to answer the question: what is the simplest logic that can capture inferences between atomic sentences of natural language? 
 In this section, we first enumerate the sorts of inferences we are trying to capture.
-Then we show how EL$[\AND, !]$ can handle these inferences.
+Then we show how \ELABR{} can handle these inferences.
 Finally, we compare our approach with the various attempts to handle these inferences in First Order Logic.
 
 \subsection{Intra-Atomic Inferences in Natural Language}
@@ -28,14 +28,14 @@ Fifth, inferences from conjunctions of sentences to conjunction of predicates\fo
 ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
 \end{quote}
 
-All these types of inference can be handled directly and naturally in EL$[\AND, !]$.
-To show this, we will define a notational variant of EL$[\AND, !]$, that we call {\bf EL-KR}, that is slightly more ergonomic as a knowledge-representation language. We will provide a translation from EL-KR to EL$[\AND, !]$
-Then we will show how these inferences between atomic sentences of natural language can be captured in EL-KR.
+All these types of inference can be handled directly and naturally in \ELABR{}.
+To show this, we will define a notational variant of \ELABR{}, that we call {\bf \ELKR{}}, that is slightly more ergonomic as a knowledge-representation language. We will provide a translation from \ELKR{} to \ELABR{}.
+Then we will show how these inferences between atomic sentences of natural language can be captured in \ELKR{}.
 
-\subsection{EL-KR as a Notational Variant of EL$[\AND, !]$}
+\subsection{\ELKR{} as a Notational Variant of \ELABR{}}
 \begin{definition} Given a set $\Sigma$ of symbols, with $a$ ranging over
 $\Sigma$,
-the sentences of EL-KR are given by:
+the sentences of \ELKR{} are given by:
 
 \begin{GRAMMAR}
   \phi 
@@ -49,12 +49,12 @@ the sentences of EL-KR are given by:
   a \fBang \phi  
 \end{GRAMMAR}
 \end{definition}
-We write sentences of EL-KR in Courier typeface, for example:
+We write sentences of \ELKR{} in Courier typeface, for example:
 \begin{verbatim}
 jack * loves * jill
 jack * gender ! male
 \end{verbatim}
-There is a simple translation function $t$ from EL-KR to EL$[\AND, !]$:
+There is a simple translation function $t$ from \ELKR{} to \ELABR{}:
 \begin{eqnarray}
 t(\phi_1 \land \phi_2) & = & t(\phi_1) \land t(\phi_2) \nonumber \\
 t(a) & = & \MAY{a} \top \nonumber \\
@@ -74,8 +74,8 @@ t(jack \ast loves \ast jill ) & = & \MAY{jack} \MAY{loves} \MAY{jill} \top \nonu
 t(jack \ast gender \fBang male ) & = & \MAY{jack} \MAY{gender} (\fBang \{jill\} \land \MAY{jill} \top) \nonumber
 \end{eqnarray}
 
-\subsection{Intra-Atomic Inferences in Eremic Logic}
-We shall show that each of the following inferences can be naturally expressed in EL-KR:
+\subsection{Intra-Atomic Inferences in \ELFULL{}}
+We shall show that each of the following inferences can be naturally expressed in \ELKR{}:
 \begin{itemize}
 \item
 ``Jack is male'' is incompatible with ``Jack is female''
@@ -88,13 +88,13 @@ We shall show that each of the following inferences can be naturally expressed i
 \item
 ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
 \end{itemize}
-First, incompatibility: ``Jack is male'' and ``Jack is female'' are translated into EL-KR as the pair of incompatible sentences:
+First, incompatibility: ``Jack is male'' and ``Jack is female'' are translated into \ELKR{} as the pair of incompatible sentences:
 \begin{verbatim}
 jack * gender ! male
 jack * gender ! female
 \end{verbatim}
 Second, entailment from dyadic to monadic predicates:
-``Jack loves Jill'' is translated into KR-EL as:
+``Jack loves Jill'' is translated into EL-KL as:
 \begin{verbatim}
 jack * loves * jill
 \end{verbatim}
@@ -110,8 +110,8 @@ entails:
 \begin{verbatim}
 jack * walks
 \end{verbatim}
-Fourth, EL-KR directly supports inferences from conjunctions of sentences to conjunctions of noun-phrases.
-From the general EL-KR rule that
+Fourth, \ELKR{} directly supports inferences from conjunctions of sentences to conjunctions of noun-phrases.
+From the general \ELKR{} rule that
 \[
 a \ast b \; \land \; a \ast c \; \models \; a \ast (b \land c)
 \]
@@ -170,7 +170,7 @@ If we want to capture the inference from ``Jack loves Jill`` to ``Jack loves'' i
 \]
 We would have to add an extra non-logical axiom like this for every n-place predicate.
 This is cumbersome at best. 
-In EL, by contrast, we do not need to introduce any non-logical machinery at all to capture these inferences because they all follow from the general rule that $A \star B \models A$.
+In \ELABR{}, by contrast, we do not need to introduce any non-logical machinery at all to capture these inferences because they all follow from the general rule that $A \star B \models A$.
 
 \subsection{Supporting Adverbial Inferences in Predicate Logic}
 How can we represent verbs in traditional predicate logic so as to support adverbial inference?
@@ -192,7 +192,7 @@ The cost of Davidson's proposal is that a seemingly simple sentence, such as ``J
 (\exists x) Walks(Jones, x)
 \]
 Although Predicate Logic can handle some of these inferences, it can only do so by reinterpreting the sentences as logically-complex compound propositions. 
-It uses more complex machinery to achieve the same results that Eremic Logic gets directly.
+It uses more complex machinery to achieve the same results that \ELFULL{} gets directly.
 
 \subsection{Comparison}
 We have been looking at five types of inference between atomic sentences:
@@ -208,16 +208,16 @@ Inferences from conjunctions of sentences to conjunctions of noun-phrases
 \item
 Inferences from conjunctions of sentences to conjunctions of predicates
 \end{itemize}
-Eremic Logic can handle all five types of inference directly and naturally.
+\ELFULL{} can handle all five types of inference directly and naturally.
 Traditional predicate logic has a harder time.
-Traditional predicate logic \emph{can} express incompatibility. But it can only do so by bringing in relatively complex machinery - a universal quantifier, a conditional, and a negation operator. Eremic Logic, by contrast, expresses the source of the incompatibility \emph{directly} using the $!$ operator.
+Traditional predicate logic \emph{can} express incompatibility. But it can only do so by bringing in relatively complex machinery - a universal quantifier, a conditional, and a negation operator. \ELFULL{}, by contrast, expresses the source of the incompatibility \emph{directly} using the $!$ operator.
 Again, predicate logic \emph{can} express adverbial inferences. But, again, it can only do so by introducing relatively complex machinery (quantification over events). 
 
 But when it comes to inferences from conjunctions of sentences to conjunctions of noun-phrases (or predicates), predicate logic has nothing to say because it has no way of expressing conjunctions between noun-phrases (or predicates) \emph{at all}. In predicate logic, ``Jack is bruised and humiliated'' has to be regimented into ``Jack is bruised and Jack is humiliated''. 
 This might seem, to anyone who has not already become desensitised to the differences between predicate logic and our ergonomic mother tongue, to be exactly the wrong way around.
 
 \subsection{Expressive Limitations}
-As we have seen, Eremic Logic can handle inferences where predicates are conjoined:
+As we have seen, \ELFULL{} can handle inferences where predicates are conjoined:
 \begin{quote}
 ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
 \end{quote}
@@ -229,4 +229,4 @@ But it cannot express related inferences where the \emph{subjects} are conjoined
 \begin{quote}
 ``Jack loves Jill'' and ``Jim loves Jill'' together imply that ``Jack and Jim love Jill''
 \end{quote}
-Eremic Logic has no way to conjoin noun-phrases in subject-position.
+\ELFULL{} has no way to conjoin noun-phrases in subject-position.

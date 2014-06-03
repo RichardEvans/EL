@@ -3,14 +3,14 @@
 \NI Define the set of formulae\footnote{Brandom \cite{brandom} defines
   incompatibility slightly differently: he defines the set of
   \emph{sets} of formulae which are incompatible with a \emph{set} of
-  formulae.  But in EL, if a set of formulae is incompatible, then
+  formulae.  But in \ELABR{}, if a set of formulae is incompatible, then
   there is an incompatible subset of that set with exactly two
   members.  So we can work with the simpler definition in the text
   above.}  incompatible with $\phi$ as:
 \[
 \mathcal{I}(\phi) = \{ \psi \; | \; \SIMPL{\phi} \sqcap \SIMPL{\psi} = \bot \}
 \]
-EL satisfies Robert Brandom's \textbf{incompatibility semantics}  property:
+\ELABR{} satisfies Robert Brandom's \textbf{incompatibility semantics}  property:
 \[
 \phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
 \]
@@ -18,7 +18,7 @@ Before proving this, I want to say something about why satisfying this incompati
 Not all logics satisfy this property. 
 Brandom has shown that First Order Logic and S5 satisfy the incompatibility semantics property, but it is an open question which other logics satisfy it.
 HML satisfies it, but HML without negation does not.
-EL is the \emph{simplest logic we have found} that satisfies the property.
+\ELABR{} is the \emph{simplest logic we have found} that satisfies the property.
 
 To prove this, we need to first define a related incompatibility function on  models.
 $\mathcal{J}(\MMM)$ is the set of models that are incompatible with $\MMM$:
