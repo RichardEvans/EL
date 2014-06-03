@@ -1,0 +1,55 @@
+The relation $\MODELLEQ$ is not a partial order, only a pre-order. For example
+with 
+\begin{itemize}
+
+\item $\MMM_1 = ( (\{w\}, \{\}, \{w \mapsto \Sigma\}), w)$ and
+\item $\MMM_2 = ( (\{v\}, \{\}, \{v \mapsto \Sigma\}), v)$ 
+
+\end{itemize}
+
+\NI we have models where $\MMM_1 \MODELLEQ \MMM_2$ and $\MMM_2
+\MODELLEQ \MMM_1$, but the two models are not equal. The difference
+between the two models is trival and not relevant for the formulae
+they make true. Indeed $\THEORY{\MMM_1} = \THEORY{\MMM_2}$. 
+As briefly mentioned in the mathematical preliminaries (Section \ref{preliminaries}),
+we obtain a
+proper partial-order we simply quotient the set of models:
+
+\[
+   \MMM \MODELEQ \MMM'
+      \qquad\text{iff}\qquad
+   \MMM \MODELLEQ \MMM' \ \text{and}\ \MMM' \MODELLEQ \MMM.
+\]
+
+\NI and the ordering the $\MODELEQ$-equivalence classes as follows:
+\[
+    [\MMM]_{\MODELEQ} \MODELLEQ [\MMM']_{\MODELEQ}
+      \qquad\text{iff}\qquad
+    \MMM \MODELLEQ \MMM'.
+\]
+
+\NI Since this process is independent for the chosen representatives,
+we obtain a partial order. Greatest lower and least upper bounds can also
+be computed on representatives:
+\[
+   \BIGLUB \{[\MMM]_{\MODELEQ} \ |\ \MMM \in S\ \} = [\BIGLUB S]_{\MODELEQ}
+\]
+and likewise for the greated lower bound.
+
+In the rest of this text, we will usually be sloppy and work with
+concrete models instead of equivalence classes of models because the
+quotienting process is straightfoward and not especially
+interesting. We can do this because all relevant constructions in this
+text are independent from the specific choice of representative.  Our
+Haskell implementation, described in Section \ref{hahahaskell} uses a
+slightly different approach: instead of equivalence classes, it uses
+canonical representatives.  \martin{add more explanation, and
+  integrate better with premiminaries}.
+
+\begin{itemize}
+
+\item $\bot = [\bot]_{\MODELEQ}$.
+
+\end{itemize}
+
+
