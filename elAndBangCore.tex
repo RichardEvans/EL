@@ -29,11 +29,9 @@ following grammar.
 \end{GRAMMAR}
 
 \NI The $!$ operator is used to restrict the allowable transitions
-coming out of a state.  Intuitively, $\fBang A$ means that the
-\emph{only} transitions coming out of the current state are those
-specified in $A$.
-
-\martin{Add better explanation of $\fBang$, and some examples?}
+coming out of a state.  
+Just as $\MAY{a}\top$ says that the transitions coming out of the current state include \emph{at least} $\{a\}$,
+$\fBang A$ says that the transitions coming out of the current state are \emph{at most} $A$.
 
 \martin{Explain why $\Sigma$ must be non-empty, and why $A$ in $!A$
   must be finite. What goes wrong if we drop those assumptions? Why do
