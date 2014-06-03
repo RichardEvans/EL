@@ -1,3 +1,4 @@
+* Have we discussed bisimulation invariance?
 * Be consistent. In particular
   - State vs node
 
@@ -118,6 +119,9 @@ mono (μόνο). If we go creative we could simply say
   - Bernhard Reus at Sussex
   - Billiejoe Charlton
   - Aram Lintzel
+  - Bat
+  - http://rasmuskrendsvig.dk/ 
+  - Coalgebraic modal guys (like Alexander Kurz) but not sure
 
 * Could it make sense to prepare a little video presentation (using
   Screenflow, or recording professionally), maybe 15 minutes, to
