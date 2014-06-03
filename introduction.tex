@@ -1,5 +1,180 @@
 \section{Introduction}\label{introduction}
 
+\NI Logic is the study of formally valid inferences. Based on work
+going back at least two millenia, first-order logic was first fully
+formalised by G.~Frege at the end of the 19th century
+\cite{FregeG:begriffsschrift} and has remained the dominant
+mathematisation of formally valid inferences since.  All other logics
+relate to first-order logic in some form or other. However, for some
+purposes first-order logic can be unwieldy and alternatives have been
+proposed. Two examples of alternative logics are modal logic and
+many-sorted first-order logic.  Both have a distinct advantage over
+first-order logic in their respective domain of application.
+
+\begin{itemize}
+
+\item Modal logic leads to shorter formulae and proofs when reasoning
+  'locally', meaning that all quantifiers are bound or local
+  \cite{BlackburnP:modlog}. Modal operators can be thought of as
+  abbreviations that encode quantification over
+  relationally-accessible states in a convenient, variable-free
+  notation.  Simplifying a great deal, first-order statements like for
+  example $\forall y. ( x R y \IMPLIES \phi)$ can be abbreviated to
+  $\diamond \phi$.
+
+\item Many-sorted first-order logic leads to shorter formulae and
+  proofs when reasoning about things in mutually exclusive domains.
+  Simplifying a great deal, first-order statements like for example
+  statements like
+\[
+     \forall x. \exists ab.( person(x) \AND name (a) \AND isCalled( x, a ) \AND age(b) \AND isAge(x,b))
+\]
+can be abbreviated to
+\[
+     \forall x. \exists ab.( isCalled( x, a ) \AND isAge(x,b))
+\]
+assuming the meta-language conventions that $x$ ranges over the
+universe of people, $a$ over names and $b$ over ages.
+
+\end{itemize}
+
+\NI In short, such specialised logics enable more succinct reasoning.
+
+Studying such logics is interesting for another reason: they often
+illuminate first-order logic in a different light. For example the
+standard translation of modal logic into first-order logic gives rise
+to interesting fragments like the finite variable fragments, the
+fragments closed under bisimulation, guarded fragments that have been
+investigated heavily, etc. The standard translation also allow us to
+push techniques, constructions and results between logics.
+
+Based on intutions from the philosophy of language, in particular on
+theories of negation, from industrial experience with knowlege
+representation and logic programming in computer games, and from
+Hennessy-Milner logic in computer science, the present work proposes
+\emph{eremic logic}, a multi-modal logic that can express exclusion
+between modalities directly. Eremic logic can be used as a knowledge
+representation language.  It also shines an interesting new light on
+the formalisation of natural language, in particular negation,
+relating closely to Brandom's incompatibility semantics. Eremic logic
+also enables inferences between atomic sentences in an elegant way.
+
+Before going into details, we introduce eremic logic by examples.  
+Humans are usually deemed  either male or female. We can formalise this
+as follows.
+\[
+   \begin{array}{l}
+   \forall x. (human(x) \IMPLIES sex(x, male) \OR sex(x, female)) \\
+   \qquad\AND        \\
+   \forall x.( \exists y.sex(y, x) \IMPLIES ( x = male \OR x = female )) \\
+   \qquad\AND \\
+   male \neq female
+   \end{array}
+\]
+A similar analysis can conducted for the political statement ``you are
+either with us, or with the terrorists.
+\[
+   \begin{array}{l}
+   \forall x.(group(x) \IMPLIES ( supports(x, us) \OR supports(x, terrorists)) \\
+   \qquad\AND\\
+   \forall x.( \exists y.supports(y, x) \IMPLIES ( x = us \OR x = terrorists )) \\
+   \qquad\AND\\
+   ( us \neq terrorists)
+   \end{array}
+\]
+Mutually exclusive alternatives do note have to be binary, for traffic
+lights in most countries feature three colours, red, amber and green:
+\[
+   \begin{array}{l}
+   \forall x.(colour(x) \IMPLIES ( colour(x, green) \OR colour(x, red) \OR colour(x, amber)) \\
+   \qquad\AND\\
+   \forall x.( \exists y.colour(y, x) \IMPLIES ( x = green \OR x = red \OR x = amber )) \\
+   \qquad\AND\\
+   ( green \neq red \AND green \neq amber \AND red \neq amber)
+   \end{array}
+\]
+
+\NI We could easily present a near unlimited number of similar
+examples because the choice of a limited number of exclusive opions is
+an ubiquitous and important feature of the world, and that importance
+is reflected in how frequently we discus such matters.
+
+Because of the importance of this phenomenon, let us term it
+``exclusion'' and reflect on the features of its formalisations in
+first-order logic: exclusion is a derived concept and reduced to a
+combination of universal quantification and propositional connectives
+including negation. This is several interesting and related
+consequences.
+
+\begin{itemize}
+
+
+\item Quantification is an expensive concept in the sense that it comes with
+      many rules governing it's behaviour such as the distinction
+      between free and bound variables with its
+      ramifications\footnote{As of 2014 there is a substantial amount
+      of ongoing research regarding good formalisations of handling
+      free/bound variables, see e.g.~nominal approaches to
+      logic \cite{PittsAM:newaas,PittsAM:nomsetnasics}. The problem
+      was put in focus in recent years with the rise in intrest in the
+      compuational cost of syntax manipluation in languages with
+      binders. While these matters used to swept under the carpet of
+      informality, the rise in mechanical verification has rendered
+      this option problematic.} The costs of quantification have to be
+      borne every time one uses exclusion, even though exclusion does
+      not, prima facie, appear to have anything to do with the
+      free/bound variable distinction.
+
+\item Negation and quantification introduce issues into the formalisation
+      that are not germane to exclusion, making reasoning about
+      exclusion more cumbersome.
+
+\end{itemize}
+
+\NI The examples of exclusion so far could have been handled in a
+many-sorted logic. However, exclusion is not always temporally stable:
+progress in plastic surgery has created transsexuals, undermining the
+binary between male and female. Such changing forms of exclusion are
+not easily expressible with sorting alone.
+
+The present paper proposes a different approach. Instead seeing
+exclusion as a derived concept, it porposes exclusion as a first-class
+or atomic concept that is directly baked into eremic logic. For this
+purpose a logical connective
+
+\[
+   !A
+\]
+called \emph{just} $A$, or \emph{tantum} $A$ is used and its behaviour
+axiomatised. Here $A$ is a finite set of alternatives that exhaust all
+possibilities. For example:
+\[
+   !\{male, female\}
+      \qquad
+   !\{red, amber, green\}.
+\]
+In addition, to be able to express temporal dependencies, eremic logic provides modalities
+\[
+   \MAY{jack}{(!\{male, female\} \AND \MAY{male}{})}
+\]
+Simplifying a bit, this expresses that Jack is male, and that there
+are only two sexes, male and female.  Any statement of a fact that
+exceed what tantum $A$ allows to exist is false:
+\[
+   !\{red, amber, green\} \AND blue
+\]
+is false.
+Changing exclusion can easily be expressed.
+\[
+     \MAY{20th}{(
+       !\{male, female\} \AND
+       \MAY{21th}{
+         !\{male, female, transsexual\}{}} )} 
+\]
+This formula says that the twentieth century knew only two genders,
+male and female, but the twenty-first knews three.
+
+
 \input{figure:relationships}
 
 \subsection{A logic of atomic sentences}
