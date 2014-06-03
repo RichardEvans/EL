@@ -405,30 +405,74 @@ We extend the relation $\MODELLEQ $  and stipulate that $\bot
 \MODELLEQ \MMM$ for all models $\MMM$.
 \end{definition}
 
+\NI Note that the relation $\MODELLEQ$ is not a partial order, only a
+pre-order. For example with
+\begin{itemize}
 
+\item $\MMM_1 = ( (\{w\}, \{\}, \{w \mapsto \Sigma\}), w)$ and
+\item $\MMM_2 = ( (\{v\}, \{\}, \{v \mapsto \Sigma\}), v)$ 
+
+\end{itemize}
+
+\NI we have models where $\MMM_1 \MODELLEQ \MMM_2$ and $\MMM_2
+\MODELLEQ \MMM_1$, but the two models are not equal. The difference
+between the two models is trival and not relevant for the formulae
+they make true. Indeed $\THEORY{\MMM_1} = \THEORY{\MMM_2}$.  As
+briefly mentioned in the mathematical preliminaries (Section
+\ref{preliminaries}), we obtain a proper partial-order we simply
+quotient the set of models:
+
+\[
+   \MMM \MODELEQ \MMM'
+      \qquad\text{iff}\qquad
+   \MMM \MODELLEQ \MMM' \ \text{and}\ \MMM' \MODELLEQ \MMM.
+\]
+
+\NI and the ordering the $\MODELEQ$-equivalence classes as follows:
+\[
+    [\MMM]_{\MODELEQ} \MODELLEQ [\MMM']_{\MODELEQ}
+      \qquad\text{iff}\qquad
+    \MMM \MODELLEQ \MMM'.
+\]
+
+\NI Since this process is independent for the chosen representatives,
+we obtain a partial order. Greatest lower and least upper bounds can also
+be computed on representatives:
+\[
+   \BIGLUB \{[\MMM]_{\MODELEQ} \ |\ \MMM \in S\ \} = [\BIGLUB S]_{\MODELEQ}
+\]
+and likewise for the greated lower bound.
+
+In the rest of this text, we will usually be sloppy and work with
+concrete models instead of equivalence classes of models because the
+quotienting process is straightfoward and not especially
+interesting. We can do this because all relevant constructions in this
+text are independent from the specific choice of representative.  Our
+Haskell implementation, described in Section \ref{hahahaskell} uses a
+slightly different approach: instead of equivalence classes, it uses
+canonical representatives.  \martin{add more explanation, and
+  integrate better with premiminaries}.
+
+First we extend $\MODELLEQ$ on equivalence classes with bottom element
+$\bot = [\bot]_{\MODELEQ}$.
 
 \begin{theorem}
-The collection of models together with $\bot$, and ordered by $\MODELLEQ $
-is a complete lattice.  \martin{strictly speaking this is NOT true, because we
-  can simply rename states and get new models that break
-  e.g. anti-symmetry. I guess we need to quotient somehow, e.g.  $(
-  (\{w\}, \{\}, \{w \mapsto \Sigma\}), w)$ and $( (\{v\}, \{\},
-  \{v \mapsto \Sigma\}), v)$ need to be equated.}
+The collection of (equivalence classes of) models together with
+$\bot$, and ordered by $\MODELLEQ$ is a complete lattice.
 \end{theorem}
 \begin{proof}
 \martin{worth doing?}  Example: The topmost element in the lattice is
 the model $( (\{w\}, \{\}, \{w \mapsto \Sigma\}), w)$ (for some state
 $w$): this is the model with no transitions and no transition
-restrictions.\martin{I think this is not well-defined if $\Sigma$ is
-  infinite. Remember that the labelling function $\lambda$ now always
-  must map to finite sets of actions.}
+restrictions.
 \end{proof}
 
 
 \subsubsection{Computing the simplest model satisfying a formula}
 \label{simpl}
 
-\NI In $\MODELLEQ $ we have a notion of model simplicity.  We can now
+\NI In $\MODELLEQ $ we have a notion of model simplicity\martin{I'm not sure I like
+this sentence}.  We can now
 compute $\SIMPL{\phi}$, the simplest model w.r.t.~$\MODELLEQ $ that
 satisfies $\phi$.
 
@@ -442,7 +486,10 @@ satisfies $\phi$.
                 &&  \mbox{not appearing in }S 
 \end{eqnarray*}
 
-\NI The only complex case is the clause for $\SIMPL{\phi_1 \AND \phi_2}$,
+\NI Note that by our conventions, $\SIMPL{\phi}$ really returns a
+$\MODELEQ$-equivalence class of models.
+
+The only complex case is the clause for $\SIMPL{\phi_1 \AND \phi_2}$,
 which uses the $\sqcap$ function, defined as follows, where we assume
 that the sets of states in the two models are disjoint.
 
@@ -536,11 +583,11 @@ Here, $\mathsf{sharedT}$ returns the shared transitions between two models, and 
 
 \subsubsection{Characteristic formulae}
 
-The function $\SIMPL{\cdot}$ goes form formulae to models. Now we go
-the other way: given a model $\MMM$, we compute its characteristic
-formula $\CHAR{m}$. The formula $\SIMPL{\MMM}$ characterises the model
-$\MMM$ in the following sense. \martin{Check that they are
-  true. Proofs?}
+The function $\SIMPL{\cdot}$ goes from formulae to (equivalence
+classes of) models. Now we go the other way: given a(n equivalence class of a) model $\MMM$, we
+compute its characteristic formula $\CHAR{m}$. The formula
+$\SIMPL{\MMM}$ characterises the model $\MMM$ in the following
+sense. \martin{Check that they are true. Proofs?}
 
 \begin{itemize}
 
@@ -559,7 +606,8 @@ $\MMM$ in the following sense. \martin{Check that they are
 characteristic formulae in Hennessy-Milner logic
 \cite{AcetoL:chaforfata} and Hoare logics
 \cite{HondaK:descriptive,ChargueraudA:provertcf}. Here is the
-definition of $\CHAR{\cdot}$.
+definition of $\CHAR{\cdot}$ (again we omit specifying that the function really
+returns $\MODELEQ$-equivalence classes of models).
 
 \begin{eqnarray*}
   \CHAR{\bot} &\ =\ & \langle a \rangle \top \AND ! \emptyset  \mbox{ for some symbol }a  \\
@@ -821,5 +869,386 @@ definitions.
 \qed
 \end{proof}
 
-\input{compactness}
-\input{quotient}
+\subsection{Compactness}
+
+\NI First-order logic has compactness: a set $S$ of sentences has a
+model exactly when every finite subset of $S$ does \cite[Chapter
+  4.3]{EndertonHB:matinttl}. What about eremic logic? 
+
+We can prove compactness of modal logics using the standard
+translation from modal to first-order logic \cite{BlackburnP:modlog}:
+we start from a set of modal formula such that each finite subset has
+a model. We translate the modal formulae and models to first-order
+logic, getting a set of first-order formulae such that each finite
+subset has a first-order model. By compactness of first-order logic we
+obtain a first-order model of the translated modal formulae. Then we
+translate that first-order model back to modal logic, obtaining a
+model for the original modal formulae, as required.
+
+Unfortunately we cannot do the same with the translation from eremic
+to first-order logic presented in the previous section. The problem
+are the first-order models termed 'junk' above: they do not correspond
+to eremic transistion systems.  For example the constraint $s
+\TRANS{a} t$ implies $a \in \lambda(s)$ might be violated. After all,
+merely having signature $\SSS$ is not strong enough a constraint. The
+target language of the translation from the previous section is not
+expressive enough to have formulae that can guarantee such
+constraints.  As we have no reason to belive that the first-order
+model whose existence is guarnateed by compactness isn't 'junk', we
+cannot use this translation.
+
+We solve this problem with a second translation from eremic to
+first-order logic, this time into a more expressive fragment were we
+can constrain first-order models enough to ensure that they always can
+be translated back to eremic logic.
+
+The second embedding translates eremic logic to two-sorted first-order
+logic. The many-sorted first-order signature $\SSS'$ is given as follows.
+\begin{itemize}
+
+\item $\SSS'$ has two sorts, states and actions. 
+
+\item The action constants are given by $\Sigma$. There
+are no state constants. 
+
+\item $\SSS'$ has a nullary predicate $\top$.
+
+\item A binary predicate $\ALLOWED{}{\cdot}{\cdot}$. The intended
+  meaning of $\ALLOWED{}{x}{a}$ is that at the state denoted by $x$ we
+  are allowed to do the action $a$.
+
+\item A ternary predicate $\ARROWTWO{}{\cdot}{\cdot}{\cdot}$ where
+  $\ARROWTWO{}{x}{a}{y}$ means that there is a transition from the
+  state denoted by $x$ to the state denoted by $y$, and that
+  transition is labelled $a$.
+
+\end{itemize}
+
+\NI So $\SSS'$ is a relational signature, i.e.~has no function
+symbols.  The intended interpretation should should be
+clear.\martin{Phrase this better.}
+
+With the target logic in place, we can now present a second encoding
+$\SEMBTWO{\phi}_x$ of eremic formulae.
+
+\begin{eqnarray*}
+  \SEMBTWO{\top}_x & \ = \ & \top
+     \\
+  \SEMBTWO{\phi \AND \psi}_x & = & \SEMBTWO{\phi}_x \AND \SEMBTWO{\psi}_x
+     \\
+  \SEMBTWO{\langle a \rangle \phi}_x & = & \exists^{state} y.(\ARROWTWO{}{x}{a}{y} \AND \SEMBTWO{\phi}_y)
+     \\
+  \SEMBTWO{\fBang A}_x & = & \forall^{action} a.(\ALLOWED{}{x}{a} \IMPLIES a \in A) 
+\end{eqnarray*}
+
+\NI Here we use $\exists^{state}$ to indicate that the quantifier ranges
+of the sort of states, and $\forall^{action}$ for a quantifier ranging
+over actions. The expression $a \in A$ is a shorthand for the
+first-order formula
+\[
+   a = a_1 \OR a = a_2 \OR \cdots \OR a = a_n
+\]
+assuming that $A = \{a_1, ..., a_n\}$. Since by definition, $A$ is always a finite
+set, this is well-defined.
+
+Note that the translation above could be restricted to a two-variable
+fragment. Moreover, the standard reduction from many-sorted to
+one-sorted first-order logic, does not increase the number of
+variables used (although predicates are added, one per sort)
+\cite{EndertonHB:matinttl}. For simplicity we will not consider this
+matter further.
+
+Before we can state and prove a correspondence theorem for
+$\SEMBTWO{\phi}_x$ along the lines of Theorem
+\ref{correspondence:theorem:1}, we must also translate eremic
+  transition systems $\SEMBTWO{\LLL}$.
+
+\begin{definition}
+Let $\LLL = (S, \rightarrow, \lambda)$ be an eremic transition
+system. Clearly $\LLL$ gives rise to an $\SSS'$-model $\SEMBTWO{\LLL}$
+as follows.
+\begin{itemize}
+
+\item For each constant $a \in \Sigma$, $a^{\SEMBTWO{\LLL}}$ is $a$ itself.
+
+\item The sort of states is interpreted by the set $S$.
+
+\item The sort of actions is interpreted by the set $\Sigma$.
+
+\item The relation symbols are interpreted as follows.
+
+  \begin{itemize}
+
+    \item $\top^{\SEMBTWO{\LLL}}$ always holds.
+
+    \item $\ALLOWED{\SEMBTWO{\LLL}}{s}{a}$ holds whenever $a \in \lambda(s)$.
+
+    \item $\ARROWTWO{\SEMBTWO{\LLL}}{s}{a}{t}$ holds whenver $s \TRANS{a} t$.
+
+  \end{itemize}
+\end{itemize}
+\end{definition}
+
+
+\begin{theorem}[correspondence theorem]\label{correspondence:theorem:2}
+Let $\phi$ be an eremic formula and $\MMM = (\LLL, s)$ an eremic
+model.
+\[
+   \MMM \models \phi \quad  \text{iff} \quad \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{\phi}_x.
+\]
+\end{theorem}
+\begin{proof}
+The proof proceeds by induction on the structure of $\phi$ and is
+similar to that of Theorem \ref{correspondence:theorem:2}.
+The case for the may modality proceeds as follows.  
+
+\begin{alignat*}{2}
+  \MMM \models \MAY{a}\phi
+     &\quad\text{iff}\quad 
+  \text{exists state $t$ with }\ s \TRANS{a} t\ \text{and}\ (\LLL, t) \models \phi \\
+     &\quad\text{iff}\quad
+  \text{exists state $t$ with }\ s \TRANS{a} t\ \text{and}\ \SEMBTWO{\LLL} \models_{y \mapsto t} \SEMBTWO{\phi}_y &\qquad& \text{by (IH)}\\
+     &\quad\text{iff}\quad
+  \SEMBTWO{\LLL} \models_{x \mapsto s} \exists^{state} y.(\ARROWTWO{}{x}{a}{y} \AND \SEMBTWO{\phi}_y) \\
+     &\quad\text{iff}\quad
+   \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{\MAY{a}{\phi}}_x
+\end{alignat*}
+\martin{the 2nd to last inference may need elaboration!}
+
+Finally $!A$.
+\begin{alignat*}{2}
+  \MMM \models !A
+     &\quad\text{iff}\quad
+  \lambda (s) \subseteq A \\
+      &\quad\text{iff}\quad
+  \text{for all }\ a \in \Sigma. a \in A \\
+     &\quad\text{iff}\quad
+  \SEMBTWO{\LLL} \models_{x \mapsto s} \forall^{action} a. (\ALLOWED{}{x}{a} \IMPLIES a \in A) \\
+     &\quad\text{iff}\quad
+  \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{!A}_x
+\end{alignat*}
+\martin{again, some steps need elaboration? Also should this go in the appendix?}
+\qed
+\end{proof}
+
+\NI We now use the translation $\SEMBTWO{\phi}_x$ to show that eremic
+logic must also have compactness. The key steps in the proof are
+simple, following standard techniques from modal logic
+\cite{BlackburnP:modlog}:
+
+\begin{enumerate}
+
+\item Choose a set $T$ of eremic formulae, such that each finite
+  subset $T'$ of $T$ has an eremic model $(\LLL, s)$.
+
+\item Using the translations gives a set $\SEMBTWO{T} =
+  \{\SEMBTWO{\phi}\ |\ \phi \in T\}$ of first-order formulae such that
+  each finite subset has a first-order model $\SEMBTWO{\LLL}$.
+
+\item By compactness of first-order logic, we can find a first-order
+  model $\CAL{M}$ of $\SEMBTWO{T}$.
+
+\item\label{compactness:step:4} Convert $\CAL{M}$ into an eremic transition system
+  $\CAL{M}^{\sharp}$ such that $(\CAL{M}^{\sharp}, s) \models T$.
+
+\end{enumerate}
+
+\NI The problematic step is (\ref{compactness:step:4}), for how would
+we know that the model $\CAL{M}$ can be converted back to an eremic
+transition system? Why should $\CAL{M}$ exhibit admissibility or
+well-sizedness?  The mere fact that $\CAL{M}$ is a first-order model
+of signature $\SSS'$ is not strong enough to guarantee these
+properties.  We deal with this in two ways. To ensure admissibility,
+we define a formula that guarantees that models satisfying the formula
+are admissible.
+\begin{eqnarray*}
+   \phi_{admis} 
+      & \ =\ &
+   \forall^{state} s.\forall^{action} a.\forall^{state} t.( \ARROWTWO{}{s}{a}{t} \IMPLIES \ALLOWED{}{s}{a})
+\end{eqnarray*}
+
+\begin{lemma}\label{compactness:lemma:23399}
+If $\LLL$ is an eremic transistion system then $\SEMBTWO{\LLL} \models
+\phi_{admis}$.
+\end{lemma}
+
+\begin{proof}
+Straightforward from the definitions.
+\qed
+\end{proof}
+
+\NI We can now add, without changing satisfiability, $\phi_{admis}$ to
+any set of first-order formulae that has a model that is the
+translation of an eremic model.
+
+%% We deal with the absence of well-sizedness by 
+
+%% First we add a formula $\phi_a$ for each action $a \in \Sigma$.
+%% \begin{eqnarray*}
+%%    \phi_{a} 
+%%       & = &
+%%    \exists^{action} c. a = c 
+%% \end{eqnarray*}
+
+%% \begin{lemma}\label{compactness:lemma:666}
+%% If $\LLL$ is an eremic transistion system then $\SEMBTWO{\LLL} \models
+%% \phi_{a}$ for all $a \in \Sigma$.
+%% \end{lemma}
+
+%% \begin{proof}
+%% Straightforward from the definitions.
+%% \qed
+%% \end{proof}
+
+\begin{definition}
+Let $\LLL = (S, \rightarrow, \lambda)$ be an eremic transition system
+and $X$ a set, condidered to contain actions. The \emph{restriction of
+  $\LLL$ to $X$}, written $\LLL \setminus X$ is the eremic model $(S,
+\rightarrow', \lambda')$ where $\rightarrow' = \{(s, a, t) \in
+\rightarrow \ |\ a \notin X\}$, and for all states $s$ we set:
+\[
+   \lambda'(s) 
+        =
+   \begin{cases}
+       \lambda(s) \setminus  X & \text{whenever}\ \lambda(s) \neq \Sigma \\
+       \Sigma & \text{otherwise}
+   \end{cases}
+\]
+
+\end{definition}
+
+\begin{lemma}\label{compactness:lemma:1717}
+Let $\phi$ be an eremic formula and $X$ be a set such that no action
+occuring in $\phi$ is in $X$. Then:
+\[
+   (\LLL, s) \models \phi
+      \quad\text{iff}\quad
+   (\LLL \setminus X, s) \models \phi.
+\]
+\end{lemma}
+\begin{proof}
+By straightforward induction on the structure of $\phi$, using the
+fact that by assumption $X$ only contains actions not occuring in
+$\phi$.  \qed
+\end{proof}
+
+\begin{definition}
+Let $\CAL{M}$ be a first-order model for the signature $\SSS'$.
+We construct an eremic transition system
+$\CAL{M}^{\sharp} = (S, \rightarrow, \lambda)$.
+\begin{itemize}
+
+\item The actions $\Sigma$ are given by the $\CAL{M}$ interpretation of actions.
+
+\item The states $S$ are given by the $\CAL{M}$ interpretation of states.
+
+\item The reduction relation $s \TRANS{a} t$ holds exactly when
+  $\ARROWTWO{\CAL{M}}{s}{a}{t}$.
+
+\item The function $\lambda$ is given by the following clause:
+  \[
+     \lambda(s) 
+        =
+     \begin{cases} 
+       X & \text{whenever}\ X = \{a \ |\ \ALLOWED{\CAL{M}}{s}{a} \}\ \text{ is finite} \\
+       \Sigma & \text{otherwise}
+     \end{cases}
+  \]
+
+\end{itemize}
+
+\end{definition}
+
+\begin{lemma}
+If $\CAL{M}$ be a first-order model for $\SSS'$ such that $\CAL{M}
+\models \phi_{admis}$.  Then $\CAL{M}^{\sharp}$ is an eremic
+transition system with actions $\Sigma$.
+\end{lemma}
+\begin{proof}
+Immediate from the definitions.
+\qed
+\end{proof}
+
+\begin{theorem}[correspondence theorem]\label{correspondence:theorem:223}
+Let $\CAL{M}$ be a first-order model for the signature $\SSS'$ such that
+ $\CAL{M} \models \phi_{admis}$.
+Then we have for all eremic formulae $\phi$ with
+actions from $\Sigma$:
+\[
+   \CAL{M} \models_{x \mapsto s} \SEMBTWO{\phi}_x 
+        \quad  \text{iff} \quad 
+   (\CAL{M}^{\sharp} \setminus X, s) \models \phi.
+\]
+\end{theorem}
+Here $X$ is the set of all elements in the universe of $\CAL{M}$ interpreting
+actions that are not in $\Sigma$.
+\begin{proof}
+The proof proceeds by induction on the structure of $\phi$. \textbf{To do.}
+\end{proof}
+
+\begin{definition}
+Let $T$ be a set of eremic formulae, and $\MMM$ an eremic model.  We
+write $\MMM \models T$ provided $\MMM \models \phi$ for all $\phi \in
+T$.  We say $T$ is \emph{satisfiable} provided $\MMM \models T$.
+\end{definition}
+
+\begin{theorem}[Compactness of eremic logic]
+A set $T$ of eremic formulae is satisfiable iff each finite subset of
+$T$ is satisfiable.
+\end{theorem}
+\begin{proof}
+For the non-trivial direction, let $T$ be a set of eremic formulae
+such that any finite subset has an eremic model. Define 
+\[
+  \SEMBTWO{T} 
+     \ =\ 
+  \{\SEMBTWO{\phi}\ |\ \phi \in T\} 
+     \qquad\qquad
+  T^*
+     \ =\ 
+  \SEMBTWO{T} \cup \{\phi_{admis}\} \cup \{ \phi_a\ |\ a \in \Sigma\}
+\]
+which both are sets of first-order formulae. Clearly each finite subset $T'$ of 
+$T^*$ has a first-order model. Why? First consider the subset $T'_{EL}$ of $T'$
+which is given as follows.
+\[
+   T'_{EL} \ =\ \{ \phi \in T\ |\ \SEMBTWO{\phi} \in T' \}
+\]
+Since $T'_{EL}$ is finite, by assumption there is an eremic model 
+\[
+   (\LLL, s) \models T'_{EL}
+\]
+which means we can apply Theorem \ref{correspondence:theorem:223} to get
+\[
+   \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{T'_{EL}},
+\]
+By construction $T' \setminus \SEMBTWO{T'_{EL}} \subseteq
+\{\phi_{admis}\} \cup \{ \phi_a\ |\ a \in \Sigma\}$, so all we have to
+show for $T'$ to have a model is that
+\[
+    \SEMBTWO{\LLL} \models_{x \mapsto s} \{\phi_{admis}\} \cup \{ \phi_a\ |\ a \in \Sigma\},
+\]
+but that is a direct consequence of Lemma
+\ref{compactness:lemma:23399}.  That
+means each finite subset of $T^*$ has a model and by appealing to
+compactness of first-order many-sorted logic (which is an immediate
+consequence of compactenss of one-sorted first-order logic
+\cite{EndertonHB:matinttl}), we know there must be a first-order model
+$\CAL{M}$ of $T^*$, i.e.
+\[
+   \CAL{M} \models T^*.
+\]
+Since $\CAL{M} \models \phi_{admis}$ and $\CAL{M} \models \phi_a$ for all actions $a$, 
+we can apply Theorem \ref{correspondence:theorem:223} that also
+\[
+   (\CAL{M}^{\sharp} \setminus X, s) \models T
+\]
+where $X$ is the set of all actions in $\CAL{M}^{\sharp}$ that are not
+in $\Sigma$. Hence $T$ is satisfiable.
+ \qed
+\end{proof}
+
+
+
+
+
