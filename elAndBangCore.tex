@@ -36,6 +36,7 @@ $\fBang A$ says that the transitions coming out of the current state are \emph{a
 \martin{Explain why $\Sigma$ must be non-empty, and why $A$ in $!A$
   must be finite. What goes wrong if we drop those assumptions? Why do
   we allow $\Sigma$ be infinite anyway?}
+\richard{Good question. One reason why we currently assume $\Sigma$ is non-empty is that we define $\bot$ as $\MAY{a}\top \land \fBang\{\}$, for some action $a$. If $\Sigma$ is empty, then we cannot define $\bot$.}
 
 \end{definition}
 
