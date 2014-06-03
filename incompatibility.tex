@@ -25,14 +25,10 @@ $\mathcal{J}(\MMM)$ is the set of models that are incompatible with $\MMM$:
 \[
 \mathcal{J}(\MMM) = \{ \MMM_2 \; | \; \MMM \sqcap \MMM_2 = \bot \}
 \]
-We shall make use of three lemmas (proved in the Appendix):
+We shall make use of two lemmas (proved in the Appendix):
 \begin{lemma}
 \label{inc1}
 $\mbox{if }\phi \models \psi \mbox{ then } \SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$
-\end{lemma}
-\begin{lemma}
-\label{inc2}
-$\mbox{if }\MMM \MODELLEQ \MMM_2 \mbox{ then } \MMM_3 \sqcap \MMM \MODELLEQ \MMM_3 \sqcap \MMM_2$
 \end{lemma}
 \begin{lemma}
 \label{inc3}
@@ -45,16 +41,31 @@ $\phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\p
 
 \begin{proof}
 
-Left to right: Assume $\phi \models \psi$ and $\xi \in \mathcal{I}(\psi)$.  By
-Lemma \ref{inc1}, $\SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$.  From $\xi \in \mathcal{I}(\psi)$,
-$\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$.  By Lemma \ref{inc2}, $\SIMPL{\xi} \sqcap
-\SIMPL{\phi} \MODELLEQ \SIMPL{\xi} \sqcap \SIMPL{\psi}$ (substituting $\SIMPL{\xi}$
-for $x$, $\SIMPL{\phi}$ for $m$, and $\SIMPL{\psi}$ for $n$).  But if
-$\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$, and $\SIMPL{\xi} \sqcap \SIMPL{\phi}
-\MODELLEQ \SIMPL{\xi} \sqcap \SIMPL{\psi}$, then $\SIMPL{\xi} \sqcap \SIMPL{\phi} =
-\bot$ also, because the only element that is $\MODELLEQ \bot$ is $\bot$
-itself.  But if $\SIMPL{\xi} \sqcap \SIMPL{\phi} = \bot$, then $\xi \in
-\mathcal{I}(\phi)$.  \qed
+Left to right: Assume $\phi \models \psi$ and $\xi \in \mathcal{I}(\psi)$.  
+We need to show $\xi \in \mathcal{I}(\phi)$.
+By the definition of $\mathcal{I}$, if $\xi \in \mathcal{I}(\psi)$ then
+$\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$.
+If $\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$, then either
+\begin{itemize}
+\item $\SIMPL{\xi} = \bot$
+\item $\SIMPL{\psi} = \bot$
+\item Neither $\SIMPL{\xi}$ nor $\SIMPL{\psi}$ are $\bot$, but $\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$.
+\end{itemize}
+If $\SIMPL{\xi} = \bot$, then $\SIMPL{\xi} \sqcap \SIMPL{\phi} = \bot$ and we are done.
+If $\SIMPL{\psi} = \bot$, then as $\phi \models \psi$, by Lemma \ref{inc1}, $\SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$.
+Now the only model that is $\MODELLEQ \bot$ is $\bot$ itself, so $\SIMPL{\phi} = \bot$. Hence $\SIMPL{\xi} \sqcap \SIMPL{\phi} = \bot$, and we are done.
+The interesting case is when neither $\SIMPL{\xi}$ nor $\SIMPL{\psi}$ are $\bot$, but $\SIMPL{\xi} \sqcap \SIMPL{\psi} = \bot$.
+Then (by the definition of $\mathsf{consistent}$ in Section \ref{simpl}), either $\mathsf{out}(\SIMPL{\xi}) \nsubseteq \lambda(\SIMPL{\psi})$ or $\mathsf{out}(\SIMPL{\psi}) \nsubseteq \lambda(\SIMPL{\xi})$.
+In the first sub-case, if  $\mathsf{out}(\SIMPL{\xi}) \nsubseteq \lambda(\SIMPL{\psi})$, then there is some action $a$ such that $\xi \models \MAY{a} \top$ and $a \notin \lambda(\SIMPL{\psi})$.
+If $a \notin \lambda(\SIMPL{\psi})$ then $\psi \models ! A$ where $a \notin A$.
+Now $\phi \models \psi$, so $\phi \models ! A$.
+In other words, $\phi$ also entails the $A$-restriction that rules out the $a$ transition.
+So $\SIMPL{\xi} \sqcap \SIMPL{\phi} = \bot$ and $\xi \in \mathcal{I}(\phi)$.
+In the second sub-case, $\mathsf{out}(\SIMPL{\psi}) \nsubseteq \lambda(\SIMPL{\xi})$.
+Then there is some action $a$ such that $\psi \models \MAY{a} \top$ and $a \notin \lambda(\SIMPL{\xi})$.
+If $a \notin \lambda(\SIMPL{\xi})$ then $\xi \models ! A$ where $a \notin A$.
+But if $\psi \models \MAY{a} \top$ and $\phi \models \psi$, then $\phi \models \MAY{a} \top$ and $\phi$ is also incompatible with $\xi$'s $A$-restriction.
+So $\SIMPL{\xi} \sqcap \SIMPL{\phi} = \bot$ and $\xi \in \mathcal{I}(\phi)$.
 
 Right to left: assume, for reductio, that $\MMM \models \phi$ and $\MMM \nvDash
 \psi$. we will show that $\mathcal{I}(\psi) \nsubseteq \mathcal{I}(\phi)$.
@@ -104,6 +115,6 @@ Clearly, $\MMM_2 \sqcap \SIMPL{\psi'} = \bot$
 because of the additional $a$-transition, and given that $\psi \models
 \psi'$, it follows that $\MMM_2 \sqcap \SIMPL{\psi} = \bot$. Also, $\MMM_2 \sqcap
 \SIMPL{\phi} \neq \bot$, because $\MMM_2 \MODELLEQ \MMM$ and $\MMM \models \phi$.
-
+\qed
 
 \end{proof}
