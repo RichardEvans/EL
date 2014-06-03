@@ -1,25 +1,23 @@
-\section{Using Eremic Logic as a Knowledge Representation Language}\label{kr}
+\section{Using \ELFULL{} as a Knowledge Representation Language}\label{kr}
 
-Eremic Logic has been found to be a highly-ergonomic language for the
+\ELFULL{} has been found to be a highly-ergonomic language for the
 representation of complex simulational state.  It has been used as the
 representation language for a large, complex, highly-dynamic
 multi-agent simulation \cite{evans-and-short}.  The entire world state
 is stored as a set of formulae - all other aspects of world state are
-transient and computed as needed.  The entire world state is stored as
-a Labelled Rooted Tree, using the non-monotonic update mechanism
-described above.  The application in which Eremic Logic has been
+transient and computed as needed.  The set of true sentences are represented in a Labeled Transition System, using a non-monotonic update mechanism.  The application in which \ELABR{} has been
 proven is not a toy academic problem, but an industrial-sized
 application involving tens of thousands of rules and tens of thousands
 of atomic facts.
 
-When applying it in a large knowledge base, Eremic Logic has been found to have a number of advantages over traditional predicate logic as a language to represent simulational state:
+When applying it in a large knowledge base, \ELFULL{} has been found to have a number of advantages over traditional predicate logic as a language to represent simulational state:
 \begin{itemize}
 \item
-The notion of a sub-tree in Eremic Logic gives us a natural way to represent \emph{objects}
+The notion of a sub-tree in \ELABR{} gives us a natural way to represent \emph{objects}
 \item
 The update rule (described above) means that \emph{garbage collection} of invalid data happens automatically.
 \item
-Eremic logic allows a simpler less error-prone way of specifying \emph{postconditions} of actions
+\ELABR{} allows a simpler less error-prone way of specifying \emph{postconditions} of actions
 \item
 The $!$ operator gives additional information to the type-checker, allowing an author to specify her intent more precisely
 \item
@@ -48,7 +46,7 @@ A sub-tree can be treated as an individual via its prefix.
 The whole sub-tree can be removed in one fell swoop by deleting its associated prefix.
 So we can e.g. remove Brown's friends just by deleting the prefix ``brown * friends\'.
 (Compare this with Prolog - where it is much harder to remove all formulae containing a particular symbol).
-A sub-tree of formulae is the Eremic Logic equivalent of an \emph{object} in an object-oriented programming language.
+A sub-tree of formulae is the \ELABR{} equivalent of an \emph{object} in an object-oriented programming language.
 
 The tree-structure of formulae also allows us to express the \emph{life-time of data} in a natural way. 
 If we wish a piece of data $d$ to exist for just the duration of a proposition $t$, then we make $t$ be a sub-expression of $d$. 
@@ -66,7 +64,7 @@ So if, for example, Brown is married to Elizabeth, then the database would conta
 \begin{verbatim}
 brown * married ! elizabeth
 \end{verbatim}
-In Eremic Logic, if we want to find out whether Brown is married, we can query the sub-formula directly -  we just ask if 
+In \ELFULL{}, if we want to find out whether Brown is married, we can query the sub-formula directly -  we just ask if 
 \begin{verbatim}
 brown * married
 \end{verbatim}
@@ -82,7 +80,7 @@ State $b$ might be represented as:
 \begin{verbatim}
 s ! b \star (y1 \land y2 \land y3)
 \end{verbatim}
-Now if we are in state $a$, and we switch to state $b$ by inserting $s \fBang b$ into the database, all the local data from  state $a$ is \emph{automatically} removed from the database according to the update rules for Eremic Logic. Everything is cleaned up \emph{automatically}.
+Now if we are in state $a$, and we switch to state $b$ by inserting $s \fBang b$ into the database, all the local data from  state $a$ is \emph{automatically} removed from the database according to the update rules for \ELFULL{}. Everything is cleaned up \emph{automatically}.
 
 \subsection{Simpler Postconditions}
 When expressing the pre- and post-conditions of an action, planners based on predicate logic\footnote{An early example is STRIPS \cite{strips}.} have to explicitly describe the propositions that are removed when an action is performed:
@@ -94,7 +92,7 @@ action move(A, X, Y)
         add: at(A, Y) 
         remove: at(A, X)
 \end{verbatim}
-Here, we need to explicitly state that when $A$ moves from $X$ to $Y$, $A$ is no longer at $X$. It might seem obvious to us that if $A$ is now at $Y$, he is no longer at $X$ - but we need to explicitly tell the system this. This is unnecessary, cumbersome and error-prone. In Eremic Logic, by contrast, the exclusion operator means we do not need to specify the facts that are no longer true:
+Here, we need to explicitly state that when $A$ moves from $X$ to $Y$, $A$ is no longer at $X$. It might seem obvious to us that if $A$ is now at $Y$, he is no longer at $X$ - but we need to explicitly tell the system this. This is unnecessary, cumbersome and error-prone. In \ELFULL{}, by contrast, the exclusion operator means we do not need to specify the facts that are no longer true:
 \begin{verbatim}
 action move * A * X * Y
     preconditions
@@ -115,7 +113,7 @@ This exclusion-information is available to the type-checker, which can rule out 
 
 Some modern logic-programming languages are starting to add the ability to specify uniqueness properties of predicates \cite{mercury}. 
 But they treat uniqueness properties as meta-linguistic predicates. 
-Eremic Logic is the first language to treat uniqueness as a first-class element of the language.
+\ELFULL{} is the first language to treat uniqueness as a first-class element of the language.
 
 \subsection{Using the $!$ Operator to Optimize Logic Programs}
 Suppose, for example, we want to find all married couples who are currently at home.
@@ -128,8 +126,8 @@ married_couple_at_home(X, Y) :-
 \end{verbatim}	
 Rules like this create a large search-space because we need to find all instances of $at\_home(X)$ and all instances of  $at\_home(Y)$ and take the cross-product \cite{smith-and-genesereth}. If there are $n$ instances of $at\_home$, then we will be searching $n^2$ instances of $(x,y)$ substitutions.
 
-If we express the rule in Eremic Logic, the compiler is able to use the extra information expressed in the $!$ operator to reorder the clauses to find the result significantly faster.
-Since someone can only have a single spouse at any moment, the rule is expressed in Eremic Logic as:
+If we express the rule in \ELFULL{}, the compiler is able to use the extra information expressed in the $!$ operator to reorder the clauses to find the result significantly faster.
+Since someone can only have a single spouse at any moment, the rule is expressed in \ELFULL{} as:
 \begin{verbatim}
 married_couple_at_home * X * Y :-
     at_home * X,

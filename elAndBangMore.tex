@@ -1,13 +1,13 @@
-\section{Further properties of the EL$[\AND, !]$ fragment}
+\section{Further properties of \ELFULL{}}
 
-In Section \ref{coreEL} we presented the core fragment of eremic logic
-and established key properties like completeness of the proof rules
-and compactness of satisfaction relation. This section investigates
-the core fragment further: first we give a linear-time decision
-pocedure. Then we give a logical characterisation of bisimilarity,
+In Section \ref{coreEL} we presented \ELABR{}
+and established the key properties of completeness and compactness.
+This section investigates
+the logic further: first we give a linear-time decision
+procedure. Then we give a logical characterisation of bisimilarity,
 following ideas from the theory of process calculi
 \cite{HennessyM:alglawfndac}.  The linear-time decision complexity is
-an indication that eremic logic can be useful as a query language in
+an indication that \ELABR{} can be useful as a query language in
 knowledge representation. Section \ref{kr} investigates this matter in
 more detail. The logical characterisation of a semantical equivalence
 on the other hand is an indication that our syntactic and semantical
@@ -15,10 +15,10 @@ constructs cohere with each other.
 
 \subsection{Decision Procedure}
 
-\NI Since EL has no connectives for disjunction or implication, its
+\NI Since \ELABR{} has no connectives for disjunction or implication, its
 decision procedure is straightforward and efficient.  Although there
 are an infinite number of models which satisfy any expression, the
-satisfying models form a lattice with a least upper bound.  The $\mu$
+satisfying models form a lattice with a least upper bound.  The $\SIMPL$
 function defined above gives us the minimal model satisfying an
 expression.  Using this least upper bound, we can calculate entailment
 by checking a \emph{single model}.  To decide whether $p \models q$,
@@ -63,7 +63,7 @@ of $\psi$, so computing whether $\phi \models \psi$ is $O(|\phi|+|\psi|)$.
 \martin{Can we say more about the decision procedure? Example? Talk
   about Haskell code?}
 
-\subsection{Hennessy-Milner Theorem for EL}
+\subsection{Hennessy-Milner Theorem for \ELABR{}}
 
 Bisimulations are an important concept in process theory and modal
 logics \cite{SangiorgiD:intbisac}. Bisimulations give a notion of
@@ -73,8 +73,7 @@ is helpful when working with infinite transition systems.
 
 Elementary equivalence is a natural notion of equality of models that
 can be defined for any logic: two models are \emph{elementarily
-  equivalent} exactly when they make the same formulae true. In eremic
-logic, this definition looks as follows.
+  equivalent} exactly when they make the same formulae true. In \ELABR{}, this definition looks as follows.
 
 \begin{definition}
 Two states $w$ and $w'$ are {\bf equivalent}, written $w \equiv w'$,
@@ -84,7 +83,7 @@ iff $\{\phi \; | \; w \models \phi\} = \{\phi \; | \; w' \models
 
 \NI A natural question now is how bisimilarity and equivalence
 relate. We now show that the two notions of equivalence coincide in
-eremic logic.
+\ELFULL{}.
 
 \begin{theorem}
 \label{hennessymilnertheorem}
@@ -158,9 +157,9 @@ Now consider the formula:
 As each $y'_i \models \phi_i$, $x' \models [a] (\phi_1 \lor ... \lor \phi_n)$, but $x$ does not satisfy this formula, as each $\phi_i$ is not satisfied at $y$.
 Since there is a formula which $x$ and $x'$ do not agree on, $x$ and $x'$ are not equivalent, contradicting our initial assumption.
 
-But this proof cannot be used in EL because it relies on a formula $[a] (\phi_1 \lor ... \lor \phi_n)$ which cannot be expressed in EL: 
-EL does not include the box operator or disjunction, so this formula is ruled out on two accounts.
-But we can massage it into a form which is more amenable to EL's expressive resources:
+But this proof cannot be used in \ELABR{} because it relies on a formula $[a] (\phi_1 \lor ... \lor \phi_n)$ which cannot be expressed in \ELABR{}: 
+\ELABR{} does not include the box operator or disjunction, so this formula is ruled out on two accounts.
+But we can massage it into a form which is more amenable to \ELABR{}'s expressive resources:
 \begin{eqnarray*}
 [a] (\phi_1 \lor ... \lor \phi_n) & = & \neg \langle a \rangle \neg (\phi_1 \lor ... \lor \phi_n)  \\
 	& = & \neg \langle a \rangle (\neg \phi_1\AND ... \AND \neg \phi_n) 
@@ -170,12 +169,12 @@ So we have the following formula, true in $x$ but not in $x'$:
 \[
  \langle a \rangle (\neg \phi_1\AND ... \AND \neg \phi_n)
  \]
-The reason for massaging the formula in this way is so we can express it in EL (which does not have the box operator or disjunction).
-At this moment, the revised formula is \emph{still} outside EL because it uses negation. 
-But we are almost there: the remaining negation is in innermost scope, and innermost scope negation can be simulated in EL by the $!$ operator. 
+The reason for massaging the formula in this way is so we can express it in \ELABR{} (which does not have the box operator or disjunction).
+At this moment, the revised formula is \emph{still} outside \ELABR{} because it uses negation. 
+But we are almost there: the remaining negation is in innermost scope, and innermost scope negation can be simulated in \ELABR{} by the $!$ operator. 
 
 We are assuming, for reductio, that of the $y'_1, ..., y'_n$, there is no $y'_i$ such that $y \equiv y'_i$.
-But in EL without negation, we cannot assume that each $y'_i$ has a formula $\phi_i$ which is satisfied by $y'_i$ but not by $y$ - it might instead be the other way round: $\phi_i$ may be satisfied by $y$ but not by $y'_i$. So, without loss of generality, assume that $y'_1, ..., y'_m$ fail to satisfy formulae $\phi_1, ..., \phi_m$ which $y$ does satisfy, and that $y'_{m+1}, ..., y'_n$ satisfy formulae $\phi_{m+1}, ..., \phi_n$ which $y$ does not:
+But in \ELABR{} without negation, we cannot assume that each $y'_i$ has a formula $\phi_i$ which is satisfied by $y'_i$ but not by $y$ - it might instead be the other way round: $\phi_i$ may be satisfied by $y$ but not by $y'_i$. So, without loss of generality, assume that $y'_1, ..., y'_m$ fail to satisfy formulae $\phi_1, ..., \phi_m$ which $y$ does satisfy, and that $y'_{m+1}, ..., y'_n$ satisfy formulae $\phi_{m+1}, ..., \phi_n$ which $y$ does not:
 \begin{eqnarray*}
 y \models \phi_i \mbox{ and } y'_i \nvDash \phi_i & & i = 1 \mbox{ to } m  \\
 y \nvDash \phi_j \mbox{ and } y'_j \models \phi_j & & j = m+1 \mbox{ to } n 
@@ -239,17 +238,16 @@ $y \nvDash \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \ra
 \NI The resulting formula is true in $y$ but not in $y'_j$.
 
 
-\subsection{Comparing EL with Hennessy-Milner Logic}
+\subsection{Comparing \ELABR{} with Hennessy-Milner Logic}
 
 Section \ref{standardTranslation} investigated the relationship
-between eremic and first-order logic. Now we compare eremic logic with
+between \ELABR{} and first-order logic. Now we compare \ELABR{} with
 a logic that is much closer in spirit: Hennessy-Milner logic
 \cite{HennessyM:alglawfndac}, a modal logic designed to reason about
-process calculi. Indeed the present shape of eremic logic owes to
-Hennessy-Milner logic. We now contrast both by translation from eremic
-logic into Hennessy-Milner logic \martin{why not the other way?}. 
+process calculi. Indeed the present shape of \ELABR{} owes to
+Hennessy-Milner logic. We now contrast both by translation from \ELABR{} into Hennessy-Milner logic \martin{why not the other way?}. 
 This will reveal more clearly than the translation into
-first-order logic where eremic logic is novel.
+first-order logic where \ELABR{} is novel.
 
 Given a set $\Sigma$ of symbols, with $s$ ranging over
 $\Sigma$, the \emph{formulae} of Hennessy-Milner logic are given
@@ -277,20 +275,20 @@ w) \models \phi$ is given by the following inductive clauses.
 \end{array}
 \]
 
-\NI We can now see the two differences between eremic logic, and
+\NI We can now see the two differences between \ELFULL{}, and
 Hennessy-Milner logic, one syntactic, the other semantic.
 
 \begin{itemize}
 
-\item Syntactically, EL has the transition-restriction operator ($!$)
+\item Syntactically, \ELABR{} has the transition-restriction operator ($!$)
   instead of logical negation ($\neg$).
 
-\item Semantically, an EL model has an additional state-labelling,
+\item Semantically, an \ELABR{} model has an additional state-labelling,
   describing the allowable transitions from each vertex.
 
 \end{itemize}
 
-\NI We translate formulae of EL into HML using the function $t$:\martin{maybe use $\SEMB{X}$ instead?}
+\NI We translate formulae of \ELABR{} into HML using the function $t$:\martin{maybe use $\SEMB{X}$ instead?}
 
 \begin{eqnarray*}
   t(\top) & \ = \ & \top  \\
@@ -303,8 +301,8 @@ Hennessy-Milner logic, one syntactic, the other semantic.
 formula will be an infinitary formula.  If $\Sigma$ is finite,
 then the size\martin{Define the size of a formula. Maybe when formulae
   are defined.} of the HML formula will be of the order of $n *
-| \Sigma |$ larger than the original EL formula (where $n$ is the
-number of $!$ operators occurring in the EL formula).
+| \Sigma |$ larger than the original \ELABR{} formula (where $n$ is the
+number of $!$ operators occurring in the \ELABR{} formula).
 
 \martin{Say something more interesting about this translation!}
 
@@ -333,14 +331,14 @@ can distinguish between these models via the formula:
    \langle a \rangle \neg \langle c \rangle \top
 \]
 
-\NI Similarly, EL is able to distinguish between these models via the
+\NI Similarly, \ELABR{} is able to distinguish between these models via the
 formula:
 
 \[
   \langle a \rangle ! \{b\}
 \]
 
-\NI EL, also, has the expressive capacity to distinguish between
+\NI \ELABR{}, also, has the expressive capacity to distinguish between
 non-bisimilar models. If the LTSs are finitely-branching, it can
 simulate negation (in innermost scope) via the width restriction
 operator !

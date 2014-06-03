@@ -1,9 +1,9 @@
-\section{Core eremic logic: the EL$[\AND, !]$ fragment}\label{coreEL}
+\section{\ELFULL}\label{coreEL}
 
-In this section we introduce the syntax and semantics of eremic logic.
+In this section we introduce the syntax and semantics of \ELFULL{} (hereafter \ELABR{}) .
 Then we establish key completeness of the the proof rules and prove a
 the compactness theorem via a translation into first-order logic. We
-focus on a small core of eremic logic, leaving extensions to later
+focus on a small core of \ELABR{}, leaving extensions to later
 section.
 
 \subsection{Syntax}
@@ -13,7 +13,7 @@ section.
 \begin{definition} Let $\Sigma$ be a non-empty set of \emph{actions}.\martin{Sketch why we require $\Sigma$ to be non-empty.}
 Actions are ranged over by $a, a', a_1, b, ...$, and $A$ ranges over
 finite subsets of $\Sigma$. The \emph{formulae}, ranged over by $\phi,
-\psi, \xi ...$, of the \emph{EL$[\AND, !]$-fragment} are given by the
+\psi, \xi ...$, of \ELABR{} are given by the
 following grammar.
 
 \begin{GRAMMAR}
@@ -43,7 +43,7 @@ specified in $A$.
 
 \subsection{Semantics}
 
-\NI We now give the semantics of EL$[\AND, !]$-formulae using
+\NI We now give the semantics of \ELABR{} formulae using
 transition systems, as described in Section \ref{preliminaries}, but
 augmented with labels on states.
 
@@ -102,7 +102,7 @@ the formula $\MAY{a}{\MAY{b}{\TRUE}}$. \martin{Add more examples/discussion.}
 
 \input{figure:elAndBangRules}
 
-\NI We now present the inference rules for eremic logic. 
+\NI We now present the inference rules for \ELFULL{}. 
 
 \begin{definition} Judgements are of the following form.
 \[
@@ -113,9 +113,9 @@ no axioms.
 \end{definition}
 
 \NI Note that $\phi$ and $\psi$ are single formulae, not sequents.  By
-using single formalae, we can avoid structural inference rules.  EL
+using single formulae, we can avoid structural inference rules.  \ELABR{}
 proof rules can be grouped in two parts: standard rules and rules
-unique to EL.  Standard rules are [\RULENAME{Identity}],
+unique to \ELABR{}.  Standard rules are [\RULENAME{Identity}],
 [\RULENAME{$\top$-Right}], [\RULENAME{$\bot$-Left}],
 [\RULENAME{Transitivity}], [\RULENAME{$\AND$-Left 1}],
 [\RULENAME{$\AND$-Left 2}] and [\RULENAME{$\AND$-Right}] hardly need
@@ -246,7 +246,7 @@ premise. \martin{add an intuitive explanation for [\RULENAME{!-right 2}]!}!
 \subsection{Example inferences}
 
 We give some example inferences that illustrate how EL is used in
-practise.
+practice.
 \martin{Add some example assertions here, for example some of those we
   use later.}
   
@@ -390,7 +390,7 @@ model-theoretic point of view how classical and eremic logic
 differ. In classical logic the theory of each model is complete, and
 $\THEORY{\CAL{M}} \subseteq \THEORY{\CAL{N}}$ already implies that
 $\THEORY{\CAL{M}} = \THEORY{\CAL{N}}$, i.e.~$\CAL{M}$ and $\CAL{N}$
-are elementarily equivalent. Eremic logic's lack of negation changes
+are elementarily equivalent. \ELFULL{}'s lack of negation changes
 this drastically, and gives $\MODELLEQ$ the structure of a non-trivial
 complete lattice as we shall demonstrate now.
 
@@ -670,7 +670,7 @@ also have, by Lemma \ref{lemma:completeness:5}, $\phi \judge
 \CHAR{\SIMPL{\phi}} $.  So by transitivity, we have $\phi \judge \psi$.  \qed
 
 
-\subsection{The standard translation from  eremic logic into 
+\subsection{The standard translation from  \ELABR{} into 
             first-order logic}\label{standardTranslation}
 
 We now present a translation from EL to first-order logic. We have two
@@ -780,14 +780,14 @@ issue is that not every first-order model of our first-order signature
 corresponds to an eremic model. The problem is that eremic models have
 constraints that are not enforced by our signature, e.g.~$s \TRANS{a}
 t$ implies that $a \in \lambda(s)$. Such models are 'junk' from the
-point of view of eremic logic. 
+point of view of \ELABR{}. 
 
 We deal with this problem following ideas from modal logic
 \cite{BlackburnP:modlog}: we add a translation $\SEMB{\LLL}$ for
 eremic transition systems, and then prove the following theorem.
 
 \begin{theorem}[correspondence theorem]\label{correspondence:theorem:1}
-Let $\phi$ be an eremic formula and $\MMM = (\LLL, s)$ an eremic
+Let $\phi$ be an \ELABR{} formula and $\MMM = (\LLL, s)$ an eremic
 model.
 \[
    \MMM \models \phi \quad  \text{iff} \quad \SEMB{\LLL} \models_{x \mapsto s} \SEMB{\phi}_x.
@@ -873,7 +873,7 @@ definitions.
 
 \NI First-order logic has compactness: a set $S$ of sentences has a
 model exactly when every finite subset of $S$ does \cite[Chapter
-  4.3]{EndertonHB:matinttl}. What about eremic logic? 
+  4.3]{EndertonHB:matinttl}. What about \ELABR{}? 
 
 We can prove compactness of modal logics using the standard
 translation from modal to first-order logic \cite{BlackburnP:modlog}:
@@ -885,10 +885,10 @@ obtain a first-order model of the translated modal formulae. Then we
 translate that first-order model back to modal logic, obtaining a
 model for the original modal formulae, as required.
 
-Unfortunately we cannot do the same with the translation from eremic
+Unfortunately we cannot do the same with the translation from \ELABR{}
 to first-order logic presented in the previous section. The problem
 are the first-order models termed 'junk' above: they do not correspond
-to eremic transistion systems.  For example the constraint $s
+to eremic transition systems.  For example the constraint $s
 \TRANS{a} t$ implies $a \in \lambda(s)$ might be violated. After all,
 merely having signature $\SSS$ is not strong enough a constraint. The
 target language of the translation from the previous section is not
@@ -897,12 +897,12 @@ constraints.  As we have no reason to belive that the first-order
 model whose existence is guarnateed by compactness isn't 'junk', we
 cannot use this translation.
 
-We solve this problem with a second translation from eremic to
+We solve this problem with a second translation from \ELABR{} to
 first-order logic, this time into a more expressive fragment were we
 can constrain first-order models enough to ensure that they always can
-be translated back to eremic logic.
+be translated back to \ELFULL{}.
 
-The second embedding translates eremic logic to two-sorted first-order
+The second embedding translates \ELFULL{} to two-sorted first-order
 logic. The many-sorted first-order signature $\SSS'$ is given as follows.
 \begin{itemize}
 
@@ -929,7 +929,7 @@ symbols.  The intended interpretation should should be
 clear.\martin{Phrase this better.}
 
 With the target logic in place, we can now present a second encoding
-$\SEMBTWO{\phi}_x$ of eremic formulae.
+$\SEMBTWO{\phi}_x$ of \ELABR{} formulae.
 
 \begin{eqnarray*}
   \SEMBTWO{\top}_x & \ = \ & \top
@@ -991,7 +991,7 @@ as follows.
 
 
 \begin{theorem}[correspondence theorem]\label{correspondence:theorem:2}
-Let $\phi$ be an eremic formula and $\MMM = (\LLL, s)$ an eremic
+Let $\phi$ be an \ELABR{} formula and $\MMM = (\LLL, s)$ an eremic
 model.
 \[
    \MMM \models \phi \quad  \text{iff} \quad \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{\phi}_x.
@@ -1031,14 +1031,13 @@ Finally $!A$.
 \qed
 \end{proof}
 
-\NI We now use the translation $\SEMBTWO{\phi}_x$ to show that eremic
-logic must also have compactness. The key steps in the proof are
+\NI We now use the translation $\SEMBTWO{\phi}_x$ to show that \ELABR{} must also have compactness. The key steps in the proof are
 simple, following standard techniques from modal logic
 \cite{BlackburnP:modlog}:
 
 \begin{enumerate}
 
-\item Choose a set $T$ of eremic formulae, such that each finite
+\item Choose a set $T$ of \ELABR{} formulae, such that each finite
   subset $T'$ of $T$ has an eremic model $(\LLL, s)$.
 
 \item Using the translations gives a set $\SEMBTWO{T} =
@@ -1118,7 +1117,7 @@ and $X$ a set, condidered to contain actions. The \emph{restriction of
 \end{definition}
 
 \begin{lemma}\label{compactness:lemma:1717}
-Let $\phi$ be an eremic formula and $X$ be a set such that no action
+Let $\phi$ be an \ELABR{} formula and $X$ be a set such that no action
 occuring in $\phi$ is in $X$. Then:
 \[
    (\LLL, s) \models \phi
@@ -1172,7 +1171,7 @@ Immediate from the definitions.
 \begin{theorem}[correspondence theorem]\label{correspondence:theorem:223}
 Let $\CAL{M}$ be a first-order model for the signature $\SSS'$ such that
  $\CAL{M} \models \phi_{admis}$.
-Then we have for all eremic formulae $\phi$ with
+Then we have for all \ELABR{} formulae $\phi$ with
 actions from $\Sigma$:
 \[
    \CAL{M} \models_{x \mapsto s} \SEMBTWO{\phi}_x 
@@ -1187,17 +1186,17 @@ The proof proceeds by induction on the structure of $\phi$. \textbf{To do.}
 \end{proof}
 
 \begin{definition}
-Let $T$ be a set of eremic formulae, and $\MMM$ an eremic model.  We
+Let $T$ be a set of \ELABR{} formulae, and $\MMM$ an eremic model.  We
 write $\MMM \models T$ provided $\MMM \models \phi$ for all $\phi \in
 T$.  We say $T$ is \emph{satisfiable} provided $\MMM \models T$.
 \end{definition}
 
-\begin{theorem}[Compactness of eremic logic]
-A set $T$ of eremic formulae is satisfiable iff each finite subset of
+\begin{theorem}[Compactness of \ELFULL{}]
+A set $T$ of \ELABR{} formulae is satisfiable iff each finite subset of
 $T$ is satisfiable.
 \end{theorem}
 \begin{proof}
-For the non-trivial direction, let $T$ be a set of eremic formulae
+For the non-trivial direction, let $T$ be a set of \ELABR{} formulae
 such that any finite subset has an eremic model. Define 
 \[
   \SEMBTWO{T} 
