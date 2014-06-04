@@ -1,5 +1,50 @@
 \section{Introduction}\label{introduction}
 
+It can seem, as we survey the burgeoning variety of logical systems, that there are almost as many distinct logics as there are distinct logicians.
+Why do we tolerate so many different logical systems?
+What are they all \emph{for}?
+
+The reason why we allow such a plurality of logical systems is something like this: 
+for every ``logical''\footnote{In this paper, we take for granted an intuitive understanding that some concepts (such as implication, negation, necessity) are logical while others (such as happiness, inflation, gravity) are not. TODO add references to philosophical literature on what is a logical concept e.g. Gareth Evans Some Remarks on Logical Form, Robert Brandom Between Saying and Doing.} concept, there should be a logic that expresses it naturally.
+But each logic makes some concepts easy to express, and others harder - or impossible.
+So we need a variety of logics, each of which is tailored to a particular subset of the logical concepts.
+
+Each logic allows some concepts to be represented naturally, others somewhat less naturally, while some cannot be represented at all.
+For example, first order predicate logic is designed to express quantificational concepts.
+Multiply quantified sentences can be expressed concisely and unambiguously.
+It can capture the ambiguity in ``Every man loves a woman'' with admirable succinctness:
+\begin{eqnarray}
+\forall X. man(X) \rightarrow \exists Y . loves(X,Y) \nonumber \\
+\exists Y. \forall X. man(X) \rightarrow loves(X,Y) \nonumber
+\end{eqnarray}
+First order logic can use its quantificational machinery to express uniqueness. 
+To say that there is exactly one King of France, and that he is bald, we can write:
+\[
+\exists X. king(france, X) \land bald(X) \land \forall Y. king(france, Y) \rightarrow Y = X
+\]
+Although uniqueness \emph{can} be expressed, the expression is arguably somewhat convoluted. 
+To express the simple idea that a two-place predicate is unique in its second argument, we need to invoke relatively complex machinery: a universal quantifier and the identity relation (with the associated inference schema of the Indiscernibility of Identicals).
+As well as the concepts that can only be expressed with a certain awkwardness, there are also concepts that predicate logic cannot express at all: strict implication, necessity, defeasible implication.
+Each logic divides the set of concepts into three concentric rings: the inner ring is the concepts that can be handled ergonomically; the middle ring is the concepts that can be handled, albeit with some difficulty or awkwardness; the outer ring is the concepts that cannot be expressed at all.
+
+
+
+\subsection{Summary}
+To summarise the argument so far:
+\begin{itemize}
+\item
+For every logical concept, we should provide a logic in which it can be expressed naturally (ergonomically)
+\item
+Exclusion is a basic logical concept
+\item
+First order logic does not express exclusion naturally
+\item
+Therefore, we should look for another logic in which exclusion can be expressed naturally
+\end{itemize}
+
+
+
+
 \NI Logic is the study of formally valid inferences. Based on work
 going back at least two millenia, first-order logic was first fully
 formalised by G.~Frege at the end of the 19th century
