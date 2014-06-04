@@ -154,6 +154,14 @@ c\}$.
 
 \martin{We could Add more examples, maybe ones that we do something with later.}
 
+\begin{definition}
+Let $\Gamma$ be an arbitrary set of formulae. We say \emph{$\Gamma$
+  semantically implies $\phi$}, written $\Gamma \models \phi$,
+provided for all eremic models $\MMM$ if it is the case that $\MMM
+\models \Gamma$ implies $\MMM \models \phi$. 
+\end{definition}
+
+
 \subsection{Inference Rules}
 
 \input{figure:elAndBangRules}
@@ -233,35 +241,40 @@ The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
 deferred to Section \ref{completenessProof}. 
 
 \begin{definition}
-Let $\Gamma$ be an arbitrary set of formulae. We say \emph{$\Gamma$
-  semantically implies $\phi$}, written $\Gamma \models \phi$,
-provided for all eremic models $\MMM$ if it is the case that $\MMM
-\models \Gamma$ implies $\MMM \models \phi$. We write $\phi_1, ...,
+We write $\phi_1, ...,
 \phi_n \judge \psi$ whenever $\BIGAND_{i}\phi_i \judge \psi$.  For
 arbitrary sets $\Gamma$ of formulae, we write $\Gamma \judge \psi$
 provided there are $\phi_1, ..., \phi_n \in \Gamma$ such that $\phi_1,
 ..., \phi_n \judge \psi$.
 \end{definition}
 
-\martin{TO DO: show completeness in the sense of $\Gamma \models
-  \phi$, then also $\Gamma \judge \phi$.}
+\begin{corollary}\label{theorem:elAndBang:soundComplete}
+The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
+\begin{enumerate}
+
+\item(Soundness) $\Gamma \judge \psi$ implies $\Gamma \models \psi$.
+
+\item (Completeness) $\Gamma \models \psi$ implies $\Gamma \judge \psi$.\martin{I don't know how to prove it!}
+
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+For soundness assume that $\MMM$ is a model with $\MMM \models
+\Gamma$.  We know that $\Gamma \judge \psi$ means that we can find a
+finite number of formulae $\phi_i \in \Gamma$ with $\AND_i \phi \judge
+\psi$.  By soundness then also $\AND_i \phi \models \psi$, hence
+clearly $\Gamma \models \psi$.
+
+For completeness \martin{To do!}
+\end{proof}
 
 \subsection{\RULENAME{!-Left} and \RULENAME{!-Right}}
-We have an inference rule for weakening $!$ on the right hand side:
 
-\[
-     \TWOPREMISERULENAMEDRIGHT
-     {
-       \phi \judge !A
-     }
-     {
-       A \subseteq A'
-     }
-     {
-       \phi \judge!A'
-     }{!-Right 1}
-\]
-But we do not need a corresponding inference rule for strengthening $!$ on the left hand side :
+The rules [\RULENAME{!-Right 1}, \RULENAME{!-Right 2}] jointly express
+how the subset relation $\subseteq$ on sets of symbols relates to
+provability. We don't need a corresponding rule \RULENAME{!-Left}?
+for strengthening $!$ on the left hand side
 \[
    \TWOPREMISERULENAMEDRIGHT
      {
@@ -276,20 +289,18 @@ But we do not need a corresponding inference rule for strengthening $!$ on the l
 \]
 because the latter can be derived from the former:        
 \begin{center}
-\AxiomC{$\phi \AND\, !A'  \judge  \phi \AND\, !A'$}
-\AxiomC{$A' \subseteq A$}
-\LeftLabel{\RULENAME{!-Right 1}}
-\BinaryInfC{$\phi \AND\, !A'  \judge  \phi \AND\, !A$}
-\AxiomC{$\phi \AND\, !A  \judge  \psi$}
-\LeftLabel{Transitivity: \quad}
-\BinaryInfC{$\phi \AND\, !A'  \judge  \psi$}
-\DisplayProof
+  \AxiomC{$\phi \AND\, !A'  \judge  \phi \AND\, !A'$}
+  \AxiomC{$A' \subseteq A$}
+  \LeftLabel{\RULENAME{!-Right 1}}
+  \BinaryInfC{$\phi \AND\, !A'  \judge  \phi \AND\, !A$}
+  \AxiomC{$\phi \AND\, !A  \judge  \psi$}
+  \LeftLabel{Transitivity: \quad}
+  \BinaryInfC{$\phi \AND\, !A'  \judge  \psi$}
+  \DisplayProof
 \end{center}
+\martin{inconsisten formating of rule names.}
 
-The three rules [\RULENAME{!-Left}, \RULENAME{!-Right 1},
-  \RULENAME{!-Right 2}] jointly express how the subset relation
-$\subseteq$ on sets of symbols relates to provability. Readers
-familiar with object-oriented programming will recognise
+\NI Readers familiar with object-oriented programming will recognise
 [\RULENAME{!-Left}] as contra-variant subtyping and [\RULENAME{!-Right
     1}] as covariant subtyping. Honda \cite{HondaK:thetypftpc}
 develops a full theory of subtyping based on similar ideas.  All three
@@ -297,14 +308,13 @@ rules embody the intuition that whenever $A \subseteq A'$ then
 asserting that $!A'$ is as strong as, or a stronger statement than
 $!A$. [\RULENAME{!-Left}] simply states that we can always strengthen
 our premise, while [\RULENAME{!-right 1}] allows us to weaken the
-premise. \martin{add an intuitive explanation for [\RULENAME{!-right 2}]!}!
+premise.
 
 \subsection{Example inferences}
 
 We give some example inferences that illustrate how EL is used in
-practice.
-\martin{Add some example assertions here, for example some of those we
-  use later.}
+practice.  \martin{Add some example assertions here, for example some
+  of those we use later.}
   
 \subsection{Proof of completeness}\label{completenessProof}
 
@@ -380,8 +390,7 @@ $\SIM^{-1}$, so we give it its own symbol.
 Let $\MODELLEQ$  be short for $\SIM^{-1}$.
 \end{definition}
 
-
-
+\input{figure:leq}
 
 \begin{theorem}\label{theorem:completeLattice}
 $\MMM' \MODELLEQ \MMM$ if and only if
@@ -542,6 +551,10 @@ satisfies $\phi$.
                 &&  \mbox{not appearing in }S 
 \end{eqnarray*}
 
+\input{figure:glb}
+
+
+
 \NI Note that by our conventions, $\SIMPL{\phi}$ really returns a
 $\MODELEQ$-equivalence class of models.
 
@@ -609,6 +622,8 @@ where:
 \item If $\MMM' \models \phi$ and  $\MMM \MODELLEQ \MMM'$ then also  $\MMM \models \phi$.
  
 \end{itemize}
+
+\input{figure:lub}
 
 \subsubsection{Computing Least Upper Bound ($\sqcup$)}
 Define the least upper bound ($\sqcup$) of two models as:
