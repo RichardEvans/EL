@@ -39,54 +39,82 @@ While Brandom defines an unusual (non truth-conditional) semantics that applies 
 
 \subsection{Other Related work}
 
-Here is a brief list of things that I suggest we compare \ELABR{} with.
+Linguists have also investigated how mutually exclusive alternatives
+are expressed \cite{OKeeffeA:rouhanocl}\martin{See John C email for
+  more precise reference}, but, to the best of our knowledge have not
+proposed formal theories of linguistic exclusion.
 
-\begin{itemize}
+Linear logic \cite{GirardJY:linlog,GirardJY:protyp} is a refinement of
+first-order logic and was introduced by J.-Y.~Girard with the aim of
+bringing the symmetries of classical logic to constructive
+logic. Linear logic has been fruitful in a variety of fields, in
+particular in the study of typing systems, where the concept of
+linearity puts type-based resource handling on a sound logical basis.
 
-\item Linear logic \cite{GirardJY:linlog,GirardJY:protyp}. Especially
-  interesting in the context of \ELFULL{} is the additive
-  conjunction $A \& B$ which has been interpreted
-  \cite{AbramskyS:comintoll} as an external choice operation in the
-  terminology of CSP \cite{HoareC:comseq}. External, because the
-  choice is offered to the environment. This interpretation has been
-  influential in the study of types for process calculus,
-  e.g.~\cite{HondaK:unitypsfsifLONG,TakeuchiK:intbaslaits,HondaK:lanpriatdfscbp}. 
+Linear logic splits conjunction into two: additive and multiplicative
+conjunction The former, additive conjunction $A \& B$, is especially
+interesting in the context of \ELFULL{}. It can be interpreted
+\cite{AbramskyS:comintoll} as an external choice operation in the
+terminology of CSP \cite{HoareC:comseq}. External, because the choice
+is offered to the environment.  This interpretation has been
+influential in the study of types for process calculus,
+e.g.~\cite{HondaK:unitypsfsifLONG,TakeuchiK:intbaslaits,HondaK:lanpriatdfscbp}.
+Implicitly, additive conjunction gives an explicit upper bound on how
+many different options the environment can choose from. For example in
+$A \& B \& C$ we have three options (assuming that none of $A, B, C$
+can be decomposed into further additive conjunctions).  With this in
+mind, and simplifying a great deal, a key difference between $!A$ and
+additive conjunction $A \& B$ is that the individual actions in $!A$
+have no continuation, while they do with $A \& B$: $!\{l, r\}$ says
+that at this point the only available actions are $l$ and $r$. What
+happens at later states is not constraind by $!A$.  In contrast, $A \&
+B$ says not only that at this point the only available options are $A$
+and $B$, but also that if we choose $A$, then $A$ holds 'for ever',
+and likewise for choosing $B$. To be sure, the alternatives in $A \&
+B$ may themselves contain further additive conjunctions, and in this
+way express how exclusion changes 'over time'.
 
-  Simplifying a great deal, a key difference between $!A$ and additive
-  conjunction $A \& B$ is that the individual actions in $!A$ have no
-  continuation, while they do with $A \& B$: $!{\mathsf{left},
-    \mathsf{right}}$ says that at this point the only available
-  actions are $\mathsf{left}$ and $\mathsf{right}$, while $A \& B$
-  says that at this point the only available actions are
-  $\mathsf{left}$ and $\mathsf{right}$, and if we do $\mathsf{left}$,
-  then $A$ holds, while doing $\mathsf{right}$ guarantees $B$.
+In summary, \ELABR{} and linear logic offer an operator that restricts
+the available options. How are they related? Linear logic has an
+explicit linear negation $(\cdot)^{\bot}$ which, unlike classical
+negation, is constructive. In constrast, \ELABR{} defines a restricted
+form negation from $!A$. Can these two perspectives be frutifully
+reconciled?
 
-  So both, \ELABR{} and linear logic offer an operator that restricts
-  the available options. How are they related? Linear logic has an
-  explicit linear negation $(\cdot)^{\bot}$ which, unlike classical
-  negation, is constructive. In constrast, \ELABR{} defines
-  negation from $!A$. Can these two perspectives be frutifully
-  reconciled?
+In this context it is also worth noting that like eremic logic, linear
+logic has been used for logic programming
+\cite{HodasJS:logproiafoill,WinikoffMD:logprowll,PymDJ:uniprotiollp,HarlandJ:prolygao,MillerD:surlinlp}
+and as a programming language for narrative generation
+\cite{BosserAG:linlogpfng}, see references therein.
 
-  In this context it is also worth noting that linear logic has been
-  used for logic programming
-  \cite{HodasJS:logproiafoill,WinikoffMD:logprowll,PymDJ:uniprotiollp,HarlandJ:prolygao,MillerD:surlinlp}
-  and as a programming language for narrative generation
-  \cite{BosserAG:linlogpfng}, see references therein.
+Another formalism that has a form of explicit description of mutually
+exclusive option as a core primitive are process calculi. They are
+models of computation based on the idea of message passing between
+actors running in parallel. Labelled transition systems are often used
+as models for process calculi, and many concepts, for example
+bisimulations and Hennessy-Milner logic, used for developing eremic
+logic originated from process theory (although some, such as
+bisimulation, evolved independently in other contexts).
 
-
-\item Process calculi traditionally 
-  have sums which in their most general form are:
-  \[
+Process calculi traditionally have sums, which, in their most general
+form, are:
+\[
      \sum_{i \in I} P_i
-  \]
-  But input-guarded sums are much better behaved (and strictly less
-  expressive):
+\]
+That is a process that can internally choose, or be chosen to evolve
+into the process $P_i$ for each $i$. Once the choice is made, all
+other options disappear.  Usually, so much generality is not
+considered. Instead, input-guarded sums are much better behaved (and
+strictly less expressive):
   \[
      \sum_{i \in I} x_{i}(v_i)P_i
   \]
-  and they are even better behaved if they are all using the same
-  input channel and have only finitely many alternatives:
+This is a process that can receive a message on each channel $x_i$
+and, if such a message arrives with payload $y$, evolve into
+$P_i{y/v_i}$ which is the process obtained from $P_i$ by substituting
+$y$ for the bound variable $v_i$.  An even better behaved process is
+obtained if all inputs use the same input channel and we have only
+finitely many alternatives:
   \[
      \sum_{i = 1}^n x(v)P_i
   \]
@@ -95,9 +123,15 @@ Here is a brief list of things that I suggest we compare \ELABR{} with.
   \[
      \&_{i = 1}^n x(v)A_i
   \]
-  provided each $P_i$ is a proof of $A_i$.  As with linear logic's
-  additive conjunction, sums in process calculi have continuations.
-  
-\end{itemize}
+  provided each $P_i$ is a proof of $A_i$.  It is possible to extend
+  the Curry-Howard correspondence to (fragments of) linear logic on
+  one side and process calculi on the other \cite{GaySJ:typcalosp}.
+
+In this way, process calculi are related to linear logic (by using
+formulae as types) and to eremic logic (because processes and eremic
+formulae can be modelled by labelled transition systems, and because
+eremic logic is close to logics for processes).\martin{rephrase. How
+  did process theory influence EL?}
+
 
 

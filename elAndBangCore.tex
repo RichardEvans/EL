@@ -66,7 +66,7 @@ described in Section \ref{preliminaries}, but augmented with labels on
 states.
 
 \begin{definition}
-An \emph{eremic transition system} is a triple $(S, \rightarrow,
+An \emph{eremic transition system} is a triple $\LLL = (S, \rightarrow,
 \lambda)$, where $(S, \rightarrow)$ is a labelled transition system
 over $\Sigma$, and $\lambda$ is a function from states to sets of
 actions (not necessarily finite), subject to the following constraints:
@@ -81,6 +81,9 @@ actions (not necessarily finite), subject to the following constraints:
 
 \end{itemize}
 
+\NI We say $\LLL$ is \emph{deterministic} if $s \TRANS{a} t_i$ for $i
+= 1, 2$ implies that $t_1 = t_2$. Otherwise $\LLL$ is
+\emph{non-deterministic}.
 \end{definition}
 
 \NI The intended interpretation is that $\lambda(w)$ is the set of
@@ -114,12 +117,15 @@ rise to the following definition.
 A \emph{eremic model}, ranged over by $\MMM, \MMM', ...$, is a pair $(\LLL,
 s)$, where $\LLL$ is an eremic transition system $(S, \rightarrow,
 \lambda)$, and $s$ is a state from $S$.
+
+An eremic model is \emph{(non-)deterministic} if the underlying eremic
+transition system is.
 \end{definition}
 
 \NI With eremic models at hand, we can finally formalise the
 satisfaction relation for eremic formulae.
 
-\begin{definition}
+\begin{definition}\label{ELsatisfaction}
 The \emph{satisfaction relation} $\MMM \models \phi$ is defined
 inductively by the following clauses, where we assume that $\MMM =
 (\LLL, s)$ and $\LLL = (S, \rightarrow, \lambda)$.
@@ -315,35 +321,24 @@ premise.
 We give some example inferences that illustrate how EL is used in
 practice.  \martin{Add some example assertions here, for example some
   of those we use later.}
-  
-\subsection{Proof of completeness}\label{completenessProof}
 
-\NI We now prove completeness of the rules in Figure
-\ref{figure:elAndBangRules}.  The proof requires the development of
-the following additional technology which is also useful in other
-contexts.
+\subsection{A semantic characterisation of elementary equivalence}
 
-\begin{itemize}
+Elementary equivalence induces a notion of model equivalence: two
+models are elementarily equivalent exactly when they make the same
+formulae true. Elementary equivalent as a concept thus relies on
+eremic logic even for its definition. We now present an alternative
+characterisation that is purely semantic, using the concept of
+(mutual) simulation from process theory. Apart from its intrinsic
+interest, this characterisation will also be crucial for proving
+completeness of the proof rules.
 
-\item An ordering $\MODELLEQ$ on models, which enables us to speak of
-  the simplest model satisfying a formula.
-
-\item An algorithm which gives the simplest model for a formula.
-
-\item An algorithm which gives the a formula characterising a model.
-
-\end{itemize}
-
-\NI We now develop these three in turn and then prove completeness.
-
-\subsubsection{A partial ordering on models}
-
-We shall develop a partial-ordering $\MODELLEQ$ on models by extending
-the notion of simulation on labeled transition systems. We then give
-an alternative characterisation of $\MODELLEQ$ in terms of
-set-inclusion of the theories induced by models. Simulations on eremic
-transition systems give rise only to a pre-order, and we use the
-standard quotienting process to obtain the desired partial order.
+We first define a pre-order $\MODELLEQ$ on models by extending the
+notion of simulation on labeled transition systems to eremic
+models. Then we prove an alternative characterisation of $\MODELLEQ$
+in terms of set-inclusion of the theories induced by models. We then
+show that two models are elementarily equivalent exactly when they are
+related by $\MODELLEQ$ and by $\MODELLEQ^{-1}$.
 
 \begin{definition}
 Let $\LLL_i = (S_i, \rightarrow_i, \lambda_i)$ be eremic transition
@@ -381,14 +376,6 @@ The largest simulation from $\MMM_1$ to $\MMM_2$ is denoted $\MMM_1
 simulation from $\MMM_1$ to $\MMM_2$, and the union of all such
 simulations.  If $\MMM_1 \SIM \MMM_2$ we say $\MMM_2$
 \emph{simulates} $\MMM_1$.
-\end{definition}
-
-\begin{definition}
-We say $\RRR$ is a \emph{bisimulation} if $\RRR$ is a simulation from
-$\MMM_1$ to $\MMM_2$ and $\RRR^{-1}$ is a simulation from $\MMM_2$ to
-$\MMM_1$. By $\BISIM$ we denote the largest bisimulation, and we say
-that $\MMM_1$ and $\MMM_2$ are \emph{bisimilar} whenever $\MMM_1
-\BISIM \MMM_2$.
 \end{definition}
 
 \begin{definition}
@@ -469,27 +456,39 @@ $\lambda(x) = \Sigma \supseteq \lambda'(x')$.
 \end{proof}
 
 Theorem \ref{theorem:completeLattice} illustrates from a
-model-theoretic point of view how classical and eremic logic
-differ. In classical logic the theory of each model is complete, and
-$\THEORY{\CAL{M}} \subseteq \THEORY{\CAL{N}}$ already implies that
-$\THEORY{\CAL{M}} = \THEORY{\CAL{N}}$, i.e.~$\CAL{M}$ and $\CAL{N}$
-are elementarily equivalent. \ELFULL{}'s lack of negation changes
-this drastically, and gives $\MODELLEQ$ the structure of a non-trivial
-complete lattice as we shall demonstrate now.
+model-theoretic point of view one dimension of how classical and
+eremic logic differ. In classical logic the theory of each model is
+complete, and $\THEORY{\CAL{M}} \subseteq \THEORY{\CAL{N}}$ already
+implies that $\THEORY{\CAL{M}} = \THEORY{\CAL{N}}$, i.e.~$\CAL{M}$ and
+$\CAL{N}$ are elementarily equivalent. \ELFULL{}'s lack of negation
+changes this drastically, and gives $\MODELLEQ$ the structure of a
+non-trivial complete lattice as we shall demonstrate below.
 
-It turns out that $\MODELLEQ $ on (equivalence classes of) models is
-not just a partial order, but a complete lattice, except that a bottom
-element is missing.
+But first we show that $\MODELEQ$ is a strictly coarser relation than 
+bisimilarity.
 
 \begin{definition}
-We extend the collection of models with a single \emph{bottom} element
-$\bot$, where $\bot \models \phi$ for all $\phi$. 
-We extend the relation $\MODELLEQ $  and stipulate that $\bot
-\MODELLEQ \MMM$ for all models $\MMM$.
+We say $\RRR$ is a \emph{bisimulation} if $\RRR$ is a simulation from
+$\MMM_1$ to $\MMM_2$ and $\RRR^{-1}$ is a simulation from $\MMM_2$ to
+$\MMM_1$. By $\BISIM$ we denote the largest bisimulation, and we say
+that $\MMM_1$ and $\MMM_2$ are \emph{bisimilar} whenever $\MMM_1
+\BISIM \MMM_2$.
 \end{definition}
 
-\NI As already mentioned, the relation $\MODELLEQ$ is not a partial
-order, only a pre-order. For example with
+Clearly $\BISIM \subseteq \MODELEQ$, but the two relations do not
+coincide: the former is strictly more discriminating than the latter,
+i.e.~$\BISIM \subsetneq \MODELEQ$. Figure \ref{figure:counterexample}
+shows two models that are $\MODELEQ$-equal but not bisimilar. Note
+that this counterexample is non-deterministic. That is not
+coincidence, because on deterministic eremic models, the two relations
+coincide.
+
+\input{figure:counterexample}
+
+\subsection{Turning $\MODELLEQ$ into a complete lattice}
+
+\NI The relation $\MODELLEQ$ is not a partial order, only a
+pre-order. For example with
 \begin{itemize}
 
 \item $\MMM_1 = ( (\{w\}, \{\}, \{w \mapsto \Sigma\}), w)$ and
@@ -503,7 +502,7 @@ between the two models, the name of the unique state, is trival and
 not relevant for the formulae they make true. Indeed $\THEORY{\MMM_1}
 = \THEORY{\MMM_2}$.  As briefly mentioned in the mathematical
 preliminaries (Section \ref{preliminaries}), we obtain a proper
-partial-order we simply quotient the set of models:
+partial-order by simply quotienting models:
 
 \[
    \MMM \MODELEQ \MMM'
@@ -524,18 +523,20 @@ be computed on representatives:
 \[
    \BIGLUB \{[\MMM]_{\MODELEQ} \ |\ \MMM \in S\ \} = [\BIGLUB S]_{\MODELEQ}
 \]
-and likewise for the greated lower bound.
+whenever $\BIGLUB S$ exists, and likewise for the greated lower bound.
+We also define 
+\[
+   [\MMM]_{\MODELEQ} \models \phi 
+      \qquad\text{iff}\qquad
+   \MMM \models \phi.
+\]
 
-Note that bisimilarity $\BISIM$ and $\MODELEQ$ do not coincide: the
-former is strictly more discriminating than the latter, i.e.~$\BISIM
-\subsetneq \MODELEQ$. Figure \ref{figure:counterexample} shows two
-models that are $\MODELEQ$-equal but not bisimilar.
-
-\input{figure:counterexample}
+\NI Theorem \ref{theorem:completeLattice} guarantees that the choice
+of representative is irrelevant.
 
 In the rest of this text, we will usually be sloppy and work with
-concrete models instead of $\MODELEQ$-equivalence classes of models because the
-quotienting process is straightfoward and not especially
+concrete models instead of $\MODELEQ$-equivalence classes of models
+because the quotienting process is straightfoward and not especially
 interesting. We can do this because all relevant constructions in this
 text are independent from the specific choice of representative.  Our
 Haskell implementation, described in Section \ref{hahahaskell} uses a
@@ -543,20 +544,44 @@ slightly different approach: instead of equivalence classes, it uses
 canonical representatives.  \martin{add more explanation, and
   integrate better with premiminaries}.
 
-First we extend $\MODELLEQ$ on equivalence classes with bottom element
-$\bot = [\bot]_{\MODELEQ}$.
+It turns out that $\MODELLEQ $ on ($\MODELEQ$-equivalence classes of)
+models is not just a partial order, but a complete lattice, except
+that a bottom element is missing.
+
+\begin{definition}
+We extend the collection of models with a single \emph{bottom} element
+$\bot$, where $\bot \models \phi$ for all $\phi$. We also write $\bot$
+for $[\bot]_{\MODELEQ}$.  We extend the relation $\MODELLEQ $ and
+stipulate that $\bot \MODELLEQ \MMM$ for all models $\MMM$.
+\end{definition}
 
 \begin{theorem}
 The collection of (equivalence classes of) models together with
 $\bot$, and ordered by $\MODELLEQ$ is a complete lattice.
 \end{theorem}
 \begin{proof}
-\martin{worth doing?}  Example: The topmost element in the lattice is
-the model $( (\{w\}, \{\}, \{w \mapsto \Sigma\}), w)$ (for some state
-$w$): this is the model with no transitions and no transition
-restrictions.
+\martin{Why is there no proof?}  Example: The topmost element in the
+lattice is the model $( (\{w\}, \{\}, \{w \mapsto \Sigma\}), w)$ (for
+some state $w$): this is the model with no transitions and no
+transition restrictions.
 \end{proof}
 
+\subsection{Proof of completeness}\label{completenessProof}
+
+\NI We now prove completeness of the rules in Figure
+\ref{figure:elAndBangRules}.  The proof requires the development of
+the following additional technology which is also useful in other
+contexts.
+
+\begin{itemize}
+
+\item An algorithm which gives the simplest model for a formula.
+
+\item An algorithm which gives the a formula characterising a model.
+
+\end{itemize}
+
+\NI We now develop these  in turn and then prove completeness.
 
 \subsubsection{Computing the simplest model satisfying a formula}
 \label{simpl}
@@ -650,7 +675,7 @@ where:
 
 \input{figure:lub}
 
-\subsubsection{Computing Least Upper Bound ($\sqcup$)}
+\subsubsection{Computing the least upper bound ($\sqcup$)}
 Define the least upper bound ($\sqcup$) of two models as:
 \begin{eqnarray*}
 \MMM \sqcup \bot & = & \MMM \\

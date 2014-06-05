@@ -1,0 +1,134 @@
+\section{An alternative model}\label{pureModels}
+
+In Section \ref{coreEL} we used node-labelled transition systems as
+models for eremic logic. The purpose of the node labels was to state
+the constrains, if any, on outgoing actions. This concern is reflected
+in the semantics of $!A$.
+
+\[
+\begin{array}{lclcl}
+  ((S, \rightarrow, \lambda), s) & \models & !A  &\mbox{\quad iff\quad } & \lambda(s) \subseteq A
+\end{array}
+\]
+
+\NI There is an alternative, and in some sense even simpler approach
+to giving semantics to $!A$ which does not require a node-labelling:
+we simply check if all actions of all outgoing transitions are in $A$.
+As no other formula requires the labelling function $\lambda$ in the
+definition of it's satisfaction condition, this approach means we can
+use plain labelled transition systems (together with a current state)
+as models. This gives rise to a subtly different theory that we now
+explore, albeit not in depth.
+
+\begin{definition}
+By a \emph{pure eremic model}, ranged over by $\PPP$, we mean a pair
+$(\LLL, s)$ where $\LLL = (S, \rightarrow)$ is a labelled transition
+system and $s \in S$ a state.
+\end{definition}
+
+\NI Adapting the satisfaction relation to pure eremic models is
+straightfoward.
+
+\begin{definition}
+Using pure eremic models, the  \emph{satisfaction relation} is defined 
+inductively by the following clauses, where we assume that $\MMM =
+(\LLL, s)$ and $\LLL = (S, \rightarrow)$.
+
+\[
+\begin{array}{lclcl}
+  \MMM & \models & \top   \\
+  \MMM & \models & \phi \AND \psi &\ \mbox{ iff } \ & \MMM  \models \phi \mbox { and } \MMM \models \psi  \\
+  \MMM & \models & \langle a \rangle \phi & \mbox{ iff } & \text{there is a } s \xrightarrow{a} t \mbox { such that } (\LLL, t) \models \phi  \\
+  \MMM & \models & A &\mbox{ iff } & \{a\ |\ \exists t.s \TRANS{a} t \} \subseteq A
+\end{array}
+\]
+
+\NI Note that all but the last clause are unchanged from Definition
+\ref{ELsatisfaction}.
+\end{definition}
+
+In this interpretation, $!A$ can easily be seen to restrict the
+out-degree of the current state $s$, i.e.~it constraints the 'width'
+of the graph.
+
+It is easy to see that all rules in Figure \ref{figure:elAndBangRules}
+are sound with respect to the new semantics too\martin{what about
+  completeness?}.  The key advantage pure eremic models have is their
+simplicity: they are unadorned labelled transition systems, the key
+model of concurrency theory \cite{SassoneV:modcontac}. The connection
+with concurrency theory is even stronger than that, because, as we
+show below (Theorem \ref{hennessymilnertheorem}), the elementary
+equivalence on (finitely branching) pure eremic models is
+bisimilarity, one of the more widely used notions of process
+equivalence.
+
+This then leads to the question why we most of our development is
+about eremic models. The reason is one of philosophy: on pure eremic
+models, eremic logic can distinguish models based on branching
+structure, for example those in Figure
+\ref{figure:counterexample}. However, eremic logic speaks about
+exclusion. Prima facie, branching structure has nothing to do with
+exclusion. Therefore eremic logic should not distinguish models such
+as those just mentioned.
+
+Nevertheless, both kinds of models are compelling, and it is
+interesting to see if they can be related in a systematic way.
+
+\subsection{Relationship between pure and eremic models}
+
+The obvious way of converting an eremic model into a pure eremic model
+is by forgetting about the node-labelling:
+\[
+   ((S, \rightarrow, \lambda), s ) \qquad\mapsto\qquad ((S, \rightarrow), s ) 
+\]
+Let this function be $\FORGET{\cdot}$. For going the other way, we
+have two obvious choices:
+
+\begin{itemize}
+
+\item $((S, \rightarrow), s ) \mapsto ((S, \rightarrow, \lambda), s )$
+  where $\lambda(t) = \Sigma$ for all states $t$. Call this map $\MAX{\cdot}$.
+
+\item $((S, \rightarrow), s ) \mapsto ((S, \rightarrow, \lambda), s )$
+  where $\lambda(t) = \{a \ |\ \exists t'. t \TRANS{a} t'\}$ for all
+  states $t$. Call this map $\MIN{\cdot}$.
+
+\end{itemize}
+
+\begin{lemma}\label{modelRelationships}
+Let $\MMM$ be an eremic model, and $\PPP$ a pure eremic model.
+\begin{enumerate}
+
+\item\label{modelRelationships:1}  $\MMM \models \phi$ implies
+  $\FORGET{\MMM} \models \phi$. The reverse implication does not hold.
+
+\item\label{modelRelationships:2}  $ \MAX{\PPP} \models \phi$ implies
+  $\PPP \models \phi$. The reverse implication does not hold.
+
+\item\label{modelRelationships:3} $\MIN{\PPP} \models \phi$ if and only if
+  $\PPP \models \phi$. 
+
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The implication in (\ref{modelRelationships:1}) is immediate by
+induction on $\phi$. A counterexample for the reverse implication is
+given by the formula $\phi = !\{a\}$ and the eremic model $\MMM = ( \{s,
+t\}, s \TRANS{a} t, \lambda), s)$ where $\lambda (s) = \{a, b, c\}$:
+clearly $\FORGET{\MMM} \models \phi$, but $\MMM \not\models
+\phi$.
+
+The implication in (\ref{modelRelationships:2}) is immediate by
+induction on $\phi$. To construct a counterexample for the reverse
+implication, assume that $\Sigma$ is a strict superset of $\{a\}$
+$a$. The formula $\phi = !\{a\}$ and the pure eremic model $\PPP = (
+\{s, t\}, s \TRANS{a} t ), s)$ satisfy $\PPP \models \phi$, but clealy
+$\MAX{\PPP} \not\models \phi$.
+
+Finally, (\ref{modelRelationships:3}) is also straightforward by
+induction on $\phi$.
+
+\end{proof}
+
+

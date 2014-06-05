@@ -1,25 +1,21 @@
 \section{Conclusion}\label{conclusion}
 
 
+\subsection{Open problems} 
+
 \QUOTATION{As long as a branch of science offers an abundance of
   problems, so long it is alive; a lack of problems foreshadows
   extinction or the cessation of independent development. \textsc{D. Hilbert.}}
 
-\subsection{Open problems} In the spirit of Hilbert's quote, I'm including this
-section to encourage us to think about interesting open problems,
-ideally of varying degrees of difficulty. What I recommend to avoid
-are vague problems, there are enough of those already. I'm looking for
-clearcut questions, i.e. we know when we've succeeded in solving them.
-A good question would ideally come with a plausible story why solving
-the problem is important.  Here are some examples to get the ball
-rolling.
+In the spirit of Hilbert's quote, I'm including this section to
+encourage us to think about interesting open problems, ideally of
+varying degrees of difficulty. What I recommend to avoid are vague
+problems, there are enough of those already. I'm looking for clearcut
+questions, i.e. we know when we've succeeded in solving them.  A good
+question would ideally come with a plausible story why solving the
+problem is important.  Here are some examples to get the ball rolling.
 
 \begin{enumerate}
-
-\item Linguists have also investigated how mutually exclusive
-  alternatives are expressed \cite[Chapter ??? See John's email]{OKeeffeA:rouhanocl}, but, to the best of our knowledge  have not proposed
-  formal theories of linguistic exclusion.
-  aware of theories of exclusion proposed by linguists.
 
 \item Do we have 'cut-elimination', ie. can we remove
   [\RULENAME{Transitivity}]?  And do we have the sub-formula property?
@@ -29,8 +25,25 @@ rolling.
 
 \item Is there a reasonable Curry-Howard correspondence for \ELFULL{}?
 
-\item It could be fun to adapt the usual ultrafilter-based proof of compactness 
-  to \ELABR{}. Does something like \L{}o\'{s}' theorem hold?
+\item Mathematical logic knows three substantially different
+  approaches towards proving compactness: first G\"odel's original
+  approach, refined by Morley and many others, uses proof rules and
+  the completeness theorem. It thus mixes syntax and semantics. Second
+  are proofs by translation, such as our's in Section
+  \ref{completenessProof}, that piggy-back on the compactness of other
+  logics. Finally, a purely semantic approach often uses
+  ultra-products as a tool for 'gluing' together the models that
+  guarantee finite satisfiability. Ultra-products are quotients of
+  reduced products by an ultra-filter. The conditions defining
+  ultra-filters are carefully chosen to ensure that the quotiented
+  reduced product is indeed an appropriate model with nice properties
+  such as \L{}o\'{s}' theorem. In particular, for $U$ to be an
+  ultra-filter over some set $S$, for each $A \subseteq S$, either $A$
+  or its complemnet $S\setminus A$ must be in $U$. This axiom clearly
+  reflects the semantics of negation. But eremic logic doesn't have
+  negation. So what would an appropriate equivalent of ultra-filters
+  for eremic logic look like that can be used to prove compactness
+  directly on models?
 
 \item\label{conclusion:openProblems:2}  Develop a theory of SAT solving based on \ELABR{} rather than
   propositional logic.

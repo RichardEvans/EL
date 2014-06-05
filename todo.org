@@ -4,6 +4,8 @@
 
   - Names: R Brandom vs Brandom etc
 
+  - as we shall demonstrate vs as we demonstrate ...
+
   - What symbols to we use for implication? \rightarrow vs horseshoe
 
   - Make sure always to be precise about eremic model vs eremic
