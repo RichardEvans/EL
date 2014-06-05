@@ -10,6 +10,36 @@ proven is not a toy academic problem, but an industrial-sized
 application involving tens of thousands of rules and tens of thousands
 of atomic facts.
 
+We shall first sketch how facts are represented, before describing the advantages of \ELKR{} over a more traditional predicate-logic representation.
+
+\subsection{How Facts are Represented in \ELKR{}}
+
+We used the following strategy for representing facts in \ELKR{}.
+A sentence involving a one-place predicate of the form $p(a)$ is expressed in \ELKR{} as 
+\begin{verbatim}
+a * p
+\end{verbatim}
+A sentence involving a many-to-many two-place relation of the form $r(a,b)$ is expressed in \ELKR{} as
+\begin{verbatim}
+a * r * b
+\end{verbatim}
+But a sentence involving a many-to-one two-place relation of the form $r(a,b)$ is expressed in \ELKR{} as:
+\begin{verbatim}
+a * r ! b
+\end{verbatim}
+So, for example, to say that ``Jack likes Jill'' (where ``likes'' is, of course, a many-many relation), we would write:
+\begin{verbatim}
+jack * likes * jill
+\end{verbatim}
+But to say that ``Jack is married to Jane'' (where "is-married-to'' is a many-one relation), we would write:
+\begin{verbatim}
+jack * married ! jane
+\end{verbatim}
+Note that we chose to adopt an \emph{object-oriented} representation, in which the relations are placed in infix position so that the facts about an object are ``contained'' within the object.
+But we \emph{could} have chosen an alternative strategy, in which the predicate/relation symbols are to the left of the first argument. (The reason for choosing the infix notation will become clear in the next subsection).
+
+\subsection{Advantages of \ELKR{} over Predicate Logic}
+
 When applying it in a large knowledge base, \ELFULL{} has been found to have a number of advantages over traditional predicate logic as a language to represent simulational state:
 \begin{itemize}
 \item
@@ -46,7 +76,7 @@ A sub-tree can be treated as an individual via its prefix.
 The whole sub-tree can be removed in one fell swoop by deleting its associated prefix.
 So we can e.g. remove Brown's friends just by deleting the prefix ``brown * friends\'.
 (Compare this with Prolog - where it is much harder to remove all formulae containing a particular symbol).
-A sub-tree of formulae is the \ELABR{} equivalent of an \emph{object} in an object-oriented programming language.
+A sub-tree of formulae is the \ELKR{} equivalent of an \emph{object} in an object-oriented programming language.
 
 The tree-structure of formulae also allows us to express the \emph{life-time of data} in a natural way. 
 If we wish a piece of data $d$ to exist for just the duration of a proposition $t$, then we make $t$ be a sub-expression of $d$. 
