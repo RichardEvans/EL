@@ -1,0 +1,344 @@
+\section{Hennessy-Milner theory}
+
+This section parks some faulty material on the Hennessy-Milner theory.
+
+The Hennessy-Milner theorem, adapted to eremic logic, says that two
+eremic models are bisimilar exactly when they validate the same
+formulae. With eremic logic as presented in Section \ref{coreEL} this
+cannot hold. Theorem \ref{theorem:completeLattice} shows that two
+models alidate the same formulae exactly when the models are related
+by $\MODELEQ$, and bisimilarity is strictly finer than $\MODELEQ$.
+
+We know of two ways of dealing with this problem.
+
+\subsection{Adding a must-modality}
+
+We extend eremic logic as follows.
+\begin{GRAMMAR}
+  \phi
+     &::=&
+  ...
+     \VERTICAL
+  \MUST{a}{\phi}
+\end{GRAMMAR}
+
+\NI The semantics of $\MUST{a}{\phi}$ is standard.
+\[
+   (\LLL, s) \models \MUST{a}{\phi}
+      \quad\text{iff}\quad
+   \text{for all transitions}\ s \TRANS{a} t. (\LLL, t) \models \phi
+\]
+
+\subsection{Alternative semantics}
+
+In this scenario, models are simply pairs $(\LLL, s)$
+where $\LLL$ is a conventional labelled transition system (lacking node
+labels) and $s$ is a state in $\LLL$. The interpretation of all formulae but
+$!A$ is as expected. Now we set:
+\[
+   (\LLL, s) \models !A
+      \quad\text{iff}\quad
+   \{a \ |\ \exists t.s \TRANS{a} t\} \subseteq A\}.
+\]
+
+
+\subsection{TBD}
+
+In Section \ref{coreEL} we presented \ELABR{}
+and established the key properties of completeness and compactness.
+This section investigates
+the logic further: first we give a linear-time decision
+procedure. Then we give a logical characterisation of bisimilarity,
+following ideas from the theory of process calculi
+\cite{HennessyM:alglawfndac}.  The linear-time decision complexity is
+an indication that \ELABR{} can be useful as a query language in
+knowledge representation. Section \ref{kr} investigates this matter in
+more detail. The logical characterisation of a semantical equivalence
+on the other hand is an indication that our syntactic and semantical
+constructs cohere with each other.
+
+
+\subsection{Hennessy-Milner Theorem for \ELABR{}}
+
+Bisimulations are an important concept in process theory and modal
+logics \cite{SangiorgiD:intbisac}. Bisimulations give a notion of
+equality of labelled transition systems. An interesting facett of
+bisimulation is it's co-inductive rather than inductive nature, which
+is helpful when working with infinite transition systems.
+
+Elementary equivalence is a natural notion of equality of models that
+can be defined for any logic: two models are \emph{elementarily
+  equivalent} exactly when they make the same formulae true. In
+\ELABR{}, this definition looks as follows.
+
+\begin{definition}
+Two states $w$ and $w'$ are {\bf equivalent}, written $w \equiv w'$,
+iff $\{\phi \; | \; w \models \phi\} = \{\phi \; | \; w' \models
+\phi\}$.
+\end{definition}
+
+\NI A natural question now is how bisimilarity and equivalence
+relate. We now show that the two notions of equivalence coincide in
+\ELFULL{}.
+
+\begin{theorem}
+\label{hennessymilnertheorem}
+If two models are finitely-branching (if the set $\{y \fOr \exists a
+. x \xrightarrow{a} y\}$ is finite for all states $x$), $w \BISIM w'
+\mbox{ iff } w \equiv w' $.\martin{discuss the case of non-finitely-branching}
+\end{theorem}
+First, left to right.
+\begin{case}
+If $w \BISIM w'$, then $w \equiv w'$.
+\end{case}
+\begin{proof}
+Proof is by induction on formulae.  The only case which differs from
+the standard Hennessy-Milner Theorem is the case for $!A$, so this is
+the only case we shall consider.  Assume $w \BISIM w'$ and $w \models
+!A$. We need to show $w' \models !A$.
+
+From the semantic clause for $!$,  $w \models !A$ implies $\lambda(w) \subseteq A$.
+If $w \BISIM w'$, then $\lambda(w) = \lambda'(w')$.
+Therefore $\lambda'(w') \subseteq A$, and hence $w' \models !A$.
+
+\end{proof}
+
+\begin{case}
+Given two finitely-branching models $(\mathcal{W}, \rightarrow,
+\lambda)$ and $(\mathcal{W}', \rightarrow', \lambda')$, with $w \in
+\mathcal{W}$ and $w' \in \mathcal{W}'$, if $w \equiv w'$, then $w
+\BISIM w'$.
+\end{case}
+\begin{proof}
+We define the bisimilarity relation:
+\[
+Z = \{(x,x') \in \mathcal{W} \times \mathcal{W}' \fOr x \equiv x' \}
+\]
+To prove $w \BISIM w'$, we need to show:
+\begin{itemize}
+
+\item $(w,w') \in Z$. This is immediate from the definition of Z.
+
+\item The relation $Z$ respects the transition-restrictions: if
+  $(x,x') \in Z$ then $\lambda(x) = \lambda'(x')$
+
+\item The forth condition: if $(x,x') \in Z$ and $x \xrightarrow{a}
+  y$, then there exists a $y'$ such that $x' \xrightarrow{a} y'$ and $(y, y') \in Z$.
+
+\item The back condition: if $(x,x') \in Z$ and $x' \xrightarrow{a}
+  y'$, then there exists a $y$ such that $x \xrightarrow{a} y$ and $(y, y') \in Z$.
+
+\end{itemize}
+To show that $(x,x') \in Z$ implies $\lambda(x) = \lambda'(x')$, we will argue by contraposition.
+Assume $\lambda(x) \neq \lambda'(x')$.
+Then either $\lambda'(x') \nsubseteq  \lambda(x)$ or $\lambda(x) \nsubseteq  \lambda'(x')$.
+If $\lambda'(x') \nsubseteq  \lambda(x)$, then $x' \nvDash \fBang \lambda(x)$.
+But $x \models \fBang \lambda(x)$, so $x$ and $x'$ satisfy different sets of propositions and are not equivalent.
+Similarly, if $\lambda(x) \nsubseteq  \lambda'(x')$ then $x \nvDash \fBang \lambda'(x')$.
+But $x' \models \fBang \lambda'(x')$, so again $x$ and $x'$ satisfy different sets of propositions and are not equivalent.
+
+I will show the forth condition in detail. The back condition is very similar.
+To show the forth condition, assume that  $x \xrightarrow{a} y$ and that $(x,x') \in Z$ (i.e. $x \equiv x'$).
+We need to show that $\exists y'$ such that $x' \xrightarrow{a} y'$ and $(y,y') \in Z$ (i.e. $y \equiv y'$).
+
+Consider the set of $y'_i$ such that $x' \xrightarrow{a} y'_i$. Since $x \xrightarrow{a} y$, $x \models \langle a \rangle \top$, and as $x \equiv x'$,  $x' \models \langle a \rangle \top$, so we know this set is non-empty.
+Further, since $(\mathcal{W}', \rightarrow')$ is finitely-branching, there is only a finite set of such $y'_i$, so we can list them $y'_1, ..., y'_n$,  where $n >= 1$.
+
+Now, in the Hennessy-Milner theorem for HML, the proof proceeds as follows:
+assume, for reductio, that of the $y'_1, ..., y'_n$, there is no $y'_i$ such that $y \equiv y'_i$.
+Then, by the definition of $\equiv$, there must be formulae $\phi_1, ..., \phi_n$ such that for all $i$ in $1$ to $n$:
+\[
+y'_i \models \phi_i \mbox{ and } y \nvDash \phi_i
+\]
+Now consider the formula:
+\[
+[a] (\phi_1 \lor ... \lor \phi_n)
+\]
+As each $y'_i \models \phi_i$, $x' \models [a] (\phi_1 \lor ... \lor \phi_n)$, but $x$ does not satisfy this formula, as each $\phi_i$ is not satisfied at $y$.
+Since there is a formula which $x$ and $x'$ do not agree on, $x$ and $x'$ are not equivalent, contradicting our initial assumption.
+
+But this proof cannot be used in \ELABR{} because it relies on a formula $[a] (\phi_1 \lor ... \lor \phi_n)$ which cannot be expressed in \ELABR{}: 
+\ELABR{} does not include the box operator or disjunction, so this formula is ruled out on two accounts.
+But we can massage it into a form which is more amenable to \ELABR{}'s expressive resources:
+\begin{eqnarray*}
+[a] (\phi_1 \lor ... \lor \phi_n) & = & \neg \langle a \rangle \neg (\phi_1 \lor ... \lor \phi_n)  \\
+	& = & \neg \langle a \rangle (\neg \phi_1\AND ... \AND \neg \phi_n) 
+\end{eqnarray*}
+Further, if the original formula $[a] (\phi_1 \lor ... \lor \phi_n)$ is true in $x'$ but not in $x$, then its negation will be true in $x$ but not in $x'$. 
+So we have the following formula, true in $x$ but not in $x'$:
+\[
+ \langle a \rangle (\neg \phi_1\AND ... \AND \neg \phi_n)
+ \]
+The reason for massaging the formula in this way is so we can express it in \ELABR{} (which does not have the box operator or disjunction).
+At this moment, the revised formula is \emph{still} outside \ELABR{} because it uses negation. 
+But we are almost there: the remaining negation is in innermost scope, and innermost scope negation can be simulated in \ELABR{} by the $!$ operator. 
+
+We are assuming, for reductio, that of the $y'_1, ..., y'_n$, there is no $y'_i$ such that $y \equiv y'_i$.
+But in \ELABR{} without negation, we cannot assume that each $y'_i$ has a formula $\phi_i$ which is satisfied by $y'_i$ but not by $y$ - it might instead be the other way round: $\phi_i$ may be satisfied by $y$ but not by $y'_i$. So, without loss of generality, assume that $y'_1, ..., y'_m$ fail to satisfy formulae $\phi_1, ..., \phi_m$ which $y$ does satisfy, and that $y'_{m+1}, ..., y'_n$ satisfy formulae $\phi_{m+1}, ..., \phi_n$ which $y$ does not:
+\begin{eqnarray*}
+y \models \phi_i \mbox{ and } y'_i \nvDash \phi_i & & i = 1 \mbox{ to } m  \\
+y \nvDash \phi_j \mbox{ and } y'_j \models \phi_j & & j = m+1 \mbox{ to } n 
+\end{eqnarray*}
+The formula we will use to distinguish between $x$ and $x'$ is:
+\[
+ \langle a \rangle ( \bigwedge_{i=1}^m \phi_i \; \AND \; \bigwedge_{j=m+1}^n \mathsf{neg}(y, \phi_j))
+ \]
+ Here, $\mathsf{neg}$ is a meta-language function that, given a state y and a formula $\phi_j$, returns a formula that is true in $y$ but incompatible with $\phi_j$. I will show that, since $y \nvDash \phi_j$, it is always possible to construct $ \mathsf{neg}(y, \phi_j)$ using the $!$ operator.
+
+Consider the possible forms of $\phi_j$:
+\begin{itemize}
+\item
+$\top$: this case cannot occur since all models satisfy $\top$.
+\item
+$\phi_1 \AND \phi_2$: we know $y'_j \models \phi_1 \AND \phi_2$ and $y \nvDash \phi_1 \AND \phi_2$. There are three possibilities:
+\begin{enumerate}
+\item
+$y \nvDash \phi_1$ and $y \models \phi_2$. In this case, $\mathsf{neg}(y, \phi_1 \AND \phi_2) = \mathsf{neg}(y, \phi_1) \AND \phi_2$.
+\item
+$y \models \phi_1$ and $y \nvDash \phi_2$. In this case, $\mathsf{neg}(y, \phi_1 \AND \phi_2) = \phi_1 \AND \mathsf{neg}(y, \phi_2)$.
+\item
+$y \nvDash \phi_1$ and $y \nvDash \phi_2$. In this case, $\mathsf{neg}(y, \phi_1 \AND \phi_2) =  \mathsf{neg}(y, \phi_1) \AND \mathsf{neg}(y, \phi_2)$.
+\end{enumerate}
+\item
+$!A$: if $y \nvDash !A \mbox{ and } y'_j \models !A$, then there is a symbol $a \in \Sigma-A$ such that $y \xrightarrow{a} z$ for some $z$ but there is no such $z$ such that $y'_j \xrightarrow{a} z$. In this case, let $\mathsf{neg}(y, \phi_j) = \langle a \rangle \top$.
+\item
+$\langle a \rangle \phi$. There are two possibilities:
+\begin{enumerate}
+\item
+$y \models \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \rangle \phi) =  \bigwedge\limits_{y \xrightarrow{a} z}  \langle a \rangle \mathsf{neg}(z, \phi)$.
+\item
+$y \nvDash \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \rangle \phi) = \fBang \{ b \fOr \exists z. y \xrightarrow{b} z\}$. This set of $b$s is finite since we are assuming the LTS is finitely-branching.
+\end{enumerate}
+\end{itemize}
+
+\end{proof}
+
+\input{figure:example:neg}
+
+\NI We continue with a worked example of $\mathsf{neg}$.  Consider
+  $y$ and $y'_j$ as in Figure \ref{figure:example:neg}.  One formula
+  that is true in $y'_j$ but not in $y$ is
+
+\[
+   \langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top)
+\]
+
+\NI Now:
+
+\begin{eqnarray*}
+\lefteqn{\mathsf{neg}(y, \langle a \rangle (\langle b \rangle \top \AND \langle c \rangle \top))}\qquad \qquad \qquad  \\
+& = & \bigwedge\limits_{y \xrightarrow{a} z} \langle a \rangle \mathsf{neg}(z, \langle b \rangle \top \AND \langle c \rangle \top)  \\
+& = & \langle a \rangle \mathsf{neg}(z_1, \langle b \rangle \top \AND \langle c \rangle \top) \AND \langle a \rangle\mathsf{neg}(z_2, \langle b \rangle \top \AND \langle c \rangle \top)  \\
+& = & \langle a \rangle (\langle b \rangle \top \AND \mathsf{neg}(z_1, \langle c \rangle \top)) \AND \langle a \rangle\mathsf{neg}(z_2, \langle b \rangle \top \AND \langle c \rangle \top)  \\
+& = & \langle a \rangle (\langle b \rangle \top \AND \mathsf{neg}(z_1, \langle c \rangle \top)) \AND \langle a \rangle(\mathsf{neg}(z_2, \langle b \rangle \top) \AND \langle c \rangle \top)  \\
+& = & \langle a \rangle (\langle b \rangle \top \AND \fBang \{b\}) \AND \langle a \rangle(\mathsf{neg}(z_2, \langle b \rangle \top) \AND \langle c \rangle \top)  \\
+& = & \langle a \rangle (\langle b \rangle \top \AND \fBang \{b\}) \AND \langle a \rangle(\fBang \{c\} \AND \langle c \rangle \top) 
+\end{eqnarray*}
+
+\NI The resulting formula is true in $y$ but not in $y'_j$.
+
+
+\subsection{Comparing \ELABR{} with Hennessy-Milner Logic}
+
+Section \ref{standardTranslation} investigated the relationship
+between \ELABR{} and first-order logic. Now we compare \ELABR{} with
+a logic that is much closer in spirit: Hennessy-Milner logic
+\cite{HennessyM:alglawfndac}, a modal logic designed to reason about
+process calculi. Indeed the present shape of \ELABR{} owes to
+Hennessy-Milner logic. We now contrast both by translation from \ELABR{} into Hennessy-Milner logic \martin{why not the other way?}. 
+This will reveal more clearly than the translation into
+first-order logic where \ELABR{} is novel.
+
+Given a set $\Sigma$ of symbols, with $s$ ranging over
+$\Sigma$, the \emph{formulae} of Hennessy-Milner logic are given
+by the following grammar:
+\begin{GRAMMAR}
+  \phi 
+     &\quad ::= \quad & 
+  \top \fOr \phi_1 \AND \phi_2 \fOr \langle s \rangle \phi \fOr \neg \phi 
+\end{GRAMMAR}
+
+\NI Note that many presentations use infinite conjunction. However,
+that's not required in the present context.
+
+ \emph{Models} of Hennessy-Milner logic are the pairs $(W,
+\rightarrow, w)$ where $(S, \rightarrow)$ is a labelled transition
+system over $S$, and $w \in W$.  The \emph{satisfaction relation} $(l,
+w) \models \phi$ is given by the following inductive clauses.
+
+\[
+\begin{array}{lclcl}
+  (l,w) & \models & \top  \\
+  (l,w) & \models & \phi_1 \AND \phi_2 &\  \mbox{ iff }\  & (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2  \\
+  (l,w) & \models & \langle a \rangle \phi & \mbox{ iff } & \mbox{ there is a } w \xrightarrow{a} w' \mbox { such that } (l,w') \models \phi  \\
+  (l,w) & \models & \neg \phi & \mbox{ iff } & (l,w)  \nvDash \phi 
+\end{array}
+\]
+
+\NI We can now see the two differences between \ELFULL{}, and
+Hennessy-Milner logic, one syntactic, the other semantic.
+
+\begin{itemize}
+
+\item Syntactically, \ELABR{} has the transition-restriction operator ($!$)
+  instead of logical negation ($\neg$).
+
+\item Semantically, an \ELABR{} model has an additional state-labelling,
+  describing the allowable transitions from each vertex.
+
+\end{itemize}
+
+\NI We translate formulae of \ELABR{} into HML using the function $t$:\martin{maybe use $\SEMB{X}$ instead?}
+
+\begin{eqnarray*}
+  t(\top) & \ = \ & \top  \\
+  t(\phi_1 \AND \phi_2) & \ = \ & t(\phi_1) \AND t(\phi_2)  \\
+  t(\langle a \rangle \phi) & \ = \ & \langle a \rangle t(\phi)  \\
+  t(! A) & \ = \ & \bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top 
+\end{eqnarray*}
+
+\NI If $\Sigma$ is an infinite set, then the translation of a $!$
+formula will be an infinitary formula.  If $\Sigma$ is finite,
+then the size\martin{Define the size of a formula. Maybe when formulae
+  are defined.} of the HML formula will be of the order of $n *
+| \Sigma |$ larger than the original \ELABR{} formula (where $n$ is the
+number of $!$ operators occurring in the \ELABR{} formula).
+
+\martin{Say something more interesting about this translation!}
+
+We can now see why in Hennessy-Milner logic without negation $p \equiv
+p'$ does \emph{not} entail $p \BISIM p'$
+
+\begin{GRAMMAR}
+  \phi 
+    &\quad ::= \quad&
+  \top \fOr \phi_1 \AND \phi_2  \fOr \langle a \rangle \phi
+\end{GRAMMAR}
+
+\input{figure:hml}
+
+\NI Consider Figure \ref{figure:hml}.  Here, $x \equiv x'$ - they both
+satisfy the sub formulae of $\langle a \rangle (\langle b \rangle \top
+\AND \langle c \rangle \top)$.  But there is no bisimulation between
+$x$ and $x'$ ($y_1$ cannot be matched with $y'$ because $y'$ has an
+additional outgoing $c$-transition).
+
+If we remove negation, HML is insufficiently expressive to distinguish
+between these two non-bisimilar models.  When we restore negation, we
+can distinguish between these models via the formula:
+
+\[
+   \langle a \rangle \neg \langle c \rangle \top
+\]
+
+\NI Similarly, \ELABR{} is able to distinguish between these models via the
+formula:
+
+\[
+  \langle a \rangle ! \{b\}
+\]
+
+\NI \ELABR{}, also, has the expressive capacity to distinguish between
+non-bisimilar models. If the LTSs are finitely-branching, it can
+simulate negation (in innermost scope) via the width restriction
+operator !
