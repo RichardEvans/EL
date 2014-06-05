@@ -315,3 +315,20 @@ We show that \ELFULL{} satisfies Brandom's Incompatibility Semantics requirement
 We show how \ELFULL{} has been used as an ergonomic knowledge-representation language in an industrial application
 \end{itemize}
 
+\subsection{Introduction TODOs}
+
+\begin{itemize}
+\item Consider expressing ``Pierre is either male or female'' in propositional logic, without quantifiers:
+$sex(pierre, male) \lor sex(pierre, female) \land \neg (sex(pierre, male) \land sex(pierre, female))$.
+\item
+Consider placing the point (currently in Related Work, Brandom's Incompatibility Semantics) - that $\neg p$ is the least information claim that is incompatible with $p$ - into the section on Exclusion being Conceptually prior to Negation.
+\item
+Martin: Another reason for talking about restrictions that change over time in
+the introduction is that we should justify why we use a modal logic,
+rather than a propositional logic. Add an example of restrictions that change over time (e.g. a character moving from one room to another).
+\item
+Martin: I think the claims that some logics are good/average/bad at certain things
+could be made a tad less vague. We are ultimately talking about
+complexity: formula lenght, proof size, search-space size in proof
+search, run-time of SAT solver etc.
+\end{itemize}
