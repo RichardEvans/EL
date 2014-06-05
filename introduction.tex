@@ -12,25 +12,100 @@ So we need a variety of logics, each of which is tailored to a particular subset
 Each logic allows some concepts to be represented naturally, others somewhat less naturally, while some cannot be represented at all.
 For example, first order predicate logic is designed to express quantificational concepts.
 Multiply quantified sentences can be expressed concisely and unambiguously.
-It can capture the ambiguity in ``Every man loves a woman'' with admirable succinctness:
+It can capture the ambiguity in ``Every man loves a woman'', for example, with admirable succinctness:
 \begin{eqnarray}
 \forall X. man(X) \rightarrow \exists Y . loves(X,Y) \nonumber \\
 \exists Y. \forall X. man(X) \rightarrow loves(X,Y) \nonumber
 \end{eqnarray}
-First order logic can use its quantificational machinery to express uniqueness. 
-To say that there is exactly one King of France, and that he is bald, we can write:
+There are other concepts that first order logic \emph{can} express, but only with a certain awkwardness.
+For example, uniqueness can be represented, following Russell, using universal quantification and identity.
+To say that Pierre is the only King of France, we can write:
 \[
-\exists X. king(france, X) \land bald(X) \land \forall Y. king(france, Y) \rightarrow Y = X
+king(france, pierre) \land \forall Y. king(france, Y) \rightarrow Y = pierre
 \]
-Although uniqueness \emph{can} be expressed, the expression is arguably somewhat convoluted. 
-To express the simple idea that a two-place predicate is unique in its second argument, we need to invoke relatively complex machinery: a universal quantifier and the identity relation (with the associated inference schema of the Indiscernibility of Identicals).
-As well as the concepts that can only be expressed with a certain awkwardness, there are also concepts that predicate logic cannot express at all: strict implication, necessity, defeasible implication.
-Each logic divides the set of concepts into three concentric rings: the inner ring is the concepts that can be handled ergonomically; the middle ring is the concepts that can be handled, albeit with some difficulty or awkwardness; the outer ring is the concepts that cannot be expressed at all.
+Although uniqueness \emph{can} be represented, the representation is arguably somewhat convoluted. 
+To express the simple idea that the two-place $king$ predicate is unique in its second argument, we need to invoke relatively complex machinery: a universal quantifier and the identity relation.
+As well as the concepts that can only be expressed with a certain awkwardness, there are also concepts that predicate logic cannot express at all: necessity, for example.
+Each logic divides the set of concepts into three concentric rings: the inner circle is the concepts that can be handled ergonomically; the middle ring is the concepts that can be expressed somehow, if only with some difficulty or awkwardness; the outer ring is the concepts that cannot be expressed at all.
 
+In this paper, we shall argue that \emph{exclusion} is a fundamental logical concept that is not well handled by predicate logic.
 
+Natural language is full of mutually-exclusive alternatives.
+A person can be male or female, but cannot be both.
+A traffic light can be green, amber or red - but it cannot be more than one at a time.
+Mutual exclusion is such a natural and ubiquitous concept that most programming languages have a distinct representation for it: the enumeration data-type.
 
-\subsection{Summary}
-To summarise the argument so far:
+Predicate logic \emph{can} represent mutually exclusive alternatives, of course.
+To say that Pierre is either male or female - but not both - we could write:
+\[
+\exists Y . sex(pierre,Y) \land (Y = male \; \lor \; Y = female) \land \forall Z . sex(pierre,Z) \rightarrow Y = Z
+\]
+To say that a particular traffic light, $t$, is either green, amber, or red - but never more than one - we could write:
+\[
+\exists Y . colour(t,Y) \land (Y = green \; \lor \; Y = amber \; \lor \; Y = red) \land \forall Z . colour(t,Z) \rightarrow Y = Z
+\]
+In predicate logic, exclusion is a derived concept, reduced to a combination of universal quantification, disjunction and the identity relation.
+Predicate logic, in other words, uses relatively complex machinery to express a simple concept:
+\begin{itemize}
+\item Quantification is an expensive concept that comes with
+      many rules governing its behaviour - such as the distinction
+      between free and bound variables\footnote{As of 2014 there is a substantial amount
+      of ongoing research regarding good formalisations of handling
+      free/bound variables, see e.g.~nominal approaches to
+      logic \cite{PittsAM:newaas,PittsAM:nomsetnasics}. The problem
+      was put in focus in recent years with the rise in interest in the
+      computational cost of syntax manipulation in languages with
+      binders.}. The costs of quantification have to be
+      borne every time one uses exclusion, \emph{even though exclusion does
+      not, prima facie, appear to have anything to do with the
+      free/bound variable distinction}.
+\item Disjunction is a computationally complex logical operator: any sentence containing disjunction can be satisfied in many different ways.
+\item The identity relation is also an expensive piece of machinery. In first order predicate logic, identity is a special-case relation which requires an infinite axiom schema (the Indiscernibility of Identicals) to capture its unique properties.
+\end{itemize}
+
+This paper introduces an alternative logic, \ELFULL{}, in which exclusion is expressed \emph{directly}, as a first-class concept - rather than defined in terms of relatively complex machinery.
+\ELFULL{} is the simplest logic we could find that expresses exclusion directly. 
+Exclusion and conjunction are the \emph{only} logical operators. 
+There is no negation, disjunction or implication.
+Because of its extreme simplicity, it has a linear-time decision procedure.
+
+\ELFULL{} is a multi-modal logic, a variant of Hennessy-Milner Logic, that includes an additional logical connective:
+\[
+   !A
+\]
+called \emph{just} $A$, or \emph{tantum} $A$.
+Here, $A$ is a finite set of alternatives that exhaust all
+possibilities. 
+For example:
+\[
+   !\{male, female\}
+      \qquad
+   !\{green, amber, red\}
+\]
+Any statement of a fact that exceeds what tantum $A$ allows is necessarily false:
+\[
+   !\{green, amber, red\} \AND \MAY{blue}
+\]
+is necessarily false.
+If the only available options are green, amber, or red, then blue is not an available option.
+
+Now to say, in \ELFULL{}, that Pierre has a gender which is either male or female, but not both, we write:
+\[
+\MAY{pierre} \MAY{sex} !\{male, female\}
+\]
+Note that \ELFULL{}'s representation of exclusion involves no universal quantifier, no disjunction, and no identity relation.
+It is a purely propositional representation of exclusion.
+
+To say that the traffic light $t$ has a colour that  is either green, amber, or red (exclusively), we can write:
+\[
+\MAY{t} \MAY{colour} !\{green, red, amber\}
+\]
+This is markedly simpler (both in terms of representation length and computational complexity) than the representation in predicate logic:
+\[
+\exists Y . colour(t,Y) \land (Y = green \; \lor \; Y = amber \; \lor \; Y = red) \land \forall Z . colour(t,Z) \rightarrow Y = Z
+\]
+
+To summarise the argument we have sketched:
 \begin{itemize}
 \item
 For every logical concept, we should provide a logic in which it can be expressed naturally (ergonomically)
@@ -41,190 +116,83 @@ First order logic does not express exclusion naturally
 \item
 Therefore, we should look for another logic in which exclusion can be expressed naturally
 \end{itemize}
-
-
-
-
-\NI Logic is the study of formally valid inferences. Based on work
-going back at least two millenia, first-order logic was first fully
-formalised by G.~Frege at the end of the 19th century
-\cite{FregeG:begriffsschrift} and has remained the dominant
-mathematisation of formally valid inferences since.  All other logics
-relate to first-order logic in some form or other. However, for some
-purposes first-order logic can be unwieldy and alternatives have been
-proposed. Two examples of alternative logics are modal logic and
-many-sorted first-order logic.  Both have a distinct advantage over
-first-order logic in their respective domain of application.
-
+\ELFULL{} is a logic designed to express exclusion ergonomically.
+In the next subsections, we shall:
 \begin{itemize}
-
-\item Modal logic leads to shorter formulae and proofs when reasoning
-  'locally', meaning that all quantifiers are bound or local
-  \cite{BlackburnP:modlog}. Modal operators can be thought of as
-  abbreviations that encode quantification over
-  relationally-accessible states in a convenient, variable-free
-  notation.  Simplifying a great deal, first-order statements like for
-  example $\forall y. ( x R y \IMPLIES \phi)$ can be abbreviated to
-  $\diamond \phi$.
-
-\item Many-sorted first-order logic leads to shorter formulae and
-  proofs when reasoning about things in mutually exclusive domains.
-  Simplifying a great deal, first-order statements like for example
-  statements like
-\[
-     \forall x. \exists ab.( person(x) \AND name (a) \AND isCalled( x, a ) \AND age(b) \AND isAge(x,b))
-\]
-can be abbreviated to
-\[
-     \forall x. \exists ab.( isCalled( x, a ) \AND isAge(x,b))
-\]
-assuming the meta-language conventions that $x$ ranges over the
-universe of people, $a$ over names and $b$ over ages.
-
+\item
+Strengthen the claim that exclusion is a fundamental logical concept, by arguing that exclusion is conceptually prior to negation
+\item
+Broaden the claim that exclusion is a fundamental logical concept, by adding other sorts of intra-sentential logical concepts that predicate logic cannot handle (naturally, or at all). These other forms of intra-sentential inferential relations can all be handled naturally in \ELFULL{}.
 \end{itemize}
 
-\NI In short, such specialised logics enable more succinct reasoning.
+\subsection{Exclusion as a Fundamental Logical Concept, Conceptually Prior to Negation}
 
-Studying such logics is interesting for another reason: they often
-illuminate first-order logic in a different light. For example the
-standard translation of modal logic into first-order logic gives rise
-to interesting fragments like the finite variable fragments, the
-fragments closed under bisimulation, guarded fragments that have been
-investigated heavily, etc. The standard translation also allow us to
-push techniques, constructions and results between logics.
+Consider the sentences:
+\begin{enumerate}
 
-Based on intutions from the philosophy of language, in particular on
-theories of negation, from industrial experience with knowlege
-representation and logic programming in computer games, and from
-Hennessy-Milner logic in computer science, the present work proposes
-\emph{eremic logic}, a multi-modal logic that can express exclusion
-between modalities directly. Eremic logic can be used as a knowledge
-representation language.  It also shines an interesting new light on
-the formalisation of natural language, in particular negation,
-relating closely to Brandom's incompatibility semantics. Eremic logic
-also enables inferences between atomic sentences in an elegant way.
+\item ``Jack is male'' is incompatible with ``Jack is female''
+\item For every person $x$, if $x$ is male, then it is not the case that $x$ is female
 
-Before going into details, we introduce eremic logic by examples.  
-Humans are usually deemed  either male or female. We can formalise this
-as follows.
-\[
-   \begin{array}{l}
-   \forall x. (human(x) \IMPLIES sex(x, male) \OR sex(x, female)) \\
-   \qquad\AND        \\
-   \forall x.( \exists y.sex(y, x) \IMPLIES ( x = male \OR x = female )) \\
-   \qquad\AND \\
-   male \neq female
-   \end{array}
-\]
-A similar analysis can conducted for the political statement ``you are
-either with us, or with the terrorists.
-\[
-   \begin{array}{l}
-   \forall x.(group(x) \IMPLIES ( supports(x, us) \OR supports(x, terrorists)) \\
-   \qquad\AND\\
-   \forall x.( \exists y.supports(y, x) \IMPLIES ( x = us \OR x = terrorists )) \\
-   \qquad\AND\\
-   ( us \neq terrorists)
-   \end{array}
-\]
-Mutually exclusive alternatives do note have to be binary, for traffic
-lights in most countries feature three colours, red, amber and green:
-\[
-   \begin{array}{l}
-   \forall x.(colour(x) \IMPLIES ( colour(x, green) \OR colour(x, red) \OR colour(x, amber)) \\
-   \qquad\AND\\
-   \forall x.( \exists y.colour(y, x) \IMPLIES ( x = green \OR x = red \OR x = amber )) \\
-   \qquad\AND\\
-   ( green \neq red \AND green \neq amber \AND red \neq amber)
-   \end{array}
-\]
+\end{enumerate}
 
-\NI We could easily present a near unlimited number of similar
-examples because the choice of a limited number of exclusive opions is
-an ubiquitous and important feature of the world, and that importance
-is reflected in how frequently we discus such matters.
+\NI The orthodox position is that (1) is true because of (2).  There
+are \emph{general universally-quantified rules} describing which
+predicates are incompatible, and these general rules explain why
+particular sentence instances are incompatible.  We know (1) because
+we know (2).
 
-Because of the importance of this phenomenon, let us term it
-``exclusion'' and reflect on the features of its formalisations in
-first-order logic: exclusion is a derived concept and reduced to a
-combination of universal quantification and propositional connectives
-including negation. This is several interesting and related
-consequences.
+In \emph{Making It Explicit}\cite{brandom2}, Brandom proposes a reversal of this
+orthodox direction of explanation.  He claims that we can understand
+incompatible sentence pairs, like (1), even if we do not understand
+universal quantification or negation.  \emph{Material incompatibility is
+conceptually prior to logical negation.}
 
-\begin{itemize}
+Imagine, to make this vivid, a primitive people speaking a
+primordial language.  This language contains atomic sentences, but has
+no ``complex'' logical connectives.  By ``complex'', I mean logical
+connectives that, like disjunction, generate sentences which can be
+satisfied in many different distinct ways.  Negation, disjunction,
+implication, existential quantification all create formulae that can
+be satisfied in many different ways (but conjunction does not). This condition will be
+precisified in Section 2: a logic is ``simple'' if the set of
+satisfying models of every sentence has a unique least upper
+bound. Disjunction fails to be simple because there are two equally
+simple models of $\phi \lor \psi$. Similarly, negation fails to be simple
+because there are two equally simple models of $\neg (\phi \land
+\psi)$. Conjunction is the \emph{only} connective of propositional logic that is simple,
+according to this criterion.
+
+Imagine, then, a primitive people speaking a simple language of
+atomic sentences - a language containing no operators for generating
+sentences that can be satisfied in different ways.  These people
+recognise when atomic sentences are incompatible, and can see that one
+sentence entails another - but they have no way of saying explicitly
+that these sentences have these properties.  Their behaviour
+outreaches their ability to articulate it.  Over time, these people
+may advance to a more sophisticated language in which
+incompatibilities and entailments can be made explicit (using the
+negation and entailment operators respectively) - but this is a later
+(and optional) development. The speakers of the core primordial
+language understand incompatibility relations between atomic
+sentences, but use no complex logical connectives.
+
+If this picture is coherent, then material incompatibility - exclusion - is conceptually independent of logical negation.
+We do not need negation to make sense of exclusion.
+
+Now imagine a variation of our primitive language in which no sentences are ever treated as incompatible.
+The native speakers never disagree, back down, retract their claims, or justify them. They just make assertions.
+Without an understanding of incompatibility, and the variety of behaviour that it engenders, we submit (following Brandom) that there is insufficient richness in the linguistic practice for their sounds to count as assertions.
+Without exclusion, their sounds are just \emph{barks}.
+If this further claim is also accepted, then material incompatibility - exclusion - is not just conceptually \emph{independent} of logical negation, but is conceptually \emph{prior} to it.
 
 
-\item Quantification is an expensive concept in the sense that it comes with
-      many rules governing it's behaviour such as the distinction
-      between free and bound variables with its
-      ramifications\footnote{As of 2014 there is a substantial amount
-      of ongoing research regarding good formalisations of handling
-      free/bound variables, see e.g.~nominal approaches to
-      logic \cite{PittsAM:newaas,PittsAM:nomsetnasics}. The problem
-      was put in focus in recent years with the rise in intrest in the
-      compuational cost of syntax manipluation in languages with
-      binders. While these matters used to swept under the carpet of
-      informality, the rise in mechanical verification has rendered
-      this option problematic.} The costs of quantification have to be
-      borne every time one uses exclusion, even though exclusion does
-      not, prima facie, appear to have anything to do with the
-      free/bound variable distinction.
+\subsection{Intra-Sentential Logical Operators}
 
-\item Negation and quantification introduce issues into the formalisation
-      that are not germane to exclusion, making reasoning about
-      exclusion more cumbersome.
+The core claim of this paper is that \ELFULL{} is an ergonomic logic for describing the exclusion relation.
+Now exclusion is an inferential relation between \emph{atomic sentences}. 
+In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that predicate logic cannot articulate, but that \ELFULL{} is able to handle.
 
-\end{itemize}
-
-\NI The examples of exclusion so far could have been handled in a
-many-sorted logic. However, exclusion is not always temporally stable:
-progress in plastic surgery has created transsexuals, undermining the
-binary between male and female. Such changing forms of exclusion are
-not easily expressible with sorting alone.
-
-The present paper proposes a different approach. Instead seeing
-exclusion as a derived concept, it porposes exclusion as a first-class
-or atomic concept that is directly baked into eremic logic. For this
-purpose a logical connective
-
-\[
-   !A
-\]
-called \emph{just} $A$, or \emph{tantum} $A$ is used and its behaviour
-axiomatised. Here $A$ is a finite set of alternatives that exhaust all
-possibilities. For example:
-\[
-   !\{male, female\}
-      \qquad
-   !\{red, amber, green\}.
-\]
-In addition, to be able to express temporal dependencies, eremic logic provides modalities
-\[
-   \MAY{jack}{(!\{male, female\} \AND \MAY{male}{})}
-\]
-Simplifying a bit, this expresses that Jack is male, and that there
-are only two sexes, male and female.  Any statement of a fact that
-exceed what tantum $A$ allows to exist is false:
-\[
-   !\{red, amber, green\} \AND blue
-\]
-is false.
-Changing exclusion can easily be expressed.
-\[
-     \MAY{20th}{(
-       !\{male, female\} \AND
-       \MAY{21th}{
-         !\{male, female, transsexual\}{}} )} 
-\]
-This formula says that the twentieth century knew only two genders,
-male and female, but the twenty-first knews three.
-
-
-\input{figure:relationships}
-
-\subsection{A logic of atomic sentences}
-
-\NI The \emph{atomic sentences} of a natural language can be
+The \emph{atomic sentences} of a natural language can be
 characterised as the sentences which do not contain any other
 sentences as constituent parts\footnote{Compare Russell \cite{russell}
   p.117: ``A sentence is of atomic form when it contains no logical
@@ -257,9 +225,7 @@ following \emph{is} atomic, despite using ``and'' :
 \NI Here, ``Jack loves Jill'' is not a syntactic constituent since
 ``and'' is used to conjoin \emph{noun-phrases}, not sentences.
 
-\subsection{Inferences between atomic sentences}
-
-\NI There are many types of inferential relations between atomic
+There are many types of inferential relations between atomic
 sentences of a natural language.  For example:
 
 \begin{itemize}
@@ -272,7 +238,7 @@ sentences of a natural language.  For example:
 
 \end{itemize}
 
-\NI Some of these inferential relations are \emph{incompatibility}
+\NI Some of these inferential relations are \emph{exclusion}
 relations (two sentences cannot both be true) while others are
 \emph{entailment} relations (if one sentence is true, the other must
 also be true).  The main question this paper seeks to answer is:
@@ -330,123 +296,22 @@ are incompatibilities between atomic propositions. In \S 82:
 
 \NI But Wittgenstein does not, unfortunately, show us what this
 language would look like.  In this paper, a new modal logic is
-introduced to articulate Wittgenstein's vision.  Eremic Logic was
-designed to handle the various types of inferences between elementary
-propositions.
+introduced to articulate Wittgenstein's vision.  \ELFULL{} is the simplest logic we could find that handles the various types of inferences between elementary propositions.
 
-\subsection{An autonomous language game based on incompatibility between atomic sentences}
-
-\NI Another motivation for Eremic Logic starts with Robert Brandom's
-arguments that material incompatibility is conceptually prior to
-logical negation.  Consider the sentences:
-\begin{enumerate}
-
-\item ``Jack is male'' is incompatible with ``Jack is female''
-\item For every person $x$, if $x$ is male, then it is not the case that $x$ is female
-
-\end{enumerate}
-
-\NI The orthodox position is that (1) is true because of (2).  There
-are \emph{general universally-quantified rules} describing which
-predicates are incompatible, and these general rules explain why
-particular sentence instances are incompatible.  We know (1) because
-we know (2).
-
-\NI In \emph{Making It Explicit}\cite{brandom2}, Brandom proposes a reversal of this
-orthodox direction of explanation.  He claims that we can understand
-incompatible sentence pairs, like (1), even if we do not understand
-universal quantification or negation.  Material incompatibility is
-conceptually prior to logical negation.
-
-\NI Imagine, to make this vivid, a primitive people speaking a
-primordial language.  This language contains atomic sentences, but has
-no ``complex'' logical connectives.  By ``complex'', I mean logical
-connectives that, like disjunction, generate sentences which can be
-satisfied in many different distinct ways.  Negation, disjunction,
-implication, existential quantification all create formulae that can
-be satisfied in many different ways. This condition will be
-precisified in Section 2: a logic is ``simple'' if the set of
-satisfying models of every sentence has a unique least upper
-bound. Disjunction fails to be simple because there are two equally
-simple models of $\phi \lor \psi$. Similarly, negation fails to be simple
-because there are two equally simple models of $\neg (\phi \land
-\psi)$. Conjunction is the \emph{only} logical connective that is simple,
-according to this criterion.
-
-\NI Imagine, then, a primitive people speaking a simple language of
-atomic sentences, a language containing no operators for generating
-sentences that can be satisfied in different ways.  These people
-recognise when atomic sentences are incompatible, and can see that one
-sentence entails another - but they have no way of saying explicitly
-that these sentences have these properties.  Their behaviour
-outreaches their ability to articulate it.  Over time, these people
-may advance to a more sophisticated language in which
-incompatibilities and entailments can be made explicit (using the
-negation and entailment operators respectively) - but this is a later
-(and optional) development. The speakers of the core primordial
-language understand incompatibility relations between atomic
-sentences, but use no complex logical connectives.
-
-Brandom treats incompatibility relations \emph{extensionally}:
-incompatibility is introduced as a set of sets of sentences which are
-jointly incompatible.  Once the speakers of the primordial language
-learn this incompatibility relation (extensionally defined, as a set
-of sets), they can use it to make entailment inferences.  Given a
-sentence $\phi$ in a language $L$, define $\INC{\phi}$ as the set of sets of
-sentences in $L$ that are incompatible with $\phi$.  The speakers of the
-primordial language can use $\INC{\cdot}$ to make inferences, using the
-equivalence\footnote{This equivalence is described in \cite{brandom2}:
-  ``A relation of entailment, required for an inferential semantics,
-  can be derived according to the principle that p entails q just in
-  case everything incompatible with q is incompatible with p.'' For a
-  further elaboration, see \cite{brandom}, especially Chapter 5 and
-  Appendices.}:
-
-\[
-   \phi \mbox{ entails } \psi \quad \mbox{ iff }\quad \INC{\psi} \subseteq \INC{\phi}
-\]
-
-\NI This is a highly appealing picture of language development.\martin{the problem
-with this picture is that it requires that the language learners
-already understand implication at the meta-level so as to be able to
-understand set inclusion ...}  It
-suggests a way language could have got off the ground\footnote{The
-  primordial language described is an ``autonomous'' language game - a
-  game you could play although you played no other. See
-  \cite{brandom3}, Chapter 12.}, without requiring early language
-users to make complex inferences with logical symbols.  But, as
-described, the combinatorics of the situation make the incompatibility
-set so large that the language is not learnable.
-
-The trouble with characterising the incompatibility relation
-\emph{extensionally} is that it quickly grows too large to be
-learnable. We need to know that
-
+\subsection{Outline}
+The rest of this paper is organised as follows:
 \begin{itemize}
-
-\item ``Jack is male'' is incompatible with ``Jack is female''
-\item ``Jill is male'' is incompatible with ``Jill is female''
-\item ``Joan is male'' is incompatible with ``Joan is female''
-\item ``Jack is 39 years old'' is incompatible with ``Jack is 40 years old''
-\item ``Jill is 39 years old'' is incompatible with ``Jill is 40 years old''
-\item ``Joan is 39 years old'' is incompatible with ``Joan is 40 years old''
-\item etc...
-
+\item
+We describe the syntax and semantics of \ELFULL{}
+\item
+We provide inference rules, and prove soundness, completeness and compactness
+\item
+We describe a \emph{linear-time} decision procedure
+\item
+We prove a version of the Hennessy-Milner theorem
+\item
+We show that \ELFULL{} satisfies Brandom's Incompatibility Semantics requirement
+\item
+We show how \ELFULL{} has been used as an ergonomic knowledge-representation language in an industrial application
 \end{itemize}
-
-\NI Even if we restrict our attention to one-place predicates, if
-there are $n$ objects and $p$ incompatible predicates, then there are
-$n\cdot{p \choose 2}$ facts to learn.  This quickly becomes impractical as $n$ and
-$p$ increases.  As Davidson has emphasized \cite{davidson}, for a
-language to be learnable, we must discern some sort of recursive
-structure so that the combinatorics can be tamed.
-
-What is wanted, then, is a simple language (which does not contain
-complex logical connectives) that has recursive structure which can
-generate the multiplicity of incompatibility sets.  But \emph{how can
-  we introduce recursive structure without introducing complex logical
-  connectives?} EL$[\AND, !]$, to be introduced in Section Two, is
-just such a language: it characterises the multiplicity of
-incompatible sentence sets recursively, but without using complex
-truth-functional connectives.
 
