@@ -64,8 +64,31 @@ problem is important.  Here are some examples to get the ball rolling.
 \item Can we give a good characterisation of the first-order fragment
   identified by the standard translation of \ELFULL{}?
   
-  \item Consider the extension of \ELABR{} that has $\MUST{a}\phi$ as well as $\MAY{a}\phi$.
-  Note that Theorem \ref{theorem:completeLattice} fails when we add $\MUST{a}$, so we will need a completely different sort of completeness proof.
+\item Even if not explicitly defined, conventional modal logics have
+  not just a may modality, but also its dual, the must modality. This
+  is a direct consequence of the presence of negation: $\MUST{a}{\phi}
+  = \neg \MAY{a}{\neg \phi}$. In eremic logic the situation is
+  different: since negation is not available, adding $\MUST{a}{\phi}$
+  is a substantial change to the logic: for example the processes in
+  Figure \ref{figure:counterexample}, indistinguishable by eremic
+  formulae, are separated by 
+  \[
+     \MUST{a}{\MAY{b}{}},
+  \]
+  assuming the usual semantics: $(\LLL, s) \models \MUST{a}{\phi}$ if
+  $s \TRANS{a} t$ implies that $(\LLL, t) \models \phi$. That means
+  Theorem \ref{theorem:completeLattice} fails. What notion of model
+  equivalence does elementary equivalence become in this scenario?
+  What do complete proof rules look like?
+
+  Similar questions can be asked for other additional primitives. If negation is 
+  available, the formula
+  \[
+     \MAY{a}{\neg \MAY{b}{} }
+  \]
+  separates the afromentioned examples. If we add implication instead,
+  negation becomes definable: $\neg \phi = \phi \rightarrow \bot$.
+
 
 \end{enumerate}
 
