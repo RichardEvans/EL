@@ -1,0 +1,55 @@
+\section{Quantified EL}
+
+We can add variables and quantifiers to EL in the usual way.
+\begin{definition} 
+Let $\Sigma$ be a non-empty set of actions, ranged over by $a, a', ...$ as before, and let $A$ range over
+finite subsets of $\Sigma$. 
+Given a set $\mathcal{V}$ of \emph{variables},
+with $X, X', Y, Y', ...$ ranging over $\mathcal{V}$, the formulae of QEL are given by the
+following grammar:
+
+\begin{GRAMMAR}
+  \phi 
+     &\quad ::= \quad & 
+  \TRUE 
+     \VERTICAL 
+  \phi \AND \psi
+     \VERTICAL 
+  \MAY{a}{\phi}
+     \VERTICAL 
+  \MAY{X}{\phi}
+     \VERTICAL 
+  \fBang A 
+     \VERTICAL 
+  \exists X . {\phi}
+     \VERTICAL 
+  \forall X . {\phi}
+\end{GRAMMAR}
+\end{definition}
+In QEL, we can say that there is exactly one king of France, and he is bald, as:
+\[
+\exists X . \MAY{king} \MAY{france} ! \{X\} \land \MAY{X} \MAY{bald}
+\]
+Expressing this in predicate logic is significantly more cumbersome:
+\[
+\exists X. king(france, X) \land bald(X) \land \forall Y. king(france, Y) \rightarrow Y = X
+\]
+The predicate logic version uses an extra universal quantifier, and also requires the identity relation (which itself requires the schema of the Indiscernibility of Identicals ).
+
+To say that every person has exactly one sex, which is either male or female, we can write in QEL:
+\[
+\forall X . \MAY{X} \MAY{person} \rightarrow \MAY{X} \MAY{sex} ! \{male, female\} \land \exists Y . \MAY{X} \MAY{sex} (\MAY{Y} \land \fBang \{Y\})
+\]
+This is significantly more elegant than the equivalent in predicate logic:
+\[
+\forall X. person(X) \rightarrow \exists Y . sex(X,Y) \land (Y = male \; \lor \; Y = female) \land \forall Z . sex(X,Z) \rightarrow Y = Z
+\]
+
+To say that every traffic light is coloured either green, amber or red, we can write in QEL:
+\[
+\forall X. \MAY{X} \MAY{light} \rightarrow \MAY{X} \MAY{colour} !\{green, amber, red\} \land \exists Y . \MAY{X} \MAY{colour} (\MAY{Y} \land !\{Y\})
+\]
+Again, this is significantly less verbose than the equivalent in predicate logic:
+\[
+\forall X. light(X) \rightarrow \exists Y . colour(X,Y) \land (Y = green \; \lor \; Y = amber \; \lor \; Y = red) \land \forall Z . colour(X,Z) \rightarrow Y = Z
+\]
