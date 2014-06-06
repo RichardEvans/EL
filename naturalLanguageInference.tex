@@ -7,7 +7,7 @@ Finally, we compare our approach with the various attempts to handle these infer
 
 \subsection{Intra-Atomic Inferences in Natural Language}
 Natural language admits many types of inference between atomic sentences.
-First, incompatibility:
+First, exclusion:
 \begin{quote}
 ``Jack is male'' is incompatible with ``Jack is female''
 \end{quote}
@@ -28,54 +28,11 @@ Fifth, inferences from conjunctions of sentences to conjunction of predicates\fo
 ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
 \end{quote}
 
-All these types of inference can be handled directly and naturally in \ELABR{}.
-To show this, we will define a notational variant of \ELABR{}, that we call {\bf \ELKR{}}, that is slightly more ergonomic as a knowledge-representation language. We will provide a translation from \ELKR{} to \ELABR{}.
-Then we will show how these inferences between atomic sentences of natural language can be captured in \ELKR{}.
+All these types of inference can be handled directly and naturally in \ELABR{}, as we shall now show.
 
-\subsection{\ELKR{} as a Notational Variant of \ELABR{}}
-\begin{definition} Given a set $\Sigma$ of symbols, with $a$ ranging over
-$\Sigma$,
-the sentences of \ELKR{} are given by:
-
-\begin{GRAMMAR}
-  \phi 
-     &\quad ::= \quad & 
-  \phi_1 \AND \phi_2  
-     \VERTICAL 
-  a
-     \VERTICAL 
-  a \ast \phi
-     \VERTICAL 
-  a \fBang \phi  
-\end{GRAMMAR}
-\end{definition}
-We write sentences of \ELKR{} in Courier typeface, for example:
-\begin{verbatim}
-jack * loves * jill
-jack * gender ! male
-\end{verbatim}
-There is a simple translation function $t$ from \ELKR{} to \ELABR{}:
-\begin{eqnarray}
-t(\phi_1 \land \phi_2) & = & t(\phi_1) \land t(\phi_2) \nonumber \\
-t(a) & = & \MAY{a} \top \nonumber \\
-t(a \ast \phi) & = & \MAY{a} t(\phi) \nonumber \\
-t(a \fBang \phi) & = & \MAY{a} (\fBang h(\phi) \land t(\phi)) \nonumber
-\end{eqnarray}
-The $t$ function uses the auxiliary $h$ function which returns the set of topmost symbols in a formula:
-\begin{eqnarray}
-h(\phi_1 \land \phi_2) & = & h(\phi_1) \cup h(\phi_2) \nonumber \\
-h(a) & = & \{a\} \nonumber \\
-h(a \ast \phi) & = & \{a\} \nonumber \\
-t(a \fBang \phi) & = & \{a\} \nonumber
-\end{eqnarray}
-So, for example:
-\begin{eqnarray}
-t(jack \ast loves \ast jill ) & = & \MAY{jack} \MAY{loves} \MAY{jill} \top \nonumber \\
-t(jack \ast gender \fBang male ) & = & \MAY{jack} \MAY{gender} (\fBang \{jill\} \land \MAY{jill} \top) \nonumber
-\end{eqnarray}
 
 \subsection{Intra-Atomic Inferences in \ELFULL{}}
-We shall show that each of the following inferences can be naturally expressed in \ELKR{}:
+We shall show that each of the following inferences can be naturally expressed in \ELABR{}:
 \begin{itemize}
 \item
 ``Jack is male'' is incompatible with ``Jack is female''
@@ -88,50 +45,54 @@ We shall show that each of the following inferences can be naturally expressed i
 \item
 ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
 \end{itemize}
-First, incompatibility: ``Jack is male'' and ``Jack is female'' are translated into \ELKR{} as the pair of incompatible sentences:
+First, incompatibility. ``... is male'' and ``... is female'' are translated into \ELABR{} as the pair of incompatible sentences:
 \begin{verbatim}
-jack * gender ! male
-jack * gender ! female
+<male> /\ !{male}
+<female> /\ !{female}
 \end{verbatim}
+
 Second, entailment from dyadic to monadic predicates:
-``Jack loves Jill'' is translated into EL-KL as:
+``Jack loves Jill'' is translated into \ELABR{} as:
 \begin{verbatim}
-jack * loves * jill
+<jack> <loves> <jill>
 \end{verbatim}
 This directly entails:
 \begin{verbatim}
-jack * loves
+<jack> <loves>
 \end{verbatim}
 Third, adverbial inferences: 
 \begin{verbatim}
-jack * walks * quickly
+<jack> <walks> <quickly>
 \end{verbatim}
 entails:
 \begin{verbatim}
-jack * walks
+<jack> <walks>
 \end{verbatim}
-Fourth, \ELKR{} directly supports inferences from conjunctions of sentences to conjunctions of noun-phrases.
-From the general \ELKR{} rule that
+Fourth, \ELABR{} directly supports inferences from conjunctions of sentences to conjunctions of noun-phrases.
+From the general rule that
 \[
-a \ast b \; \land \; a \ast c \; \models \; a \ast (b \land c)
+\MAY{a} \MAY{b} \land \MAY{a} \MAY{c} \models \MAY{a} (\MAY{b} \land \MAY{c})
 \]
 it follows that 
 \begin{verbatim}
-jack * loves * jill
-jack * loves * joan
+<jack> <loves> <jill>
+\end{verbatim}
+and:
+\begin{verbatim}
+<jack> <loves> <joan>
 \end{verbatim}
 together imply
 \begin{verbatim}
-jack * loves * (jill /\ joan)
+<jack> <loves> (<jill> /\ <joan>)
 \end{verbatim}
 Using the same rule, we can infer that
 \begin{verbatim}
-jack * bruised
-jack * humiliated
+<jack> <bruised>
+<jack> <humiliated>
 \end{verbatim}
 together imply
 \begin{verbatim}
-jack * (bruised /\ humiliated)
+<jack> (<bruised> /\ <humiliated>)
 \end{verbatim}
  
 \subsection{Representing Incompatible Predicates in Predicate Logic}
@@ -170,7 +131,7 @@ If we want to capture the inference from ``Jack loves Jill`` to ``Jack loves'' i
 \]
 We would have to add an extra non-logical axiom like this for every n-place predicate.
 This is cumbersome at best. 
-In \ELABR{}, by contrast, we do not need to introduce any non-logical machinery at all to capture these inferences because they all follow from the general rule that $A \star B \models A$.
+In \ELABR{}, by contrast, we do not need to introduce any non-logical machinery at all to capture these inferences because they all follow from the general rule that $\MAY{a} \MAY{b} \models \MAY{a}$.
 
 \subsection{Supporting Adverbial Inferences in Predicate Logic}
 How can we represent verbs in traditional predicate logic so as to support adverbial inference?
