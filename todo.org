@@ -1,3 +1,4 @@
+* Maybe we should call "pure eremic" models just "pure" models?
 * Have we discussed bisimulation invariance?
 * Be consistent. In particular
   - State vs node
@@ -30,7 +31,7 @@
 
   - capitalisation, e.g. Eremic Logic vs Eremic logic vs eremic logic etc.
 
-* Talk about binding and precedence in EL formulae.
+* Talk about binding and precedence in EL formulae, qunatifiers etc. Be consistent.
 * Find better names for fragments: e.g. EL[∧, !] isn't exactly snappy. What
 about Core etc?
 * We have too many correspondence theorems, remove names.

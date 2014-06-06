@@ -135,7 +135,7 @@ inductively by the following clauses, where we assume that $\MMM =
 \begin{array}{lclcl}
   \MMM & \models & \top   \\
   \MMM & \models & \phi \AND \psi &\ \mbox{ iff } \ & \MMM  \models \phi \mbox { and } \MMM \models \psi  \\
-  \MMM & \models & \langle a \rangle \phi & \mbox{ iff } & \text{there is a } s \xrightarrow{a} t \mbox { such that } (\LLL, t) \models \phi  \\
+  \MMM & \models & \langle a \rangle \phi & \mbox{ iff } & \text{there is transition } s \xrightarrow{a} t \mbox { such that } (\LLL, t) \models \phi  \\
   \MMM & \models & \fBang A &\mbox{ iff } & \lambda(s) \subseteq A
 \end{array}
 \]
