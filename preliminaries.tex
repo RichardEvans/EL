@@ -14,8 +14,15 @@ all least upper bounds of $T$ is denoted $\BIGLUB T$.  \emph{Lower
   bounds}, \emph{greatest lower bounds} and $\BIGGLB T$ are defined
 mutatis mutandis.  A \emph{partial order} is a preorder $\sqsubseteq$
 that is also anti-symmetric.  A partial order $(S, \sqsubseteq)$ is a
-\emph{complete lattice} if every subset of $S$ has a least upper and a
+\emph{lattice} if every pair of elements in $S$ has a least upper and a
 greatest lower bound.
+A lattice is a \emph{bounded lattice} if it has top and bottom elements $\top$ and $\bot$ such that for all $x \in S$
+\begin{eqnarray}
+x \sqcap \bot & = & \bot \nonumber \\
+x \sqcup \bot & = & x \nonumber \\
+x \sqcap \top & = & x \nonumber \\
+x \sqcup \top & = & \top \nonumber
+\end{eqnarray}
 
 If $(S, \sqsubseteq)$ is a preorder, we can turn it into a
 partial-order by quotienting: let $a \simeq b$ iff $a \sqsubseteq b$

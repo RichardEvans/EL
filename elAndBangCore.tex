@@ -673,8 +673,6 @@ where:
  
 \end{itemize}
 
-\input{figure:lub}
-
 \subsubsection{Showing that $\sqcap$ as defined is the greatest lower bound}
 We will show that:
 \begin{itemize}
@@ -736,7 +734,9 @@ In this case, given $\lambda_{\MMM}(w) \supseteq \lambda_{\NNN}(y)$ and $\lambda
 \end{proof}
 
 \subsubsection{Computing the least upper bound ($\sqcup$)}
-Define the least upper bound ($\sqcup$) of two models as:
+Intuitively, the least upper bound of two models $\MMM$ and $\MMM'$ contains the intersection of the transitions of $\MMM$ and $\MMM'$ for every associated pair of states in $\MMM$ and $\MMM'$, and the union of the node-labellings.
+
+Formally, define the least upper bound ($\sqcup$) of two models as:
 \begin{eqnarray*}
 \MMM \sqcup \bot & = & \MMM \\
 \bot \sqcup \MMM & = & \MMM \\
@@ -761,6 +761,45 @@ Here, $\mathsf{sharedT}$ returns the shared transitions between two models, and 
 \[
 \mathsf{sharedT}(((\mathcal{W}, \rightarrow, \lambda),w) ((\mathcal{W}', \rightarrow', \lambda'),w')) =  \{(a, x, x') \;|\; w \xrightarrow{a} x \land w' \xrightarrow{a}' x'\}
 \]
+If $((S*,\rightarrow*,\lambda*),w*) = ((S,\rightarrow,\lambda),w) \sqcup ((S',\rightarrow',\lambda'),w')$ then define
+the set $\mathsf{triples}_\mathsf{lub}$ as the set of triples $(x,x',x*) \; | \; x \in S, x' \in S', x* \in S*$ that were used during the construction of $\mathsf{lub}$ above. So $\mathsf{triples}_\mathsf{lub}$ stores the associations between states in $\MMM$, $\MMM'$ and $\MMM \sqcup \MMM'$. 
+
+\input{figure:lub}
+
+\subsubsection{Showing that $\sqcup$ as defined is the least upper bound}
+We will show that:
+\begin{itemize}
+\item
+$\MMM \MODELLEQ \MMM \sqcup \MMM'$ and $\MMM' \MODELLEQ \MMM \sqcup \MMM'$
+\item
+If $\MMM \MODELLEQ \NNN $ and $\MMM' \MODELLEQ \NNN $, then $\MMM \sqcup \MMM' \MODELLEQ \NNN$
+\end{itemize}
+If $\MMM$ or $ \MMM'$ are equal to $\bot$, then we just apply the rule that $\bot \MODELLEQ m$ for all models $m$. 
+So let us assume that neither $\MMM$ not $\MMM'$ are $bot$.
+
+\begin{proof}
+To see that $\MMM \MODELLEQ \MMM \sqcup \MMM'$, observe that, by construction of $\sqcup$ above, every transition in $\MMM \sqcup \MMM'$ has a matching transition in $\MMM$, and every node label in  $\MMM \sqcup \MMM'$ is a superset of the corresponding node label in $\MMM$.
+
+To show that $\MMM \MODELLEQ \NNN $ and $\MMM' \MODELLEQ \NNN $ together imply $\MMM \sqcup \MMM' \MODELLEQ \NNN$, assume a simulation $\mathcal{R}$ from $\NNN$ to $\MMM$ and a simulation $\mathcal{R}'$ from $\NNN$ to $\MMM'$.
+We need to produce a simulation relation $\mathcal{R}*$ from $\NNN$ to $\MMM \sqcup \MMM' $.
+Define
+\[
+\mathcal{R}* =   \{(x, y*) \; | \; \exists y_1 . \exists y_2 . (x,y_1) \in \mathcal{R}, (x,y_2) \in \mathcal{R}', (y_1,y_2,y*) \in \mathsf{triples}_\mathsf{lub} \}
+\]
+In other words, $\mathsf{R}*$ contains the pairs corresponding to the pairs in both $\mathsf{R}$ and $\mathsf{R}'$.
+We just need to show that $\mathsf{R}*$ as defined is a simulation from $\NNN$ to $\MMM \sqcup \MMM' $.
+Assume $(x,x*) \in \mathsf{R}*$ and $x \xrightarrow{a} y$ in $\NNN$. 
+We need to produce a $y*$ such that $(x*,y*) \in \mathsf{R}*$ and $x* \xrightarrow{a} y*$ in $\MMM \sqcup \MMM' $.
+Given that $\mathcal{R}$ is a simulation from $\NNN$ to $\MMM$, and that  $\mathcal{R}'$ is a simulation from $\NNN$ to $\MMM'$, we know that there is a pair of states $x_1, y_1$ in $\MMM$ and a pair of states $x_2, y_2$ in $\MMM'$ such that $(x,x_1) \in \mathsf{R}$ and $(x,x_2) \in \mathsf{R}'$ and $x_1 \xrightarrow{a} y_1$ in $\MMM$ and $x_2 \xrightarrow{a} y_2$ in $\MMM'$.
+Now, from the construction of $\mathsf{lub}$ above, there is a triple $(y_1, y_2, y*) \in \mathsf{triples}_\mathsf{lub}$.
+Now, from the construction of $\mathsf{R}*$ above, $(x*,y*) \in \mathsf{R}*$.
+
+Finally, we need to show that for all states $x$ and $y$, if $(x,y) \in \mathsf{R}*, \lambda_{\NNN}(x) \supseteq \lambda_{\MMM \sqcup \MMM'}(y)$.
+Given that $\mathcal{R}$ is a simulation from $\NNN$ to $\MMM$, and that  $\mathcal{R}'$ is a simulation from $\NNN$ to $\MMM'$, we know that if $(x,y_1) \in \mathsf{R}$, then $\lambda_\NNN(x) \supseteq \lambda_\MMM(y_1)$.
+Similarly, if  $(x,y_2) \in \mathsf{R}$, then $\lambda_\NNN(x) \supseteq \lambda_\MMM'(y_2)$.
+Now, from the construction of $\mathsf{lub}$, $\lambda_{\MMM \sqcup \MMM'}(y*) = \lambda_{\MMM}(y_1) \cup \lambda_{\MMM}(y_2)$ for all triples $(y_1, y_2, y*) \in \mathsf{triples}_\mathsf{lub}$. 
+So $\lambda_{\NNN}(x) \supseteq \lambda_{\MMM \sqcup \MMM'}(y)$, as required.
+\end{proof}
 
 \subsubsection{Characteristic formulae}
 
