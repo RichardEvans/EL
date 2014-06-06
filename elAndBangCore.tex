@@ -348,19 +348,19 @@ a \emph{simulation from $\LLL_1$ to $\LLL_2$}, provided:
 
 \item $\RRR$ is a simulation on the underlying transition systems. 
 
-\item Whenever $(s, t) \in \RRR$ then also $\lambda_1(s) \supseteq
-  \lambda_2(t)$.
+\item Whenever $(x, y) \in \RRR$ then also $\lambda_1(x) \supseteq
+  \lambda_2(y)$.
 
 \end{itemize}
 
-\NI If $\MMM_i = (\LLL_i, s_i)$ are models, we say $\RRR$ is a
+\NI If $\MMM_i = (\LLL_i, x_i)$ are models, we say $\RRR$ is a
 \emph{simulation from $\MMM_1$ to $\MMM_2$}, provided the following hold.
 
 \begin{itemize}
 
 \item $\RRR$ is a simulation from $\LLL_1$ to $\LLL_2$ as eremic transition systems.
 
-\item  $(s_1, s_2) \in \RRR$. 
+\item  $(x_1, x_2) \in \RRR$. 
 
 \end{itemize}
 
@@ -663,7 +663,7 @@ where:
   \lambda'_2 & = & \lambda' \mbox{ with } w' \mbox{ removed } 
 \end{eqnarray*}
 
-\NI It is easy to show that $\SIMPL{\cdot}$ has the following properties:
+\NI It is easy to show, by induction on $\phi$, that $\SIMPL{\cdot}$ has the following properties:
 
 \begin{itemize}
 
@@ -674,6 +674,66 @@ where:
 \end{itemize}
 
 \input{figure:lub}
+
+\subsubsection{Showing that $\sqcap$ as defined is the greatest lower bound}
+We will show that:
+\begin{itemize}
+\item
+$\MMM \sqcap \MMM' \MODELLEQ \MMM$ and $\MMM \sqcap \MMM' \MODELLEQ \MMM'$
+\item
+If $\NNN \MODELLEQ \MMM$ and $\NNN \MODELLEQ \MMM'$, then $\NNN \MODELLEQ \MMM \sqcap \MMM'$
+\end{itemize}
+If $\MMM$, $ \MMM'$ or $\MMM \sqcap \MMM'$ are equal to $\bot$, then we just apply the rule that $\bot \MODELLEQ m$ for all models $m$. 
+So let us assume that $\mathsf{consistent}(\MMM, \MMM')$ and that $\MMM \sqcap \MMM'  \neq \bot$.
+
+\begin{proof}
+To show $\MMM \sqcap \MMM' \MODELLEQ \MMM$, we need to provide a simulation $\mathcal{R}$ from $\MMM$ to  $\MMM \sqcap \MMM'$.
+If $\MMM = ((S,\rightarrow,\lambda),w)$, then define $\mathcal{R}$ as the identity relation on the states of $S$:
+\[
+\mathcal{R} = \{(x,x) \; | \; x \in S\}
+\]
+It is straightforward to show that $\mathcal{R}$ as defined is a simulation from $\MMM$ to  $\MMM \sqcap \MMM'$.
+If there is a transition $x \xrightarrow{a} y$ in $\MMM$, then by the construction of $\mathsf{merge}$, there is also a transition $x \xrightarrow{a} y$ in $\MMM \sqcap \MMM'$.
+We also need to show that $\lambda_{\MMM}(x) \supseteq \lambda_{\MMM \sqcap \MMM'}(x)$ for all states $x$ in $\MMM$. This is immediate from the construction of $\mathsf{merge}$.
+
+\end{proof}
+
+\begin{proof}
+To show that $\NNN \MODELLEQ \MMM$ and $\NNN \MODELLEQ \MMM'$ imply $\NNN \MODELLEQ \MMM \sqcap \MMM'$, assume there is a simulation $\mathcal{R}$ from $\MMM$ to $\NNN$ and there is a simulation $\mathcal{R}'$ from $\MMM'$ to $\NNN$.
+We need to provide a simulation $\mathcal{R}*$ from $\MMM \sqcap \MMM'$ to $\NNN$.
+
+Assume the states of $\MMM$ and $\MMM'$ are disjoint.
+Define:
+\[
+\mathcal{R}* = \mathcal{R} \cup \mathcal{R}'
+\]
+We need to show that $\mathcal{R}*$ as defined is a simulation from $\MMM \sqcap \MMM'$ to $\NNN$.
+
+Suppose $x \xrightarrow{a} y$ in $\MMM \sqcap \MMM'$ and that $(x,x_2) \in \mathcal{R} \cup \mathcal{R}'$.
+We need to provide a $y_2$ such that $x_2 \xrightarrow{a} y_2$ in  $\NNN$ and $(y,y_2) \in \mathcal{R} \cup \mathcal{R}'$.
+If  $x \xrightarrow{a} y$ in $\MMM \sqcap \MMM'$, then, from the definition of $\mathsf{merge}$, either $x \xrightarrow{a} y$ in $\MMM$ or $x \xrightarrow{a} y$ in $\MMM'$. If the former, and given that $\mathcal{R}$ is a simulation from $\MMM$ to $\NNN$, then there is a $y_2$ such that $(y,y_2) \in \mathcal{R}$ and $x_2 \xrightarrow{a} y_2$ in $\NNN$. But, if $(y,y_2) \in \mathcal{R}$, then also $(y,y_2) \in \mathcal{R} \cup \mathcal{R}'$.
+
+Finally, we need to show that if $(x,y) \in \mathcal{R} \cup \mathcal{R}'$ then
+\[
+\lambda_{\MMM \sqcap \MMM'}(x) \supseteq \lambda_{\NNN}(y)
+\]
+If $(x,y) \in \mathcal{R} \cup \mathcal{R}'$ then either $(x,y) \in \mathcal{R}$ or $(x,y) \in \mathcal{R}'$.
+Assume the former.
+Given that $\mathcal{R}$ is a simulation from $\MMM$ to $\NNN$, we know that if $(x,y) \in \mathcal{R}$, then 
+\[
+\lambda_{\MMM}(x) \supseteq \lambda_{\NNN}(y)
+\]
+Let $\MMM = ((S,\rightarrow,\lambda),w)$.
+If $x \neq w$ (i.e. $x$ is some node other than the root node), then, from the definition of $\mathsf{merge}$, $\lambda_{\MMM \sqcap \MMM'}(x) = \lambda_{\MMM}(x)$.
+So, given $\lambda_{\MMM} \supseteq \lambda_{\NNN}(y)$, $\lambda_{\MMM \sqcap \MMM'}(x) \supseteq \lambda_{\NNN}(y)$.
+If, on the other hand, $x = w$ (i.e. $x$ is the root node of our pointed model $\MMM$), then, from the definition of $\mathsf{merge}$:
+\[
+\lambda_{\MMM \sqcap \MMM'}(w) = \lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w')
+\]
+where $w'$ is the root node of $\MMM'$.
+In this case, given $\lambda_{\MMM}(w) \supseteq \lambda_{\NNN}(y)$ and $\lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$, it follows that $\lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$ and hence $\lambda_{\MMM \sqcap \MMM'}(w) \supseteq \lambda_{\NNN}(y)$.
+
+\end{proof}
 
 \subsubsection{Computing the least upper bound ($\sqcup$)}
 Define the least upper bound ($\sqcup$) of two models as:
