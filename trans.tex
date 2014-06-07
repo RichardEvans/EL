@@ -1,5 +1,11 @@
 \subsection{A translation from first-order logic to first-order eremic logic}
 
+We now sketch how to translate from first-order logic to eremic
+logic. Given that the latter is not nearly as expressive as the
+former, we have to restrict our attention to a fragment of first-order
+logic. For simplicity, we do not seek maximal generality. Instead we
+look at a simple example that presentes the key ideas behind the
+translation \emph{in nuce}.
 
 Assume given a relational first-order signature. The relational
 symbols are split into three parts: $R_1$ of unary relation symbols
@@ -93,3 +99,16 @@ an environment. Then:
    \SEMB{\CAL{M}} \models_{\sigma} \SEMB{\phi}
 \]
 \end{theorem}
+
+Note that the encoding can easily be generalised to $n$-ary relations
+for all $n$, and also to finite-width relations.  What does the latter
+mean? Let $r$ be an $n$-ary relation symbol in the ambient first-order
+signature. Let $\CAL{M}$ be a model. The interpretation $r^{\CAL{M}}$
+of $r$ in $\CAL{M}$ is called an $(i, k)$-relation, where $0 < i \leq
+n$, and $k$ is arbitrary, provided for the cardinality of the set
+\[
+   \{ y | (x_1, ..., x_{i-1}, y, x_{i+1}, ..., x_{n}) \in r^{\CAL{M}} \}
+\]
+does not exceed $k$. We say $r^{\CAL{M}}$ is width-restricted if for each $i$
+there is $k$ such that $r^{\CAL{M}}$ is a $(i, k)$-relation.
+
