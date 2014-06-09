@@ -169,13 +169,39 @@ Neither $\MMM$ nor $\MMM_2$ are $\bot$, but together they are incompatible.
 If either $\MMM$ or $\MMM_2$ is $\bot$, then the proof is a simple application of {\bf Identity} followed by {\bf $\AND$ Left}.
 
 Next, let us consider the case where neither $\MMM$ nor $\MMM_2$ are $\bot$, but together they are incompatible.
-Let $\MMM$ be the  model $(\CAL{L}, w)$ and let $\MMM_2$ be $(\CAL{L}', w')$.
-If $(\CAL{L}, w) \sqcap (\CAL{L}', w') = \bot$, then\footnote{The alternative, in which the $a$-transition is in $n$ and the transition-restriction is in $\MMM$, is identical, swapping $\MMM$ with $\MMM_2$.} there exists a symbol $a$ and a state $w_2$ such that $w \xrightarrow{a} w_2$ but $a \notin \lambda'(w')$.
-
-In this case, by the definition of $ \CHAR$, $  \CHAR{\MMM} \judge \langle a \rangle \top$, using  {\bf Identity} and repeated applications of {\bf $\AND$ Left}.
-Further, by the definition of $ \CHAR$, $ \CHAR{\MMM_2} \judge \; ! \; \lambda'(w')$, using  {\bf Identity} and repeated applications of by {\bf $\AND$ Left}. Again, $a \notin  \lambda'(w')$.
-
-Therefore,  $  \CHAR{\MMM} \AND  \CHAR{\MMM_2} \judge \bot$, using  {\bf $\AND$ Right} and  {\bf Bottom Right 1}.
+Let $\MMM = (\mathcal{L}, w_1)$ and $\MMM' = (\mathcal{L}', w'_1)$.
+If $\MMM \sqcap \MMM_2 = \bot$, then there is a finite sequence of actions $a_1, ..., a_{n-1}$ such that both $\MMM$ and $\MMM'$ satisfy $\MAY{a_1} ... \MAY{a_{n-1}}\top$, but they disagree about the node labelling on the final node of this chain. In other words, there is a $b$-transition from the final node in $\MMM$ which is ruled-out by the $\lambda'$ node labelling in $\MMM'$. There is a set of states $w_1, ..., w'_1, ...$ and a finite set $X$ of actions such that:
+\begin{eqnarray*}
+w_1 \xrightarrow{a_1} w_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w_n \\
+w_1' \xrightarrow{a_1} w'_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w'_n \\
+w_n \xrightarrow{b} w_{n+1} \\
+\lambda'(w'_n) = X \text{ with } b \notin X
+\end{eqnarray*}
+Now it is easy to show, using {\bf $\AND$ Left}, that
+\begin{eqnarray*}
+\CHAR{\mathsf{\MMM}} \judge \MAY{a_1} ... \MAY{a_{n-1}} \MAY{b} \top \\
+\CHAR{\mathsf{\MMM'}} \judge \MAY{a_1} ... \MAY{a_{n-1}} \fBang X
+\end{eqnarray*}
+Now using {\bf $\AND$ Left} and {\bf $\AND$ Right}:
+\[
+\CHAR{\mathsf{\MMM}} \land \CHAR{\mathsf{\MMM}'} \judge  \MAY{a_1} ... \MAY{a_{n-1}} \MAY{b} \top \land  \judge \MAY{a_1} ... \MAY{a_{n-1}} \fBang X
+\]
+Now using {\bf Determinism}:
+\[
+\CHAR{\mathsf{\MMM}} \land \CHAR{\mathsf{\MMM}'} \judge  \MAY{a_1} ... \MAY{a_{n-1}} (\MAY{b} \top \land \fBang X)
+\]
+Now, using {\bf $\bot$ Right 1}:
+\[
+\MAY{b} \top \land \fBang X \judge \bot
+\]
+Using $n-1$ applications of  {\bf $\bot$ Right 2}:
+\[
+\MAY{a_1} ... \MAY{a_{n-1}} (\MAY{b} \top \land \fBang X) \judge \bot
+\]
+Finally, using {\bf Transitivity}, we derive:
+\[
+\CHAR{\mathsf{\MMM}} \land \CHAR{\mathsf{\MMM}'} \judge \bot
+\]
 \begin{mycase}
 $(\MMM \sqcap \MMM_2) \neq \bot$
 \end{mycase}
