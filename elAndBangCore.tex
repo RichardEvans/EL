@@ -636,50 +636,51 @@ that the sets of states in the two models are disjoint.
      \\
   \MMM \sqcap \MMM'
      & = & 
-  \begin{cases}
-    \mathsf{merge}(\MMM, \MMM') & \text{if}\ \mathsf{consistent}(\MMM, \MMM') \\
-    \bot & \text{else}
-  \end{cases}
+     \mathsf{merge}(\mathcal{L}, \mathcal{L}', \{(w,w')\}) 
+     \\
+     & & \text{where } \MMM = (\mathcal{L}, w) \text{ and } \MMM' = (\mathcal{L'}, w')
 \end{eqnarray*}
 
-\NI The $\mathsf{consistent}$ predicate is true of models $m$ and $n$ if
-the out-transitions on $m$'s root state respect the labelling on $n$'s
-root state, and the out-transitions on $n$'s root state respect the
-labelling on $m$'s root state. In other words:
+\NI The $\mathsf{merge}$ function attempts to merge two LTSs together, given a set of state-identification pairs (a set of pairs of states from the two LTSs that need to be identified).
+The state-identification pairs are used to make sure that the resulting model is deterministic.
 
 \begin{eqnarray*}
-  \mathsf{consistent}(\MMM, \MMM') 
-     &\ \mbox{ iff }\ & 
+  \mathsf{merge}(\mathcal{L}, \mathcal{L}', ids) 
+     & = & 
   \begin{cases}
-    \mathsf{out}(\MMM) \subseteq \mathsf{restriction}(\MMM') \mbox{ and}  \\
-    \mathsf{out}(\MMM') \subseteq \mathsf{restriction}(\MMM) 
+    \bot \text{ if } \mathsf{inconsistent}(\mathcal{L}, \mathcal{L}', ids)  \\
+    \mathsf{join}(\mathcal{L}, \mathcal{L}') \text{ if } ids = \emptyset  \\
+    \mathsf{merge}(\mathcal{L}, \mathcal{L}'', ids')  \\
+    \text{ where }  \mathcal{L}'' = \mathsf{applyIds}(ids, \mathcal{L}') \text{ and } ids' = ids \cup \mathsf{getIds}(\mathcal{L}, \mathcal{L}', ids)
   \end{cases}
 \end{eqnarray*}
-
-\NI Here:
-
+The $\mathsf{inconsistent}$ predicate is true if there is pair of states in the state-identification set such that the out-transitions of one state is incompatible with the node-labelling on the other state:
 \[
-\begin{array}{rcl}
+\mathsf{inconsistent}(\mathcal{L}, \mathcal{L}', ids) \text{ iff } \exists (w,w') \in ids \; . \; \mathsf{out}(\mathcal{L},w) \nsubseteq \lambda'(w') \; \lor \; \mathsf{out}(\mathcal{L}',w') \nsubseteq \lambda(w)
+\]
+ \NI Here:
+\[
   \mathsf{out}(((S,\rightarrow,\lambda),w)) 
-     &\ =\ & \{ a \fOr \exists w' . w \xrightarrow{a} w'\}  \\
-  \mathsf{restriction}(((S,\rightarrow,\lambda),w)) 
-    & = & 
-  \lambda(w) 
-\end{array}
+     \ =\  \{ a \fOr \exists w' . w \xrightarrow{a} w'\} 
 \]
-
-\NI Now the $\mathsf{merge}$ function fuses two  models together:
+The $\mathsf{join}$ function takes the union of the two LTSs. Because we insist that the set of states in the two LTSs are disjoint, there is no possibility of clashes.
 \[
-   \mathsf{merge}( ( (S, \rightarrow, \lambda), w),  ( (S', \rightarrow', \lambda'), w')) 
-      \ =\ 
-   ((S \cup S', \rightarrow \cup \rightarrow'_2, \lambda_2 \cup \lambda'_2), w)
+\mathsf{join}((S, \rightarrow,\lambda), (S', \rightarrow', \lambda')) = (S \cup S', \rightarrow \cup \rightarrow', \lambda \cup \lambda')
 \]
-where:
+The $\mathsf{applyIds}$ function applies all the state-identification pairs as substitutions to the Labelled Transition System:
+\[
+\mathsf{applyIds}(ids, (S, \rightarrow, \lambda)) = (S', \rightarrow', \lambda')
+\]
+where
 \begin{eqnarray*}
-  \rightarrow'_2 &\ =\ & \rightarrow' \mbox{ with } w' \mbox{ replaced by } w  \\
-  \lambda_2 & = & \lambda \mbox{ with } w \mapsto \lambda(w) \cap \lambda'(w')  \\
-  \lambda'_2 & = & \lambda' \mbox{ with } w' \mbox{ removed } 
+S' & = & S \; [ w / w' \; | \; (w,w') \in ids] \\
+\rightarrow' & = & \rightarrow \; [ w / w' \; | \; (w,w') \in ids] \\
+\lambda' & = & \lambda \; [ w / w' \; | \; (w,w') \in ids]
 \end{eqnarray*}
+The $\mathsf{getIds}$ function returns the set of extra state-identification pairs that need to be added to respect determinism:
+\[
+\mathsf{getIds}(\mathcal{L}, \mathcal{L}', ids) = \{(x,x') \; | \; (w,w') \in ids, \exists a \; . \; w \xrightarrow{a} x, w' \xrightarrow{a} x'\}
+\]
 
 \NI It is easy to show, by induction on $\phi$, that $\SIMPL{\cdot}$ has the following properties:
 
