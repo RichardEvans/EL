@@ -1173,13 +1173,13 @@ $\SEMBTWO{\phi}_x$ of \ELABR{} formulae.
      \\
   \SEMBTWO{\phi \AND \psi}_x & = & \SEMBTWO{\phi}_x \AND \SEMBTWO{\psi}_x
      \\
-  \SEMBTWO{\langle a \rangle \phi}_x & = & \exists^{state} y.(\ARROWTWO{}{x}{a}{y} \AND \SEMBTWO{\phi}_y)
+  \SEMBTWO{\langle a \rangle \phi}_x & = & \exists^{st} y.(\ARROWTWO{}{x}{a}{y} \AND \SEMBTWO{\phi}_y)
      \\
-  \SEMBTWO{\fBang A}_x & = & \forall^{action} a.(\ALLOWED{}{x}{a} \IMPLIES a \in A) 
+  \SEMBTWO{\fBang A}_x & = & \forall^{act} a.(\ALLOWED{}{x}{a} \IMPLIES a \in A) 
 \end{eqnarray*}
 
-\NI Here we use $\exists^{state}$ to indicate that the quantifier ranges
-of the sort of states, and $\forall^{action}$ for a quantifier ranging
+\NI Here we use $\exists^{st}$ to indicate that the quantifier ranges
+of the sort of states, and $\forall^{act}$ for a quantifier ranging
 over actions. The expression $a \in A$ is a shorthand for the
 first-order formula
 \[
@@ -1246,7 +1246,7 @@ The case for the may modality proceeds as follows.
      &\quad\text{iff}\quad
   \text{exists state $t$ with }\ s \TRANS{a} t\ \text{and}\ \SEMBTWO{\LLL} \models_{y \mapsto t} \SEMBTWO{\phi}_y &\qquad& \text{by (IH)}\\
      &\quad\text{iff}\quad
-  \SEMBTWO{\LLL} \models_{x \mapsto s} \exists^{state} y.(\ARROWTWO{}{x}{a}{y} \AND \SEMBTWO{\phi}_y) \\
+  \SEMBTWO{\LLL} \models_{x \mapsto s} \exists^{st} y.(\ARROWTWO{}{x}{a}{y} \AND \SEMBTWO{\phi}_y) \\
      &\quad\text{iff}\quad
    \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{\MAY{a}{\phi}}_x
 \end{alignat*}
@@ -1260,7 +1260,7 @@ Finally $!A$.
       &\quad\text{iff}\quad
   \text{for all }\ a \in \Sigma. a \in A \\
      &\quad\text{iff}\quad
-  \SEMBTWO{\LLL} \models_{x \mapsto s} \forall^{action} a. (\ALLOWED{}{x}{a} \IMPLIES a \in A) \\
+  \SEMBTWO{\LLL} \models_{x \mapsto s} \forall^{act} a. (\ALLOWED{}{x}{a} \IMPLIES a \in A) \\
      &\quad\text{iff}\quad
   \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{!A}_x
 \end{alignat*}
@@ -1292,16 +1292,24 @@ simple, following standard techniques from modal logic
 \NI The problematic step is (\ref{compactness:step:4}), for how would
 we know that the model $\CAL{M}$ can be converted back to an eremic
 transition system? Why should $\CAL{M}$ exhibit admissibility or
-well-sizedness?  The mere fact that $\CAL{M}$ is a first-order model
-of signature $\SSS'$ is not strong enough to guarantee these
-properties.  We deal with this in two ways. To ensure admissibility,
-we define a formula that guarantees that models satisfying the formula
-are admissible.
+well-sizedness? Why would the transition relation be deterministic?
+The mere fact that $\CAL{M}$ is a first-order model of signature
+$\SSS'$ is not strong enough to guarantee these properties.  We deal
+with this in two ways. To ensure admissibility, we define a formula
+that guarantees that models satisfying the formula are admissible.
 \begin{eqnarray*}
    \phi_{admis} 
       & \ =\ &
-   \forall^{state} s.\forall^{action} a.\forall^{state} t.( \ARROWTWO{}{s}{a}{t} \IMPLIES \ALLOWED{}{s}{a})
+   \forall^{st} s.\forall^{act} a.\forall^{st} t.( \ARROWTWO{}{s}{a}{t} \IMPLIES \ALLOWED{}{s}{a}) \\
+   \phi_{det} 
+      & \ =\ &
+   \forall^{st} s.\forall^{act} a.\forall^{st} t.\forall^{st} t'.
+   ((\ARROWTWO{}{s}{a}{t}  \AND \ARROWTWO{}{s}{a}{t'} ) \IMPLIES t = t' )   
 \end{eqnarray*}
+
+\NI Clearly, whenever a model satisfies $\phi_{admis}$, then it must
+be admissible, and whenever it satisfies $\phi_{det}$ is is a
+deterministic transition system.
 
 \begin{lemma}\label{compactness:lemma:23399}
 If $\LLL$ is an eremic transistion system then $\SEMBTWO{\LLL} \models
@@ -1323,7 +1331,7 @@ translation of an eremic model.
 %% \begin{eqnarray*}
 %%    \phi_{a} 
 %%       & = &
-%%    \exists^{action} c. a = c 
+%%    \exists^{act} c. a = c 
 %% \end{eqnarray*}
 
 %% \begin{lemma}\label{compactness:lemma:666}
