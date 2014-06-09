@@ -1,6 +1,3 @@
--- This is an earlier version of SNEL in which we insist on deterministic models
--- This is an unncessary restriction!
-
 module EL (
      )
 where
@@ -47,6 +44,10 @@ satsArrow ((s,r,v), w) a t =
     let satsT (x,y) = w == x && sats ((s,r,v),y) t
         findArrow (a',rel) = a == a' && any satsT rel
     in  any findArrow r
+
+topModel :: PointedLTS
+topModel = (([0], [], [(0, LStar)]), 0)
+
 
 ---------------------------- entailment ----------------------------
 
@@ -217,11 +218,6 @@ glb2 m m' =
         m'' = uniqueifyStates m' n
     in  glb3 m m''
     
-glb3 :: PointedLTS -> PointedLTS -> Model
-glb3 (lts, w) (lts', w') = do
-    lts'' <- merge lts lts' [(w', w)]
-    return (lts'', w)
-
 uniqueifyStates :: PointedLTS -> Int -> PointedLTS
 uniqueifyStates ((states, trans, labels), w) n = 
     let states' = map (+n) states
@@ -231,29 +227,58 @@ uniqueifyStates ((states, trans, labels), w) n =
         w' = w+n
     in ((states', trans', labels'), w')    
 
-merge :: LTS -> LTS -> [(State,State)] -> Maybe LTS
-merge m1 m2 ids | ids == [] = Just (addLTSTo m2 m1)
-merge m1 m2 ids | ids /= [] =
-    if consistentIdentifications m1 m2 ids then
-        let m2' = applyIdentifications ids m2
-            ids' = getIdentifications m1 m2'
-        in  merge m1 m2' ids'
-    else 
-        Nothing
+glb3 :: PointedLTS -> PointedLTS -> Model
+glb3 pm1 pm2 = case combineLabels pm1 pm2 of
+    Nothing -> Nothing
+    Just l ->
+        let p = snd pm1
+            am1 = replaceLabel (fst pm1) p l
+            am2 = replaceLabel (replaceState (fst pm2) (snd pm2, p)) p l
+        in  return (combineModels am1 am2, p)
+    
+combineLabels :: PointedLTS -> PointedLTS -> Maybe Label
+combineLabels m1 m2 =
+    let l1 = getLabel m1
+        l2 = getLabel m2
+        out1 = out m1
+        out2 = out m2
+    in  combineLabels2 (l1, out1) (l2, out2)
+    
+combineLabels2 :: (Label, [Symbol]) -> (Label, [Symbol]) -> Maybe Label
+combineLabels2 (LStar, _) (LStar, _) = Just LStar
+combineLabels2 (LStar, out1) (LBang r, _) = 
+    case out1 `subset` r of
+        True -> Just (LBang r)
+        False -> Nothing
+combineLabels2 (LBang r, _) (LStar, out2) =
+    case out2 `subset` r of
+        True -> Just (LBang r)
+        False -> Nothing
+combineLabels2 (LBang r1, out1) (LBang r2, out2) =
+    case out2 `subset` r1 && out1 `subset` r2 of
+        True -> Just (LBang $ r1 `intersect` r2)
+        False -> Nothing
 
-consistentIdentifications :: LTS -> LTS -> [(State,State)] -> Bool
-consistentIdentifications lts lts' ids = all (consistentIdentification lts lts') ids
+addOrReplaceLabel  :: LTS -> State -> Label -> LTS
+addOrReplaceLabel (s,t,l) x a =
+    case lookup x l of
+        Nothing -> (s,t,(x,a):l)
+        _ -> replaceLabel (s,t,l) x a
 
-consistentIdentification :: LTS -> LTS -> (State,State) -> Bool
-consistentIdentification lts lts' (w',w) = 
-    let pm = (lts, w)
-        pm' = (lts', w')
-    in  case (getLabel pm, getLabel pm') of
-            (LStar, LStar) -> True
-            (LStar, LBang ss') -> out pm `subset` ss'
-            (LBang ss, LStar) -> out pm' `subset` ss
-            (LBang ss, LBang ss') -> out pm `subset` ss' && out pm' `subset` ss
-            
+replaceLabel :: LTS -> State -> Label -> LTS
+replaceLabel (ss, trans, ls) s l = 
+    let f (s', l') | s == s' = (s', l)
+        f (s', l') | s /= s' = (s', l')
+        ls' = map f ls
+    in  (ss, trans, ls')
+
+combineModels :: LTS -> LTS -> LTS
+combineModels (ss, trans, ls) (ss', trans', ls') = 
+    let ss'' = nub $ ss `union` ss'
+        trans'' = nub $ trans `union` trans'
+        ls'' = nub $ ls `union` ls'
+    in  (ss'', trans'', ls'')
+
 getLabel :: PointedLTS -> Label
 getLabel ((_, _, labels), w) = fromJust $ lookup w labels
 
@@ -269,9 +294,6 @@ outTransitions ((_, t, _), w) =
 fromState :: State -> (Symbol, [(State, State)]) -> Bool
 fromState w (_, rel) = any (\(x,_) -> x == w) rel
 
-applyIdentifications :: [(State,State)] -> LTS -> LTS
-applyIdentifications ids lts = foldl replaceState lts ids
-
 replaceState :: LTS -> (State, State) -> LTS
 replaceState (states, trans, labels) (x, y) =
     let f s = if s == x then y else s
@@ -286,39 +308,66 @@ replaceState (states, trans, labels) (x, y) =
         labels' = map f3 labels
     in  (states', trans', labels')
     
-addLTSTo :: LTS -> LTS -> LTS
-addLTSTo (s, t, l) (s', t', l') = 
-    let s'' = nub $ s ++ s'
-        t'' = t `mergeTransitions` t'
-        l'' = mergeLabels l l'
-    in  (s'', t'', l'')
+    
+---------------------------- lub ----------------------------
 
-mergeLabels :: [(State, Label)] -> [(State, Label)] -> [(State, Label)]
-mergeLabels l1 l2 = 
-    let states = (map fst l1) `union` (map fst l2)
-        moreSpecificL w = case (lookup w l1, lookup w l2) of
-            (Nothing, Just l) -> l
-            (Just l, Nothing) -> l
-            (Just l, Just l') -> moreSpecificLabel l l'
-        f s = (s, moreSpecificL s)
-    in  map f states
+lub :: Model -> Model -> Model
+lub x Nothing = x
+lub Nothing x = x
+lub (Just (l, w)) (Just (l', w')) = Just (lub2 l l' topModel [(w, w', 0)])
 
-moreSpecificLabel :: Label -> Label -> Label
-moreSpecificLabel LStar x = x
-moreSpecificLabel x LStar = x
-moreSpecificLabel (LBang ss) (LBang ss') = LBang $ ss `intersect` ss'
+lubLabel :: Label -> Label -> Label
+lubLabel LStar _ = LStar
+lubLabel _ LStar = LStar
+lubLabel (LBang x) (LBang y) = LBang (nub (x ++ y))
 
-getIdentifications :: LTS -> LTS -> [(State,State)]
-getIdentifications (_, t, _) (_, t', _) =
-    let 
-        findMatch rel (x,y) = case lookup x rel of
-            Just z | y == z -> []
-            Just z | y /= z -> [(y, z)]
-            Nothing -> []
-        findMatches (s, rel) = case lookup s t of
-            Nothing -> []
-            Just rel' -> map (findMatch rel') rel
-    in  concat $ concat $ map findMatches t'
+lub2 :: LTS -> LTS -> PointedLTS -> [(State, State, State)] -> PointedLTS
+lub2 _ _ result [] = result
+lub2 l@(ws, ts, ls) l'@(ws', ts', ls') (soFar, soFarRoot) ((w, w', n):as) =
+    let lw = fromJust $ lookup w ls
+        lw' = fromJust $ lookup w' ls'
+        nl = lw `lubLabel` lw'
+        soFar' = addOrReplaceLabel soFar n nl
+        outW = outTransitions (l, w)
+        outW' = outTransitions (l', w')
+        c = commonTransitions outW outW'
+        firstNewState = maxState (soFar, soFarRoot) + 1
+        newStates = makeNewStates firstNewState (length c)
+        symbols = map (\(s,_,_) ->s) c
+        f ((_,s,s'), ns) = (s, s', ns)
+        as' = map f (zip c newStates)
+        soFar'' = makeTransitions soFar' n (zip symbols newStates)
+    in  lub2 l l' (soFar'', soFarRoot) (as' ++ as)
+
+commonTransitions :: [(Symbol, State)] -> [(Symbol, State)] -> [(Symbol, State, State)]
+commonTransitions t t' = 
+    [(s, w, w') | (s, w) <- t, (s', w') <- t', s == s']
+
+makeNewStates :: Int -> Int -> [State]
+makeNewStates x n = [x..x+(n-1)]
+
+makeTransitions :: LTS -> State -> [(Symbol, State)] -> LTS
+makeTransitions l s ts = foldl (makeTransition s) l ts
+
+makeTransition :: State -> LTS -> (Symbol, State) -> LTS
+makeTransition x (states, trans, labels) (s, newState) =
+    let states' = newState : states
+        newTran = (s, [(x, newState)])
+        trans' = mergeTransitions trans [newTran]
+    in  (states', trans', labels)
+
+---------------------------- theta ----------------------------
+
+theta :: Model -> Prop
+theta Nothing = Bot
+theta (Just pm) =
+    let (lts, _) = pm
+        f (s,w') = Trans s $ theta (Just (lts, w'))
+        cs = map f (outTransitions pm)
+        conj = foldl Conj Top cs
+    in  case getLabel pm of
+            LStar -> conj
+            LBang ls -> Conj (Bang ls) conj
 
 ---------------------------- translating negation ----------------------------
 
@@ -446,7 +495,7 @@ t5 = not $ (Conj (Bang ["a"]) (Trans "a" Top)) |= (Trans "c" Top)
 
 t6 = (Bang ["a", "b"]) |= (Bang ["b", "a"])
 
-t7 = Conj (Disj (Trans "a" Top) (Trans "b" (Trans "a" Top))) (Disj (Trans "b" (Bang [])) (Trans "c" Top)) |= Disj (Trans "a" Top) (Trans "c" Top)
+t7 = not $ Conj (Disj (Trans "a" Top) (Trans "b" (Trans "a" Top))) (Disj (Trans "b" (Bang [])) (Trans "c" Top)) |= Disj (Trans "a" Top) (Trans "c" Top)
 
 t8 = Trans "a" (Trans "b" Top) |= Trans "a" Top
 
@@ -490,17 +539,19 @@ t27 = Conj (Bang []) (Trans "a" Top) |= Trans "b" Top
 
 t28 = Trans "a" Bot |= Trans "b" Top
 
-t29 = Conj (Trans "a" (Trans "b" Top)) (Trans "a" (Trans "c" Top)) |= Trans "a" (Conj (Trans "b" Top) (Trans "c" Top))
+t29 = not $ Conj (Trans "a" (Trans "b" Top)) (Trans "a" (Trans "c" Top)) |= Trans "a" (Conj (Trans "b" Top) (Trans "c" Top))
 
 t30 = Conj (Bang ["b"]) (Trans "a" Top) |= Trans "c" Top
 
 t31 = Trans "a" (Conj  (Trans "b" Top) (Conj  (Trans "c" Top)  (Trans "d" Top))) |= Trans "a" (Trans "c" Top)
 
-t32 = Conj (Trans "a" (Conj (Bang ["b"]) (Trans "b" Top))) (Trans "a" (Bang [])) |= Trans "c" Top
+t32 = not $ Conj (Trans "a" (Conj (Bang ["b"]) (Trans "b" Top))) (Trans "a" (Bang [])) |= Trans "c" Top
 
-t33 = Conj (Trans "c" (Conj (Trans "b" Top) (Trans "c" (Bang [])))) (Trans "c" (Trans "c" (Trans "a" Top))) |= Trans "d" Top
+t33 = not $ Conj (Trans "c" (Conj (Trans "b" Top) (Trans "c" (Bang [])))) (Trans "c" (Trans "c" (Trans "a" Top))) |= Trans "d" Top
 
-tests = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33]
+t34 = Trans "a" (Conj (Trans "b" Top) (Trans "c" Top)) |= Conj (Trans "a" (Trans "b" Top)) (Trans "a" (Trans "c" Top))
+
+tests = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34]
 
 test = all id tests
 
@@ -518,6 +569,66 @@ p3 = proveExcludedMiddle (Trans "a" (Conj (Trans "a" Top) (Trans "b" Top)))
 p4 = proveExcludedMiddle (Conj (Trans "a" Top) (Trans "b" Top))
 
 
-m1 = mu $ Conj (Trans "a" (Bang ["c"])) (Trans "b" (Trans "d" Top))
-m2 = mu $ Conj (Trans "a" (Trans "c" Top)) (Trans "b" (Bang ["d"]))
-m3 = m1 `glb` m2
+(Just m1) = mu $ Conj (Trans "a" (Trans "b" Top)) (Trans "a" (Trans "c" Top))
+
+r1 = restrictStatesToDepth m1 1
+
+r2 = restrictStatesToDepth m1 2
+
+
+
+--- lub - tests
+
+ex1 = Conj (Trans "a" (Bang ["x"])) (Bang ["a"])
+ex2 = Conj (Trans "b" (Bang ["y"])) (Bang ["b"])
+
+lubt1 = lub (mu ex1) (mu ex2)
+lubt2 = lub (mu ex2) (mu ex1)
+
+ex3 = Conj (Trans "a" (Bang ["x"])) (Bang ["a","w"])
+ex4 = Conj (Trans "a" (Bang ["z"])) (Bang ["a","y"])
+
+lubt3 = lub (mu ex3) (mu ex4)
+lubt4 = lub (mu ex4) (mu ex3)
+
+ex5 = Conj (Conj (Trans "a" (Bang ["x"])) (Trans "b" (Bang ["x2"]))) (Bang ["a","b","w"])
+ex6 = ex4
+
+lubt5 = lub (mu ex5) (mu ex6)
+lubt6 = lub (mu ex6) (mu ex5)
+
+ex7 = ex5
+ex8 = Conj (Trans "c" (Bang ["z"])) (Bang ["c","y"])
+
+lubt7 = lub (mu ex7) (mu ex8)
+lubt8 = lub (mu ex8) (mu ex7)
+
+ex9 = Conj (Conj (Trans "a" (Bang ["x"])) (Trans "a" (Bang ["y"]))) (Bang ["a","w"])
+ex10 = Conj (Trans "a" (Bang ["z"])) (Bang ["a","w"])
+
+lubt9 = lub (mu ex9) (mu ex10)
+lubt10 = lub (mu ex10) (mu ex9)
+
+ex11 = Conj (Conj (Trans "a" (Bang ["x"])) (Trans "b" (Bang ["y"]))) (Bang ["a","b","w"])
+ex12 = Conj (Conj (Trans "a" (Bang ["z1"])) (Trans "c" (Bang ["z2"]))) (Bang ["a","c","w"])
+
+lubt11 = lub (mu ex11) (mu ex12)
+lubt12 = lub (mu ex12) (mu ex11)
+
+ex13 = ex11
+ex14 = Conj (Conj (Trans "a" (Bang ["z1"])) (Trans "b" (Bang ["z2"]))) (Bang ["a","b","w"])
+
+lubt13 = lub (mu ex13) (mu ex14)
+lubt14 = lub (mu ex14) (mu ex13)
+
+ex15 = ex9
+ex16 = Conj (Conj (Trans "a" (Bang ["z1"])) (Trans "a" (Bang ["z2"]))) (Bang ["a","w"])
+
+lubt15 = lub (mu ex15) (mu ex16)
+lubt16 = lub (mu ex16) (mu ex15)
+
+ex17 = Trans "a" (Trans "b" (Bang ["x"]))
+ex18 = Trans "a" (Conj (Trans "c" (Bang ["y"])) (Trans "b" (Bang ["z"])))
+
+lubt17 = lub (mu ex17) (mu ex18)
+lubt18 = lub (mu ex18) (mu ex17)
