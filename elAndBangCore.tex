@@ -651,7 +651,7 @@ The state-identification pairs are used to make sure that the resulting model is
     \bot \text{ if } \mathsf{inconsistent}(\mathcal{L}, \mathcal{L}', ids)  \\
     \mathsf{join}(\mathcal{L}, \mathcal{L}') \text{ if } ids = \emptyset  \\
     \mathsf{merge}(\mathcal{L}, \mathcal{L}'', ids')  \\
-    \text{ where }  \mathcal{L}'' = \mathsf{applyIds}(ids, \mathcal{L}') \text{ and } ids' = ids \cup \mathsf{getIds}(\mathcal{L}, \mathcal{L}', ids)
+    \text{ where }  \mathcal{L}'' = \mathsf{applyIds}(ids, \mathcal{L}') \text{ and } ids' = \mathsf{getIds}(\mathcal{L}, \mathcal{L}', ids)
   \end{cases}
 \end{eqnarray*}
 The $\mathsf{inconsistent}$ predicate is true if there is pair of states in the state-identification set such that the out-transitions of one state is incompatible with the node-labelling on the other state:
@@ -663,9 +663,9 @@ The $\mathsf{inconsistent}$ predicate is true if there is pair of states in the 
   \mathsf{out}(((S,\rightarrow,\lambda),w)) 
      \ =\  \{ a \fOr \exists w' . w \xrightarrow{a} w'\} 
 \]
-The $\mathsf{join}$ function takes the union of the two LTSs. Because we insist that the set of states in the two LTSs are disjoint, there is no possibility of clashes.
+The $\mathsf{join}$ function takes the union of the two LTSs.
 \[
-\mathsf{join}((S, \rightarrow,\lambda), (S', \rightarrow', \lambda')) = (S \cup S', \rightarrow \cup \rightarrow', \lambda \cup \lambda')
+\mathsf{join}((S, \rightarrow,\lambda), (S', \rightarrow', \lambda')) = (S \cup S', \rightarrow \cup \rightarrow', \{\lambda(x) \cap \lambda'(x) \; | \; x \in S \cup S'\})
 \]
 The $\mathsf{applyIds}$ function applies all the state-identification pairs as substitutions to the Labelled Transition System:
 \[
