@@ -89,7 +89,8 @@
      {
        \phi \judge !(A \cap B)
      }{!-Right 2}
-     \quad
+
+     \\\\
      \ONEPREMISERULENAMEDRIGHT
      {
        \phi \judge \psi
@@ -97,6 +98,13 @@
      {
        \MAY{a}{\phi} \judge \MAY{a}{\psi}
      }{Transition Normal}
+     \ONEPREMISERULENAMEDRIGHT
+     {
+       \phi \judge \MAY{a}\psi \land \MAY{a}\xi
+     }
+     {
+       \phi \judge \MAY{a}(\psi \land \xi)
+     }{Determinism}
 \end{RULES}
 \caption{Proof rules.}\label{figure:elAndBangRules}
 \end{FIGURE}
