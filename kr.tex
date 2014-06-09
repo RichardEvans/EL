@@ -10,8 +10,6 @@ proven is not a toy academic problem, but an industrial-sized
 application involving tens of thousands of rules and tens of thousands
 of atomic facts.
 
-In this section, we are assuming a \emph{deterministic} Labelled Transition System. So we cannot have $\MAY{a} ! \{\} \land \MAY{a}\MAY{b}$ because there is at most one $a$-transition from any state.
-
 We shall first sketch how facts are represented, before describing the advantages of \ELABR{} over a more traditional predicate-logic representation.
 
 \subsection{How Facts are Represented in \ELABR{}}
@@ -25,7 +23,7 @@ A sentence involving a many-to-many two-place relation of the form $r(a,b)$ is e
 \begin{verbatim}
 <a> <r> <b>
 \end{verbatim}
-But a sentence involving a many-to-one two-place relation of the form $r(a,b)$ is expressed in \ELABR{}\footnote{We are assuming a \emph{deterministic} labelled transition system throughout this section.}:
+But a sentence involving a many-to-one two-place relation of the form $r(a,b)$ is expressed in \ELABR{}:
 \begin{verbatim}
 <a> <r> (<b> /\ !{b})
 \end{verbatim}
@@ -166,5 +164,51 @@ married_couple_at_home * X * Y :-
 \end{verbatim}	
 Now it is able to find all results by just searching $n$ instances - a significant optimization.
 This optimisation has made a significant difference to the run-time cost in our industrial application.
+
+
+\subsection{Non-Deterministic EL Cannot Express Incompatibility}
+
+We have experimented with a version of EL in which the models are \emph{non-deterministic} labeled-transition systems.
+Although non-determinism makes some of the constructions simpler, non-deterministic EL is unable to express incompatibility properly.
+
+Consider, for example, the claim that Jack is married to Jill. 
+In standard deterministic EL this would be rendered as:
+\begin{verbatim}
+<jack><married>(<jill> /\ !{jill})
+\end{verbatim}
+There are three levels at which this claim can be denied.
+First, we can claim that Jack is married to someone else:
+\begin{verbatim}
+<jack><married>(<joan> /\ !{joan})
+\end{verbatim}
+Second, we can claim that Jack is unmarried:
+\begin{verbatim}
+<jack>!{unmarried}
+\end{verbatim}
+Third, we can claim that Jack does not exist at all. Bob and Jill, for example, are the only people in our domain:
+\begin{verbatim}
+!{bob, jill}
+\end{verbatim}
+
+Now we can assert the same sentences in non-deterministic EL, but they are no longer incompatible with our original sentence.
+In non-deterministic EL, the following sentences are fully compatible (as long as there are two separate transitions labelled with $married$, or two separate transitions labelled with $jack$):
+\begin{verbatim}
+<jack><married>(<jill> /\ !{jill})
+<jack><married>(<joan> /\ !{joan})
+\end{verbatim}
+Similarly, the following sentences are fully compatible as long as there are two separate transitions labelled with $jack$:
+\begin{verbatim}
+<jack><married>(<jill> /\ !{jill})
+<jack>!{unmarried}
+\end{verbatim}
+
+Relately, non-deterministic EL does not satisfy Brandom's Incompatibility Semantics property:
+\[
+\phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
+\]
+$\MAY{a}\MAY{b}$ implies $\MAY{a}$, but not conversely.
+But in non-deterministic EL, the set of sentences incompatible with $\MAY{a}\MAY{b}$ is identical with the set of sentences incompatible with  $\MAY{a}$.
+
+
 
 
