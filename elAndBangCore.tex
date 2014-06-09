@@ -463,7 +463,7 @@ complete, and $\THEORY{\CAL{M}} \subseteq \THEORY{\CAL{N}}$ already
 implies that $\THEORY{\CAL{M}} = \THEORY{\CAL{N}}$, i.e.~$\CAL{M}$ and
 $\CAL{N}$ are elementarily equivalent. \ELFULL{}'s lack of negation
 changes this drastically, and gives $\MODELLEQ$ the structure of a
-non-trivial complete lattice as we shall demonstrate below.
+non-trivial bounded lattice as we shall demonstrate below.
 
 But first we show that $\MODELEQ$ is a strictly coarser relation than 
 bisimilarity.
@@ -508,7 +508,7 @@ reachable from the root.
 \end{proof}
 
 
-\subsection{Turning $\MODELLEQ$ into a complete lattice}
+\subsection{Turning $\MODELLEQ$ into a bounded lattice}
 
 \NI The relation $\MODELLEQ$ is not a partial order, only a
 pre-order. For example with
@@ -568,7 +568,7 @@ canonical representatives.  \martin{add more explanation, and
   integrate better with premiminaries}.
 
 It turns out that $\MODELLEQ $ on ($\MODELEQ$-equivalence classes of)
-models is not just a partial order, but a complete lattice, except
+models is not just a partial order, but a bounded lattice, except
 that a bottom element is missing.
 
 \begin{definition}
@@ -580,7 +580,7 @@ stipulate that $\bot \MODELLEQ \MMM$ for all models $\MMM$.
 
 \begin{theorem}
 The collection of (equivalence classes of) models together with
-$\bot$, and ordered by $\MODELLEQ$ is a complete lattice.
+$\bot$, and ordered by $\MODELLEQ$ is a bounded lattice.
 \end{theorem}
 \begin{proof}
 \martin{Why is there no proof?}  Example: The topmost element in the
