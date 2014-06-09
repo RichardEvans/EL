@@ -1321,9 +1321,9 @@ Straightforward from the definitions.
 
 \end{proof}
 
-\NI We can now add, without changing satisfiability, $\phi_{admis}$ to
-any set of first-order formulae that has a model that is the
-translation of an eremic model.
+\NI We can now add, without changing satisfiability, $\phi_{admis}
+\AND \phi_{det}$ to any set of first-order formulae that has a model
+that is the translation of an eremic model.
 
 %% We deal with the absence of well-sizedness by 
 
@@ -1405,8 +1405,8 @@ $\CAL{M}^{\sharp} = (S, \rightarrow, \lambda)$.
 
 \begin{lemma}
 If $\CAL{M}$ be a first-order model for $\SSS'$ such that $\CAL{M}
-\models \phi_{admis}$.  Then $\CAL{M}^{\sharp}$ is an eremic
-transition system with actions $\Sigma$.
+\models \phi_{admis} \AND \phi_{det}$.  Then $\CAL{M}^{\sharp}$ is an
+eremic transition system with actions $\Sigma$.
 \end{lemma}
 \begin{proof}
 Immediate from the definitions.
@@ -1414,10 +1414,9 @@ Immediate from the definitions.
 \end{proof}
 
 \begin{theorem}[correspondence theorem]\label{correspondence:theorem:223}
-Let $\CAL{M}$ be a first-order model for the signature $\SSS'$ such that
- $\CAL{M} \models \phi_{admis}$.
-Then we have for all \ELABR{} formulae $\phi$ with
-actions from $\Sigma$:
+Let $\CAL{M}$ be a first-order model for the signature $\SSS'$ such
+that $\CAL{M} \models \phi_{admis} \AND \phi_{det}$.  Then we have for
+all \ELABR{} formulae $\phi$ with actions from $\Sigma$:
 \[
    \CAL{M} \models_{x \mapsto s} \SEMBTWO{\phi}_x 
         \quad  \text{iff} \quad 
@@ -1450,7 +1449,7 @@ such that any finite subset has an eremic model. Define
      \qquad\qquad
   T^*
      \ =\ 
-  \SEMBTWO{T} \cup \{\phi_{admis}\} \cup \{ \phi_a\ |\ a \in \Sigma\}
+  \SEMBTWO{T} \cup \{\phi_{admis} \AND  \phi_{det}\}
 \]
 which both are sets of first-order formulae. Clearly each finite subset $T'$ of 
 $T^*$ has a first-order model. Why? First consider the subset $T'_{EL}$ of $T'$
@@ -1467,7 +1466,7 @@ which means we can apply Theorem \ref{correspondence:theorem:223} to get
    \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{T'_{EL}},
 \]
 By construction $T' \setminus \SEMBTWO{T'_{EL}} \subseteq
-\{\phi_{admis}\} \cup \{ \phi_a\ |\ a \in \Sigma\}$, so all we have to
+\{\phi_{admis} \AND \phi_{det}\}$, so all we have to
 show for $T'$ to have a model is that
 \[
     \SEMBTWO{\LLL} \models_{x \mapsto s} \{\phi_{admis}\} \cup \{ \phi_a\ |\ a \in \Sigma\},
@@ -1482,8 +1481,8 @@ $\CAL{M}$ of $T^*$, i.e.
 \[
    \CAL{M} \models T^*.
 \]
-Since $\CAL{M} \models \phi_{admis}$ and $\CAL{M} \models \phi_a$ for all actions $a$, 
-we can apply Theorem \ref{correspondence:theorem:223} that also
+Since $\CAL{M} \models \phi_{admis} \AND \phi_{det}$ we can apply
+Theorem \ref{correspondence:theorem:223} that also
 \[
    (\CAL{M}^{\sharp} \setminus X, s) \models T
 \]
