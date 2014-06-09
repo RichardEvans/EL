@@ -412,7 +412,7 @@ assume $(\LLL, w) \models \MAY{a}\psi$.  Then $w \xrightarrow{a} x$
 and $(\LLL, x) \models \psi$.  As $\MMM'$ simulates $\MMM$, there is
 an $x'$ such that $(x,x') \in R$ and $w' \xrightarrow{a} x'$.  By the
 induction hypothesis, $(\LLL', x') \models \psi$.  Therefore, by the
-semantic clause for $!$, $(\LLL', w') \models \MAY{a}\psi$.  Assume
+semantic clause for $\MAY{}$, $(\LLL', w') \models \MAY{a}\psi$.  Assume
 now that $\phi = \; ! \; A$, for some finite $A \subseteq \Sigma$, and
 that $(\LLL, w) \models \; ! \; A$.  By the semantic clause for $!$,
 $\lambda(w) \subseteq A$.  Since $(\LLL', w') \MODELLEQ (\LLL, w)$, by
