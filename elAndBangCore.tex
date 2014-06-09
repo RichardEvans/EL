@@ -7,7 +7,7 @@ first-order logic. We focus on a small core of \ELABR{}, leaving
 extensions to later section.
 
 \subsection{Syntax}
-
+\label{elsyntax}
 \NI Syntactically, eremic logic is a multi-modal logic with one new
 operator.
 
@@ -849,12 +849,11 @@ definition of $\CHAR{\cdot}$ (again we omit specifying that the function really
 returns $\MODELEQ$-equivalence classes of models).
 
 \begin{eqnarray*}
-  \CHAR{\bot} &\ =\ & \langle a \rangle \top \AND ! \emptyset  \mbox{ for some symbol }a  \\
-  \CHAR{\MMM, w} & = & \mathsf{bang}(\MMM,w) \AND \bigwedge_{(a,w') \in \mathsf{trans}(l,w)} \langle a \rangle \CHAR{\MMM, w'}  
+  \CHAR{\bot} &\ =\ & \langle a \rangle \top \AND ! \emptyset  \mbox{ for some fixed symbol }a \in \Sigma  \\
+  \CHAR{\MMM, w} & = & \mathsf{bang}(\MMM,w) \AND \bigwedge_{w \xrightarrow{a} w'} \langle a \rangle \CHAR{\MMM, w'}  
 \end{eqnarray*}
 
-\martin{Note that in its current form $\CHAR{\bot}$ defines a
-  relation, not a function, because $a$ an vary.}
+\NI Note that $\bot$ requires a particular symbol $a \in \Sigma$. This is why we required, in Section \ref{elsyntax}, that $\Sigma$ is non-empty.
 
 \NI The functions $\mathsf{bang}(\cdot)$ and $\mathsf{trans}$ on
 models are given by the following clauses.
@@ -866,7 +865,6 @@ models are given by the following clauses.
     \top & \mbox{ if } \lambda(w) = \Sigma  \\
     ! \; \lambda(w) & \mbox{ otherwise }  
   \end{cases} \\
-  \mathsf{trans}((S,\rightarrow, \lambda),w) & \ = \ & \{(a,w') | w \xrightarrow{a} w' \} 
 \end{eqnarray*}
 
 \NI Note that $\CHAR{\MMM}$ is finite if $\MMM$ contains no cycles and if
