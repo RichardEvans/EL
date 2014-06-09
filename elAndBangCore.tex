@@ -477,7 +477,7 @@ Clearly $\BISIM \subseteq \MODELEQ$, but the two relations do not
 coincide: the former is strictly more discriminating than the latter,
 i.e.~$\BISIM \subsetneq \MODELEQ$. Figure \ref{figure:counterexample}
 shows two models that are $\MODELEQ$-equal but not bisimilar. Note
-that this counterexample is non-deterministic. That is not
+that this counterexample is \emph{non-deterministic}. That is not
 coincidence, because on deterministic eremic models, the two relations
 coincide.
 
@@ -606,9 +606,7 @@ contexts.
 \subsubsection{Computing the simplest model satisfying a formula}
 \label{simpl}
 
-\NI In $\MODELLEQ $ we have a notion of model simplicity\martin{I'm not sure I like
-this sentence}.  We can now
-compute $\SIMPL{\phi}$, the simplest model w.r.t.~$\MODELLEQ $ that
+Given $\MODELLEQ $, we can define $\SIMPL{\phi}$, the simplest model w.r.t.~$\MODELLEQ $ that
 satisfies $\phi$.
 
 \begin{eqnarray*}
