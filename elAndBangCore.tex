@@ -61,13 +61,18 @@ stated otherwise.
 \subsection{Semantics}
 
 \NI The semantics of eremic logic is close to Hennessy-Milner logic
-\cite{HennessyM:alglawfndac} and uses labelled transition systems, as
-described in Section \ref{preliminaries}, but augmented with labels on
+\cite{HennessyM:alglawfndac} but uses \emph{deterministic} transition systems, as
+described in Section \ref{preliminaries}, augmented with labels on
 states.
 
 \begin{definition}
+
+\NI We say $\LLL$ is \emph{deterministic} if $x \TRANS{a} y$ and $x \TRANS{a} z$ imply that $y = z$. Otherwise $\LLL$ is
+\emph{non-deterministic}.
+\end{definition}
+
 An \emph{eremic transition system} is a triple $\LLL = (S, \rightarrow,
-\lambda)$, where $(S, \rightarrow)$ is a labelled transition system
+\lambda)$, where $(S, \rightarrow)$ is a \emph{deterministic} labelled transition system
 over $\Sigma$, and $\lambda$ is a function from states to sets of
 actions (not necessarily finite), subject to the following constraints:
 \begin{itemize}
@@ -80,11 +85,6 @@ actions (not necessarily finite), subject to the following constraints:
   $\Sigma$. We call this condition \emph{well-sizedness}.
 
 \end{itemize}
-
-\NI We say $\LLL$ is \emph{deterministic} if $s \TRANS{a} t_i$ for $i
-= 1, 2$ implies that $t_1 = t_2$. Otherwise $\LLL$ is
-\emph{non-deterministic}.
-\end{definition}
 
 \NI The intended interpretation is that $\lambda(w)$ is the set of
 allowed transition symbols emanating from $w$.  The $\lambda$ function
@@ -109,7 +109,7 @@ of nodes:
 \NI Defining $\lambda$ on all nodes and not just on those with
 restrictions makes some definitions and proofs slightly easier.
 
-As with outher modal logics, satisfaction of formulae is defined
+As with other modal logics, satisfaction of formulae is defined
 relative to a state in the ambient eremic transition system, giving
 rise to the following definition.
 
@@ -118,9 +118,6 @@ A \emph{eremic model}, ranged over by $\MMM, \MMM', ...$, is a pair
 $(\LLL, s)$, where $\LLL$ is an eremic transition system $(S,
 \rightarrow, \lambda)$, and $s$ is a state from $S$. We call $s$ the
 \emph{root} of the model.
-
-An eremic model is \emph{(non-)deterministic} if the underlying eremic
-transition system is.
 \end{definition}
 
 \NI With eremic models at hand, we can finally formalise the
@@ -146,8 +143,8 @@ inductively by the following clauses, where we assume that $\MMM =
 \ref{figure:elAndBang:models} gives examples of models for the formula
 $\MAY{a}{\MAY{b}{\TRUE}}$.  The last clause enforces the intended
 meaning of $!A$: the available modalities in the model are \emph{at
-  least as constrainted} as required by $!A$. They may even be more
-constrainted, if the inclusion $\lambda(s) \subseteq A$ is proper. We
+  least as constrained} as required by $!A$. They may even be more
+constrained, if the inclusion $\lambda(s) \subseteq A$ is proper. We
 note in the case where the set $\Sigma$ of actions is infinite,
 allowing $\lambda(s)$ to return arbitrary inifinite sets in addition
 to $\sigma$ does not make a difference because $A$ is finite by
