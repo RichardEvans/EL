@@ -335,19 +335,4 @@ Martin: I think the claims that some logics are good/average/bad at certain thin
 could be made a tad less vague. We are ultimately talking about
 complexity: formula lenght, proof size, search-space size in proof
 search, run-time of SAT solver etc.
-\item
-Martin: add example where we need non-determism e.g. $\MAY{jack}\MAY{may}(\MAY{love}!\{jill\} \land \MAY{love}!\{jane\})$
-\item 
-Martin: add translation from FOL to EL. 
-\begin{verbatim}
-In predicate logic, we might write:
-
-sex(pierre, male) /\ \forall Y. sex(pierre, Y) => Y == male
-
-The standard way I translate this sort of two-place relation into EL is to
-make the two-place relation infix (so sex(X,Y) becomes <X><sex><Y>)
-add ! after the relation symbol
-This yields:
-<pierre><sex>(<male> /\ !{male})
-\end{verbatim}
 \end{itemize}
