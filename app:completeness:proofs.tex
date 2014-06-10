@@ -87,11 +87,11 @@ Using {\bf $\AND$ Left} and {\bf $\AND$ Right}, we can show:
 \[
 \psi \AND \psi' \judge  \CHAR{\SIMPL{\psi}} \AND  \CHAR{\SIMPL{\psi'}}
 \]
-Lemma \ref{final_completeness_lemma}, proven below, states that, for all models $\MMM$ and $\MMM_2$:
+Lemma \ref{final_completeness_lemma}, proven below, states that, for all acyclic models $\MMM$ and $\MMM_2$:
 \[
   \CHAR{\MMM} \AND  \CHAR{\MMM_2} \judge  \CHAR{\MMM \sqcap \MMM_2}
 \]
-From Lemma \ref{final_completeness_lemma} (substituting $\SIMPL{\psi}$ for $\MMM$ and $\SIMPL{\psi'}$ for $\MMM_2$), it follows that:
+From Lemma \ref{final_completeness_lemma} (substituting $\SIMPL{\psi}$ for $\MMM$ and $\SIMPL{\psi'}$ for $\MMM_2$, and noting that $\SIMPL{}$ always produces acyclic models), it follows that:
 \[
  \CHAR{\SIMPL{\psi}} \AND  \CHAR{\SIMPL{\psi'}} \judge  \CHAR{\SIMPL{\psi \AND \psi'}}
 \]
@@ -145,7 +145,7 @@ We can prove $\fBang A \judge \fBang A \AND \top$ using {\bf $\AND$ Right}, {\bf
 Finally, to fill the hole in Case 2 above, we need to show that:
 \begin{lemma}
 \label{final_completeness_lemma}
-For all models $\MMM$ and $\MMM_2$, $  \CHAR{\MMM} \AND  \CHAR{\MMM_2} \judge  \CHAR{\MMM \sqcap \MMM_2}$.
+For all acyclic models $\MMM$ and $\MMM_2$, $  \CHAR{\MMM} \AND  \CHAR{\MMM_2} \judge  \CHAR{\MMM \sqcap \MMM_2}$.
 \end{lemma}
 
 \begin{proof}
@@ -170,7 +170,7 @@ If either $\MMM$ or $\MMM_2$ is $\bot$, then the proof is a simple application o
 
 Next, let us consider the case where neither $\MMM$ nor $\MMM_2$ are $\bot$, but together they are incompatible.
 Let $\MMM = (\mathcal{L}, w_1)$ and $\MMM' = (\mathcal{L}', w'_1)$.
-If $\MMM \sqcap \MMM_2 = \bot$, then there is a finite sequence of actions $a_1, ..., a_{n-1}$ such that both $\MMM$ and $\MMM'$ satisfy $\MAY{a_1} ... \MAY{a_{n-1}}\top$, but they disagree about the node labelling on the final node of this chain. In other words, there is a $b$-transition from the final node in $\MMM$ which is ruled-out by the $\lambda'$ node labelling in $\MMM'$. There is a set of states $w_1, ..., w'_1, ...$ and a finite set $X$ of actions such that:
+If $\MMM \sqcap \MMM_2 = \bot$, then there is a finite sequence of actions $a_1, ..., a_{n-1}$ such that both $\MMM$ and $\MMM'$ satisfy $\MAY{a_1} ... \MAY{a_{n-1}}\top$, but they disagree about the node labelling on the final node of this chain. In other words, there is a $b$-transition from the final node in $\MMM$ which is ruled-out by the $\lambda'$ node labelling in $\MMM'$. So there is a set of states $w_1, ..., w'_1, ...$ and a finite set $X$ of actions such that:
 \begin{eqnarray*}
 w_1 \xrightarrow{a_1} w_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w_n \\
 w_1' \xrightarrow{a_1} w'_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w'_n \\
@@ -205,26 +205,100 @@ Finally, using {\bf Transitivity}, we derive:
 \begin{mycase}
 $(\MMM \sqcap \MMM_2) \neq \bot$
 \end{mycase}
-In this case, let $(\CAL{L},w) = \MMM$ and let $(\CAL{L}',w')=\MMM_2$.
-Then, from the definition of $\mathsf{merge}$ above:
+From the construction of $\mathsf{merge}$, if $\MMM$ and $\MMM'$ are acyclic, then $\MMM \sqcap \MMM'$ is also acyclic.
+If $\MMM \sqcap \MMM'$ is acyclic, then $\CHAR{\MMM \sqcap \MMM'}$ is equivalent to a set $\Gamma$ of sentences of one of two forms:
+\begin{eqnarray*}
+\MAY{a_1} ... \MAY{a_n} \top \\
+\MAY{a_1} ... \MAY{a_n} ! X
+\end{eqnarray*}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.3cm,>=stealth',bend angle=45,auto]
+  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
+  \tikzstyle{red place}=[place,draw=red!75,fill=red!20]
+  \tikzstyle{transition}=[rectangle,thick,draw=black!75,
+  			  fill=black!20,minimum size=4mm]
+  \tikzstyle{every label}=[red]
+    
+  \begin{scope}
+    \node [place] (w1) {$\Sigma$};
+    \node [place] (e1) [below left of=w1] {$\{c,d\}$}
+      edge [pre]  node[swap] {a}                 (w1);      
+    \node [place] (e2) [below right of=w1] {$\Sigma$}
+      edge [pre]  node[swap] {b}                 (w1);      
+    \node [place] (e3) [below of=e1] {$\Sigma$}
+      edge [pre]  node[swap] {c}                 (e1);      
+  \end{scope}
+    
+\end{tikzpicture}
+\caption{Example of $\sqcap$}
+\label{setofpaths}
+\end{figure}
+For example, if $\MMM \sqcap \MMM'$ is as in Figure \ref{setofpaths}, then 
 \[
- \CHAR{(\CAL{L},w) \sqcap (\CAL{L}',w')} = \; ! \; (\lambda(w) \cap \lambda'(w')) \AND \bigwedge_{w \xrightarrow{a} w_2} \langle a \rangle  \CHAR{(\CAL{L}, w_2)} \AND \bigwedge_{w' \xrightarrow{a} w_3} \langle a \rangle  \CHAR{(\CAL{L}', w_3)}
+\CHAR{\MMM \sqcap \MMM'} = \MAY{a}(\fBang \{c,d\} \land \MAY{c} \top) \land \MAY{b} \top
 \]
-We need to show that $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge  \CHAR{(\CAL{L},w) \sqcap (\CAL{L}',w')}$ - or in other words, that:
-\begin{itemize}
+This is equivalent to the set $\Gamma$ of sentences:
+\begin{eqnarray*}
+\MAY{a}\MAY{c} \top \\
+\MAY{b} \top \\
+\MAY{a}\fBang\{c,d\}
+\end{eqnarray*}
+Now using {\bf $\AND$ Right} and {\bf Determinism} we can show that
+\[
+\bigwedge_{\phi \in \Gamma} \phi \judge \CHAR{\MMM \sqcap \MMM'}
+\]
+We know that for all $\phi \in \Gamma$
+\[
+\MMM \sqcap \MMM' \models \phi
+\]
+We just need to show that:
+\[
+\CHAR{\MMM} \land \CHAR{\MMM'} \judge \phi
+\]
+Take any $\phi \in \Gamma$ of the form $\MAY{a_1} ... \MAY{a_n} ! X$ for some finite $X \subseteq \Sigma$. (The case where $\phi$ is of the form $\MAY{a_1} ... \MAY{a_n} \top$ is very similar, but simpler).
+If $\MMM \sqcap \MMM' \models \MAY{a_1} ... \MAY{a_n} ! X$ then either:
+\begin{enumerate}
 \item
-$ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$
+$\MMM \models \MAY{a_1} ... \MAY{a_n} ! X$ but $\MMM' \nvDash \MAY{a_1} ... \MAY{a_n} \top$
 \item
-$ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \langle a \rangle  \CHAR{(\CAL{L}, w_2)}$ for all $a,w_2$ such that $w \xrightarrow{a} w_2$
+$\MMM' \models \MAY{a_1} ... \MAY{a_n} ! X$ but $\MMM \nvDash \MAY{a_1} ... \MAY{a_n} \top$
 \item
-$ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \langle a \rangle  \CHAR{(\CAL{L}, w_3)}$ for all $a,w_3$ such that $w' \xrightarrow{a} w_3$
-\end{itemize}
-To show $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$, note that $ \CHAR{(\CAL{L},w)}  \judge \; ! \; \lambda(w)$ and $ \CHAR{(\CAL{L}',w')} \judge \; ! \;  \lambda'(w'))$.
-We can derive $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \; ! \; (\lambda(w) \cap \lambda'(w'))$ using {\bf $\AND$ Right} and {\bf $!$ Right 2}. 
-
-To show $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \langle a \rangle  \CHAR{(\CAL{L}, w_2)}$, observe from the definition of $ \CHAR$ that $ \CHAR{(\CAL{L},w)}$ contains a conjunct $\langle a \rangle  \CHAR{(\CAL{L}, w_2)}$, so the proof follows from  {\bf $\AND$ Right} and repeated applications of  {\bf $\AND$ Left}. The same procedure applies to show $ \CHAR{(\CAL{L},w)} \AND  \CHAR{(\CAL{L}',w')} \judge \langle a \rangle  \CHAR{(\CAL{L}, w_3)}$ for all $a,w_3$ such that $w' \xrightarrow{a} w_3$.
-
-This completes Lemma 6 and hence the Completeness Proof.
-
-
+$\MMM \models \MAY{a_1} ... \MAY{a_n} ! X_1$ and $\MMM' \models \MAY{a_1} ... \MAY{a_n} ! X_2$ and $X_1 \cap X_2 \subseteq X$
+\end{enumerate}
+In the first two cases, showing $\CHAR{\MMM} \land \CHAR{\MMM'} \judge \phi$ is just a matter of repeated application of   {\bf $\AND$ Left} and {\bf $\AND$ Right}.
+In the third case, let $\MMM = (\mathcal{L}, w_1)$ and $\MMM' = (\mathcal{L}', w'_1)$.
+If $\MMM \models \MAY{a_1} ... \MAY{a_n} ! X_1$ and $\MMM' \models \MAY{a_1} ... \MAY{a_n} ! X_2$ then there exists sequences $w_1, ..., w_{n+1}$ and $w'_1, ..., w'_{n+1}$ of states such that
+\begin{eqnarray*}
+w_1 \xrightarrow{a_1} ... \xrightarrow{a_n} w_{n+1} \\
+w'_1 \xrightarrow{a_1} ... \xrightarrow{a_n} w'_{n+1} \\
+\lambda(w_{n+1}) \subseteq X_1 \\
+\lambda'(w'_{n+1}) \subseteq X_2 \\
+\end{eqnarray*}
+Now from the definition of $\CHAR{}$:
+\begin{eqnarray*}
+\CHAR{(\mathcal{L}, w_{n_1})} \judge \fBang X_1 \\
+\CHAR{(\mathcal{L}', w'_{n_1})} \judge \fBang X_2
+\end{eqnarray*}
+Now using {\bf \fBang Right 2}:
+\[
+\CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})} \judge \fBang (X_1 \cap X_2)
+\]
+Using {\bf \fBang Right 1}:
+\[
+\CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})} \judge \fBang X
+\]
+Using $n$ applications of {\bf Transition Normal}:
+\[
+\MAY{a_1} ... \MAY{a_n} (\CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})}) \judge \MAY{a_1} ... \MAY{a_n} \fBang X
+\]
+Finally, using $n$ applications of {\bf Determinism}:
+\[
+\CHAR{ (\mathcal{L}, w_1)} \land \CHAR{ (\mathcal{L}', w'_1)} \judge \MAY{a_1} ... \MAY{a_n} (\CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})})
+\]
+So, by {\bf Transitivity}
+\[
+\CHAR{\MMM} \land \CHAR{\MMM'} \judge \MAY{a_1} ... \MAY{a_n} \fBang X
+\]
 \end{proof}
