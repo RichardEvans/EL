@@ -45,10 +45,10 @@ We shall show that each of the following inferences can be naturally expressed i
 \item
 ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
 \end{itemize}
-First, incompatibility. ``... is male'' and ``... is female'' are translated into \ELABR{} as the pair of incompatible sentences:
+First, incompatibility. ``Jack is male'' and ``Jack is female'' are translated into \ELABR{} as the pair of incompatible sentences:
 \begin{verbatim}
-<male> /\ !{male}
-<female> /\ !{female}
+<jack> (<male> /\ !{male})
+<jack> (<female> /\ !{female})
 \end{verbatim}
 
 Second, entailment from dyadic to monadic predicates:
