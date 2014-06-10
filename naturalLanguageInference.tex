@@ -47,8 +47,8 @@ We shall show that each of the following inferences can be naturally expressed i
 \end{itemize}
 First, incompatibility. ``Jack is male'' and ``Jack is female'' are translated into \ELABR{} as the pair of incompatible sentences:
 \begin{verbatim}
-<jack> (<male> /\ !{male})
-<jack> (<female> /\ !{female})
+<jack> <sex> (<male> /\ !{male})
+<jack> <sex> (<female> /\ !{female})
 \end{verbatim}
 
 Second, entailment from dyadic to monadic predicates:
@@ -69,11 +69,11 @@ entails:
 <jack> <walks>
 \end{verbatim}
 Fourth, \ELABR{} directly supports inferences from conjunctions of sentences to conjunctions of noun-phrases.
-From the general rule that
+As our models are \emph{deterministic labelled transition systems}, we have the general rule that
 \[
 \MAY{a} \MAY{b} \land \MAY{a} \MAY{c} \models \MAY{a} (\MAY{b} \land \MAY{c})
 \]
-it follows that 
+from which it follows that 
 \begin{verbatim}
 <jack> <loves> <jill>
 \end{verbatim}
@@ -177,12 +177,12 @@ Again, predicate logic \emph{can} express adverbial inferences. But, again, it c
 But when it comes to inferences from conjunctions of sentences to conjunctions of noun-phrases (or predicates), predicate logic has nothing to say because it has no way of expressing conjunctions between noun-phrases (or predicates) \emph{at all}. In predicate logic, ``Jack is bruised and humiliated'' has to be regimented into ``Jack is bruised and Jack is humiliated''. 
 This might seem, to anyone who has not already become desensitised to the differences between predicate logic and our ergonomic mother tongue, to be exactly the wrong way around.
 
-\subsection{Expressive Limitations}
+\subsection{An Expressive Limitation}
 As we have seen, \ELFULL{} can handle inferences where predicates are conjoined:
 \begin{quote}
 ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
 \end{quote}
-It can also handle inferences were predicate-objects are conjoined:
+It can also handle inferences where predicate-objects are conjoined:
 \begin{quote}
 ``Jack loves Jill'' and ``Jack loves Joan'' together imply that ``Jack loves Jill and Joan''
 \end{quote}
@@ -191,3 +191,4 @@ But it cannot express related inferences where the \emph{subjects} are conjoined
 ``Jack loves Jill'' and ``Jim loves Jill'' together imply that ``Jack and Jim love Jill''
 \end{quote}
 \ELFULL{} has no way to conjoin noun-phrases in subject-position.
+We plan to address this representational issue in future work.
