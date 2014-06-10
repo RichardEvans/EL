@@ -6,9 +6,9 @@ A traffic light can be green, amber or red - but it cannot be more than one at a
 Mutual exclusion is such a natural and ubiquitous concept that most programming languages have a distinct representation for it: the enumeration data-type.
 
 Predicate logic \emph{can} represent mutually exclusive alternatives, of course.
-To say that Pierre is male - and male is his \emph{only} sex - we could write:
+To say that Pierre is the only king of France, we can write, following Russell:
 \[
-sex(pierre, male) \land \forall X . sex(pierre, X) \rightarrow X = male
+king(france, pierre) \land \forall X . king(france, X) \rightarrow X = pierre
 \]
 To say that a particular traffic light, $t$, is red - and red is its \emph{only} colour - we could write:
 \[
@@ -38,7 +38,7 @@ Exclusion and conjunction are the \emph{only} logical operators.
 There is no negation, disjunction or implication.
 Because of its extreme simplicity, it has a linear-time decision procedure.
 
-\ELFULL{} is a multi-modal logic, a variant of Hennessy-Milner Logic (using \emph{deterministic} labelled transition systems), that replaces negation with a different logical connective:
+\ELFULL{} is a multi-modal logic, a variant of Hennessy-Milner Logic, that replaces negation with a different logical connective:
 \[
    !A
 \]
@@ -46,11 +46,10 @@ called \emph{just} $A$, or \emph{tantum} $A$.
 Here, $A$ is a finite set of alternatives that exhaust all
 possibilities. 
 For example:
-\[
-   !\{male, female\}
-      \qquad
-   !\{green, amber, red\}
-\]
+\begin{eqnarray*}
+\fBang \{male, female\} \\
+\fBang \{green, amber, red\}
+\end{eqnarray*}
 Any statement of a fact that exceeds what tantum $A$ allows is necessarily false:
 \[
    !\{green, amber, red\} \AND \MAY{blue}
@@ -62,13 +61,7 @@ Now to say that Pierre is the only king of France, we write:
 \[
 \MAY{king}\MAY{france}(\MAY{pierre} \land \fBang \{pierre\})
 \]
-In \ELFULL{}, we do not need universal quantifiers or the identity relation to express uniqueness.
-
-To say that Pierre is male and \emph{only male}, we write:
-\[
-\MAY{pierre} \MAY{sex} (\MAY{male} \land !\{male\})
-\]
-Note that \ELFULL{}'s representation of exclusion involves no universal quantifier, no disjunction, and no identity relation.
+Note that \ELFULL{}'s representation of exclusion involves no universal quantifier and no identity relation.
 It is a purely propositional representation of exclusion.
 
 To say that the traffic light is currently red, and \emph{red is its only colour}, we write:
@@ -79,18 +72,26 @@ This is markedly simpler (both in terms of representation length and computation
 \[
 colour(t, red) \land \forall X . colour(t, X) \rightarrow X = red
 \]
-To summarise the argument we have sketched:
+To summarise the argument we shall be presenting:
 \begin{itemize}
 \item
-For every logical concept, we should provide a logic in which it can be expressed naturally (ergonomically)
+For every logical concept, we need a logic in which it can be expressed naturally (ergonomically)
 \item
-Exclusion is a basic logical concept
+Exclusion is a fundamental logical concept
 \item
-First order logic does not express exclusion naturally
+First order logic does not express exclusion naturally\footnote{We will precisify this claim in later sections by showing that (i) first order logic's representation of exclusion is significantly longer in terms of formula length than \ELFULL{}'s (see Section \ref{incompatiblepredicatesinfol}); and (ii) logic programs in \ELFULL{} can be optimised to run significantly faster than their equivalent in FOL (see Section \ref{optimizingpreconditions}).}
 \item
-Therefore, we should look for another logic in which exclusion can be expressed naturally
+\ELFULL{} expresses exclusion directly. 
+\item
+Because it expresses exclusion directly, it has various unusual features. 
+It is the only logic we have found that has a linear-time decision procedure and that satisfies:
+\begin{itemize}
+\item
+The Hennessy-Milner theorem
+\item
+Brandom's Incompatibility Semantics property
 \end{itemize}
-\ELFULL{} is a logic designed to express exclusion ergonomically.
+\end{itemize}
 In the next subsections, we shall:
 \begin{itemize}
 \item
