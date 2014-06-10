@@ -38,7 +38,7 @@ But to say that ``Jack is married to Joan'' (where``is-married-to'' is a many-on
 Note that we chose to adopt an \emph{object-oriented} representation, in which the relations are placed in infix position so that the facts about an object are ``contained'' within the object.
 But we \emph{could} have chosen an alternative strategy, in which the predicate/relation symbols are to the left of the first argument. (The reason for choosing the infix notation will become clear in the next subsection).
 
-\subsection{Advantages of \ELABR{} over Predicate Logic}
+\subsection{Practical Advantages of \ELABR{} as a Knowledge-Representation Language}
 
 When applied to a large knowledge base, \ELFULL{} has been found to have a number of advantages over traditional predicate logic as a language to represent simulational state:
 \begin{itemize}
@@ -139,10 +139,10 @@ married_couple_at_home(X, Y) :-
     welsh(Y),
     spouse(X,Y).
 \end{verbatim}	
-Rules like this create a large search-space because we need to find all instances of $welsh(X)$ and all instances of  $welsh(Y)$ and take the cross-product \cite{smith-and-genesereth}. If there are $n$ Welsh people, then we will be searching $n^2$ instances of $(x,y)$ substitutions.
+Rules like this create a large search-space because we need to find all instances of $welsh(X)$ and all instances of  $welsh(Y)$ and take the cross-product \cite{smith-and-genesereth}. If there are $n$ Welsh people, then we will be searching $n^2$ instances of $(X,Y)$ substitutions.
 
 If we express the rule in \ELFULL{}, the compiler is able to use the extra information expressed in the $!$ operator to reorder the literals to find the result significantly faster.
-Since someone can only have a single spouse at any moment, the rule is expressed in \ELFULL{} as:
+Assuming someone can only have a single spouse at any moment, the rule is expressed in \ELFULL{} as:
 \begin{verbatim}
 married_couple_at_home * X * Y :-
     <welsh> <X>,
