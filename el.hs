@@ -1,6 +1,3 @@
--- This is an earlier version of SNEL in which we insist on deterministic models
--- This is an unncessary restriction!
-
 module EL (
      )
 where
@@ -36,9 +33,6 @@ sats m (Disj p q)       = sats m p || sats m q
 sats m (Trans s p)      = satsArrow m s p
 sats m (Bang ss)        = out m `subset` ss
 
-notSats :: PointedLTS -> Prop -> Bool
-notSats m = not . sats m
-
 subset :: (Eq a) => [a] -> [a] -> Bool
 subset a b = all (`elem` b) a
 
@@ -59,7 +53,7 @@ entails p q =
     let p2 = removeNeg p q
         ps = dnf p2
         syms = getSymbols p q
-        f d = all (`satisfies` q) (expansions (mu d) syms (degree q))
+        f d = all (`satisfies` q) (expansions (simpl d) syms (degree q))
     in  all f ps
     
 getSymbols :: Prop -> Prop -> [Symbol]
@@ -70,19 +64,15 @@ newSymbol = "_n"
 
 expansions :: Model -> [Symbol] -> Int -> [Model]
 expansions Nothing _ _ = [Nothing]
-expansions (Just m) ss k = map Just $ expansions2 m ss k
-
-expansions2 :: PointedLTS -> [Symbol] -> Int -> [PointedLTS]
-expansions2 m@((_, _, ls), _) ss k = 
-    let rs = restrictStatesToDepth m k
-        ls' = [(w,l) | (w,l) <- ls, w `elem` rs]
-    in  nub $ expansions3 ls' ss m
-    
-expansions3 :: [(State, Label)] -> [Symbol] -> PointedLTS -> [PointedLTS]
-expansions3 [] _ m = [m]
-expansions3 ((w, l):ls) ss m = 
-    let ms = expand m (w, l) ss
-    in  ms >>= expansions3 ls ss
+expansions (Just m) ss k = map Just $ f m ss k where
+    f m@((_, _, ls), _) ss k =
+        let rs = restrictStatesToDepth m k
+            ls' = [(w,l) | (w,l) <- ls, w `elem` rs]
+        in  nub $ g ls' ss m
+    g [] _ m = [m]
+    g ((w, l):ls) ss m =
+        let ms = expand m (w, l) ss
+        in  ms >>= g ls ss
 
 expand :: PointedLTS -> (State, Label) -> [Symbol] -> [PointedLTS]
 expand m (w, l) syms =
@@ -100,90 +90,37 @@ addTransition :: State -> PointedLTS -> Symbol -> PointedLTS
 addTransition x m@((states, trans, labels), w) s =
     case satsArrow ((states, trans, labels), x) s Top of
         True -> m
-        False -> addTransition2 x m s
-        
-addTransition2 :: State -> PointedLTS -> Symbol -> PointedLTS
-addTransition2 x m@((states, trans, labels), w) s =
-    let newState = (maxState m) + 1
-        states' = newState : states
-        newTran = (s, [(x, newState)])
-        trans' = mergeTransitions trans [newTran]
-    in  ((states', trans', labels), w)
+        False -> 
+            let newState = (maxState m) + 1
+                states' = newState : states
+                newTran = (s, [(x, newState)])
+                trans' = mergeTransitions trans [newTran]
+            in  ((states', trans', labels), w)
 
 restrictStatesToDepth :: PointedLTS -> Int -> [State]
 restrictStatesToDepth m@((s, _, _), _) n =
     [w | w <- s, pathLength w m < n]
     
 pathLength :: State -> PointedLTS -> Int
-pathLength w (lts, root) = pathLength2 lts [root] w
+pathLength w (lts, root) = f lts [root] w where
+    f lts states w | w `elem` states = 0
+    f lts states w =
+        let outTs = states >>= (\x -> outTransitions (lts, x)) 
+            states' = map snd outTs
+        in  1 + f lts states' w
 
-pathLength2 :: LTS -> [State] -> State -> Int
-pathLength2 lts states w | w `elem` states = 0
-pathLength2 lts states w =
-    let outTs = states >>= (\x -> outTransitions (lts, x)) 
-        states' = map snd outTs
-    in  1 + pathLength2 lts states' w
+---------------------------- simpl ----------------------------
 
----------------------------- dnf ----------------------------
-
-removeNeg :: Prop -> Prop -> Prop
-removeNeg p q = 
-    let ss = nub $ symbols p ++ symbols q
-    in  removeNeg2 p ss
-    
-removeNeg2 :: Prop -> [Symbol] -> Prop
-removeNeg2 Top _ = Top
-removeNeg2 Bot _ = Bot
-removeNeg2 (Neg p) ss =
-    let (q, _) = translateNeg (p, (ss, [], []))
-    in  q
-removeNeg2 (Conj p q) ss = Conj (removeNeg2 p ss) (removeNeg2 q ss)
-removeNeg2 (Disj p q) ss = Disj (removeNeg2 p ss) (removeNeg2 q ss)
-removeNeg2 (Trans s p) ss = Trans s (removeNeg2 p ss)
-removeNeg2 (Bang ss) _ = Bang ss
-
-dnf :: Prop -> [Prop]
-dnf p = extractDisjuncts (dnf2 p)
-
-dnf2 :: Prop -> Prop
-dnf2 = fixedPoint dnfStep
-
-dnfStep :: Prop -> Prop
-dnfStep Top = Top
-dnfStep Bot = Bot
-dnfStep (Neg _) = error "Negation should have already been translated away"
-dnfStep (Conj p (Disj q r)) =
-    let p' = dnfStep p
-        q' = dnfStep q
-        r' = dnfStep r
-    in  Disj (Conj p' q') (Conj p' r')
-dnfStep (Conj (Disj q r) p) =
-    let p' = dnfStep p
-        q' = dnfStep q
-        r' = dnfStep r
-    in  Disj (Conj q' p') (Conj r' p')
-dnfStep (Conj p q) = Conj (dnfStep p) (dnfStep q)
-dnfStep (Disj p q) = Disj (dnfStep p) (dnfStep q)
-dnfStep (Trans s p) = Trans s (dnfStep p)
-dnfStep (Bang ss) = Bang ss
-
-extractDisjuncts :: Prop -> [Prop]
-extractDisjuncts (Disj p q) = extractDisjuncts p ++ extractDisjuncts q
-extractDisjuncts p = [p]
-
----------------------------- mu ----------------------------
-
-mu :: Prop -> Model
-
-mu Top = Just (([1], [], [(1, LStar)]), 1)
-mu Bot = Nothing
-mu (Neg _) = error "Negation should have already been translated away"
-mu (Conj p q) = mu p `glb` mu q
-mu (Disj _ _) = error "Disjunction should have already been translated away"
-mu (Trans s p) = do
-    m <- mu p
+simpl :: Prop -> Model
+simpl Top = Just (([1], [], [(1, LStar)]), 1)
+simpl Bot = Nothing
+simpl (Neg _) = error "Negation should have already been translated away"
+simpl (Conj p q) = simpl p `glb` simpl q
+simpl (Disj _ _) = error "Disjunction should have already been translated away"
+simpl (Trans s p) = do
+    m <- simpl p
     return (addSymbolToModel s m)
-mu (Bang ss) = Just (([1], [], [(1, LBang ss)]), 1)
+simpl (Bang ss) = Just (([1], [], [(1, LBang ss)]), 1)
 
 addSymbolToModel :: Symbol -> PointedLTS -> PointedLTS
 addSymbolToModel s plts@((states, trans, labels), w) = 
@@ -209,18 +146,11 @@ maxState ((states, _, _), _) = maximum states
 glb :: Model -> Model -> Model
 glb Nothing _ = Nothing
 glb _ Nothing = Nothing
-glb (Just m) (Just m') = glb2 m m'
-
-glb2 :: PointedLTS -> PointedLTS -> Model
-glb2 m m' =
-    let n = maxState m
-        m'' = uniqueifyStates m' n
-    in  glb3 m m''
-    
-glb3 :: PointedLTS -> PointedLTS -> Model
-glb3 (lts, w) (lts', w') = do
-    lts'' <- merge lts lts' [(w', w)]
-    return (lts'', w)
+glb (Just m) (Just m') = f m (uniqueifyStates m' n) where
+    n = (maxState m)
+    f (lts, w) (lts', w') = do
+        lts'' <- merge lts lts' [(w', w)]
+        return (lts'', w)
 
 uniqueifyStates :: PointedLTS -> Int -> PointedLTS
 uniqueifyStates ((states, trans, labels), w) n = 
@@ -319,6 +249,47 @@ getIdentifications (_, t, _) (_, t', _) =
             Nothing -> []
             Just rel' -> map (findMatch rel') rel
     in  concat $ concat $ map findMatches t'
+
+---------------------------- dnf ----------------------------
+
+removeNeg :: Prop -> Prop -> Prop
+removeNeg p q = f p (nub $ symbols p ++ symbols q) where
+    f :: Prop -> [Symbol] -> Prop
+    f Top _ = Top
+    f Bot _ = Bot
+    f (Neg p) ss =
+        let (q, _) = translateNeg (p, (ss, [], []))
+        in  q
+    f (Conj p q) ss = Conj (f p ss) (f q ss)
+    f (Disj p q) ss = Disj (f p ss) (f q ss)
+    f (Trans s p) ss = Trans s (f p ss)
+    f (Bang ss) _ = Bang ss
+
+dnf :: Prop -> [Prop]
+dnf p = extractDisjuncts (fixedPoint dnfStep p)
+
+dnfStep :: Prop -> Prop
+dnfStep Top = Top
+dnfStep Bot = Bot
+dnfStep (Neg _) = error "Negation should have already been translated away"
+dnfStep (Conj p (Disj q r)) =
+    let p' = dnfStep p
+        q' = dnfStep q
+        r' = dnfStep r
+    in  Disj (Conj p' q') (Conj p' r')
+dnfStep (Conj (Disj q r) p) =
+    let p' = dnfStep p
+        q' = dnfStep q
+        r' = dnfStep r
+    in  Disj (Conj q' p') (Conj r' p')
+dnfStep (Conj p q) = Conj (dnfStep p) (dnfStep q)
+dnfStep (Disj p q) = Disj (dnfStep p) (dnfStep q)
+dnfStep (Trans s p) = Trans s (dnfStep p)
+dnfStep (Bang ss) = Bang ss
+
+extractDisjuncts :: Prop -> [Prop]
+extractDisjuncts (Disj p q) = extractDisjuncts p ++ extractDisjuncts q
+extractDisjuncts p = [p]
 
 ---------------------------- translating negation ----------------------------
 
@@ -518,6 +489,6 @@ p3 = proveExcludedMiddle (Trans "a" (Conj (Trans "a" Top) (Trans "b" Top)))
 p4 = proveExcludedMiddle (Conj (Trans "a" Top) (Trans "b" Top))
 
 
-m1 = mu $ Conj (Trans "a" (Bang ["c"])) (Trans "b" (Trans "d" Top))
-m2 = mu $ Conj (Trans "a" (Trans "c" Top)) (Trans "b" (Bang ["d"]))
+m1 = simpl $ Conj (Trans "a" (Bang ["c"])) (Trans "b" (Trans "d" Top))
+m2 = simpl $ Conj (Trans "a" (Trans "c" Top)) (Trans "b" (Bang ["d"]))
 m3 = m1 `glb` m2
