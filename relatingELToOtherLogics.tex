@@ -7,7 +7,7 @@ Section \ref{standardTranslation} investigated the relationship
 between \ELABR{} and first-order logic. Now we compare \ELABR{} with a
 logic that is much closer in spirit: Hennessy-Milner logic
 \cite{HennessyM:alglawfndac}, a modal logic designed to reason about
-process calculi. Indeed the present shape of \ELABR{} owes to
+process calculi. Indeed the present shape of \ELABR{} owes much to
 Hennessy-Milner logic. We now contrast both by translation from
 \ELABR{} into Hennessy-Milner logic \martin{why not the other way?}.
 This will reveal more clearly than the translation into first-order
@@ -47,10 +47,6 @@ that's not required in the present context.
 \end{array}
 \]
 
-\NI It is not common to require models of Hennessy-Milner logic to be
-deterministic, although that restriction can be useful as we see
-below.
-
 We can now see the two differences between \ELFULL{}, and
 Hennessy-Milner logic, one syntactic, the other semantic.
 
@@ -59,13 +55,12 @@ Hennessy-Milner logic, one syntactic, the other semantic.
 \item Syntactically, \ELABR{} has the transition-restriction operator ($!$)
   instead of logical negation ($\neg$).
 
-\item Semantically, an \ELABR{} model has an additional state-labelling,
-  describing the allowable transitions from each vertex.
+\item Semantically, an \ELABR{} model involves one restriction from and one addition to a standard HML labelled transition system. The restriction is that all \ELABR{} model are \emph{deterministic}, while many HML models are nondeterministic. The addition is the additional state-labelling on \ELABR{} models, a labelling that restricts the allowable transitions emanating from each vertex.
 
 \end{itemize}
 
 \NI We translate formulae of \ELABR{} into HML using the function
-$t$:
+$\SEMB{}$:
 
 \begin{eqnarray*}
   \SEMB{\top} & \ = \ & \top  \\
@@ -100,13 +95,34 @@ Let $\MMM$ be a (deterministic or non-deterministic) eremic
   \SEMB{\phi}$.
 \end{theorem}
 \begin{proof}
-Stringforward by induction on $\phi$.
+Straightforward by induction on $\phi$.
 \end{proof}
 
 \NI The same theorem is also true if we replace eremic by pure eremic
 models.
 
+However, note that the following natural extension is \emph{not} true under the translation above:
+\[
+\text{If } \phi \models \psi \text{ then } \SEMB{\phi} \models \SEMB{\psi}
+\]
+To see this, consider an entailment which relies on determinism, such as
+\[
+\MAY{a} \MAY{b} \land \MAY{a} \MAY{c} \models \MAY{a} (\MAY{b} \land \MAY{c})
+\]
+Now this entailment is valid in EL because of the restriction to deterministic models, but is not valid in HML, 
+where it is invalidated by any model with two outgoing $a$ transitions, one of which satisfies $\MAY{b}$ and one of which satisfies $\MAY{c}$.
 
+However, if we add a determinism constraint to our translation, we can restore the desired connection between \ELABR{} implication and HML implication. Given a set $\Gamma$ of \ELABR{} formulae, closed under sub formulae, that contains actions from the set $A \subseteq \Sigma$, let the determinism constraint for $\Gamma$ be:
+\[
+\bigwedge_{a \in A, \phi \in \Gamma, \psi \in \Gamma} \neg \; (\MAY{a} \phi \land \MAY{a} \psi \land \neg \MAY{a} (\phi \land \psi) )
+\]
+If we add this sentence as part of our translation $\SEMB{}$, we do get the desired result that
+\[
+\text{If } \phi \models \psi \text{ then } \SEMB{\phi} \models \SEMB{\psi}
+\]
+
+
+\subsection{Why HML Without Negation Does Not Satisfy the Hennessy-Milner theorem}
 
 We can now see why in Hennessy-Milner logic without negation $p \equiv
 p'$ does \emph{not} entail $p \BISIM p'$
@@ -184,7 +200,7 @@ Because EL[$\land, !$]  is expressive enough to be able to make incompatible cla
 \[
 p \models q \mbox{ iff } \INC{q} \subseteq \INC{p}
 \]
-EL[$\land, !$]  is the \emph{only} logic with a linear-time decision procedure that is expressive enough to respect Incompatibility Semantics.
+EL[$\land, !$]  is the \emph{only} logic with a linear-time decision procedure that is expressive enough to respect Incompatibility Semantics. See Theorem \ref{incompatibilitytheorem}.
 
 The bottom three language can all be decided in exponential time.
 But HML is more expressive than PL, and EL [$\land, !, \neg$]  is more expressive than full HML. 
