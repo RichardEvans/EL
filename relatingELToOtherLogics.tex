@@ -4,13 +4,14 @@
 \subsection{Comparing \ELABR{} with Hennessy-Milner Logic}
 
 Section \ref{standardTranslation} investigated the relationship
-between \ELABR{} and first-order logic. Now we compare \ELABR{} with
-a logic that is much closer in spirit: Hennessy-Milner logic
+between \ELABR{} and first-order logic. Now we compare \ELABR{} with a
+logic that is much closer in spirit: Hennessy-Milner logic
 \cite{HennessyM:alglawfndac}, a modal logic designed to reason about
 process calculi. Indeed the present shape of \ELABR{} owes to
-Hennessy-Milner logic. We now contrast both by translation from \ELABR{} into Hennessy-Milner logic \martin{why not the other way?}. 
-This will reveal more clearly than the translation into
-first-order logic where \ELABR{} is novel.
+Hennessy-Milner logic. We now contrast both by translation from
+\ELABR{} into Hennessy-Milner logic \martin{why not the other way?}.
+This will reveal more clearly than the translation into first-order
+logic where \ELABR{} is novel.
 
 Given a set $\Sigma$ of symbols, with $s$ ranging over
 $\Sigma$, the \emph{formulae} of Hennessy-Milner logic are given
@@ -24,21 +25,33 @@ by the following grammar:
 \NI Note that many presentations use infinite conjunction. However,
 that's not required in the present context.
 
- \emph{Models} of Hennessy-Milner logic are the pairs $(W,
-\rightarrow, w)$ where $(S, \rightarrow)$ is a labelled transition
-system over $S$, and $w \in W$.  The \emph{satisfaction relation} $(l,
-w) \models \phi$ is given by the following inductive clauses.
+ \emph{Models} of Hennessy-Milner logic are pairs $(\LLL, s)$ where
+ $\LLL = (S, \rightarrow)$ is a labelled transition system over
+ $\Sigma$, and $s \in S$.  The \emph{satisfaction relation} $(\LLL, s)
+ \models \phi$ is given by the following inductive clauses.
 
 \[
 \begin{array}{lclcl}
-  (l,w) & \models & \top  \\
-  (l,w) & \models & \phi_1 \AND \phi_2 &\  \mbox{ iff }\  & (l,w)  \models \phi_1 \mbox { and } (l,w) \models \phi_2  \\
-  (l,w) & \models & \langle a \rangle \phi & \mbox{ iff } & \mbox{ there is a } w \xrightarrow{a} w' \mbox { such that } (l,w') \models \phi  \\
-  (l,w) & \models & \neg \phi & \mbox{ iff } & (l,w)  \nvDash \phi 
+  (\LLL, s) 
+     & \models & 
+  \top  \\
+  (\LLL, s) 
+     & \models & 
+  \phi_1 \AND \phi_2 &\  \mbox{ iff }\  & (\LLL, s)  \models \phi_1 \mbox { and } (\LLL, s) \models \phi_2  \\
+  (\LLL, s) 
+     & \models & 
+  \langle a \rangle \phi & \mbox{ iff } & \mbox{ there is a } s \xrightarrow{a} s' \mbox { such that } (l,s') \models \phi  \\
+  (\LLL, s) 
+     & \models & 
+  \neg \phi & \mbox{ iff } & (\LLL, s)  \nvDash \phi 
 \end{array}
 \]
 
-\NI We can now see the two differences between \ELFULL{}, and
+\NI It is not common to require models of Hennessy-Milner logic to be
+deterministic, although that restriction can be useful as we see
+below.
+
+We can now see the two differences between \ELFULL{}, and
 Hennessy-Milner logic, one syntactic, the other semantic.
 
 \begin{itemize}
@@ -51,23 +64,49 @@ Hennessy-Milner logic, one syntactic, the other semantic.
 
 \end{itemize}
 
-\NI We translate formulae of \ELABR{} into HML using the function $t$:\martin{maybe use $\SEMB{X}$ instead?}
+\NI We translate formulae of \ELABR{} into HML using the function
+$t$:
 
 \begin{eqnarray*}
-  t(\top) & \ = \ & \top  \\
-  t(\phi_1 \AND \phi_2) & \ = \ & t(\phi_1) \AND t(\phi_2)  \\
-  t(\langle a \rangle \phi) & \ = \ & \langle a \rangle t(\phi)  \\
-  t(! A) & \ = \ & \bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top 
+  \SEMB{\top} & \ = \ & \top  \\
+  \SEMB{\phi_1 \AND \phi_2} & \ = \ & \SEMB{\phi_1} \AND \SEMB{\phi_2}  \\
+  \SEMB{\langle a \rangle \phi} & \ = \ & \langle a \rangle \SEMB{\phi}  \\
+  \SEMB{! A} & \ = \ & \bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top 
 \end{eqnarray*}
 
 \NI If $\Sigma$ is an infinite set, then the translation of a $!$
-formula will be an infinitary formula.  If $\Sigma$ is finite,
-then the size\martin{Define the size of a formula. Maybe when formulae
-  are defined.} of the HML formula will be of the order of $n *
-| \Sigma |$ larger than the original \ELABR{} formula (where $n$ is the
-number of $!$ operators occurring in the \ELABR{} formula).
+formula will be an infinitary formula.  If $\Sigma$ is finite, then
+the size of the HML formula will be of the order of $n * | \Sigma |$
+larger than the original \ELABR{} formula, where $n$ is the number of
+$!$ operators occurring in the \ELABR{} formula). In both logics we
+use the number of logical operators as a measure of size.
 
-\martin{Say something more interesting about this translation!}
+We can also translate eremic models:
+\[
+   \SEMB{((S, \rightarrow, \lambda), s)} 
+      =
+   ((S, \rightarrow), s)
+\]
+Pure eremic models are already models of Hennessy-Milner logic, so the
+translation is trivial $\SEMB{\PPP} = \PPP$. Note that both
+translations work for deterministic as well as non-deterministic
+models.
+
+We continue with an obvious consequence of the translation.
+
+\begin{theorem}
+Let $\MMM$ be a (deterministic or non-deterministic) eremic
+  model. Then $\MMM \models \phi$ implies $\SEMB{\MMM} \models
+  \SEMB{\phi}$.
+\end{theorem}
+\begin{proof}
+Stringforward by induction on $\phi$.
+\end{proof}
+
+\NI The same theorem is also true if we replace eremic by pure eremic
+models.
+
+
 
 We can now see why in Hennessy-Milner logic without negation $p \equiv
 p'$ does \emph{not} entail $p \BISIM p'$
@@ -155,17 +194,17 @@ Full HML  is more expressive than full PL.
 To see this, fix a PL with the nullary operator $\top$ plus an infinite number of propositional atoms $P_{(i,j)}$, indexed by $i$ and $j$.
 Now translate each formula of HML via the rules:
 \begin{eqnarray*}
-t(\top)  & = & \top  \\
-t(\phi \land \psi) & = & t(\phi) \land t(\psi)  \\
-t(\neg \phi) & = & \neg t(\phi)   \\
-t(\langle a_i \rangle \phi_j) & = & P_{(i,j)} 
+\SEMB{\top}  & = & \top  \\
+\SEMB{\phi \land \psi} & = & \SEMB{\phi} \land \SEMB{\psi}  \\
+\SEMB{\neg \phi} & = & \neg \SEMB{\phi}   \\
+\SEMB{\langle a_i \rangle \phi_j} & = & P_{(i,j)} 
 \end{eqnarray*}
 Now to show that HML is more expressive, we show that there are formulae $\phi$ and $\psi$ of HML such that
 \[
-\phi \models_{HML} \psi \mbox{ but } t(\phi) \nvDash_{PL} t(\psi)
+\phi \models_{HML} \psi \mbox{ but } \SEMB{\phi} \nvDash_{PL} \SEMB{\psi}
 \]
 For example, let $\phi = \langle a \rangle \langle b \rangle \top$ and $\psi = \langle a \rangle \top$.
-Clearly, $\phi \models_{HML} \psi$. But $t(\phi) = P_{(i,j)}$ and $t(\psi) = P_{(i',j')}$ for some $i,j,i',j'$, and there are no entailments in PL between arbitrary propositional atoms.
+Clearly, $\phi \models_{HML} \psi$. But $\SEMB{\phi} = P_{(i,j)}$ and $\SEMB{\psi} = P_{(i',j')}$ for some $i,j,i',j'$, and there are no entailments in PL between arbitrary propositional atoms.
 
 \begin{proposition}
 EL [$\land, !, \neg$]  is more expressive than full HML
