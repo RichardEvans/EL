@@ -7,18 +7,17 @@
   			  fill=black!20,minimum size=4mm]
   \tikzstyle{every label}=[red]
   \begin{scope}[xshift=0cm]
-    \node [place] (w1) {$\{a, b\}$};
-    \node [place] (e1) [below left of=w1] {$\Sigma$}
+    \node [place] (w1) {$\{a\}$};
+    \node [place] (e1) [below of=w1] {$\Sigma$}
       edge [pre]  node {a}                 (w1);
-    \node [place] (e2) [below right of=w1] {$\{c\}$}
-      edge [pre]  node[swap] {b}                 (w1);
   \end{scope}   
   \begin{scope}[xshift=4cm]
-    \node [place] (w1) {$\{a, b, c, d\}$};
+    \node [place] (w1) {$\{a, b, c\}$};
     \node [place] (e1) [below of=w1] {$\{a\}$}
       edge [pre]  node[swap] {c}                 (w1);
   \end{scope}   
 \end{tikzpicture}
-\caption{The model on the left validates $!\{a, b, c\}$
+\caption{The model on the left validates $!\{a, b\}$
 while the model on the right does not.}\label{figure:elAndBang:moreMdels}
+\label{more models}
 \end{FIGURE}
