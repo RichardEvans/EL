@@ -157,9 +157,20 @@ our premise, while [\RULENAME{!-right 1}] allows us to weaken the
 premise.
 
 \subsection{Example inferences}
+We prove that we can use $\phi \AND \psi  \judge  \xi$ to derive $\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$:
+\begin{center}
+  \AxiomC{$\phi \AND \psi  \judge  \xi$}
+  \LeftLabel{\RULENAME{Transition Normal}}
+  \UnaryInfC{$\MAY{a} (\phi \AND \psi)  \judge  \MAY{a} \xi$}
+  \AxiomC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \phi \land \MAY{a} \psi$}
+  \LeftLabel{\RULENAME{Determinism}}
+  \UnaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} (\phi \land \psi)$}
+  \LeftLabel{\RULENAME{Transitivity}}
+  \BinaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$}
+  \DisplayProof
+\end{center}
 
-We give some example inferences that illustrate how EL is used in
-practice.  \martin{Add some example assertions here, for example some
+\martin{Add some more example assertions here, for example some
   of those we use later.}
 
 \subsection{A semantic characterisation of elementary equivalence}\label{elementaryEquivalence}
