@@ -16,25 +16,26 @@ We shall first sketch how facts are represented, before describing the advantage
 
 We used the following strategy for representing facts in \ELABR{}.
 A sentence involving a one-place predicate of the form $p(a)$ is expressed in \ELABR{} as 
-\begin{verbatim}
-<a> <p>
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{a} \MAY{p}
+\end{eqnarray*}
 A sentence involving a many-to-many two-place relation of the form $r(a,b)$ is expressed in \ELABR{} as
-\begin{verbatim}
-<a> <r> <b>
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{a} \MAY{r} \MAY{b}
+\end{eqnarray*}
 But a sentence involving a many-to-one two-place relation of the form $r(a,b)$ is expressed in \ELABR{}:
-\begin{verbatim}
-<a> <r> (<b> /\ !{b})
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{a} \MAY{r} (\MAY{b} \land \fBang \{b\})
+\end{eqnarray*}
 So, for example, to say that ``Jack likes Jill'' (where ``likes'' is, of course, a many-many relation), we would write:
-\begin{verbatim}
-<jack> <likes> <jill>
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{likes} \MAY{jill}
+\end{eqnarray*}
 But to say that ``Jack is married to Joan'' (where``is-married-to'' is a many-one relation), we would write:
-\begin{verbatim}
-<jack> <married> (<joan> /\ !{joan})
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
+\end{eqnarray*}
+Colloquially, we might say that ``Jack is married to Joan - and only Joan''.
 Note that we chose to adopt an \emph{object-oriented} representation, in which the relations are placed in infix position so that the facts about an object are ``contained'' within the object.
 But we \emph{could} have chosen an alternative strategy, in which the predicate/relation symbols are to the left of the first argument. (The reason for choosing the infix notation will become clear in the next subsection).
 
@@ -57,58 +58,38 @@ I shall go through each of these in turn.
 
 \subsection{Using Sub-trees of Expressions to Represent Objects}
 Consider the following facts about a gentleman named Brown:
-\begin{verbatim}
-<brown>
-    (
-        <sex> (<male> /\ !{male}) /\
-        <friends> (<lucy> /\ <elizabeth>)
-        <class>(<upper> /\ !{upper})
-)
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{brown} & ( & \\
+& & \MAY{sex} (\MAY{male} \land \fBang \{male\}) \\
+& & \MAY{friends} (\MAY{lucy} \land \MAY{elizabeth}) \\
+& )
+\end{eqnarray*}
 All the facts which start with the prefix $\MAY{brown}$ form a sub-tree of the entire database.
 And all the facts which start with the prefix $\MAY{brown} \MAY{friends}$ form a sub-tree of that tree.
 A sub-tree can be treated as an individual via its prefix.
 The whole sub-tree can be removed in one fell swoop by deleting its associated prefix.
-So we can e.g. remove Brown's friends just by deleting the sentence
-\begin{verbatim}
-<brown> <friends>
-\end{verbatim}
+So we can e.g. remove Brown's friends just by deleting the sentence $\MAY{brown} \MAY{friends}$.
 (Compare this with Prolog - where it is much harder to remove all formulae containing a particular symbol).
 A sub-tree of formulae is the \ELABR{} equivalent of an \emph{object} in an object-oriented programming language.
 
 The tree-structure of formulae also allows us to express the \emph{life-time of data} in a natural way. 
 If we wish a piece of data $d$ to exist for just the duration of a proposition $t$, then we make $t$ be a sub-expression of $d$. 
 For example, if we want the friendships of an agent to exist just as long as the agent, then we place the relationships inside the agent: 
-\begin{verbatim}
-<brown> <friends>
-\end{verbatim}
-Or if we want the score of a game to exist just as long as the game itself, then we place the score data inside the social practice for the game: 
-\begin{verbatim}
-<process> <whist> <data> <whose_move> (<brown> /\ !{brown})
-\end{verbatim}
+\[
+\MAY{brown} \MAY{friends}
+\]
+Now, when we remove $\MAY{brown}$ all the sub-trees, including the data about who he is friends with, will be automatically deleted as well.
 
 Another advantage of using a tree structure is that we get a form of \emph{automatic currying} which simplifies queries.
 So if, for example, Brown is married to Elizabeth, then the database would contain 
-\begin{verbatim}
-<brown> <married> (<elizabeth> /\ !{elizabeth})
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{brown} \MAY{married} (\MAY{elizabeth} \land \fBang \{elizabeth\})
+\end{eqnarray*}
 In \ELFULL{}, if we want to find out whether Brown is married, we can query the sub-formula directly -  we just ask if 
-\begin{verbatim}
-<brown> <married>
-\end{verbatim}
-In traditional predicate logic, if ``married'' is a two-place predicate, then we need to fill in the extra argument place with a free variable - we would need to find out if there exists an $X$ such that $married(brown, X)$ - this is slower to compute and more cumbersome to type. 
-
-\subsection{Automatic Garbage Collection}
-The $!$ operator supports automatic clean up of dead data.
-For example, an object $p$ might have two states: $a$ and $b$. State $a$ might have two pieces of information, $x1$ and $x2$. State $b$ might have three pieces of information $y1$, $y2$ and $y3$. Being in state $a$ might be represented as:
-\begin{verbatim}
-<s> (<a>(<x1> /\ <x2>) /\ !{a})
-\end{verbatim}
-State $b$ might be represented as:
-\begin{verbatim}
-<s> (<b> (<y1> /\ <y2> /\ <y3>) /\ !{b})
-\end{verbatim}
-Now if we are in state $a$, and we switch to state $b$ by inserting $\MAY{s}(\MAY{b} \land !\{b\})$ into the database, all the local data from  state $a$ is \emph{automatically} removed from the database according to the update rules for \ELFULL{}. Everything is cleaned up \emph{automatically}.
+\begin{eqnarray*}
+\MAY{brown} \MAY{married}
+\end{eqnarray*}
+In traditional predicate logic, if $married$ is a two-place predicate, then we need to fill in the extra argument place with a free variable - we would need to find out if there exists an $X$ such that $married(brown, X)$ - this is slower to compute and more cumbersome to type. 
 
 \subsection{Simpler Postconditions}
 When expressing the pre- and post-conditions of an action, planners based on predicate logic\footnote{An early example is STRIPS \cite{strips}.} have to explicitly describe the propositions that are removed when an action is performed:
@@ -130,7 +111,7 @@ action move (A, X, Y)
 \end{verbatim}
 The ``!" operator makes it clear that something can only be at one place at a time, and the non-monotonic update rule \emph{automatically} removes the old invalid location data.
 
-\subsection{Using the $!$ Operator to Optimize Logic Programs}
+\subsection{Using the $!$ Operator to Optimize Preconditions}
 Suppose, for example, we want to find all married couples who are both Welsh.
 In Prolog, we might write something like:
 \begin{verbatim}
@@ -173,40 +154,40 @@ Although non-determinism makes some of the constructions simpler, non-determinis
 
 Consider, for example, the claim that Jack is married to Jill. 
 In standard deterministic EL this would be rendered as:
-\begin{verbatim}
-<jack><married>(<jill> /\ !{jill})
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\})
+\end{eqnarray*}
 There are three levels at which this claim can be denied.
-First, we can claim that Jack is married to someone else:
-\begin{verbatim}
-<jack><married>(<joan> /\ !{joan})
-\end{verbatim}
-Second, we can claim that Jack is unmarried (more accurately, that being unmarried is Jack's only property):
-\begin{verbatim}
-<jack>!{unmarried}
-\end{verbatim}
+First, we can claim that Jack is married to someone else - Joan, say:
+\begin{eqnarray*}
+\MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
+\end{eqnarray*}
+Second, we can claim that Jack is unmarried (specifically, that being unmarried is Jack's only property):
+\begin{eqnarray*}
+\MAY{jack} !\{unmarried\}
+\end{eqnarray*}
 Third, we can claim that Jack does not exist at all. Bob and Jill, for example, are the only people in our domain:
-\begin{verbatim}
-!{bob, jill}
-\end{verbatim}
+\begin{eqnarray*}
+\fBang \{bob, jill\}
+\end{eqnarray*}
 
-Now we can assert the same sentences in non-deterministic EL, but they are no longer incompatible with our original sentence.
+Now we can assert the same sentences in non-deterministic EL, but they are \emph{no longer incompatible with our original sentence}.
 In non-deterministic EL, the following sentences are fully compatible (as long as there are two separate transitions labelled with $married$, or two separate transitions labelled with $jack$):
-\begin{verbatim}
-<jack><married>(<jill> /\ !{jill})
-<jack><married>(<joan> /\ !{joan})
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\}) \\
+\MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
+\end{eqnarray*}
 Similarly, the following sentences are fully compatible as long as there are two separate transitions labelled with $jack$:
-\begin{verbatim}
-<jack><married>(<jill> /\ !{jill})
-<jack>!{unmarried}
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{married}\\
+\MAY{jack} \fBang \{unmarried\}
+\end{eqnarray*}
 
-Relately, non-deterministic EL does not satisfy Brandom's Incompatibility Semantics property:
+Relatedly, non-deterministic EL does not satisfy Brandom's Incompatibility Semantics property:
 \[
 \phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
 \]
-$\MAY{a}\MAY{b}$ implies $\MAY{a}$, but not conversely.
+To take a simple counter-example, $\MAY{a}\MAY{b}$ implies $\MAY{a}$, but not conversely.
 But in non-deterministic EL, the set of sentences incompatible with $\MAY{a}\MAY{b}$ is identical with the set of sentences incompatible with  $\MAY{a}$.
 
 

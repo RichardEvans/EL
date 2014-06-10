@@ -46,54 +46,52 @@ We shall show that each of the following inferences can be naturally expressed i
 ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
 \end{itemize}
 First, incompatibility. ``Jack is male'' and ``Jack is female'' are translated into \ELABR{} as the pair of incompatible sentences:
-\begin{verbatim}
-<jack> <sex> (<male> /\ !{male})
-<jack> <sex> (<female> /\ !{female})
-\end{verbatim}
-
+\begin{eqnarray*}
+\MAY{jack} \MAY{sex} (\MAY{male} \land \fBang \{male\}) \\
+\MAY{jack} \MAY{sex} (\MAY{female} \land \fBang \{female\})
+\end{eqnarray*}
 Second, entailment from dyadic to monadic predicates:
 ``Jack loves Jill'' is translated into \ELABR{} as:
-\begin{verbatim}
-<jack> <loves> <jill>
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{loves} \MAY{jill}
+\end{eqnarray*}
 This directly entails:
-\begin{verbatim}
-<jack> <loves>
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{loves}
+\end{eqnarray*}
 Third, adverbial inferences: 
-\begin{verbatim}
-<jack> <walks> <quickly>
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{walks} \MAY{quickly}
+\end{eqnarray*}
 entails:
-\begin{verbatim}
-<jack> <walks>
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{walks}
+\end{eqnarray*}
 Fourth, \ELABR{} directly supports inferences from conjunctions of sentences to conjunctions of noun-phrases.
 As our models are \emph{deterministic labelled transition systems}, we have the general rule that
 \[
 \MAY{a} \MAY{b} \land \MAY{a} \MAY{c} \models \MAY{a} (\MAY{b} \land \MAY{c})
 \]
 from which it follows that 
-\begin{verbatim}
-<jack> <loves> <jill>
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{loves} \MAY{jill}
+\end{eqnarray*}
 and:
-\begin{verbatim}
-<jack> <loves> <joan>
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{loves} \MAY{joan}
+\end{eqnarray*}
 together imply
-\begin{verbatim}
-<jack> <loves> (<jill> /\ <joan>)
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{loves} (\MAY{jill} \land \MAY{joan})
+\end{eqnarray*}
 Using the same rule, we can infer that
-\begin{verbatim}
-<jack> <bruised>
-<jack> <humiliated>
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} \MAY{bruised} \land \MAY{jack} \MAY{humiliated}
+\end{eqnarray*}
 together imply
-\begin{verbatim}
-<jack> (<bruised> /\ <humiliated>)
-\end{verbatim}
+\begin{eqnarray*}
+\MAY{jack} (\MAY{bruised} \land \MAY{humiliated})
+\end{eqnarray*}
  
 \subsection{Representing Incompatible Predicates in Predicate Logic}
 How are incompatible predicates represented in traditional Predicate Logic?
