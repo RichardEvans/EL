@@ -36,15 +36,15 @@ A traffic light can be green, amber or red - but it cannot be more than one at a
 Mutual exclusion is such a natural and ubiquitous concept that most programming languages have a distinct representation for it: the enumeration data-type.
 
 Predicate logic \emph{can} represent mutually exclusive alternatives, of course.
-To say that Pierre is either male or female - but not both - we could write:
+To say that Pierre is male - and male is his \emph{only} sex - we could write:
 \[
-\exists Y . sex(pierre,Y) \land (Y = male \; \lor \; Y = female) \land \forall Z . sex(pierre,Z) \rightarrow Y = Z
+sex(pierre, male) \land \forall X . sex(pierre, X) \rightarrow X = male
 \]
-To say that a particular traffic light, $t$, is either green, amber, or red - but never more than one - we could write:
+To say that a particular traffic light, $t$, is red - and red is its \emph{only} colour - we could write:
 \[
-\exists Y . colour(t,Y) \land (Y = green \; \lor \; Y = amber \; \lor \; Y = red) \land \forall Z . colour(t,Z) \rightarrow Y = Z
+colour(t, red) \land \forall X . colour(t, X) \rightarrow X = red
 \]
-In predicate logic, exclusion is a derived concept, reduced to a combination of universal quantification, disjunction and the identity relation.
+In predicate logic, exclusion is a derived concept, reduced to a combination of universal quantification and identity.
 Predicate logic, in other words, uses relatively complex machinery to express a simple concept:
 \begin{itemize}
 \item Quantification is an expensive concept that comes with
@@ -59,7 +59,6 @@ Predicate logic, in other words, uses relatively complex machinery to express a 
       borne every time one uses exclusion, \emph{even though exclusion does
       not, prima facie, appear to have anything to do with the
       free/bound variable distinction}.
-\item Disjunction is a computationally complex logical operator: any sentence containing disjunction can be satisfied in many different ways.
 \item The identity relation is also an expensive piece of machinery. In first order predicate logic, identity is a special-case relation which requires an infinite axiom schema (the Indiscernibility of Identicals) to capture its unique properties.
 \end{itemize}
 
@@ -69,7 +68,7 @@ Exclusion and conjunction are the \emph{only} logical operators.
 There is no negation, disjunction or implication.
 Because of its extreme simplicity, it has a linear-time decision procedure.
 
-\ELFULL{} is a multi-modal logic, a variant of Hennessy-Milner Logic, that includes an additional logical connective:
+\ELFULL{} is a multi-modal logic, a variant of Hennessy-Milner Logic (using \emph{deterministic} labelled transition systems), that replaces negation with a different logical connective:
 \[
    !A
 \]
@@ -89,22 +88,27 @@ Any statement of a fact that exceeds what tantum $A$ allows is necessarily false
 is necessarily false.
 If the only available options are green, amber, or red, then blue is not an available option.
 
-Now to say, in \ELFULL{}, that Pierre's sex can only be male or female, we write:
+Now to say that Pierre is the only king of France, we write:
 \[
-\MAY{pierre} \MAY{sex} !\{male, female\}
+\MAY{king}\MAY{france}(\MAY{pierre} \land \fBang \{pierre\})
+\]
+In \ELFULL{}, we do not need universal quantifiers or the identity relation to express uniqueness.
+
+To say that Pierre is male and \emph{only male}, we write:
+\[
+\MAY{pierre} \MAY{sex} (\MAY{male} \land !\{male\})
 \]
 Note that \ELFULL{}'s representation of exclusion involves no universal quantifier, no disjunction, and no identity relation.
 It is a purely propositional representation of exclusion.
 
-To say that the traffic light $t$'s colour can only be green, amber, or red, we can write:
+To say that the traffic light is currently red, and \emph{red is its only colour}, we write:
 \[
-\MAY{t} \MAY{colour} !\{green, red, amber\}
+\MAY{t} \MAY{colour} (\MAY{red} \land !\{red\})
 \]
 This is markedly simpler (both in terms of representation length and computational complexity) than the representation in predicate logic:
 \[
-\exists Y . colour(t,Y) \land (Y = green \; \lor \; Y = amber \; \lor \; Y = red) \land \forall Z . colour(t,Z) \rightarrow Y = Z
+colour(t, red) \land \forall X . colour(t, X) \rightarrow X = red
 \]
-
 To summarise the argument we have sketched:
 \begin{itemize}
 \item
