@@ -1,89 +1,300 @@
 \section{Conclusion}\label{conclusion}
 
+\NI We have proposed eremic logic, a modal logic based on the
+exclusion as a logical primitive. We have investigated key
+meta-theoretic properties of the logic, related eremic logic to
+first-order logic and Hennessy-Milner logic, and we have explored
+applications in the philosophy of language, knowledge representation
+and the semantics of concurrent processes.  
+
+\subsection{Related work} 
+
+Eremic logic emerged out of an engagement with Brandom's
+incompatibility semantics.  Its formal presentation and developemnt
+owes to modal logic in general and Hennessy-Milner logic in
+particular.
+
+\subsubsection{Brandom's Incompatibility Semantics}
+
+The origins of eremic logic lay in classical philosophy, in particular
+in Hegel's work on ``bestimmte Negation'' (determinate negation)).  In
+his \emph{Wissenschaft der Logic} \cite{HegelGWF:wisdlog}, Hegel
+develops the concept that concept, in part in reaction to Kant's use
+of material incompatibility in the \emph{Critique of pure reason}
+\cite{KantI:kdrv}, but also in relation to Spinoza's \emph{omnis
+  determinatio est negatio} \cite{???}.  In the twentieth century,
+determinate negation has been important in the Neo-Marxist tradition
+of the Frankfurt School, in particular in Adorno's negative dialectics
+\cite{AdornoTW:negdia}, but also in the .
+ analytic tradition. In particular Brandom ...
+
+
+In \cite{brandom2} and \cite{brandom}, Brandom has emphasised that
+logical negation is a degenerate case of material incompatibility:
+
+\begin{quote}
+Incompatible sentences are Aristotelian \emph{contraries}. A sentence
+and its negation are \emph{contradictories}. What is the relation
+between these? Well, the contradictory is a contrary: any sentence is
+incompatible with its negation. What distinguishes the contradictory
+of a sentence from all the rest of its contraries? The contradictory
+is the \emph{minimal} contrary: the one that is entailed by all the
+rest. Thus every contrary of ``Plane figure $f$ is a circle'' - for
+instance ``$f$ is a triangle'', ``$f$ is an octagon'', and so on -
+entails ``$f$ is \emph{not} a circle''.
+\end{quote}
+
+\NI In \cite{brandom}, Chapter 5, Appendix I, Brandom developed a new
+type of semantics, Incompatibility Semantics, that takes material
+incompatibility - rather than truth-assignment - as the semantically
+primitive notion.
+
+Incompatibility Semantics applies to any language, $\mathcal{L}$,
+given as a set of sentences.  It uses an incompatibility function
+$\mathcal{I}$, that, given a set of sentences $S \subseteq
+\mathcal{L}$, produces the set of sets of sentences that are
+incompatible with $S$.  We assume that $\mathcal{I}$ satisfies the
+monotonicity requirement (Brandom calls it ``Persistence''):
+\[
+   \text{If } X \in \mathcal{I}(Y) \text{ and } X \subseteq X' \text{ then } X' \in \mathcal{I}(Y)
+\]
+
+\NI Now Brandom defines entailment in terms of the incompatiblity
+function. Given a set $X \subseteq \mathcal{L}$ and an individual
+sentence $\phi \in \mathcal{L}$:
+
+\[
+   X \models \phi \text{ iff } \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
+\]
+
+\NI Now, given material incompatibility (as captured by the
+$\mathcal{I}$ function) and entailment, he introduces logical negation
+as a \emph{derived} concept. Using $N \phi$ for the negation of
+$\phi$, he introduces negation via the rule:
+
+\[
+   \{N \phi\} \in \mathcal{I}(X) \text{ iff } X \models \phi
+\]
+
+\NI Brandom goes on to show that the $N$ operator, as defined, satisfies
+the laws of classical negation.  He also introduces a modal operator,
+again defined in terms of material incompatibility, and shows that
+this operator satisfies the laws of $S5$.
+
+\ELFULL{} was inspired by Brandom's vision that material
+incompatibility is conceptually prior to logical negation: in other
+words, it is possible for a community of language users to deploy a
+language including a material incompatibility relation, even if that
+language has no explicit logical operators such as negation.  The
+language users of this simple language may go on to introduce logical
+operators, in order to make certain inferential properties explicit -
+but this is an optional further development.  The language before that
+addition was already in order as it is.
+
+The approach taken in this paper takes Brandom's original insight in a
+different direction.  While Brandom defines an unusual (non
+truth-conditional) semantics that applies to any language, we have
+defined a unusual logic with a standard (truth-conditional) semantics.
+
+\subsection{Other Related work}
+
+Linguists have also investigated how mutually exclusive alternatives
+are expressed \cite{OKeeffeA:rouhanocl}\martin{See John C email for
+  more precise reference}, but, to the best of our knowledge have not
+proposed formal theories of linguistic exclusion.
+
+Linear logic \cite{GirardJY:linlog,GirardJY:protyp} is a refinement of
+first-order logic and was introduced by J.-Y.~Girard with the aim of
+bringing the symmetries of classical logic to constructive
+logic. Linear logic has been fruitful in a variety of fields, in
+particular in the study of typing systems, where the concept of
+linearity puts type-based resource handling on a sound logical basis.
+
+Linear logic splits conjunction into two: additive and multiplicative
+conjunction The former, additive conjunction $A \& B$, is especially
+interesting in the context of \ELFULL{}. It can be interpreted
+\cite{AbramskyS:comintoll} as an external choice operation in the
+terminology of CSP \cite{HoareC:comseq}. External, because the choice
+is offered to the environment.  This interpretation has been
+influential in the study of types for process calculus,
+e.g.~\cite{HondaK:unitypsfsifLONG,TakeuchiK:intbaslaits,HondaK:lanpriatdfscbp}.
+Implicitly, additive conjunction gives an explicit upper bound on how
+many different options the environment can choose from. For example in
+$A \& B \& C$ we have three options (assuming that none of $A, B, C$
+can be decomposed into further additive conjunctions).  With this in
+mind, and simplifying a great deal, a key difference between $!A$ and
+additive conjunction $A \& B$ is that the individual actions in $!A$
+have no continuation, while they do with $A \& B$: $!\{l, r\}$ says
+that at this point the only available actions are $l$ and $r$. What
+happens at later states is not constraind by $!A$.  In contrast, $A \&
+B$ says not only that at this point the only available options are $A$
+and $B$, but also that if we choose $A$, then $A$ holds 'for ever',
+and likewise for choosing $B$. To be sure, the alternatives in $A \&
+B$ may themselves contain further additive conjunctions, and in this
+way express how exclusion changes 'over time'.
+
+In summary, \ELABR{} and linear logic offer an operator that restricts
+the available options. How are they related? Linear logic has an
+explicit linear negation $(\cdot)^{\bot}$ which, unlike classical
+negation, is constructive. In constrast, \ELABR{} defines a restricted
+form negation from $!A$. Can these two perspectives be frutifully
+reconciled?
+
+Another formalism that has a form of explicit description of mutually
+exclusive option as a core primitive are process calculi. They are
+models of computation based on the idea of message passing between
+actors running in parallel. Labelled transition systems are often used
+as models for process calculi, and many concepts, for example
+bisimulations and Hennessy-Milner logic, used for developing eremic
+logic originated from process theory (although some, such as
+bisimulation, evolved independently in other contexts).
+
+Process calculi traditionally have sums, which, in their most general
+form, are:
+\[
+     \sum_{i \in I} P_i
+\]
+That is a process that can internally choose, or be chosen to evolve
+into the process $P_i$ for each $i$. Once the choice is made, all
+other options disappear.  Usually, so much generality is not
+considered. Instead, input-guarded sums are much better behaved (and
+strictly less expressive):
+  \[
+     \sum_{i \in I} x_{i}(v_i)P_i
+  \]
+This is a process that can receive a message on each channel $x_i$
+and, if such a message arrives with payload $y$, evolve into
+$P_i{y/v_i}$ which is the process obtained from $P_i$ by substituting
+$y$ for the bound variable $v_i$.  An even better behaved process is
+obtained if all inputs use the same input channel and we have only
+finitely many alternatives:
+  \[
+     \sum_{i = 1}^n x(v)P_i
+  \]
+  Simplifying a great deal, this can be seen as a proof for linear
+  logic's additive conjunction
+  \[
+     \&_{i = 1}^n x(v)A_i
+  \]
+  provided each $P_i$ is a proof of $A_i$.  It is possible to extend
+  the Curry-Howard correspondence to (fragments of) linear logic on
+  one side and process calculi on the other \cite{GaySJ:typcalosp}.
+
+In this way, process calculi are related to linear logic (by using
+formulae as types) and to eremic logic (because processes and eremic
+formulae can be modelled by labelled transition systems, and because
+eremic logic is close to logics for processes).\martin{rephrase. How
+  did process theory influence EL?}
+
+Our eremic models are remarkably close to a form of the
+failures/divergences models that has been used in the denotational
+semantics of Hoare's CSP \cite{HoareC:comseq,RoscoeAW:theapoc}.  In
+this model, the denotation of a process $P$ is given as a pair
+
+\[
+   (traces(P), fail(P))
+\]
+
+where $traces(P) = \{ \sigma\ |\ (\sigma, X) \in \SEMB{P} \}$ are
+$P$'s traces, and $fail(P)$ it's failures.  A \emph{failure} is a pair
+$(\sigma, R)$ where $\sigma \in \Sigma^*$ and $R \subseteq
+\Sigma$. The intended interpretation is that a process $P$ has failure
+$(\sigma, R)$ provided that $\sigma$ is a trace of $P$ and after $P$
+executes all the actions in $\sigma$ it refuses to do any action given
+in $R$. The denotation $\SEMB{P}$ of $P$ in a failures/divergences
+model is the the set of all of $P$'s failures. The set $ traces(P)$ is
+prefix-closed, hence gives rise of a deterministic labelled transition
+system.
+\begin{itemize}
+
+\item States are given by the set $traces(P)$ of all traces.
+
+\item Transitions are of the form $\sigma \TRANS{a} \sigma.a$, where
+  $\sigma.a$ is the string extending $\sigma$ with the action $a$.
+
+\item Start state is the empty string.
+
+\end{itemize}
+We can decorate all states as follows:
+\[
+   \lambda (\sigma) = \Sigma \setminus R
+\]
+provided that $(\sigma, R) \in \SEMB{P}$.  Whenever the set $\Sigma$
+of symbols is finite, we obtain an eremic model this way.
+
+While the failures/divergences semantics of CSP are somewhat more
+complicated due to the possibility of diverging programs, the close
+connection between eremic logic and the denotation semantics, as well
+as the syntatic similarity with Hennessy-Milner logic suggest that it
+might be fruitful to investigate how eremic logic can be used as a
+program logic for process calculi.
 
 \subsection{Open problems} 
 
-\QUOTATION{As long as a branch of science offers an abundance of
-  problems, so long it is alive; a lack of problems foreshadows
-  extinction or the cessation of independent development. \textsc{D. Hilbert.}}
+A question that has been fruitful in modal logic has been which
+fragment of first-order logic corresponds to modal formulae?  Van
+Benthem established that modal logic is the fragment of first-order
+logic invariant under bisimulation \cite{BlackburnP:modlog}. What is
+the the fragment corresponding to eremic logic? Our Theorem
+\ref{theorem:completeLattice} suggests to look at closure under mutual
+simulation. Van Benthem's result was generalised to monadic second
+order by Janin and Walukiewicz \cite{JaninD:expcomotpmcwrtmsol} who
+showed that the bisimulation invariant fragment of monadic
+second-order logic is the modal $\mu$-calculus, an extension of modal
+logic with fixpoint operators \cite{KozenD:respromc}.  It would be
+interesting to study the \emph{eremic $\mu$-calculus}, which adds
+fixpoints to eremic logic:
+\begin{GRAMMAR}
+  \phi
+     &::=&
+  \TRUE
+     \VERTICAL
+  \phi \AND \psi
+     \VERTICAL
+  \MAY{a}\phi
+     \VERTICAL
+  !A
+     \VERTICAL
+  \mu \PVAR{x}.\phi
+     \VERTICAL
+  \nu \PVAR{x}.\phi
+     \VERTICAL
+  \PVAR{x}
+\end{GRAMMAR}
 
-In the spirit of Hilbert's quote, I'm including this section to
-encourage us to think about interesting open problems, ideally of
-varying degrees of difficulty. What I recommend to avoid are vague
-problems, there are enough of those already. I'm looking for clearcut
-questions, i.e. we know when we've succeeded in solving them.  A good
-question would ideally come with a plausible story why solving the
-problem is important.  Here are some examples to get the ball rolling.
+\NI Here $\PVAR{x}$ ranges over propositional variables. What
+properties does the eremic $\mu$-calculus have? In the absence of
+negation, a lot of proof techniques taken for granted in the
+meta-theory of the modal $\mu$-calculus is no longer available.
 
-\begin{enumerate}
+Another interesting open question is to do with
+ultra-products. Mathematical logic knows three substantially different
+approaches towards proving compactness: G\"odel's original approach,
+refined by Morley and many others, uses proof rules and the
+completeness theorem. It thus mixes syntax and semantics. Our proof in
+Section \ref{compactnessProof} exemplifies the second approach: proof
+by translation that piggy-back on the compactness of other
+logics. Finally, the model-theoretic approach uses ultra-products as a
+tool for 'gluing' together the models that guarantee finite
+satisfiability. Ultra-products are quotients of reduced products by an
+ultra-filter. The conditions defining ultra-filters are carefully
+chosen to ensure that the quotient is indeed an appropriate model with
+nice properties such as \L{}o\'{s}' theorem. In particular, for $U$ to
+be an ultra-filter over some set $S$, for each $A \subseteq S$, either
+$A$ or its complemnet $S\setminus A$ must be in $U$. This axiom
+clearly reflects the semantics of negation. But eremic logic doesn't
+have negation. So what would an appropriate equivalent of
+ultra-filters for eremic logic look like that can be used to prove
+compactness directly on models?
 
-\item A question that has been fruitful in modal logic has been which
-  fragment of first-order logic corresponds to modal formulae?  Van
-  Benthem established that modal logic is the fragment of first-order
-  logic invariant under bisimulation. What is the the fragment
-  corresponding to eremic logic? Our Theorem
-  \ref{theorem:completeLattice} suggests to look at closure under
-  mutual simulation. Van Benthem's result was generalised to monadic
-  second order by Janin and Walukiewicz
-  \cite{JaninD:expcomotpmcwrtmsol} who showed that the bisimulation
-  invariant fragment of monadic second-order logic is Kozen's modal
-  $\mu$-calculus, an extension of modal logic with fixpoint operators.
-
-\item Do we have 'cut-elimination', ie. can we remove
-  [\RULENAME{Transitivity}]?  And do we have the sub-formula property?
-
-\item What about double negation and the constructive/classical
-  reasoning distinction?  How does it appear in \ELABR{}?
-
-\item Is there a reasonable Curry-Howard correspondence for \ELFULL{}?
-
-\item Mathematical logic knows three substantially different
-  approaches towards proving compactness: first G\"odel's original
-  approach, refined by Morley and many others, uses proof rules and
-  the completeness theorem. It thus mixes syntax and semantics. Second
-  are proofs by translation, such as our's in Section
-  \ref{completenessProof}, that piggy-back on the compactness of other
-  logics. Finally, a purely semantic approach often uses
-  ultra-products as a tool for 'gluing' together the models that
-  guarantee finite satisfiability. Ultra-products are quotients of
-  reduced products by an ultra-filter. The conditions defining
-  ultra-filters are carefully chosen to ensure that the quotiented
-  reduced product is indeed an appropriate model with nice properties
-  such as \L{}o\'{s}' theorem. In particular, for $U$ to be an
-  ultra-filter over some set $S$, for each $A \subseteq S$, either $A$
-  or its complemnet $S\setminus A$ must be in $U$. This axiom clearly
-  reflects the semantics of negation. But eremic logic doesn't have
-  negation. So what would an appropriate equivalent of ultra-filters
-  for eremic logic look like that can be used to prove compactness
-  directly on models?
-
-\item\label{conclusion:openProblems:2}  Develop a theory of SAT solving based on \ELABR{} rather than
-  propositional logic.
-
-\item Once (\ref{conclusion:openProblems:2}) works, develop efficient
-  solvers for \ELABR{} satisfiability.
-
-\item\label{conclusion:openProblems:4} Develop machine-oriented proof-rules that relate to \ELABR{}
-  in the way that unification/resolution relate to first-order logic.
-
-\item Once (\ref{conclusion:openProblems:4}) works, develop a
-  programming language that relates to \ELABR{} in the same way
-  Prolog relates to classical logic.
-
-\item Develop and axiomatise an \ELABR{} $\mu$-calulus, following
-  Kozen's modal-$\mu$-calculus.
-
-\item Can we give a good characterisation of the first-order fragment
-  identified by the standard translation of \ELFULL{}?
-  
-\item Even if not explicitly defined, conventional modal logics have
-  not just a may modality, but also its dual, the must modality. This
-  is a direct consequence of the presence of negation: $\MUST{a}{\phi}
-  = \neg \MAY{a}{\neg \phi}$. In eremic logic the situation is
-  different: since negation is not available, adding $\MUST{a}{\phi}$
-  is a substantial change to the logic: for example the processes in
-  Figure \ref{figure:counterexample}, indistinguishable by eremic
-  formulae, are separated by 
+Even if not explicitly defined, conventional modal logics have not
+just a may modality, but also its dual, the must modality. This is a
+direct consequence of the presence of negation: $\MUST{a}{\phi} = \neg
+\MAY{a}{\neg \phi}$. In eremic logic the situation is different: since
+negation is not available, adding $\MUST{a}{\phi}$ is a substantial
+change to the logic: for example the processes in Figure
+\ref{figure:counterexample}, indistinguishable by eremic formulae, are
+separated by
   \[
      \MUST{a}{\MAY{b}{}},
   \]
@@ -102,5 +313,5 @@ problem is important.  Here are some examples to get the ball rolling.
   negation becomes definable: $\neg \phi = \phi \rightarrow \bot$.
 
 
-\end{enumerate}
+
 
