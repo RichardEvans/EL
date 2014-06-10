@@ -1,12 +1,12 @@
 \section{Introduction}\label{introduction}
 
 Natural language is full of mutually-exclusive alternatives.
-A person can be male or female, but cannot be both.
+If Pierre is the current king of France, then nobody else can concurrently fill that role.
 A traffic light can be green, amber or red - but it cannot be more than one at a time.
-Mutual exclusion is such a natural and ubiquitous concept that most programming languages have a distinct representation for it: the enumeration data-type.
+Mutual exclusion is a natural and ubiquitous concept.
 
 Predicate logic \emph{can} represent mutually exclusive alternatives, of course.
-To say that Pierre is the only king of France, we can write, following Russell:
+To say that Pierre is the \emph{only} king of France, we can write, following Russell:
 \[
 king(france, pierre) \land \forall X . king(france, X) \rightarrow X = pierre
 \]
@@ -47,7 +47,6 @@ Here, $A$ is a finite set of alternatives that exhaust all
 possibilities. 
 For example:
 \begin{eqnarray*}
-\fBang \{male, female\} \\
 \fBang \{green, amber, red\}
 \end{eqnarray*}
 Any statement of a fact that exceeds what tantum $A$ allows is necessarily false:
@@ -75,7 +74,7 @@ colour(t, red) \land \forall X . colour(t, X) \rightarrow X = red
 To summarise the argument we shall be presenting:
 \begin{itemize}
 \item
-For every logical concept, we need a logic in which it can be expressed naturally (ergonomically)
+Every fundamental logical concept needs a logic in which it can be expressed naturally (ergonomically)
 \item
 Exclusion is a fundamental logical concept
 \item
