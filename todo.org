@@ -1,3 +1,6 @@
+* Cases in proofs are inconsistent across the paper
+* Each chapter its own file
+* remove all files that are not used 
 * Maybe we should call "pure eremic" models just "pure" models?
 * Have we discussed bisimulation invariance?
 * Be consistent. In particular
