@@ -1,6 +1,6 @@
 \section{Eremic logic and negation}
 
-Our motivation for investigating eremic logic has been to given an
+Our motivation for investigating eremic logic has been to give an
 alternative account of negation, based on the concept of exclusion.
 In this section we study how to recover negation in eremic logic. For
 this purpose, we enrich eremic logic with negation as well as
@@ -91,16 +91,18 @@ relative to $S \subseteq \Sigma$:
 
 \NI Note that, if $S$ is infinite, then the last two clauses will generate infinitary formulae.
 
-\subsection{Restricting the Law of the Excluded Middle to a Determinate Set of Possibilities}
+\subsection{Excluded middle}
 
-Given a formula $p$ and particular set $S$ of symbols, then we
+The logical law of excluded middle states that either a proposition or
+its negation must be true. In eremic logic, 
+given a formula $\phi$ and particular set $S$ of symbols, then we
 cannot hope to prove
 
 \[
-\models p \lor \neg_S(p)
+\models \phi \lor \neg_S(\phi)
 \]
 
-\NI For example, let $p$ be $\langle a \rangle \top$ and $S = \{a,
+\NI For example, let $\phi$ be $\langle a \rangle \top$ and $S = \{a,
 b\}$.  Now
 
 \[
@@ -109,7 +111,7 @@ b\}$.  Now
 
 \NI So, in this case:
 \[
-p \lor \neg p \; = \; \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
+\phi \lor \neg \phi \; = \; \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
 \]
 
 \NI Now this will not in general be valid - it will be false in any model
