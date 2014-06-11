@@ -102,27 +102,44 @@ cannot hope to prove
 \models \phi \lor \neg_S(\phi)
 \]
 
-\NI For example, let $\phi$ be $\langle a \rangle \top$ and $S = \{a,
+\NI For example, let $\phi$ be $\langle a \rangle \top$ and $S = \Sigma = \{a,
 b\}$.  Now
 
 \[
-\neg_S(\langle a \rangle \top) \; = \; ! \{b\} \lor \langle a \rangle \neg_S(\top) \; =  \; ! \{b\} \lor \langle a \rangle \bot
+   \neg_S(\langle a \rangle \top) 
+      \quad= \quad 
+   ! \{b\} \lor \langle a \rangle \neg_S(\top) 
+      \quad =\quad  
+   ! \{b\} \lor \langle a \rangle \bot
 \]
 
-\NI So, in this case:
+\NI The term on the right is equivalent to $! \{b\}$. So, in this case:
 \[
-\phi \lor \neg \phi \; = \; \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
+   \phi \lor \neg \phi 
+       \quad=\quad 
+   \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
 \]
 
-\NI Now this will not in general be valid - it will be false in any model
-which contains a transition from the root to any other symbol not in
-$S$, for example: $c$.
-
-But if we \emph{fix in advance the set of available options} (in this
-case restricting to the set $S$), then we can prove the excluded
-middle:
+\NI Now this will not in general be valid - it will be false for
+example in the model $((\{x\}, \emptyset, \{(x, \Sigma)\}), x)$, the
+model having just the root node (labelled $\Sigma$) and no transition.
+Restricting $S$ to be a proper subset of $\Sigma \{a, b\}$ is also not
+enough. For example with $S = \{a\}$ we have
 \[
-!\{a, b\} \models \; \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
+   \MAY{a}{\TRUE} \lor \neg_{S}(\MAY{a}{\TRUE})
+      \quad=\quad
+   \MAY{a}{\TRUE}\ \lor\ !\emptyset \lor \MAY{a}{\FALSE}
+\]
+This formula cannot hold in any eremic model which contains a
+$b$-labelled transition, but no $a$-transition from the root.
+
+But if we restrict our attention to the right kind of models then  excluded middle holds:
+\[
+   !\{a, b\} 
+      \models \; 
+   \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
+      \quad=\quad
+   \MAY{a}{\TRUE} \lor \neg_{\{a, b\}}(\MAY{a}{\TRUE}).
 \]
 
 \NI More generally, let $\mathsf{path}(\phi)$ be the set of
