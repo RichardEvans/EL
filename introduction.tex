@@ -80,15 +80,16 @@ Exclusion is a fundamental logical concept
 \item
 First order logic does not express exclusion naturally\footnote{We will precisify this claim in later sections by showing that (i) first order logic's representation of exclusion is significantly longer in terms of formula length than \ELFULL{}'s (see Section \ref{incompatiblepredicatesinfol}); and (ii) logic programs in \ELFULL{} can be optimised to run significantly faster than their equivalent in FOL (see Section \ref{optimizingpreconditions}).}
 \item
-\ELFULL{} expresses exclusion directly. 
+\ELFULL{} expresses exclusion directly
 \item
 Because it expresses exclusion directly, it has various unusual features. 
-It is the only logic we have found that has a linear-time decision procedure and that satisfies:
+Because it eschews the complexifying logical operators $\neg, \lor$ and $\Rightarrow$, it has a \emph{linear-time} decision procedure. 
+Nevertheless, despite its simplicity, it is sufficiently expressive to satisfy both:
 \begin{itemize}
 \item
-The Hennessy-Milner theorem
+The Hennessy-Milner theorem (Theorem \ref{theorem:completeLattice})
 \item
-Brandom's Incompatibility Semantics property
+Brandom's Incompatibility Semantics property (Theorem \ref{incompatibilitytheorem})
 \end{itemize}
 \end{itemize}
 In the next subsections, we shall:
@@ -296,13 +297,4 @@ We show how \ELFULL{} has been used as an ergonomic knowledge-representation lan
 $sex(pierre, male) \lor sex(pierre, female) \land \neg (sex(pierre, male) \land sex(pierre, female))$.
 \item
 Consider placing the point (currently in Related Work, Brandom's Incompatibility Semantics) - that $\neg p$ is the least information claim that is incompatible with $p$ - into the section on Exclusion being Conceptually prior to Negation.
-\item
-Martin: Another reason for talking about restrictions that change over time in
-the introduction is that we should justify why we use a modal logic,
-rather than a propositional logic. Add an example of restrictions that change over time (e.g. a character moving from one room to another).
-\item
-Martin: I think the claims that some logics are good/average/bad at certain things
-could be made a tad less vague. We are ultimately talking about
-complexity: formula lenght, proof size, search-space size in proof
-search, run-time of SAT solver etc.
 \end{itemize}
