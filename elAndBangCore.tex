@@ -267,26 +267,27 @@ The collection of (equivalence classes of) models together with
 $\bot$, and ordered by $\MODELLEQ$ is a bounded lattice.
 \end{theorem}
 \begin{proof}
-\martin{Why is there no proof?}  Example: The topmost element in the
+The topmost element in the
 lattice is the model $( (\{w\}, \{\}, \{w \mapsto \Sigma\}), w)$ (for
 some state $w$): this is the model with no transitions and no
 transition restrictions.
+The bottom element is $\bot$. 
+$\sqcap$ and $\sqcup$ are defined below.
 \end{proof}
 
-\NI We now prove completeness of the rules in Figure
-\ref{figure:elAndBangRules}.  The proof requires the development of
-the following additional technology which is also useful in other
-contexts.
-
+\ELABR{} has the unusual property that every formula has a unique (up to isomorphism) simplest  model satisfying a formula. 
+Any logic with disjunction, negation or implication does not have this property.
+For example, in propositional logic:
 \begin{itemize}
-
-\item An algorithm which gives the simplest model for a formula.
-
-\item An algorithm which gives the a formula characterising a model.
-
+\item
+There are two equally-simple models satisfying $p \lor q$
+\item
+There are two equally-simple  models satisfying $\neg (\neg p \land \neg q)$
+\item
+There are two equally-simple models satisfying $p \Rightarrow q$
 \end{itemize}
-
-\NI We now develop these  in turn and then prove completeness.
+But as \ELABR{} does not have disjunction, negation or implication, it does satisfy this unusual property.
+In \ELABR{}, both the linear-time decision procedure and the completeness proof rely on computing the simplest model that satisfies a formula. 
 
 \subsection{Computing the simplest model satisfying a formula}
 \label{simpl}
@@ -367,17 +368,10 @@ The $\mathsf{getIds}$ function returns the set of extra state-identification pai
 \mathsf{getIds}(\mathcal{L}, \mathcal{L}', ids) = \{(x,x') \; | \; (w,w') \in ids, \exists a \; . \; w \xrightarrow{a} x, w' \xrightarrow{a} x'\}
 \]
 
-\NI It is easy to show, by induction on $\phi$, that $\SIMPL{\cdot}$ has the following properties:
-
-\begin{itemize}
-
-\item $\SIMPL{\phi} \models \phi$.
-
-\item If $\MMM' \models \phi$ and  $\MMM \MODELLEQ \MMM'$ then also  $\MMM \models \phi$.\martin{This has nothing to do with $\SIMPL{.}$}
- 
-\end{itemize}
-\martin{There is a lemma/theorem misssing, namely $\MMM \models \phi$ implies $\MMM \MODELLEQ \SIMPL{\phi}$.
-this is used in the decision procedure.}
+\NI It is easy to show, by induction on $\phi$, that
+\[
+\SIMPL{\phi} \models \phi
+\]
 
 \subsubsection{Showing that $\sqcap$ as defined is the greatest lower bound}
 We will show that:
@@ -510,13 +504,13 @@ So $\lambda_{\NNN}(x) \supseteq \lambda_{\MMM \sqcup \MMM'}(y)$, as required.
 \subsection{A decision procedure for eremic logic}\label{decisionprocedure}
 
 We use the semantic constructions above to provide a linear-time decision procedure.  
-The linear time-complexity of the decision procedure is an indication that \ELABR{} can be useful as a
+The complexity of the decision procedure shows that \ELABR{} can be useful as a
 query language in knowledge representation. 
 
-\NI Since \ELABR{} has no connectives for disjunction or implication, its
+\NI Since \ELABR{} has no connectives for negation, disjunction or implication, its
 decision procedure is straightforward and efficient.  Although there
 are an infinite number of models which satisfy any expression, the
-satisfying models form a lattice with a least upper bound.  The $\SIMPL$
+satisfying models form a bounded lattice with a least upper bound.  The $\SIMPL$
 function defined above gives us the minimal model satisfying an
 expression.  Using this least upper bound, we can calculate entailment
 by checking a \emph{single model}.  To decide whether $p \models q$,
@@ -533,24 +527,32 @@ we use the following theorem:
 
 \begin{proof}
 The implication from  (\ref{theorem:decision:1}) to
-(\ref{theorem:decision:2}) is trivial because $\SIMPL{\phi}$ is a model by construction.
+(\ref{theorem:decision:2}) is trivial because $\SIMPL{\phi} \models \phi$ by construction.
 
-For the reverse direction, assume $\MMM \models \phi$. We need to show
+For the reverse direction, we make use of the following lemma (proved in the Appendix):
+\begin{lemma}
+\label{lemmasimpl}
+If $\MMM \models \phi$ then $\MMM \MODELLEQ \SIMPL{\phi}$.
+\end{lemma}
+
+With Lemma \ref{lemmasimpl} in hand, the proof of Theorem \ref{theorem:decision} is straightforward.
+Assume $\MMM \models \phi$. We need to show
 $\MMM \models \psi$.  Now if $\MMM \models \phi$ then $\MMM \MODELLEQ
-\SIMPL{\phi}$ (by Lemma \ref{...}).  Further, if $\MMM' \models \xi $
+\SIMPL{\phi}$ (by Lemma \ref{lemmasimpl}).  Further, if $\MMM' \models \xi $
 and $\MMM \MODELLEQ \MMM'$ then $\MMM \models \xi $ by Theorem
 \ref{theorem:completeLattice}. So, substituting $\psi$ for $\xi $ and
 $\SIMPL{\phi}$ for $\MMM'$, it follows that $\MMM \models \psi$.
 \end{proof}
 
-\NI Given this theorem, the decision procedure is straightforward: to
+Given this theorem, the decision procedure is straightforward: to
 test if $\phi \models \psi$, we construct $\SIMPL{\phi}$, and then inspect whether
 $\SIMPL{\phi} \models \psi$.  Construction of $\SIMPL{\phi}$ is linear in the size of
 $\phi$, and computing whether a model satisfies $\psi$ is linear in the size
 of $\psi$, so computing whether $\phi \models \psi$ is $O(|\phi|+|\psi|)$.
 
-\martin{Can we say more about the decision procedure? Example? Talk
-  about Haskell code?}
+There is a Haskell implementation of the decision procedure at
+\url{https://github.com/RichardEvans/EL}.
+To see that the decision procedure is linear-time, observe that every function in the Haskell implementation is non-recursive and all iterative constructions use one of \begin{verbatim}map, filter, fold, any, all \end{verbatim}- each of which is linear in the size of its input.
 
 
 
