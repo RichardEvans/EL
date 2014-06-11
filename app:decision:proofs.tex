@@ -1,0 +1,40 @@
+\section{Proof of Lemma \ref{lemmasimpl}}\label{app:decision:proofs}
+
+If $\MMM \models \phi$ then $\MMM \MODELLEQ \SIMPL{\phi}$.
+
+\begin{proof}
+We shall show $\THEORY{\SIMPL{\phi}} \subseteq \THEORY{\MMM}$.
+The desired result will then follow by applying Theorem \ref{theorem:completeLattice}.
+We shall show that
+\[
+\text{If } \MMM \models \phi \text{ then } \THEORY{\SIMPL{\phi}} \subseteq \THEORY{\MMM}
+\]
+by induction on $\phi$.
+In all the cases below, let $\SIMPL{\phi} = (\mathcal{L}, w)$ and let $\MMM = (\mathcal{L}', w')$.
+The case where $\phi = \top$ is trivial.
+Next, assume $\phi = \MAY{a} \psi$.
+We know $\MMM \models \MAY{a} \psi$ and need to show that $\THEORY{\SIMPL{\MAY{a} \psi}} \subseteq \THEORY{\MMM}$.
+Since $(\mathcal{L}', w') \models \MAY{a} \psi$, there is an $x'$ such that $w' \xrightarrow{a} x'$ and $(\mathcal{L}', x') \models \psi$.
+Now from the definition of $\SIMPL{}$, $\SIMPL{\MAY{a} \psi}$ is a model combining $\SIMPL{\psi}$ with a new state $w$ not appearing in $\SIMPL{\psi}$ with an arrow $w \xrightarrow{a} x$ (where $x$ is the pointed state in $\SIMPL{\psi}$), and $\lambda(w) = \Sigma$. 
+Consider any sentence $\xi$ such that $\SIMPL{\MAY{a} \psi} \models \xi$. Given the construction of $\SIMPL{\MAY{a}\psi}$, $\xi$ must be a conjunction of $\top$ and formulae of the form $\MAY{a} \tau$. In the first case, $(\mathcal{L}', x')$ satisfies $\top$; in the second case, $(\mathcal{L}', x') \models \tau$ by the induction hypothesis and hence $(\mathcal{L}', w') \models \MAY{a} \tau$.
+
+Next, consider the case where $\phi = !A$, for some finite set $A \subset \Sigma$.
+From the definition of $\SIMPL{}$, $\SIMPL{!A}$ is a model with one state $s$, no transitions, with $\lambda(s) = A$.
+Now the only formulae that are true in $\SIMPL{!A}$ are conjunctions of $\top$ and $!B$, for supersets $B \supseteq A$.
+If $\MMM \models !A$ then by the semantic clause for $!$, $\lambda'(w') \subseteq A$, hence $\MMM$ models all the formulae that are true in $\SIMPL{!A}$.
+
+Finally, consider the case where $\phi = \psi_1 \land \psi_2$.
+Assume $\MMM \models \psi_1$ and $\MMM \models \psi_2$.
+We assume, by the induction hypothesis that $\THEORY{\SIMPL{\psi_1}} \subseteq \THEORY{\MMM}$ and $\THEORY{\SIMPL{\psi_2}} \subseteq \THEORY{\MMM}$.
+We need to show that $\THEORY{\SIMPL{\psi_1\land \psi_2}} \subseteq \THEORY{\MMM}$.
+By the definition of $\SIMPL{}$, $\SIMPL{\psi_1 \land \psi_2} = \SIMPL{\psi_1} \sqcap \SIMPL{\psi_2}$.
+If $\SIMPL{\psi_1}$ and $\SIMPL{\psi_2}$ are $\mathsf{inconsistent}$ (see the definition of $\mathsf{inconsistent}$ in Section \ref{simpl}) then $\MMM = \bot$. In this case, $\THEORY{\SIMPL{\psi_1} \land \SIMPL{\psi_2}} \subseteq \THEORY{\bot}$.
+If, on the other hand, $\SIMPL{\psi_1}$ and $\SIMPL{\psi_2}$ are not $\mathsf{inconsistent}$, we shall show that $\THEORY{\SIMPL{\psi_1 \land \psi_2}} \subseteq \THEORY{\MMM}$ by reductio.
+Assume a formula $\xi$ such that $\SIMPL{\psi_1 \land \psi_2} \models \xi$ but $\MMM \nvDash \xi$.
+Now $\xi \neq \top$ because all models satisfy $\top$.
+$\xi$ cannot be of the form $\MAY{a} \tau$ because, by the construction of $\mathsf{merge}$ (see Section \ref{simpl}), all transitions in $\SIMPL{\psi_1 \land \psi_2}$ are transitions from $\SIMPL{\psi_1}$ or $\SIMPL{\psi_2}$ and we know from the inductive hypothesis that $\THEORY{\SIMPL{\psi_1}} \subseteq \THEORY{\MMM}$ and $\THEORY{\SIMPL{\psi_2}} \subseteq \THEORY{\MMM}$.
+$\xi$ cannot be $!A$ for some $A \subset \Sigma$, because, from the construction of $\mathsf{merge}$, all node labellings in $\SIMPL{\psi_1 \land \psi_2}$ are no more specific than the corresponding node labellings in $\SIMPL{\psi_1}$ and $\SIMPL{\psi_2}$, and we know from the inductive hypothesis that $\THEORY{\SIMPL{\psi_1}} \subseteq \THEORY{\MMM}$ and $\THEORY{\SIMPL{\psi_2}} \subseteq \THEORY{\MMM}$.
+Finally, $\xi$ cannot be $\xi_1 \land xi_2$ because the same argument applies to $xi_1$ and $xi_2$ individually.
+We have exhausted the possible forms of $\xi$, so conclude that there is no formula $\xi$ such that $\SIMPL{\psi_1 \land \psi_2} \models \xi$ but $\MMM \nvDash \xi$.
+Hence $\THEORY{\SIMPL{\psi_1\land \psi_2}} \subseteq \THEORY{\MMM}$.
+\end{proof}
