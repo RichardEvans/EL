@@ -1,47 +1,561 @@
-\section{A decision procedure for eremic logic}\label{decisionprocedure}
+\section{Inference Rules}
 
-In Section \ref{coreEL} we presented \ELABR{} and established the key
-properties of completeness and compactness.  Here we give a
-linear-time decision procedure.  The linear time-complexity of the
-decision procedure is an indication that \ELABR{} can be useful as a
-query language in knowledge representation. 
+\input{figure:elAndBangRules}
 
-\NI Since \ELABR{} has no connectives for disjunction or implication, its
-decision procedure is straightforward and efficient.  Although there
-are an infinite number of models which satisfy any expression, the
-satisfying models form a lattice with a least upper bound.  The $\SIMPL$
-function defined above gives us the minimal model satisfying an
-expression.  Using this least upper bound, we can calculate entailment
-by checking a \emph{single model}.  To decide whether $p \models q$,
-we use the following theorem:
+\NI We now present the inference rules for \ELFULL{}. There are no
+axioms.
 
-\begin{theorem}\label{theorem:decision}
-  The following are equivalent:
-  \begin{enumerate}
-    \item\label{theorem:decision:1} For all eremic models $\MMM$,
-      $\MMM \models \phi$ implies $\MMM \models \psi$.
-    \item\label{theorem:decision:2} $\SIMPL{\phi} \models \psi$.
-  \end{enumerate}
+\begin{definition} Judgements are of the following form.
+\[
+  \phi \judge \psi.
+\]
+Figure \ref{figure:elAndBangRules} presents all proof rules. 
+\end{definition}
+
+\NI Note that $\phi$ and $\psi$ are single formulae, not sequents.  By
+using single formulae, we can avoid structural inference rules.  \ELABR{}
+proof rules can be grouped in two parts: standard rules and rules
+unique to \ELABR{}.  Standard rules are [\RULENAME{Identity}],
+[\RULENAME{$\top$-Right}], [\RULENAME{$\bot$-Left}],
+[\RULENAME{Transitivity}], [\RULENAME{$\AND$-Left 1}],
+[\RULENAME{$\AND$-Left 2}] and [\RULENAME{$\AND$-Right}] hardly need
+explanation as they are variants of familiar rules for propositional
+logic, see e.g.~\cite{TroelstraAS:basprot,vanDalenD:logstr}.  We now
+explain the rules that give EL's its distinctive properties: the
+relations betwen $\langle \rangle$, $!$ and $\bot$.
+
+The rule [\RULENAME{$\bot$-Right 1}] axiom captures the core
+\emph{exclusion} property of !: for example if $A = \{male, female\}$
+then $\MAY{orange}{\phi}$ is incompatible with $!A$. Thus $!A \AND
+\MAY{orange}{\phi}$ must be false.
+
+The rule [\RULENAME{$\bot$-Right 2}] expresses that falsity is 'global'
+  and cannot be surpressed by prefixing. For example
+  $\MAY{orange}{\bot}$ is false, simply because $\bot$ is already
+  false.
+
+Relatedly, the rule [\RULENAME{Transition Normal}] enables us to
+prefix an inference with a may-modality. For example \martin{add good
+  example here.}. Note that it is vital for soundness that $\phi$ in $\phi
+\judge \psi$ is a single formula. If we used transitional sequents $\phi_1, ..., \phi_n \judge \psi$,
+then the rule
+\[
+   \ONEPREMISERULE
+   {
+     \phi_1, ..., \phi_n \judge \psi
+   }
+   {
+     \MAY{a}{\phi_1}, ..., \MAY{a}{\phi_n} \judge \MAY{a}{\psi}
+   }
+\]
+is unsound. \martin{explain why, and why this is significant}. \richard{I think this rule is only unsound if we allow non-determinstic models.}
+This
+restriction is also in place in \cite{GaySJ:typcalosp} where a
+Curry-Howard corrospondence between a fragment of linear logic
+\cite{GirardJY:linlog,GirardJY:protyp} and a process calculus is
+introduced. We discuss the relationship between EL and linear logic in
+general, and linear logic's additive conjunction in Section
+\ref{conclusion}.
+
+Note that the logic has no axioms. One reason for a purely rule-based
+presentation is the absence of implication in the present fragment of
+EL. \martin{explain in more detail!}
+
+\subsection{\RULENAME{!-Left} and \RULENAME{!-Right}}
+
+The rules [\RULENAME{!-Right 1}, \RULENAME{!-Right 2}] jointly express
+how the subset relation $\subseteq$ on sets of symbols relates to
+provability. Why  don't we need a corresponding rule \RULENAME{!-Left} for
+strengthening $!$ on the left hand side?
+\[
+   \TWOPREMISERULENAMEDRIGHT
+     {
+       \phi \AND \, !A \judge \psi
+     }
+     {
+       A' \subseteq A
+     }
+     {
+       \phi \AND\, !A' \judge \psi
+     }{!-Left}
+\]
+The reason is that [\RULENAME{!-Left}] can be derived as follows.
+\begin{center}
+  \AxiomC{$\phi \AND\, !A'  \judge  \phi \AND\, !A'$}
+  \AxiomC{$A' \subseteq A$}
+  \LeftLabel{\RULENAME{!-Right 1}}
+  \BinaryInfC{$\phi \AND\, !A'  \judge  \phi \AND\, !A$}
+  \AxiomC{$\phi \AND\, !A  \judge  \psi$}
+  \LeftLabel{Transitivity: \quad}
+  \BinaryInfC{$\phi \AND\, !A'  \judge  \psi$}
+  \DisplayProof
+\end{center}
+\martin{inconsisten formating of rule names.}
+
+\NI Readers familiar with object-oriented programming will recognise
+[\RULENAME{!-Left}] as contra-variant subtyping and [\RULENAME{!-Right
+    1}] as covariant subtyping. Honda \cite{HondaK:thetypftpc}
+develops a full theory of subtyping based on similar ideas.  All three
+rules embody the intuition that whenever $A \subseteq A'$ then
+asserting that $!A'$ is as strong as, or a stronger statement than
+$!A$. [\RULENAME{!-Left}] simply states that we can always strengthen
+our premise, while [\RULENAME{!-right 1}] allows us to weaken the
+premise.
+
+\subsection{Example inferences}
+We prove that we can use $\phi \AND \psi  \judge  \xi$ to derive $\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$:
+\begin{center}
+  \AxiomC{$\phi \AND \psi  \judge  \xi$}
+  \LeftLabel{\RULENAME{Transition Normal}}
+  \UnaryInfC{$\MAY{a} (\phi \AND \psi)  \judge  \MAY{a} \xi$}
+  \AxiomC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \phi \land \MAY{a} \psi$}
+  \LeftLabel{\RULENAME{Determinism}}
+  \UnaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} (\phi \land \psi)$}
+  \LeftLabel{\RULENAME{Transitivity}}
+  \BinaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$}
+  \DisplayProof
+\end{center}
+
+\martin{Add some more example assertions here, for example some
+  of those we use later.}
+
+
+\subsection{Characteristic formulae}
+
+In order to prove completeness, below, we need the notion of a \emph{characteristic formula} of a model: the simplest (in terms of entailment) formula that describes the model.
+
+The function $\SIMPL{\cdot}$ goes from formulae to (equivalence
+classes of) models. Now we go the other way: given a(n equivalence class of a) model $\MMM$, we
+compute its characteristic formula $\CHAR{m}$. The formula
+$\CHAR{\MMM}$ characterises the model $\MMM$ in the following
+sense. \martin{Check that they are true. Proofs?}
+
+\begin{itemize}
+
+\item  $\MMM \models \phi$ implies $\CHAR{\MMM} \models \phi$.
+
+\item  $\MMM \models \CHAR{ \MMM' }$ exactly when $\MMM \MODELLEQ \MMM'$.
+
+\item $\MMM = \BIGLUB \{\MMM' \ |\ \MMM' \models \CHAR{\MMM} \}$.
+
+\end{itemize}
+
+\martin{we must define $\BIGLUB$!}
+\richard{It is defined below. Should we move it up?}
+
+\NI This notion of characteristic formula is closely related to
+characteristic formulae in Hennessy-Milner logic
+\cite{AcetoL:chaforfata} and Hoare logics
+\cite{HondaK:descriptive,ChargueraudA:provertcf}. Here is the
+definition of $\CHAR{\cdot}$ (again we omit specifying that the function really
+returns $\MODELEQ$-equivalence classes of models).
+
+\begin{eqnarray*}
+  \CHAR{\bot} &\ =\ & \langle a \rangle \top \AND ! \emptyset  \mbox{ for some fixed symbol }a \in \Sigma  \\
+  \CHAR{\MMM, w} & = & \mathsf{bang}(\MMM,w) \AND \bigwedge_{w \xrightarrow{a} w'} \langle a \rangle \CHAR{\MMM, w'}  
+\end{eqnarray*}
+
+\NI Note that $\bot$ requires a particular symbol $a \in \Sigma$. This is why we required, in Section \ref{elsyntax}, that $\Sigma$ is non-empty.
+
+\NI The functions $\mathsf{bang}(\cdot)$ and $\mathsf{trans}$ on
+models are given by the following clauses.
+
+\begin{eqnarray*}
+  \mathsf{bang}((S,\rightarrow,\lambda),w) 
+     & \ = \ & 
+  \begin{cases}
+    \top & \mbox{ if } \lambda(w) = \Sigma  \\
+    ! \; \lambda(w) & \mbox{ otherwise }  
+  \end{cases} \\
+\end{eqnarray*}
+
+\NI Note that $\CHAR{\MMM}$ is finite if $\MMM$ contains no cycles and if
+$\lambda(x)$ is either $\Sigma$ or finite for all states $x$.
+Note also that $\SIMPL{\cdot}$ and $\CHAR{\cdot}$ are inverses of each other in that:
+
+\begin{itemize}
+
+\item $\SIMPL{\CHAR{\MMM}} \ = \  \MMM$. \martin{Is this set-theoretic equality?}
+
+\item $\CHAR{\SIMPL{\phi}}$ iff $\phi$.\martin{is this $\vdash$ or $\models$?}
+
+\end{itemize}
+
+
+\subsection{Soundness and Completeness}
+
+\begin{theorem}\label{theorem:elAndBang:soundComplete}
+The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
+\begin{enumerate}
+
+\item\label{theorem:elAndBang:sound} (Soundness) $\phi \judge \psi$ implies $\phi \models \psi$.
+
+\item\label{theorem:elAndBang:complete} (Completeness) $\phi \models \psi$ implies $\phi \judge \psi$.
+
+\end{enumerate}
 \end{theorem}
 
-\begin{proof}
-The implication from  (\ref{theorem:decision:1}) to
-(\ref{theorem:decision:2}) is trivial because $\SIMPL{\phi}$ is a model by construction.
+\NI Soundness is immediate from the definitions. Completeness is
+proved below. 
 
-For the reverse direction, assume $\MMM \models \phi$. We need to show
-$\MMM \models \psi$.  Now if $\MMM \models \phi$ then $\MMM \MODELLEQ
-\SIMPL{\phi}$ (by Lemma \ref{...}).  Further, if $\MMM' \models \xi $
-and $\MMM \MODELLEQ \MMM'$ then $\MMM \models \xi $ by Theorem
-\ref{completeLattice}. So, substituting $\psi$ for $\xi $ and
-$\SIMPL{\phi}$ for $\MMM'$, it follows that $\MMM \models \psi$.
+\begin{definition}
+We write $\phi_1, ...,
+\phi_n \judge \psi$ whenever $\BIGAND_{i}\phi_i \judge \psi$.  For
+arbitrary sets $\Gamma$ of formulae, we write $\Gamma \judge \psi$
+provided there are $\phi_1, ..., \phi_n \in \Gamma$ such that $\phi_1,
+..., \phi_n \judge \psi$.
+\end{definition}
+
+\begin{corollary}
+The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
+\begin{enumerate}
+
+\item(Soundness) $\Gamma \judge \psi$ implies $\Gamma \models \psi$.
+
+\item (Completeness) $\Gamma \models \psi$ implies $\Gamma \judge \psi$.
+
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+For soundness assume that $\MMM$ is a model with $\MMM \models
+\Gamma$.  We know that $\Gamma \judge \psi$ means that we can find a
+finite number of formulae $\phi_i \in \Gamma$ with $\AND_i \phi \judge
+\psi$.  By soundness then also $\AND_i \phi \models \psi$, hence
+clearly $\Gamma \models \psi$.
+
+\NI To prove completeness,  we will show that $\phi
+\models \psi$ implies there is a derivation of $\phi \judge \psi$.  Our proof
+will make use of two key facts (proved in Sections \ref{prooflemma4} and \ref{prooflemma5} below):
+
+\begin{lemma}\label{lemma:completeness:4}
+If $\MMM \models \phi$ then $\CHAR{\MMM} \judge \phi$.
+\end{lemma}
+
+\begin{lemma}\label{lemma:completeness:5}
+For all formulae $\phi$, we can derive $\phi \judge \CHAR{\SIMPL{\phi}}$.
+\end{lemma}
+
+Lemma \ref{lemma:completeness:4} states that, if $\phi$ is satisfied by a model, then there is a proof that the characteristic formula describing that model entails $\phi$.
+
+As to Lemma \ref{lemma:completeness:5}, $\SIMPL{\phi}$ is the simplest model
+satisfying $\phi$, and $\CHAR{\MMM}$ is the simplest formula describing
+$m$, so $\CHAR{\SIMPL{\phi}}$ is a simplified form of $\phi$. This lemma
+states that EL has the inferential capacity to transform any
+proposition into its simplified form.
+
+With these two lemmas in hand, the proof of completeness is
+straightforward.  Assume $\phi \models \psi$.  Then all models which satisfy
+$\phi$ also satisfy $\psi$.  In particular, $\SIMPL{\phi} \models \psi$.  Then
+$\CHAR{\SIMPL{\phi}} \judge \psi$ by Lemma \ref{lemma:completeness:4}.  But we
+also have, by Lemma \ref{lemma:completeness:5}, $\phi \judge
+\CHAR{\SIMPL{\phi}} $.  So by transitivity, we have $\phi \judge \psi$.  
+
 \end{proof}
 
-\NI Given this theorem, the decision procedure is straightforward: to
-test if $\phi \models \psi$, we construct $\SIMPL{\phi}$, and then inspect whether
-$\SIMPL{\phi} \models \psi$.  Construction of $\SIMPL{\phi}$ is linear in the size of
-$\phi$, and computing whether a model satisfies $\psi$ is linear in the size
-of $\psi$, so computing whether $\phi \models \psi$ is $O(|\phi|+|\psi|)$.
+\subsection{Proof of Lemma \ref{lemma:completeness:4}}
+\label{prooflemma4}
+If $\MMM\models \phi$ then $\CHAR{\MMM} \judge \phi$.
 
-\martin{Can we say more about the decision procedure? Example? Talk
-  about Haskell code?}
+\NI We proceed by induction on $\phi$.
 
+\martin{no need to number cases if numbers are not referred to later.}
+\setcounter{mycase}{0}
+
+\begin{mycase}
+$\phi$ is $\top$
+\end{mycase}
+Then we can prove  $ \CHAR{\MMM} \judge \phi$ immediately using axiom {\bf $\top$ Right}.
+
+\begin{mycase}
+$\phi$ is $\psi \AND \psi'$
+\end{mycase}
+By the induction hypothesis, $  \CHAR{\MMM} \judge \psi$ and $  \CHAR{\MMM} \judge \psi'$.
+The proof of $  \CHAR{\MMM} \judge \psi \AND \psi'$ follows immediately using {\bf $\AND$ Right}.
+
+\begin{mycase}
+$\phi$ is $\langle a \rangle \psi$
+\end{mycase}
+If $\MMM \models \langle a \rangle \psi$, then either $\MMM = \bot$ or $\MMM$ is a  model of the form $(\CAL{L},w)$.
+\begin{subcase}
+$\MMM = \bot$
+\end{subcase}
+In this case, $  \CHAR{\MMM} =  \CHAR{\bot} = \bot$. (Recall, that we are overloading $\bot$ to mean both the  model at the bottom of our lattice and a formula (such as $\langle s \rangle \top \AND !\{\}$) which is always false).
+In this case, $  \CHAR{\bot} \judge  \langle a \rangle \psi$ using {\bf $\bot$ Left}.
+
+\begin{subcase}
+ $m$ is a  model of the form $(\CAL{L},w)$
+ \end{subcase}
+Given $\MMM \models \langle a \rangle \psi$, and that $\MMM$ is a  model of the form $(\CAL{L},w)$, we know that:
+\[
+(\CAL{L},w) \models \langle a \rangle \psi
+\]
+From the satisfaction clause for $\langle a \rangle$, it follows that:
+\[
+\exists w' \mbox{ such that } w \xrightarrow{a} w' \mbox { and } (\CAL{L},w') \models \psi
+\]
+By the induction hypothesis:
+\[
+ \CHAR{(\CAL{L},w')} \judge \psi
+\]
+Now by {\bf Transition Normal}:
+\[
+\langle a \rangle  \CHAR{(\CAL{L},w')} \judge \langle a \rangle \psi
+\]
+Using repeated application of {\bf $\AND$ Left}, we can show:
+\[
+ \CHAR{(\CAL{L},w)} \judge \langle a \rangle  \CHAR{(\CAL{L},w')}
+\]
+Finally, using {\bf Transitivity}, we derive:
+\[
+ \CHAR{(\CAL{L},w)} \judge  \langle a \rangle \psi
+\]
+\begin{mycase}
+$\phi$ is $\fBang \psi$
+\end{mycase}
+If $(\CAL{L},w) \models \fBang A$, then $\lambda(w) \subseteq A$.
+Then $ \CHAR{(\CAL{L},w)} = ! \; \lambda(w) \AND \phi$.
+Now we can prove $! \; \lambda(w) \AND \phi \judge \fBang A$ using  {\bf $!$ Right 1} and repeated applications of {\bf $\AND$ Left}.
+
+
+\subsection{Proof of Lemma \ref{lemma:completeness:5}}
+\label{prooflemma5}
+
+Now we prove Lemma \ref{lemma:completeness:5}: 
+For all formulae $\phi$, we can derive $\phi \judge \CHAR{\SIMPL{\phi}}$.
+
+\begin{proof}
+Induction on $\phi$.
+
+\setcounter{mycase}{0}
+
+\begin{mycase}
+$\phi$ is $\top$
+\end{mycase}
+Then we can prove  $\top \judge \top$ using either {\bf $\top$ Right} or {\bf Identity}.
+
+\begin{mycase}
+$\phi$ is $\psi \AND \psi'$
+\end{mycase}
+By the induction hypothesis, $\psi \judge  \CHAR{\SIMPL{\psi}}$ and $\psi' \judge  \CHAR{\SIMPL{\psi'}}$.
+Using {\bf $\AND$ Left} and {\bf $\AND$ Right}, we can show:
+\[
+\psi \AND \psi' \judge  \CHAR{\SIMPL{\psi}} \AND  \CHAR{\SIMPL{\psi'}}
+\]
+Lemma \ref{final_completeness_lemma}, proven below, states that, for all acyclic models $\MMM$ and $\MMM_2$:
+\[
+  \CHAR{\MMM} \AND  \CHAR{\MMM_2} \judge  \CHAR{\MMM \sqcap \MMM_2}
+\]
+From Lemma \ref{final_completeness_lemma} (substituting $\SIMPL{\psi}$ for $\MMM$ and $\SIMPL{\psi'}$ for $\MMM_2$, and noting that $\SIMPL{}$ always produces acyclic models), it follows that:
+\[
+ \CHAR{\SIMPL{\psi}} \AND  \CHAR{\SIMPL{\psi'}} \judge  \CHAR{\SIMPL{\psi \AND \psi'}}
+\]
+Our desired result follows using {\bf Transitivity}.
+
+\begin{mycase}
+$\phi$ is $\langle a \rangle \psi$
+\end{mycase}
+By the induction hypothesis, $\psi \judge  \CHAR{\SIMPL{\psi}}$.
+Now there are two sub-cases to consider, depending on whether or not $ \CHAR{\SIMPL{\psi}} = \bot$.
+\begin{subcase}
+$ \CHAR{\SIMPL{\psi}} = \bot$
+\end{subcase}
+In this case, $ \CHAR{\SIMPL{\langle a \rangle \psi}}$ also equals $\bot$. 
+By the induction hypothesis:
+\[
+\psi \judge \bot
+\]
+By {\bf Transition Normal}:
+\[
+\langle a \rangle \psi \judge \langle a \rangle \bot
+\]
+By {\bf Bottom Right 2}:
+\[
+\langle a \rangle \bot \judge \bot
+\]
+The desired proof that:
+\[
+\langle a \rangle \psi \judge \bot
+\]
+follows by {\bf Transitivity}.
+\begin{subcase}
+$ \CHAR{\SIMPL{\psi}} \neq \bot$
+\end{subcase}
+By the induction hypothesis, $\psi \judge  \CHAR{\SIMPL{\psi}}$.
+So, by {\bf Transition Normal}:
+\[
+\langle a \rangle \psi \judge \langle a \rangle  \CHAR{\SIMPL{\psi}}
+\]
+The desired conclusion follows from noting that:
+\[
+ \langle a \rangle  \CHAR{\SIMPL{\psi}} =  \CHAR{\SIMPL{\langle a \rangle \psi}}
+ \]
+ \begin{mycase}
+$\phi$ is $\fBang A$
+\end{mycase}
+If $\phi$ is $\fBang A$, then $  \CHAR{\SIMPL{\phi}}$ is $\fBang A \AND \top$.
+We can prove $\fBang A \judge \fBang A \AND \top$ using {\bf $\AND$ Right}, {\bf $\top$ Right} and {\bf Identity}.
+\end{proof}
+
+\subsection{Proof of Lemma \ref{final_completeness_lemma}}
+\label{prooflemma6}
+Finally, to fill the hole in Case 2 of Lemma \ref{lemma:completeness:5} above, we need to show that:
+\begin{lemma}
+\label{final_completeness_lemma}
+For all acyclic models $\MMM$ and $\MMM_2$, $  \CHAR{\MMM} \AND  \CHAR{\MMM_2} \judge  \CHAR{\MMM \sqcap \MMM_2}$.
+\end{lemma}
+
+\begin{proof}
+
+There are two cases to consider, depending on whether or not $(\MMM \sqcap \MMM_2) = \bot$.
+
+\setcounter{mycase}{0}
+
+\begin{mycase}
+$(\MMM \sqcap \MMM_2) = \bot$
+\end{mycase}
+If $(\MMM \sqcap \MMM_2) = \bot$, there are three possibilities:
+\begin{itemize}
+\item
+$\MMM = \bot$
+\item
+$\MMM_2 = \bot$
+\item
+Neither $\MMM$ nor $\MMM_2$ are $\bot$, but together they are incompatible. 
+\end{itemize}
+If either $\MMM$ or $\MMM_2$ is $\bot$, then the proof is a simple application of {\bf Identity} followed by {\bf $\AND$ Left}.
+
+Next, let us consider the case where neither $\MMM$ nor $\MMM_2$ are $\bot$, but together they are incompatible.
+Let $\MMM = (\mathcal{L}, w_1)$ and $\MMM' = (\mathcal{L}', w'_1)$.
+If $\MMM \sqcap \MMM_2 = \bot$, then there is a finite sequence of actions $a_1, ..., a_{n-1}$ such that both $\MMM$ and $\MMM'$ satisfy $\MAY{a_1} ... \MAY{a_{n-1}}\top$, but they disagree about the node labelling on the final node of this chain. In other words, there is a $b$-transition from the final node in $\MMM$ which is ruled-out by the $\lambda'$ node labelling in $\MMM'$. So there is a set of states $w_1, ..., w'_1, ...$ and a finite set $X$ of actions such that:
+\begin{eqnarray*}
+w_1 \xrightarrow{a_1} w_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w_n \\
+w_1' \xrightarrow{a_1} w'_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w'_n \\
+w_n \xrightarrow{b} w_{n+1} \\
+\lambda'(w'_n) = X \text{ with } b \notin X
+\end{eqnarray*}
+Now it is easy to show, using {\bf $\AND$ Left}, that
+\begin{eqnarray*}
+\CHAR{\mathsf{\MMM}} \judge \MAY{a_1} ... \MAY{a_{n-1}} \MAY{b} \top \\
+\CHAR{\mathsf{\MMM'}} \judge \MAY{a_1} ... \MAY{a_{n-1}} \fBang X
+\end{eqnarray*}
+Now using {\bf $\AND$ Left} and {\bf $\AND$ Right}:
+\[
+\CHAR{\mathsf{\MMM}} \land \CHAR{\mathsf{\MMM}'} \judge  \MAY{a_1} ... \MAY{a_{n-1}} \MAY{b} \top \land  \judge \MAY{a_1} ... \MAY{a_{n-1}} \fBang X
+\]
+Now using {\bf Determinism}:
+\[
+\CHAR{\mathsf{\MMM}} \land \CHAR{\mathsf{\MMM}'} \judge  \MAY{a_1} ... \MAY{a_{n-1}} (\MAY{b} \top \land \fBang X)
+\]
+Now, using {\bf $\bot$ Right 1}:
+\[
+\MAY{b} \top \land \fBang X \judge \bot
+\]
+Using $n-1$ applications of  {\bf $\bot$ Right 2}:
+\[
+\MAY{a_1} ... \MAY{a_{n-1}} (\MAY{b} \top \land \fBang X) \judge \bot
+\]
+Finally, using {\bf Transitivity}, we derive:
+\[
+\CHAR{\mathsf{\MMM}} \land \CHAR{\mathsf{\MMM}'} \judge \bot
+\]
+\begin{mycase}
+$(\MMM \sqcap \MMM_2) \neq \bot$
+\end{mycase}
+From the construction of $\mathsf{merge}$, if $\MMM$ and $\MMM'$ are acyclic, then $\MMM \sqcap \MMM'$ is also acyclic.
+If $\MMM \sqcap \MMM'$ is acyclic, then $\CHAR{\MMM \sqcap \MMM'}$ is equivalent to a set $\Gamma$ of sentences of one of two forms:
+\begin{eqnarray*}
+\MAY{a_1} ... \MAY{a_n} \top \\
+\MAY{a_1} ... \MAY{a_n} ! X
+\end{eqnarray*}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.3cm,>=stealth',bend angle=45,auto]
+  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
+  \tikzstyle{red place}=[place,draw=red!75,fill=red!20]
+  \tikzstyle{transition}=[rectangle,thick,draw=black!75,
+  			  fill=black!20,minimum size=4mm]
+  \tikzstyle{every label}=[red]
+    
+  \begin{scope}
+    \node [place] (w1) {$\Sigma$};
+    \node [place] (e1) [below left of=w1] {$\{c,d\}$}
+      edge [pre]  node[swap] {a}                 (w1);      
+    \node [place] (e2) [below right of=w1] {$\Sigma$}
+      edge [pre]  node[swap] {b}                 (w1);      
+    \node [place] (e3) [below of=e1] {$\Sigma$}
+      edge [pre]  node[swap] {c}                 (e1);      
+  \end{scope}
+    
+\end{tikzpicture}
+\caption{Example of $\sqcap$}
+\label{setofpaths}
+\end{figure}
+For example, if $\MMM \sqcap \MMM'$ is as in Figure \ref{setofpaths}, then 
+\[
+\CHAR{\MMM \sqcap \MMM'} = \MAY{a}(\fBang \{c,d\} \land \MAY{c} \top) \land \MAY{b} \top
+\]
+This is equivalent to the set $\Gamma$ of sentences:
+\begin{eqnarray*}
+\MAY{a}\MAY{c} \top \\
+\MAY{b} \top \\
+\MAY{a}\fBang\{c,d\}
+\end{eqnarray*}
+Now using {\bf $\AND$ Right} and {\bf Determinism} we can show that
+\[
+\bigwedge_{\phi \in \Gamma} \phi \judge \CHAR{\MMM \sqcap \MMM'}
+\]
+We know that for all $\phi \in \Gamma$
+\[
+\MMM \sqcap \MMM' \models \phi
+\]
+We just need to show that:
+\[
+\CHAR{\MMM} \land \CHAR{\MMM'} \judge \phi
+\]
+Take any $\phi \in \Gamma$ of the form $\MAY{a_1} ... \MAY{a_n} ! X$ for some finite $X \subseteq \Sigma$. (The case where $\phi$ is of the form $\MAY{a_1} ... \MAY{a_n} \top$ is very similar, but simpler).
+If $\MMM \sqcap \MMM' \models \MAY{a_1} ... \MAY{a_n} ! X$ then either:
+\begin{enumerate}
+\item
+$\MMM \models \MAY{a_1} ... \MAY{a_n} ! X$ but $\MMM' \nvDash \MAY{a_1} ... \MAY{a_n} \top$
+\item
+$\MMM' \models \MAY{a_1} ... \MAY{a_n} ! X$ but $\MMM \nvDash \MAY{a_1} ... \MAY{a_n} \top$
+\item
+$\MMM \models \MAY{a_1} ... \MAY{a_n} ! X_1$ and $\MMM' \models \MAY{a_1} ... \MAY{a_n} ! X_2$ and $X_1 \cap X_2 \subseteq X$
+\end{enumerate}
+In the first two cases, showing $\CHAR{\MMM} \land \CHAR{\MMM'} \judge \phi$ is just a matter of repeated application of   {\bf $\AND$ Left} and {\bf $\AND$ Right}.
+In the third case, let $\MMM = (\mathcal{L}, w_1)$ and $\MMM' = (\mathcal{L}', w'_1)$.
+If $\MMM \models \MAY{a_1} ... \MAY{a_n} ! X_1$ and $\MMM' \models \MAY{a_1} ... \MAY{a_n} ! X_2$ then there exists sequences $w_1, ..., w_{n+1}$ and $w'_1, ..., w'_{n+1}$ of states such that
+\begin{eqnarray*}
+w_1 \xrightarrow{a_1} ... \xrightarrow{a_n} w_{n+1} \\
+w'_1 \xrightarrow{a_1} ... \xrightarrow{a_n} w'_{n+1} \\
+\lambda(w_{n+1}) \subseteq X_1 \\
+\lambda'(w'_{n+1}) \subseteq X_2 \\
+\end{eqnarray*}
+Now from the definition of $\CHAR{}$:
+\begin{eqnarray*}
+\CHAR{(\mathcal{L}, w_{n_1})} \judge \fBang X_1 \\
+\CHAR{(\mathcal{L}', w'_{n_1})} \judge \fBang X_2
+\end{eqnarray*}
+Now using {\bf \fBang Right 2}:
+\[
+\CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})} \judge \fBang (X_1 \cap X_2)
+\]
+Using {\bf \fBang Right 1}:
+\[
+\CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})} \judge \fBang X
+\]
+Using $n$ applications of {\bf Transition Normal}:
+\[
+\MAY{a_1} ... \MAY{a_n} (\CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})}) \judge \MAY{a_1} ... \MAY{a_n} \fBang X
+\]
+Finally, using $n$ applications of {\bf Determinism}:
+\[
+\CHAR{ (\mathcal{L}, w_1)} \land \CHAR{ (\mathcal{L}', w'_1)} \judge \MAY{a_1} ... \MAY{a_n} (\CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})})
+\]
+So, by {\bf Transitivity}
+\[
+\CHAR{\MMM} \land \CHAR{\MMM'} \judge \MAY{a_1} ... \MAY{a_n} \fBang X
+\]
+\end{proof}
