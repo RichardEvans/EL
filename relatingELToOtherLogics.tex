@@ -8,10 +8,10 @@ between \ELABR{} and first-order logic. Now we compare \ELABR{} with a
 logic that is much closer in spirit: Hennessy-Milner logic
 \cite{HennessyM:alglawfndac}, a modal logic designed to reason about
 process calculi. Indeed the present shape of \ELABR{} owes much to
-Hennessy-Milner logic. We now contrast both by translation from
-\ELABR{} into Hennessy-Milner logic \martin{why not the other way?}.
-This will reveal more clearly than the translation into first-order
-logic where \ELABR{} is novel.
+Hennessy-Milner logic. We now contrast eremic and Hennessy-Milner
+logic by translation from the former into the latter.  This will
+reveal more clearly than the translation into first-order logic the
+novelty of \ELABR{}.
 
 Given a set $\Sigma$ of symbols, with $s$ ranging over
 $\Sigma$, the \emph{formulae} of Hennessy-Milner logic are given
@@ -19,14 +19,14 @@ by the following grammar:
 \begin{GRAMMAR}
   \phi 
      &\quad ::= \quad & 
-  \top \fOr \phi_1 \AND \phi_2 \fOr \langle s \rangle \phi \fOr \neg \phi 
+  \top \fOr \BIGAND_{i \in I} \phi_i  \fOr \langle s \rangle \phi \fOr \neg \phi 
 \end{GRAMMAR}
 
-\NI Note that many presentations use infinite conjunction. However,
-that's not required in the present context.
+\NI The index set $I$ in the conjunction can be infinite, and needs to
+be for applications in process theory.
 
- \emph{Models} of Hennessy-Milner logic are pairs $(\LLL, s)$ where
- $\LLL = (S, \rightarrow)$ is a labelled transition system over
+ \emph{Models} of Hennessy-Milner logic are simply pairs $(\LLL, s)$
+ where $\LLL = (S, \rightarrow)$ is a labelled transition system over
  $\Sigma$, and $s \in S$.  The \emph{satisfaction relation} $(\LLL, s)
  \models \phi$ is given by the following inductive clauses.
 
@@ -37,7 +37,7 @@ that's not required in the present context.
   \top  \\
   (\LLL, s) 
      & \models & 
-  \phi_1 \AND \phi_2 &\  \mbox{ iff }\  & (\LLL, s)  \models \phi_1 \mbox { and } (\LLL, s) \models \phi_2  \\
+  \BIGAND_{i \in I} \phi_i  &\  \mbox{ iff }\  & \mbox { for all $i \in I$ }: (\LLL, s) \models \phi_i  \\
   (\LLL, s) 
      & \models & 
   \langle a \rangle \phi & \mbox{ iff } & \mbox{ there is a } s \xrightarrow{a} s' \mbox { such that } (l,s') \models \phi  \\
@@ -47,7 +47,7 @@ that's not required in the present context.
 \end{array}
 \]
 
-We can now see the two differences between \ELFULL{}, and
+\NI We can now see the two differences between \ELFULL{}, and
 Hennessy-Milner logic, one syntactic, the other semantic.
 
 \begin{itemize}
@@ -55,28 +55,35 @@ Hennessy-Milner logic, one syntactic, the other semantic.
 \item Syntactically, \ELABR{} has the transition-restriction operator ($!$)
   instead of logical negation ($\neg$).
 
-\item Semantically, an \ELABR{} model involves one restriction from and one addition to a standard HML labelled transition system. The restriction is that all \ELABR{} model are \emph{deterministic}, while many HML models are nondeterministic. The addition is the additional state-labelling on \ELABR{} models, a labelling that restricts the allowable transitions emanating from each vertex.
+\item Semantically, an \ELABR{} model involves one restriction from
+  and one addition to a standard Hennessy-Milner logic labelled transition system. The
+  restriction is that all \ELABR{} model are \emph{deterministic},
+  while typcially models of Hennessy-Milner logic are
+  nondeterministic, although the semantics makes perfect sense for
+  deterministic transistion systems too. The addition is the
+  additional state-labelling on \ELABR{} models, a labelling that
+  restricts the allowable transitions emanating from each vertex.
 
 \end{itemize}
 
-\NI We translate formulae of \ELABR{} into HML using the function
-$\SEMB{}$:
+\NI We translate formulae of \ELABR{} into Hennessy-Milner logic using the function
+$\SEMB{\cdot}$:
 
 \begin{eqnarray*}
   \SEMB{\top} & \ = \ & \top  \\
   \SEMB{\phi_1 \AND \phi_2} & \ = \ & \SEMB{\phi_1} \AND \SEMB{\phi_2}  \\
   \SEMB{\langle a \rangle \phi} & \ = \ & \langle a \rangle \SEMB{\phi}  \\
-  \SEMB{! A} & \ = \ & \bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top 
+  \SEMB{! A} & \ = \ & \bigwedge_{a \in \Sigma \setminus A}\!\!\!\! \neg \langle a \rangle \top 
 \end{eqnarray*}
 
 \NI If $\Sigma$ is an infinite set, then the translation of a $!$
 formula will be an infinitary formula.  If $\Sigma$ is finite, then
-the size of the HML formula will be of the order of $n * | \Sigma |$
+the size of the Hennessy-Milner logic formula will be of the order of $n * | \Sigma |$
 larger than the original \ELABR{} formula, where $n$ is the number of
 $!$ operators occurring in the \ELABR{} formula). In both logics we
 use the number of logical operators as a measure of size.
 
-We can also translate eremic models:
+We can also translate eremic models by forgetting node labelling:
 \[
    \SEMB{((S, \rightarrow, \lambda), s)} 
       =
@@ -101,28 +108,42 @@ Straightforward by induction on $\phi$.
 \NI The same theorem is also true if we replace eremic by pure eremic
 models.
 
-However, note that the following natural extension is \emph{not} true under the translation above:
-\[
+However, note that the following natural extension is \emph{not} true
+under the translation above:
+\begin{align}
 \text{If } \phi \models \psi \text{ then } \SEMB{\phi} \models \SEMB{\psi}
-\]
+\label{invalidEntailment}
+\end{align}
 To see this, consider an entailment which relies on determinism, such as
 \[
 \MAY{a} \MAY{b} \land \MAY{a} \MAY{c} \models \MAY{a} (\MAY{b} \land \MAY{c})
 \]
-Now this entailment is valid in EL because of the restriction to deterministic models, but is not valid in HML, 
-where it is invalidated by any model with two outgoing $a$ transitions, one of which satisfies $\MAY{b}$ and one of which satisfies $\MAY{c}$.
 
-However, if we add a determinism constraint to our translation, we can restore the desired connection between \ELABR{} implication and HML implication. Given a set $\Gamma$ of \ELABR{} formulae, closed under sub formulae, that contains actions from the set $A \subseteq \Sigma$, let the determinism constraint for $\Gamma$ be:
+\NI The entailment (\ref{invalidEntailment}) is valid in EL because of
+the restriction to deterministic models, but is not valid in
+Hennessy-Milner logic, where it is invalidated by any model with two
+outgoing $a$ transitions, one of which satisfies $\MAY{b}$ and one of
+which satisfies $\MAY{c}$.
+
+We can restore the desired connection between \ELABR{} implication and
+Hennessy-Milner logic implication in two ways. First we can restrict
+our attention to deterministic models of Hennessy-Milner logic.  The
+second solution is to add a determinism constraint to our
+translation. Given a set $\Gamma$ of \ELABR{} formulae, closed under
+sub formulae, that contains actions from the set $A \subseteq \Sigma$,
+let the determinism constraint for $\Gamma$ be:
 \[
 \bigwedge_{a \in A, \phi \in \Gamma, \psi \in \Gamma} \neg \; (\MAY{a} \phi \land \MAY{a} \psi \land \neg \MAY{a} (\phi \land \psi) )
 \]
-If we add this sentence as part of our translation $\SEMB{}$, we do get the desired result that
+If we add this sentence as part of our translation $\SEMB{\cdot}$, we
+do get the desired result that
 \[
 \text{If } \phi \models \psi \text{ then } \SEMB{\phi} \models \SEMB{\psi}
 \]
 
 
-\subsection{Why HML Without Negation Does Not Satisfy the Hennessy-Milner theorem}
+\subsection{Why Hennessy-Milner logic without negation does not satisfy 
+the Hennessy-Milner theorem}
 
 We can now see why in Hennessy-Milner logic without negation $p \equiv
 p'$ does \emph{not} entail $p \BISIM p'$
@@ -141,7 +162,7 @@ satisfy the sub formulae of $\langle a \rangle (\langle b \rangle \top
 $x$ and $x'$ ($y_1$ cannot be matched with $y'$ because $y'$ has an
 additional outgoing $c$-transition).
 
-If we remove negation, HML is insufficiently expressive to distinguish
+If we remove negation, Hennessy-Milner logic is insufficiently expressive to distinguish
 between these two non-bisimilar models.  When we restore negation, we
 can distinguish between these models via the formula:
 
@@ -161,7 +182,7 @@ non-bisimilar models. If the LTSs are finitely-branching, it can
 simulate negation (in innermost scope) via the width restriction
 operator !
 
-\subsection{EL, HML and Propositional Logic}
+\subsection{EL, Hennessy-Milner logic and Propositional Logic}
 
 \richard{TODO: this subsection relies on an understanding of EL [$\land, !, \neg$]  - but this extension is not defined until the Appendices. Things need to be reordered!!!}
 
@@ -172,7 +193,7 @@ Consider the following six languages:
 Language & Description \\
 \hline
 PL[$\land$] & Propositional Logic restricted to the $\land$ operator \\
-HML[$\land$] & Hennessy-Milner Logic restricted to the $\land$ operator \\
+Hennessy-Milner logic[$\land$] & Hennessy-Milner Logic restricted to the $\land$ operator \\
 EL[$\land, !$] & Eremic Logic restricted to the $\land$ and $\fBang$ operators \\
 PL [$\land, \neg$] & Full Propositional Logic \\
 HML [$\land, \neg$] & Full Hennessy-Milner Logic \\
@@ -203,19 +224,19 @@ p \models q \mbox{ iff } \INC{q} \subseteq \INC{p}
 EL[$\land, !$]  is the \emph{only} logic with a linear-time decision procedure that is expressive enough to respect Incompatibility Semantics. See Theorem \ref{incompatibilitytheorem}.
 
 The bottom three language can all be decided in exponential time.
-But HML is more expressive than PL, and EL [$\land, !, \neg$]  is more expressive than full HML. 
+But Hennessy-Milner logic is more expressive than PL, and EL [$\land, !, \neg$]  is more expressive than full Hennessy-Milner logic. 
 \begin{proposition}
-Full HML  is more expressive than full PL.
+Full Hennessy-Milner logic  is more expressive than full PL.
 \end{proposition}
 To see this, fix a PL with the nullary operator $\top$ plus an infinite number of propositional atoms $P_{(i,j)}$, indexed by $i$ and $j$.
-Now translate each formula of HML via the rules:
+Now translate each formula of Hennessy-Milner logic via the rules:
 \begin{eqnarray*}
 \SEMB{\top}  & = & \top  \\
 \SEMB{\phi \land \psi} & = & \SEMB{\phi} \land \SEMB{\psi}  \\
 \SEMB{\neg \phi} & = & \neg \SEMB{\phi}   \\
 \SEMB{\langle a_i \rangle \phi_j} & = & P_{(i,j)} 
 \end{eqnarray*}
-Now to show that HML is more expressive, we show that there are formulae $\phi$ and $\psi$ of HML such that
+Now to show that Hennessy-Milner logic is more expressive, we show that there are formulae $\phi$ and $\psi$ of Hennessy-Milner logic such that
 \[
 \phi \models_{HML} \psi \mbox{ but } \SEMB{\phi} \nvDash_{PL} \SEMB{\psi}
 \]
@@ -223,9 +244,9 @@ For example, let $\phi = \langle a \rangle \langle b \rangle \top$ and $\psi = \
 Clearly, $\phi \models_{HML} \psi$. But $\SEMB{\phi} = P_{(i,j)}$ and $\SEMB{\psi} = P_{(i',j')}$ for some $i,j,i',j'$, and there are no entailments in PL between arbitrary propositional atoms.
 
 \begin{proposition}
-EL [$\land, !, \neg$]  is more expressive than full HML
+EL [$\land, !, \neg$]  is more expressive than full Hennessy-Milner logic
 \end{proposition}
-Given a background set $\Sigma$ of symbols, the formula $\fBang A$ of EL can be translated into HML as:
+Given a background set $\Sigma$ of symbols, the formula $\fBang A$ of EL can be translated into Hennessy-Milner logic as:
 \[
 \bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top
 \]

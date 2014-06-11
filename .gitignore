@@ -2,6 +2,7 @@
 *.pdf
 *.aux
 *.log
+*.toc
 *.bbl
 *.blg
 old\ drafts

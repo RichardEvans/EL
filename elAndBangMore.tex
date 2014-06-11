@@ -1,20 +1,11 @@
-\section{Further properties of \ELFULL{}}
+\section{A decision procedure for eremic logic}\label{decisionprocedure}
 
-In Section \ref{coreEL} we presented \ELABR{}
-and established the key properties of completeness and compactness.
-This section investigates
-the logic further: first we give a linear-time decision
-procedure. Then we give a logical characterisation of bisimilarity,
-following ideas from the theory of process calculi
-\cite{HennessyM:alglawfndac}.  The linear-time decision complexity is
-an indication that \ELABR{} can be useful as a query language in
-knowledge representation. Section \ref{kr} investigates this matter in
-more detail. The logical characterisation of a semantical equivalence
-on the other hand is an indication that our syntactic and semantical
-constructs cohere with each other.
+In Section \ref{coreEL} we presented \ELABR{} and established the key
+properties of completeness and compactness.  Here we give a
+linear-time decision procedure.  The linear time-complexity of the
+decision procedure is an indication that \ELABR{} can be useful as a
+query language in knowledge representation. 
 
-\subsection{Decision Procedure}
-\label{decisionprocedure}
 \NI Since \ELABR{} has no connectives for disjunction or implication, its
 decision procedure is straightforward and efficient.  Although there
 are an infinite number of models which satisfy any expression, the
@@ -27,31 +18,22 @@ we use the following theorem:
 \begin{theorem}\label{theorem:decision}
   The following are equivalent:
   \begin{enumerate}
-    \item\label{theorem:decision:1} For all models $\MMM$,  $\MMM \models \phi \Rightarrow \MMM \models \psi$.
+    \item\label{theorem:decision:1} For all eremic models $\MMM$,
+      $\MMM \models \phi$ implies $\MMM \models \psi$.
     \item\label{theorem:decision:2} $\SIMPL{\phi} \models \psi$.
   \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-We first show the implication from (\ref{theorem:decision:1}) to
-(\ref{theorem:decision:2}), and from (\ref{theorem:decision:2}) to
-(\ref{theorem:decision:1}).  \setcounter{mycase}{0}
-\begin{mycase}
-If $\forall \MMM \; \MMM \models \phi \Rightarrow \MMM \models \psi \; \text{then} \; \SIMPL{\phi} \models \psi$
-\end{mycase}
+The implication from  (\ref{theorem:decision:1}) to
+(\ref{theorem:decision:2}) is trivial because $\SIMPL{\phi}$ is a model by construction.
 
-\NI Given that $\SIMPL{\phi} \models \phi$, we substitute $\SIMPL{\phi}$ for $\MMM $ in
-$\forall \MMM \; \MMM \models \phi \Rightarrow \MMM \models \psi$, to infer $\SIMPL{\phi}
-\models \psi$.
-
-\begin{mycase}
-If $\SIMPL{\phi} \models \psi \; \text{then} \; \forall \MMM \; \MMM \models \phi \Rightarrow \MMM \models \psi$
-\end{mycase}
-
-\NI Assume $\MMM \models \phi$. We need to show $\MMM \models \psi$.  Now if $\MMM
-\models \phi$ then $\MMM \MODELLEQ \SIMPL{\phi}$ (by definition of $\SIMPL$).  Further, if
-$\MMM' \models \xi $ and $\MMM \MODELLEQ \MMM'$ then $\MMM \models \xi $. So, substituting $\psi$
-for $\xi $ and $\SIMPL{\phi}$ for $\MMM'$, it follows that $\MMM \models \psi$.  
+For the reverse direction, assume $\MMM \models \phi$. We need to show
+$\MMM \models \psi$.  Now if $\MMM \models \phi$ then $\MMM \MODELLEQ
+\SIMPL{\phi}$ (by Lemma \ref{...}).  Further, if $\MMM' \models \xi $
+and $\MMM \MODELLEQ \MMM'$ then $\MMM \models \xi $ by Theorem
+\ref{completeLattice}. So, substituting $\psi$ for $\xi $ and
+$\SIMPL{\phi}$ for $\MMM'$, it follows that $\MMM \models \psi$.
 \end{proof}
 
 \NI Given this theorem, the decision procedure is straightforward: to

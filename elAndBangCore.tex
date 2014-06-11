@@ -1,4 +1,4 @@
-\section{Inference Rules, Completeness, Compactness for \ELABR{}}\label{coreEL}
+\section{Inference rules, completeness and compactness for eremic logic}\label{coreEL}
 
 In this section we produce our key results. 
 We provide inference rules for \ELABR{}, establish completeness of the 
@@ -541,9 +541,11 @@ The $\mathsf{getIds}$ function returns the set of extra state-identification pai
 
 \item $\SIMPL{\phi} \models \phi$.
 
-\item If $\MMM' \models \phi$ and  $\MMM \MODELLEQ \MMM'$ then also  $\MMM \models \phi$.
+\item If $\MMM' \models \phi$ and  $\MMM \MODELLEQ \MMM'$ then also  $\MMM \models \phi$.\martin{This has nothing to do with $\SIMPL{.}$}
  
 \end{itemize}
+\martin{There is a lemma/theorem misssing, namely $\MMM \models \phi$ implies $\MMM \MODELLEQ \SIMPL{\phi}$.
+this is used in the decision procedure.}
 
 \subsubsection{Showing that $\sqcap$ as defined is the greatest lower bound}
 We will show that:
@@ -745,6 +747,7 @@ For all formulae $\phi$, we can derive $\phi \judge \CHAR{\SIMPL{\phi}}$.
 \end{lemma}
 
 \martin{Add short explanation of Lemma \ref{lemma:completeness:4}}.
+\martin{Don't we need to prove these lemmas?}
 
 As to Lemma \ref{lemma:completeness:5}, $\SIMPL{\phi}$ is the simplest model
 satisfying $\phi$, and $\CHAR{\MMM}$ is the simplest formula describing
@@ -1166,7 +1169,7 @@ deterministic transition system.
 
 \begin{lemma}\label{compactness:lemma:23399}
 If $\LLL$ is an eremic transistion system then $\SEMBTWO{\LLL} \models
-\phi_{admis}$.
+\phi_{admis} \AND \phi_{det}$.
 \end{lemma}
 
 \begin{proof}

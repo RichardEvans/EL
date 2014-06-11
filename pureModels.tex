@@ -324,3 +324,26 @@ $y \nvDash \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \ra
 \NI The resulting formula is true in $y$ but not in $y'_j$.
 
 
+\subsection{Non-determinism and eremic models}
+
+Both, eremic models and pure eremic models must be deterministic. That
+is important for the incompatibility semantics. However, formally, the
+definition of satisfaction makes sense for non-deterministic models as
+well, pure or otherwise. Such models are important in the theory of
+concurrent processes. Many of the theorems of the precious section
+either hold directly, or with small modifications for
+non-deterministic models. The rules of inference in Figure
+\ref{figure:elAndBangRules} are sound except for
+    [\RULENAME{Determinism}] which cannot hold in properly
+    non-deterministic models. With this omission, they are also
+    complete.  Elementary equivalence on non-deterministic eremic
+    models also coincides with mutual simulation, while elementary
+    equivalence on non-deterministic pure eremic models is
+    bisimilarity. The proofs of both facts follow those of Theorems
+    \ref{theorem:completeLattice} and \ref{hennessymilnertheorem},
+    respectively. Compactness by translation can be shown following
+    the proof in Section \ref{compactness}, except that the constraint
+    $\phi_{det}$ is unnecessary.
+
+We don't pursue the investigation of non-deterministic models in this
+text, and leave it as future work.
