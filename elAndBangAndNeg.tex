@@ -1,60 +1,110 @@
-\section{EL$[\land, !, \neg]$}
+\section{Eremic logic and negation}
 
+Our motivation for investigating eremic logic has been to given an
+alternative account of negation, based on the concept of exclusion.
+In this section we study how to recover negation in eremic logic. For
+this purpose, we enrich eremic logic with negation as well as
+disjunction, and show how negation can be explained in terms of plain
+eremic logic with disjunction. We then discuss the meaning of excluded
+middle in eremic logic.
 
-\subsection{Syntax}
-
-Given a set $\Sigma$ of symbols, with $a$ ranging over
-$\Sigma$, and $A$ ranging over (possibly empty) sequences of
-elements of $\Sigma$, the formulae of EL$[\land, !, \neg]$ are
-given by\footnote{We include $\lor$, even though it is definable in
-formulae of $\neg$ and $\land$, because our decision procedure involves
-translating formulae into Disjunctive Normal Form.}:
+\begin{definition}
+Given a set $\Sigma$ of symbols, the \emph{formulae of eremic logic
+  with negation}, collectively denoted EL$[\land, !, \neg]$, are given
+by the following grammar.
 
 \begin{GRAMMAR}
   \phi 
      &\quad ::= \quad & 
-   \top \fOr \bot \fOr \neg \phi \fOr \phi_1 \land \phi_2 \fOr\phi_1 \lor \phi_2 \fOr \langle a \rangle \phi \fOr \fBang A 
+   \top \fOr \bot \fOr \neg \phi \fOr \phi \land \psi \fOr \langle a \rangle \phi \fOr \fBang A 
 \end{GRAMMAR}
 
-\subsection{Semantics}
+\NI We can now define disjunction $\phi \lor \psi$ and implication
+$\phi \IMPLIES \psi$ by de Morgan duality: $\phi \OR \psi$ is short
+for $\neg (\neg \phi \land \neg \psi )$, and $\phi \IMPLIES \psi$  abbreviates
+$\neg\phi \OR \psi$.
+\end{definition}
 
 The semantics of EL$[\land, !, \neg]$ is just as in EL$[\land, !]$
 above, except for the obvious clauses for negation and disjunction:
 \begin{eqnarray*}
-(l,w) & \models & \neg \phi \mbox{ iff } (l,w) \nvDash \phi \\
-(l,w) & \models & \phi \lor \psi \mbox{ iff } (l,w) \models \phi \text{ or }   (l,w) \models \psi
+\MMM \models \neg \phi &\quad\mbox{ iff }\quad& \MMM \nvDash \phi  
+%\MMM \models \phi \lor \psi &\mbox{ iff }& \MMM \models \phi \text{ or }   \MMM \models \psi
 \end{eqnarray*}
 
-\subsection{Negation}
+\martin{Can we say something about the proof rules for EL$[\land, !, \neg]$?}
 
-Negation can be translated away using the following rewrite rules,
-\emph{relative to a certain set $\mathcal{S} \subseteq \Sigma$ of symbols}:
+Negation is a core operation of classical logic, and its absence makes
+eremic logic unusual. In order to understand eremic logic better, we
+now investigate how negation can be seen as a definable abbreviation
+in eremic logic with disjunction. The key idea is that 
+\[
+   \neg \MAY{a}{\phi}
+\]
+can be false in two ways: there is no $a$-labelled action at the
+current state, or there is, but $\phi$ is false. Both arms of this
+disjunction can be expressed in eremic logic:
 
-\begin{eqnarray*}
-  \neg_{\mathcal{S}}(\top) & \ = \ & \bot  \\
-  \neg_\mathcal{S}(\bot) & \ = \ & \top  \\
-  \neg_\mathcal{S}(\phi_1 \land \phi_2) & \ = \ & \neg_\mathcal{S}(\phi_1) \lor \neg_\mathcal{S}(\phi_2)  \\
-  \neg_\mathcal{S}(\phi_1 \lor \phi_2) & \ = \ & \neg_\mathcal{S}(\phi_1) \land \neg_\mathcal{S}(\phi_2)  \\
-  \neg_\mathcal{S}(\langle a \rangle \phi) & \ = \ & \fBang(\mathcal{S}-\{a\}) \lor \langle a \rangle \neg_\mathcal{S}(\phi)  \\
-  \neg_\mathcal{S}(\fBang A) & \ = \ & \bigvee_{a \in \mathcal{S} - A} \langle a \rangle \top
-\end{eqnarray*}
+\begin{itemize}
 
-\NI Note that, if $\mathcal{S}$ is infinite, then the last two clauses will generate infinitary formulae.
+\item $!\Sigma \setminus \{a\}$.
+
+\item $\MAY{a}{\neg \phi}$.
+
+\end{itemize}
+
+\NI Hence, we can see $\neg \MAY{a}{\phi}$ as a shorthand for 
+\[
+   \Sigma \setminus \{a\} \OR \MAY{a}{\neg \phi}
+\]
+
+\NI Negation still occurs in this term, but prefixing a formula of
+lower complexity.
+
+This leaves the question of negating the tantum. That's easy: when
+$\neg !A$, then clearly the current state can do an action $a \notin
+A$. In other words
+\[
+   \BIGOR_{a \in \Sigma}\MAY{a}{\TRUE}
+\]
+
+\NI Note that both, the negation of the modality and the negation of
+the tantum involve the set $\Sigma$ of actions. As we will see below in the section
+on excluded middle, it is sometimes advantageous to translate away negation with respect to 
+a subset $S \subseteq \Sigma$. 
+
+\begin{definition}
+The function $x \neg_{S}(\phi)$ removes negation from $\phi$
+relative to $S \subseteq \Sigma$:
+
+\begin{align*}
+  \neg_{S}(\top) &\ =\  \bot  &
+  \neg_S(\bot) &\ =\  \top  \\
+  \neg_S(\phi \land \psi) &\ =\  \neg_S(\phi) \lor \neg_S(\psi)  &
+  \neg_S(\phi \lor \psi) &\ =\  \neg_S(\phi) \land \neg_S(\psi)  \\
+  \neg_S(\langle a \rangle \phi) &\ =\  \fBang(S-\{a\}) \lor \langle a \rangle \neg_S(\phi)  &
+  \neg_S(\fBang A) &\ =\  \bigvee_{a \in S - A} \langle a \rangle \top
+\end{align*}
+
+
+\end{definition}
+
+\NI Note that, if $S$ is infinite, then the last two clauses will generate infinitary formulae.
 
 \subsection{Restricting the Law of the Excluded Middle to a Determinate Set of Possibilities}
 
-Given a formula $p$ and particular set $\mathcal{S}$ of symbols, then we
+Given a formula $p$ and particular set $S$ of symbols, then we
 cannot hope to prove
 
 \[
-\models p \lor \neg_\mathcal{S}(p)
+\models p \lor \neg_S(p)
 \]
 
-\NI For example, let $p$ be $\langle a \rangle \top$ and $\mathcal{S} = \{a,
+\NI For example, let $p$ be $\langle a \rangle \top$ and $S = \{a,
 b\}$.  Now
 
 \[
-\neg_\mathcal{S}(\langle a \rangle \top) \; = \; ! \{b\} \lor \langle a \rangle \neg_\mathcal{S}(\top) \; =  \; ! \{b\} \lor \langle a \rangle \bot
+\neg_S(\langle a \rangle \top) \; = \; ! \{b\} \lor \langle a \rangle \neg_S(\top) \; =  \; ! \{b\} \lor \langle a \rangle \bot
 \]
 
 \NI So, in this case:
@@ -64,10 +114,10 @@ p \lor \neg p \; = \; \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \lang
 
 \NI Now this will not in general be valid - it will be false in any model
 which contains a transition from the root to any other symbol not in
-$\mathcal{S}$, for example: $c$.
+$S$, for example: $c$.
 
 But if we \emph{fix in advance the set of available options} (in this
-case restricting to the set $\mathcal{S}$), then we can prove the excluded
+case restricting to the set $S$), then we can prove the excluded
 middle:
 \[
 !\{a, b\} \models \; \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
@@ -81,10 +131,10 @@ symbol-sequences in $\phi$.  So for example:
 \]
 
 \NI Then the following is valid for any formula $\phi$ (letting
-$\mathcal{S} = \sigma(\phi)$):
+$S = \sigma(\phi)$):
 
 \[
-\bigwedge_{(a_1, ..., a_n) \in \mathsf{path}(\phi)} \langle a_1 \rangle ... \langle a_n \rangle \fBang \mathcal{S} \models \phi \lor \neg_\mathcal{S} (\phi)
+\bigwedge_{(a_1, ..., a_n) \in \mathsf{path}(\phi)} \langle a_1 \rangle ... \langle a_n \rangle \fBang S \models \phi \lor \neg_S (\phi)
 \]
 
 \subsubsection{Discussion: Precisifying the Negation. }
@@ -105,10 +155,10 @@ excluded middle can be proven.
 \subsubsection{Discussion: Negation as Infinitary Disjunction. }
 As is well known the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.
 
-Analogously, given an infinite set $\mathcal{S}$ of symbols, the
+Analogously, given an infinite set $S$ of symbols, the
 negation of propositional logic can be translated into an infinitary
 disjunction of formulae in SNEL.\martin{doesn't this argument also work for a finite
-set $\mathcal{S}$?}
+set $S$?}
 
 
 
@@ -118,8 +168,8 @@ Define $|\phi|$ as the degree of $\phi$:
 |\top| & = & 0  \\
 |\bot| & = & 0  \\
 |\neg \phi| & = & | \phi |  \\
-|\phi_1 \land \phi_2| & = & \mathsf{max}(| \phi_1 |, | \phi_2|)  \\
-|\phi_1 \lor \phi_2| & = & \mathsf{max}(| \phi_1 |, | \phi_2|)  \\
+|\phi \land \psi| & = & \mathsf{max}(| \phi |, | \psi|)  \\
+|\phi \lor \psi| & = & \mathsf{max}(| \phi |, | \psi|)  \\
 |\langle a \rangle \phi | & = & 1 + | \phi |  \\
 | \fBang S | & = & 1 
 \end{eqnarray*}
@@ -128,8 +178,8 @@ Define the $\mathsf{symbols}$ of a formula as:
 \mathsf{symbols}(\top) & = & \{\}  \\
 \mathsf{symbols}(\bot) & = & \{\}  \\
 \mathsf{symbols}(\neg \phi) & = & \mathsf{symbols}(\phi)  \\
-\mathsf{symbols}(\phi_1 \land \phi_2) & = &\mathsf{symbols}(\phi_1) \cup \mathsf{symbols}(\phi_2)  \\
-\mathsf{symbols}(\phi_1 \lor \phi_2) & = &\mathsf{symbols}(\phi_1) \cup \mathsf{symbols}(\phi_2)  \\
+\mathsf{symbols}(\phi \land \psi) & = &\mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi)  \\
+\mathsf{symbols}(\phi \lor \psi) & = &\mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi)  \\
 \mathsf{symbols}(\langle a \rangle \phi) & = & \{a\} \cup \mathsf{symbols}(\phi)  \\
 \mathsf{symbols}(\fBang S) & = & S 
 \end{eqnarray*}
@@ -210,8 +260,8 @@ h & a(h) \\
 \section{A More Efficient DecisionProcedure}
 We can use the fact that the $[\land, \fBang]$ fragment of SNEL has a linear-time decision procedure to build an exponential-time decision procedure for EL $[\land, \fBang, \neg]$:
 
-Given a claim $\phi \models \psi$, let $\mathcal{S} = \mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{\nu\}$ (where $\nu$ is a new symbol which does not occur in $\phi$ or $\psi$).
-First, translate away all negations in $\phi$ using $\neg_\mathcal{S}()$ as defined in Section 1.4.
+Given a claim $\phi \models \psi$, let $S = \mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{\nu\}$ (where $\nu$ is a new symbol which does not occur in $\phi$ or $\psi$).
+First, translate away all negations in $\phi$ using $\neg_S()$ as defined in Section 1.4.
 Let the result be $\phi'$.
 Second, reduce $\phi'$ to Disjunctive Normal Form by repeated application of the rewrite rules:
 \begin{eqnarray*}
@@ -224,32 +274,32 @@ Now
 \phi \models \psi \mbox{ iff } \forall \phi_{i=1}^n \phi_i \models \psi
 \]
 Now, to check whether each $\phi_i \models \psi$, we will construct a model of $\psi_i$ (in linear time). 
-Now define the $\mathcal{S}$ extensions of an annotated model $\MMM$ as all models which extend the states of $\MMM$ with extra transitions taken from $\mathcal{S}$ which respect the state labelling on $\MMM$.
-Now $\phi_i \models \psi$ if and only if all $\mathcal{S}$-extensions of $\SIMPL{\phi_i}$ satisfy $\psi$.
-So, to check whether $\phi_i \models \psi$, we enumerate the $\mathcal{S}$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{\phi_i}$) and check for each one whether it satisfies $\psi$.
+Now define the $S$ extensions of an annotated model $\MMM$ as all models which extend the states of $\MMM$ with extra transitions taken from $S$ which respect the state labelling on $\MMM$.
+Now $\phi_i \models \psi$ if and only if all $S$-extensions of $\SIMPL{\phi_i}$ satisfy $\psi$.
+So, to check whether $\phi_i \models \psi$, we enumerate the $S$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{\phi_i}$) and check for each one whether it satisfies $\psi$.
 
-To fill out this sketch, I will describe the structure of the annotated model, define the $\mu$ function, and show how to compute the extensions of an annotated model relative to a set $\mathcal{S}$ of symbols.
+To fill out this sketch, I will describe the structure of the annotated model, define the $\mu$ function, and show how to compute the extensions of an annotated model relative to a set $S$ of symbols.
 
 
 \subsection{Computing the Extensions of a Model}
 
-Recall that, to check whether $\phi_i \models \psi$, we enumerate the $\mathcal{S}$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{\phi_i}$) and check for each one whether it satisfies $\psi$.
+Recall that, to check whether $\phi_i \models \psi$, we enumerate the $S$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{\phi_i}$) and check for each one whether it satisfies $\psi$.
 
 \begin{definition}
-Given an eremic transition system $(\mathcal{W},\rightarrow,\lambda)$,  and a set $\mathcal{S}$ of symbols, then $(\mathcal{W'},\rightarrow',\lambda')$ is a {\bf $\mathcal{S}$-extension} of $(\mathcal{W},\rightarrow,\lambda)$ if it is a valid LTS (recall Definition 1) and for all $(x,a,y) \in \rightarrow'$, either:
+Given an eremic transition system $(\mathcal{W},\rightarrow,\lambda)$,  and a set $S$ of symbols, then $(\mathcal{W'},\rightarrow',\lambda')$ is a {\bf $S$-extension} of $(\mathcal{W},\rightarrow,\lambda)$ if it is a valid LTS (recall Definition 1) and for all $(x,a,y) \in \rightarrow'$, either:
 \begin{itemize} 
 \item
 $(x, a, y) \in \rightarrow$,  or;
 \item
- $x \in \mathcal{W}$ and $a \in \mathcal{S}$ and $y$ is a new state not appearing elsewhere in $\mathcal{W}$ or $\mathcal{W'}$.
+ $x \in \mathcal{W}$ and $a \in S$ and $y$ is a new state not appearing elsewhere in $\mathcal{W}$ or $\mathcal{W'}$.
 \end{itemize}
 \end{definition}
-In other words, $\MMM'$ is an extension of an annotated model $\MMM$, if all its transitions are either from $\MMM$ or involve states of $\MMM$ transitioning via elements of $\mathcal{S}$ to new states not appearing in $\MMM$ or $\MMM'$.
+In other words, $\MMM'$ is an extension of an annotated model $\MMM$, if all its transitions are either from $\MMM$ or involve states of $\MMM$ transitioning via elements of $S$ to new states not appearing in $\MMM$ or $\MMM'$.
 
 The number of extensions can quickly grow very large.
 If the model $\MMM$ has $n$ states, then the number of possible extensions is:
 \[
-({2^{|\mathcal{S}|}})^n
+({2^{|S|}})^n
 \] 
 But recall that we are computing these extensions in order to verify $\psi$. So we can make a significant optimisation by restricting the height of each tree to $|\psi|$.
 
