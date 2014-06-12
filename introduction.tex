@@ -1,8 +1,8 @@
 \section{Introduction}\label{introduction}
 
 Natural language is full of mutually-exclusive alternatives.
-If Pierre is the current king of France, then nobody else can concurrently fill that role.
-A traffic light can be green, amber or red - but it cannot be more than one at a time.
+If Pierre is the current king of France, then nobody else can simultaneously fill that role.
+A traffic light can be green, amber or red - but it cannot be more than one colour at a time.
 Mutual exclusion is a natural and ubiquitous concept.
 
 Predicate logic \emph{can} represent mutually exclusive alternatives, of course.
@@ -10,9 +10,9 @@ To say that Pierre is the \emph{only} king of France, we can write, following Ru
 \[
 king(france, pierre) \land \forall X . king(france, X) \rightarrow X = pierre
 \]
-To say that a particular traffic light, $t$, is red - and red is its \emph{only} colour - we could write:
+To say that a particular traffic light, $tl$, is red - and red is its \emph{only} colour - we could write:
 \[
-colour(t, red) \land \forall X . colour(t, X) \rightarrow X = red
+colour(tl, red) \land \forall X . colour(tl, X) \rightarrow X = red
 \]
 In predicate logic, exclusion is a \emph{derived} concept, reduced to a combination of universal quantification and identity.
 Predicate logic, in other words, uses relatively complex machinery to express a simple concept:
@@ -65,12 +65,19 @@ It is a purely propositional representation of exclusion.
 
 To say that the traffic light is currently red, and \emph{red is its only colour}, we write:
 \[
-\MAY{t} \MAY{colour} (\MAY{red} \land !\{red\})
+\MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\})
 \]
 This is markedly simpler (both in terms of representation length and computational complexity) than the representation in predicate logic:
 \[
 colour(t, red) \land \forall X . colour(t, X) \rightarrow X = red
 \]
+If we want to be able to describe properties changing over time, we can add an extra transition representing the time-stamp.
+To say that that the traffic light was red at time $t_1$ and amber at time $t_2$, we can write:
+\[
+\MAY{tl} \MAY{colour} (\MAY{t1} (\MAY{red} \land !\{red\}) \land \MAY{t2} (\MAY{amber} \land !\{amber\}))
+\]
+
+
 To summarise the argument we shall be presenting:
 \begin{itemize}
 \item
@@ -101,31 +108,32 @@ Broaden the claim that exclusion is a fundamental logical concept, by adding oth
 \end{itemize}
 
 \subsection{Exclusion as a Fundamental Logical Concept, Conceptually Prior to Negation}
+In this section, we shall strengthen the claim that exclusion is a fundamental logical concept, by arguing that exclusion is conceptually prior to negation.
 
-Consider the sentences:
-\begin{enumerate}
+Every English speaker knows that
+\begin{quote}
+``Jack is male'' is incompatible with ``Jack is female''
+\end{quote}
+But what is the \emph{explanation} for the incompatibility between these two particular sentences? 
+The orthodox position is that these sentences are incompatible because of the following general law:
+\begin{quote}
+If someone is male, then it is not the case that they are female
+\end{quote}
+Recast in first order logic:
+\[
+\forall X. male(X) \Rightarrow \neg female(X)
+\]
+According to the orthodox position, the incompatibility between the two particular sentences depends on a general law involving universal quantification, implication and negation. 
 
-\item ``Jack is male'' is incompatible with ``Jack is female''
-\item For every person $x$, if $x$ is male, then it is not the case that $x$ is female
-
-\end{enumerate}
-
-\NI The orthodox position is that (1) is true because of (2).  There
-are \emph{general universally-quantified rules} describing which
-predicates are incompatible, and these general rules explain why
-particular sentence instances are incompatible.  We know (1) because
-we know (2).
-
-In \emph{Making It Explicit}\cite{brandom2}, Brandom proposes a reversal of this
-orthodox direction of explanation.  He claims that we can understand
-incompatible sentence pairs, like (1), even if we do not understand
-universal quantification or negation.  \emph{Material incompatibility is
+In \emph{Making It Explicit}\cite{brandom2}, Brandom proposes an alternative explanation:
+the reason why ``Jack is male'' is incompatible with ``Jack is female'' is because ``is male'' and ``is female'' are \emph{incompatible predicates}.
+He claims that we can understand incompatible predicates even if we do not understand universal quantification or negation.  \emph{Material incompatibility is
 conceptually prior to logical negation.}
 
 Imagine, to make this vivid, a primitive people speaking a
 primordial language.  This language contains atomic sentences, but has
 no ``complex'' logical connectives.  By ``complex'', I mean logical
-connectives that, like disjunction, generate sentences which can be
+connectives that, like disjunction, generate sentences that can be
 satisfied in many different distinct ways.  Negation, disjunction,
 implication, existential quantification all create formulae that can
 be satisfied in many different ways (but conjunction does not). This condition will be
@@ -155,15 +163,45 @@ If this picture is coherent, then material incompatibility - exclusion - is conc
 We do not need negation to make sense of exclusion.
 
 Now imagine a variation of our primitive language in which no sentences are ever treated as incompatible.
-The native speakers never disagree, back down, retract their claims, or justify them. They just make assertions.
+If one person says ``Jack is male'' and another says ``Jack is female'', nobody counts these claims as \emph{conflicting}. 
+The native speakers never disagree, back down, retract their claims, or justify them. They just make ``assertions''\footnote{We place sneer-quotes around ``assertion'' because we believe, following Brandom, that in the absence of any sort of procedure for the recognition and resolution of incompatible claims, the sounds do not count as assertions at all.}.
 Without an understanding of incompatibility, and the variety of behaviour that it engenders, we submit (following Brandom) that there is insufficient richness in the linguistic practice for their sounds to count as assertions.
 Without exclusion, their sounds are just \emph{barks}.
 If this further claim is also accepted, then material incompatibility - exclusion - is not just conceptually \emph{independent} of logical negation, but is conceptually \emph{prior} to it.
 
+\subsection{Logical Negation is Just the Informationally Weakest Form of Incompatibility}
+
+In \cite{brandom2} and \cite{brandom}, Brandom has emphasised that logical negation is a degenerate form of material incompatibility:
+\begin{quote}
+Incompatible sentences are Aristotelian \emph{contraries}. A sentence and its negation are \emph{contradictories}. What is the relation between these? Well, the contradictory is a contrary: any sentence is incompatible with its negation. What distinguishes the contradictory of a sentence  from all the rest of its contraries? The contradictory is the \emph{minimal} contrary: the one that is entailed by all the rest. Thus every contrary of ``Plane figure $f$ is a circle'' - for instance ``$f$ is a triangle'', ``$f$ is an octagon'', and so on - entails ``$f$ is \emph{not} a circle''.
+\end{quote}
+
+If someone asserts, say, that Jack does not support Manchester United, we have so far said very little.  
+There are so many different ways in which it could be true that Jack does not support Manchester United\footnote{We are assuming, in this example, that ``supports'' is a many-one relation - that a person can only authentically support a single football team.}:
+\begin{itemize}
+\item
+He might support Arsenal
+\item
+He might support Chelsea
+\item
+...
+\item
+He might not support any football team at all
+\item
+There may be no person answering to the name ``Jack''
+\end{itemize}
+All the above possibilities are concrete propositions which are incompatible with Jack supporting Manchester United.
+To say that ``Jack does not support Manchester United'' is just to claim that one of these indefinitely many concrete possibilities is true.
+Negation is just the informationally weakest form of incompatibility.
+
+As is well known, the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.
+Analogously, given a set $\Sigma$ of symbols, a negated formula in proposition logic can be translated into a (possibly infinitary)
+disjunction of materially incompatible formulae in \ELFULL{}.
 
 \subsection{Intra-Sentential Logical Operators}
 
-The core claim of this paper is that \ELFULL{} is an ergonomic logic for describing the exclusion relation.
+So far, we have justified the claim that exclusion is a fundamental logical concept by arguing (following Brandom) that exclusion is conceptually prior to negation. 
+
 Now exclusion is an inferential relation between \emph{atomic sentences}. 
 In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that predicate logic cannot articulate, but that \ELFULL{} is able to handle.
 
@@ -290,42 +328,3 @@ We show that \ELFULL{} satisfies Brandom's Incompatibility Semantics requirement
 We show how \ELFULL{} has been used as an ergonomic knowledge-representation language in an industrial application
 \end{itemize}
 
-\subsubsection{Discussion: Precisifying the Negation. }
-
-\NI If someone asserts that, say, Jack does not support Manchester United,
-we have so far said very little.  Until we know the \emph{range of
-  football teams} he could support, we don't know what the negation
-amounts to.  Until we have some more determinate information about the
-range of possible choices, there are an \emph{indefinite} number of
-ways in which this could be true.  But if we knew that the only
-possible teams Jack could support are Manchester United, Arsenal or
-Chelsea, then suddenly our negation has some determinate content.
-SNEL captures this intuition.  Once a negated formula has been
-precisified by specifying the range of allowable options (via the $!$
-operator), the negated claim can be made precise, and the law of
-excluded middle can be proven.
-
-\subsubsection{Discussion: Negation as Infinitary Disjunction. }
-As is well known the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.
-
-Analogously, given an infinite set $S$ of symbols, the
-negation of propositional logic can be translated into an infinitary
-disjunction of formulae in SNEL.\martin{doesn't this argument also work for a finite
-set $S$?}
-
-
-\subsection{Introduction TODOs}
-
-\begin{itemize}
-\item Consider expressing ``Pierre is either male or female'' in
-  propositional logic, without quantifiers: $sex(pierre, male) \lor
-  sex(pierre, female) \land \neg (sex(pierre, male) \land sex(pierre,
-  female))$.
-\item
-Consider placing the point (currently in Related Work, Brandom's
-Incompatibility Semantics) - that $\neg p$ is the least information
-claim that is incompatible with $p$ - into the section on Exclusion
-being Conceptually prior to Negation.
-
-\item Integrate the two section above on negation
-\end{itemize}
