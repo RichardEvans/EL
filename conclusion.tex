@@ -1,11 +1,12 @@
 \section{Conclusion}\label{conclusion}
 
-\NI We have proposed eremic logic, a modal logic based on the
+\NI We have proposed eremic logic, a multi-modal logic based on
 exclusion as a logical primitive. We have investigated key
 meta-theoretic properties of the logic, related eremic logic to
 first-order logic and Hennessy-Milner logic, and we have explored
 applications in the philosophy of language, knowledge representation
-and the semantics of concurrent processes.  
+and the semantics of concurrent processes. We end this paper with a
+discussion of related work and open problems.
 
 \subsection{Related work} 
 
@@ -19,7 +20,7 @@ particular.
 The origins of eremic logic lay in classical philosophy, in particular
 in Hegel's work on ``bestimmte Negation'' (determinate negation)).  In
 his \emph{Wissenschaft der Logic} \cite{HegelGWF:wisdlog}, Hegel
-develops the concept that concept, in part in reaction to Kant's use
+develops that concept, in part in reaction to Kant's use
 of material incompatibility in the \emph{Kritik der reinen Vernunft}
 \cite{KantI:kdrv}, but also in relation to Spinoza's \emph{omnis
   determinatio est negatio} \cite{???}.  In the twentieth century,
@@ -96,12 +97,13 @@ different direction.  While Brandom defines an unusual (non
 truth-conditional) semantics that applies to any language, we have
 defined a unusual logic with a standard (truth-conditional) semantics.
 
-\subsection{Other Related work}
+\subsubsection{Linguistics}
 
 Linguists have also investigated how mutually exclusive alternatives
-are expressed \cite{OKeeffeA:rouhanocl}\martin{See John C email for
-  more precise reference}, but, to the best of our knowledge have not
-proposed formal theories of linguistic exclusion.
+are expressed \cite{OKeeffeA:rouhanocl}, but, to the best of our
+knowledge have not proposed formal theories of linguistic exclusion.
+
+\subsubsection{Linear logic}
 
 Linear logic \cite{GirardJY:linlog,GirardJY:protyp} is a refinement of
 first-order logic and was introduced by J.-Y.~Girard with the aim of
@@ -139,6 +141,8 @@ explicit linear negation $(\cdot)^{\bot}$ which, unlike classical
 negation, is constructive. In constrast, \ELABR{} defines a restricted
 form negation from $!A$. Can these two perspectives be frutifully
 reconciled?
+
+\subsubsection{Process calculus}
 
 Another formalism that has a form of explicit description of mutually
 exclusive option as a core primitive are process calculi. They are
@@ -186,10 +190,13 @@ formulae can be modelled by labelled transition systems, and because
 eremic logic is close to logics for processes).\martin{rephrase. How
   did process theory influence EL?}
 
+\subsubsection{Failures/divergences in process calculi}
+
 Our eremic models are remarkably close to a form of the
 failures/divergences models that has been used in the denotational
-semantics of Hoare's CSP \cite{HoareC:comseq,RoscoeAW:theapoc}.  In
-this model, the denotation of a process $P$ is given as a pair
+semantics of process calculi, primarily Hoare's CSP
+\cite{HoareC:comseq,RoscoeAW:theapoc} and its descendants.  In this
+model, the denotation of a process $P$ is given as a pair
 
 \[
    (traces(P), fail(P))
@@ -231,7 +238,9 @@ program logic for process calculi.
 
 \subsection{Open problems} 
 
-We conclude this paper with a discussion of open problems.
+The present paper introduced eremic logic, and established key
+meta-logical properties such as completeness and compactness. However,
+many questions are left open. 
 
 \subsubsection{Eremic logic as a fragment of first- and second-order logic }
 
