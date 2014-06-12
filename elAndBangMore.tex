@@ -86,11 +86,10 @@ The reason is that [\RULENAME{!-Left}] can be derived as follows.
   \LeftLabel{\RULENAME{!-Right 1}}
   \BinaryInfC{$\phi \AND\, !A'  \judge  \phi \AND\, !A$}
   \AxiomC{$\phi \AND\, !A  \judge  \psi$}
-  \LeftLabel{Transitivity: \quad}
+  \LeftLabel{\RULENAME{Transitivity}}
   \BinaryInfC{$\phi \AND\, !A'  \judge  \psi$}
   \DisplayProof
 \end{center}
-\martin{inconsisten formating of rule names.}
 
 \NI Readers familiar with object-oriented programming will recognise
 [\RULENAME{!-Left}] as contra-variant subtyping and [\RULENAME{!-Right
@@ -115,10 +114,43 @@ We prove that we can use $\phi \AND \psi  \judge  \xi$ to derive $\MAY{a} \phi \
   \BinaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$}
   \DisplayProof
 \end{center}
-
-\martin{Add some more example assertions here, for example some
-  of those we use later.}
-
+Next, we prove that we can derive $\MAY{a}!\{b,c\} \land \MAY{a}!\{c,d\} \judge \MAY{a}!\{c\}$:
+\begin{center}
+  \AxiomC{$!\{b,c\} \judge !\{b,c\}$}
+  \LeftLabel{\RULENAME{$\land$ Left 1}}
+  \UnaryInfC{$!\{b,c\} \land !\{c,d\} \judge !\{b,c\}$}
+  \AxiomC{$!\{c,d\} \judge !\{c,d\}$}
+  \LeftLabel{\RULENAME{$\land$ Left 2}}
+  \UnaryInfC{$!\{b,c\} \land !\{c,d\} \judge !\{c,d\}$}
+  \LeftLabel{\RULENAME{! Right 2}}
+  \BinaryInfC{$!\{b,c\} \land !\{c,d\} \judge !\{c\}$}
+  \LeftLabel{\RULENAME{Transition Normal}}
+  \UnaryInfC{$\MAY{a} (!\{b,c\} \land !\{c,d\}) \judge \MAY{a} !\{c\}$}
+  \AxiomC{$\MAY{a} !\{b,c\} \land \MAY{a} !\{c,d\} \judge \MAY{a} !\{b,c\} \land \MAY{a} !\{c,d\}$}
+  \LeftLabel{\RULENAME{Determinism}}
+  \UnaryInfC{$\MAY{a} !\{b,c\} \land \MAY{a} !\{c,d\} \judge \MAY{a} (!\{b,c\} \land !\{c,d\})$}
+  \LeftLabel{\RULENAME{Transitivity}}
+  \BinaryInfC{$\MAY{a} !\{b,c\} \land \MAY{a} !\{c,d\} \judge \MAY{a}!\{c\}$}
+  \DisplayProof
+\end{center}
+Next, we prove that we can derive $\MAY{a} !\{b\} \land \MAY{a} \MAY{c} \top \judge \MAY{d} \top$:
+\begin{center}
+  \AxiomC{$!\{b\} \land \MAY{c}\top \judge \bot$}
+  \LeftLabel{\RULENAME{Transition Normal}}
+  \UnaryInfC{$\MAY{a}(!\{b\} \land \MAY{c}\top) \judge \MAY{a} \bot$}
+  \AxiomC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top \judge \MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top$}
+  \LeftLabel{\RULENAME{Determinism}}
+  \UnaryInfC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top \judge \MAY{a}(!\{b\} \land \MAY{c}\top)$}
+  \LeftLabel{\RULENAME{Transitivity}}
+  \BinaryInfC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top  \judge \MAY{a} \bot$}  
+  \AxiomC{$\MAY{a}\bot \judge \bot$}
+  \LeftLabel{\RULENAME{Transitivity}}
+  \BinaryInfC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top  \judge \bot$}  
+  \AxiomC{$\bot \judge \MAY{d} \top$}
+  \LeftLabel{\RULENAME{Transitivity}}
+  \BinaryInfC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top  \judge  \MAY{d} \top$}    
+  \DisplayProof
+\end{center}
 
 \subsection{Characteristic formulae}
 
