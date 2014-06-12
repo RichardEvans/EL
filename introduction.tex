@@ -290,11 +290,42 @@ We show that \ELFULL{} satisfies Brandom's Incompatibility Semantics requirement
 We show how \ELFULL{} has been used as an ergonomic knowledge-representation language in an industrial application
 \end{itemize}
 
+\subsubsection{Discussion: Precisifying the Negation. }
+
+\NI If someone asserts that, say, Jack does not support Manchester United,
+we have so far said very little.  Until we know the \emph{range of
+  football teams} he could support, we don't know what the negation
+amounts to.  Until we have some more determinate information about the
+range of possible choices, there are an \emph{indefinite} number of
+ways in which this could be true.  But if we knew that the only
+possible teams Jack could support are Manchester United, Arsenal or
+Chelsea, then suddenly our negation has some determinate content.
+SNEL captures this intuition.  Once a negated formula has been
+precisified by specifying the range of allowable options (via the $!$
+operator), the negated claim can be made precise, and the law of
+excluded middle can be proven.
+
+\subsubsection{Discussion: Negation as Infinitary Disjunction. }
+As is well known the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.
+
+Analogously, given an infinite set $S$ of symbols, the
+negation of propositional logic can be translated into an infinitary
+disjunction of formulae in SNEL.\martin{doesn't this argument also work for a finite
+set $S$?}
+
+
 \subsection{Introduction TODOs}
 
 \begin{itemize}
-\item Consider expressing ``Pierre is either male or female'' in propositional logic, without quantifiers:
-$sex(pierre, male) \lor sex(pierre, female) \land \neg (sex(pierre, male) \land sex(pierre, female))$.
+\item Consider expressing ``Pierre is either male or female'' in
+  propositional logic, without quantifiers: $sex(pierre, male) \lor
+  sex(pierre, female) \land \neg (sex(pierre, male) \land sex(pierre,
+  female))$.
 \item
-Consider placing the point (currently in Related Work, Brandom's Incompatibility Semantics) - that $\neg p$ is the least information claim that is incompatible with $p$ - into the section on Exclusion being Conceptually prior to Negation.
+Consider placing the point (currently in Related Work, Brandom's
+Incompatibility Semantics) - that $\neg p$ is the least information
+claim that is incompatible with $p$ - into the section on Exclusion
+being Conceptually prior to Negation.
+
+\item Integrate the two section above on negation
 \end{itemize}

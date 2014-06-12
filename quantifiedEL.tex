@@ -192,9 +192,12 @@ where $s$ and $s'$ are both labelled $\Sigma$.
 
 \NI Now $\SEMB{\CAL{M}} = (\LLL, h)$.
 
-\begin{theorem}[Conjecture]
-Let $\phi$ be a nice formula, $\CAL{M}$ be a nice model and $\sigma$
-an environment. Then:
+It is straightforward to show that translation has the expected 
+properties.
+
+\begin{theorem}
+Let $\phi$ be a nice first-order formula, $\CAL{M}$ be a nice
+first-order model and $\sigma$ an environment. Then:
 \[
    \CAL{M} \models_{\sigma} \phi
       \qquad\text{iff}\qquad
@@ -202,15 +205,16 @@ an environment. Then:
 \]
 \end{theorem}
 
-Note that the encoding can easily be generalised to $n$-ary relations
-for all $n$, and also to finite-width relations.  What does the latter
-mean? Let $r$ be an $n$-ary relation symbol in the ambient first-order
-signature. Let $\CAL{M}$ be a model. The interpretation $r^{\CAL{M}}$
-of $r$ in $\CAL{M}$ is called an $(i, k)$-relation, where $0 < i \leq
-n$, and $k$ is arbitrary, provided for the cardinality of the set
+\NI Note that the encoding can easily be generalised to $n$-ary
+relations for all $n$, and also to finite-width relations.  What does
+the latter mean? Let $r$ be an $n$-ary relation symbol in the ambient
+first-order signature. Let $\CAL{M}$ be a model. The interpretation
+$r^{\CAL{M}}$ of $r$ in $\CAL{M}$ is called an $(i, k)$-relation,
+where $0 < i \leq n$, and $k$ is arbitrary, provided for the
+cardinality of the set
 \[
    \{ y | (x_1, ..., x_{i-1}, y, x_{i+1}, ..., x_{n}) \in r^{\CAL{M}} \}
 \]
-does not exceed $k$. We say $r^{\CAL{M}}$ is width-restricted if for each $i$
-there is $k$ such that $r^{\CAL{M}}$ is a $(i, k)$-relation.
+does not exceed $k$. We say $r^{\CAL{M}}$ is finite-width if for each
+$i$ there is $k$ such that $r^{\CAL{M}}$ is a $(i, k)$-relation.
 

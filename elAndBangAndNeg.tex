@@ -1,12 +1,13 @@
-\section{Eremic logic and negation}
+\section{Eremic logic and negation}\label{ELAndNegation}
+
+\subsection{The logic $EL[\land, !, \neg]$}
 
 Our motivation for investigating eremic logic has been to give an
 alternative account of negation, based on the concept of exclusion.
 In this section we study how to recover negation in eremic logic. For
 this purpose, we enrich eremic logic with negation as well as
 disjunction, and show how negation can be explained in terms of plain
-eremic logic with disjunction. We then discuss the meaning of excluded
-middle in eremic logic.
+eremic logic with disjunction.
 
 \begin{definition}
 Given a set $\Sigma$ of symbols, the \emph{formulae of eremic logic
@@ -69,9 +70,9 @@ A$. In other words
 \]
 
 \NI Note that both, the negation of the modality and the negation of
-the tantum involve the set $\Sigma$ of actions. As we will see below in the section
-on excluded middle, it is sometimes advantageous to translate away negation with respect to 
-a subset $S \subseteq \Sigma$. 
+the tantum involve the set $\Sigma$ of actions. It is sometimes
+advantageous to translate away negation with respect to a subset $S
+\subseteq \Sigma$.\martin{We should explain why.}
 
 \begin{definition}
 The function $x \neg_{S}(\phi)$ removes negation from $\phi$
@@ -89,196 +90,14 @@ relative to $S \subseteq \Sigma$:
 
 \end{definition}
 
-\NI Note that, if $S$ is infinite, then the last two clauses will generate infinitary formulae.
+\NI Note that, if $S$ is infinite, then the last two clauses will
+generate infinitary formulae.
 
-\subsection{Excluded middle}
+\subsection{A decision procedure}
 
-The logical law of excluded middle states that either a proposition or
-its negation must be true. In eremic logic, 
-given a formula $\phi$ and particular set $S$ of symbols, then we
-cannot hope to prove
-
-\[
-\models \phi \lor \neg_S(\phi)
-\]
-
-\NI For example, let $\phi$ be $\langle a \rangle \top$ and $S = \Sigma = \{a,
-b\}$.  Then
-
-\[
-   \neg_\Sigma(\langle a \rangle \top) 
-      \quad= \quad 
-   ! \{b\} \lor \langle a \rangle \neg_\Sigma(\top) 
-      \quad =\quad  
-   ! \{b\} \lor \langle a \rangle \bot
-\]
-
-\NI The term on the right is equivalent to $! \{b\}$. So, in this case:
-\[
-   \phi \lor \neg_{\Sigma} \phi 
-       \quad=\quad 
-   \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
-\]
-
-\NI Now this will not in general be valid - it will be false for
-example in the model $((\{x\}, \emptyset, \{(x, \Sigma)\}), x)$, the
-model having just the root node (labelled $\Sigma$) and no transitions.
-Restricting $S$ to be a proper subset of $\Sigma = \{a, b\}$ is also not
-enough. For example with $S = \{a\}$ we have
-\[
-   \MAY{a}{\TRUE} \lor \neg_{S}(\MAY{a}{\TRUE})
-      \quad=\quad
-   \MAY{a}{\TRUE}\ \lor\ !\emptyset \lor \MAY{a}{\FALSE}
-\]
-This formula cannot hold in any eremic model which contains a
-$b$-labelled transition, but no $a$-transition from the root.
-
-But if we restrict our attention to the right kind of models then  excluded middle holds:
-\[
-   !\{a\} 
-      \models \; 
-   \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
-      \quad=\quad
-   \MAY{a}{\TRUE} \lor \neg_{\{a, b\}}(\MAY{a}{\TRUE}).
-\]
-
-\NI More generally, let $\mathsf{path}(\phi)$ be the set of
-symbol-sequences in $\phi$.  So for example:
-
-\[
-\mathsf{path}(\langle a \rangle (\langle b \rangle \top \land \langle c \rangle \langle d \rangle \top)) = \{(), (a), (a, b), (a, c, d)\}
-\]
-
-\NI Then the following is valid for any formula $\phi$ (letting
-$S = \sigma(\phi)$):
-
-\[
-\bigwedge_{(a_1, ..., a_n) \in \mathsf{path}(\phi)} \langle a_1 \rangle ... \langle a_n \rangle \fBang S \models \phi \lor \neg_S (\phi)
-\]
-
-\subsubsection{Discussion: Precisifying the Negation. }
-
-\NI If someone asserts that, say, Jack does not support Manchester United,
-we have so far said very little.  Until we know the \emph{range of
-  football teams} he could support, we don't know what the negation
-amounts to.  Until we have some more determinate information about the
-range of possible choices, there are an \emph{indefinite} number of
-ways in which this could be true.  But if we knew that the only
-possible teams Jack could support are Manchester United, Arsenal or
-Chelsea, then suddenly our negation has some determinate content.
-SNEL captures this intuition.  Once a negated formula has been
-precisified by specifying the range of allowable options (via the $!$
-operator), the negated claim can be made precise, and the law of
-excluded middle can be proven.
-
-\subsubsection{Discussion: Negation as Infinitary Disjunction. }
-As is well known the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.
-
-Analogously, given an infinite set $S$ of symbols, the
-negation of propositional logic can be translated into an infinitary
-disjunction of formulae in SNEL.\martin{doesn't this argument also work for a finite
-set $S$?}
-
-
-
-\subsection{A Naive Decision Procedure}
-\martin{Do we need this section?}
-Define $|\phi|$ as the degree of $\phi$:
-\begin{eqnarray*}
-|\top| & = & 0  \\
-|\bot| & = & 0  \\
-|\neg \phi| & = & | \phi |  \\
-|\phi \land \psi| & = & \mathsf{max}(| \phi |, | \psi|)  \\
-|\phi \lor \psi| & = & \mathsf{max}(| \phi |, | \psi|)  \\
-|\langle a \rangle \phi | & = & 1 + | \phi |  \\
-| \fBang S | & = & 1 
-\end{eqnarray*}
-Define the $\mathsf{symbols}$ of a formula as:
-\begin{eqnarray*}
-\mathsf{symbols}(\top) & = & \{\}  \\
-\mathsf{symbols}(\bot) & = & \{\}  \\
-\mathsf{symbols}(\neg \phi) & = & \mathsf{symbols}(\phi)  \\
-\mathsf{symbols}(\phi \land \psi) & = &\mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi)  \\
-\mathsf{symbols}(\phi \lor \psi) & = &\mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi)  \\
-\mathsf{symbols}(\langle a \rangle \phi) & = & \{a\} \cup \mathsf{symbols}(\phi)  \\
-\mathsf{symbols}(\fBang S) & = & S 
-\end{eqnarray*}
-Now define $\sigma(\phi)$ as:
-\[
-\sigma(\phi) = |\mathsf{symbols}(\phi)| + 1
-\]
-Then we can prove the following theorem:
-
-\begin{theorem}
-If a formula $\phi$ is satisfiable, then there is a finite tree-like model of height $|\phi|$ and branching factor $\sigma(\phi)$ that satisfies $\phi$.
-\end{theorem}
-\begin{proof}
-Take the original  model $(l,w)$ that satisfies $\phi$.
-Let $(l',w)$ be the generated sub-model starting at $w$. 
-It is well known that generated sub-models satisfy the same formulae, so $(l',w)$ also satisfies $\phi$.
-Now (by Proposition 2.15 of ``Modal Logic'') we can construct a tree-like model $(l'',w)$ of branching factor $\sigma(\phi)+1$ that also satisfies $\phi$.
-Now take the restriction of $(l'',w)$ to height $|\phi|$.
-Now $(l'',w)$ bisimulates $(l,w)$ to degree $|\phi|$.
-But (by Proposition 2.31 of ``Modal Logic''), if two models bisimulate to degree $|\phi|$, then they agree on all formulae of degree $|\phi|$. So the restriction of the tree-like model satisfies $\phi$.
-\end{proof}
-
-To use Theorem 1 as a decision procedure: if we have a claim $P_1, ..., P_n \models Q$,  let $ \phi = \bigwedge P_i \land \neg Q$, and look for a satisfying model of $\phi$. By Theorem 1, we only need to search a finite number of trees of height $\LEQ |\phi|$ and branching factor $\LEQ \sigma(\phi)$.
-
-\subsection{The Need for an Additional Symbol}
-Note that the function $\sigma(\phi) = |\mathsf{symbols}(\phi)| + 1$ adds one additional symbol to the symbols in $\phi$. Why is this?
-
-Consider the invalid claim that says that nothing ever exists:
-\[
-\top \nvDash \fBang []
-\]
-To see that it is invalid, we need to consider a model which includes a transition using a new symbol $\nu$ which is not in $\mathsf{symbols}(\phi)$. (After all, in this case, $\mathsf{symbols}(\top \land \neg  \fBang []) = []$). 
-So, when enumerating finite models that might satisfy $\phi$, the symbols we need to consider are:
-\[
-\mathsf{symbols}(\phi) \cup \{\nu\}
-\]
-where $\nu \notin \mathsf{symbols}(\phi)$. Another case where the extra $\nu$ symbol is needed is for showing that:
-\[
-\langle a \rangle \top \nvDash \fBang [a]
-\]
-To show this we need a model which satisfies $\langle a \rangle \top \land \neg \nvDash \fBang [a]$.
-Any satisfying counter model includes an extra transition from the root using a symbol other than $a$.
-
-\subsection{Doubly-Exponential Search Space}
-The number of trees grows at a rate which is doubly exponential.
-At level $0$, there is just one state.
-At level $1$, there are $\sigma(\phi)$ states.
-At level $h$, there are $\sigma(\phi)^h$ states.
-The total height of the tree is $|\phi|$, so the total number of states in the model is:
-\[
-\sum_{i=0}^{|\phi|} (\sigma(\phi))^i
-\]
-The different models are distinguished by which of these states are used. 
-Each state is either used or unused.
-So the total number of models is no more than $2 ^ {\sum_{i=0}^{|\phi|} (\sigma(\phi))^i}$.
-(In fact it is significantly less than this upper bound because there are restrictions on which combinations of states can be used and unused: a child cannot be used if any of its ancestors are unused).
-
-To get the exact number of trees for a given height $h$ and branching factor $b$, define the following recursive function:
-\begin{eqnarray*}
-a(0) & = & 1 \\
-a(n+1) & = & (1+a(n))^b 
-\end{eqnarray*}
-Then the number of trees is $a(h)$.
-This quickly grows enormous, as the following table shows, for $b = 3$:
-\begin{center}
-\begin{tabular}{ r | r }
-h & a(h) \\
-\hline
-0 & 1 \\
-1 & 8 \\
-2 & 729 \\
-3 & 389017000 \\
-4 & 58871587162270593034051001
-%4 & 5.8871587e+25 \\
-\end{tabular}
-\end{center}
-    
-\subsection{A More Efficient DecisionProcedure}
-We can use the fact that the $[\land, \fBang]$ fragment of SNEL has a linear-time decision procedure to build an exponential-time decision procedure for EL $[\land, \fBang, \neg]$:
+\NI We can use the fact that the $[\land, \fBang]$ fragment of SNEL
+has a linear-time decision procedure to build an exponential-time
+decision procedure for EL $[\land, \fBang, \neg]$:
 
 Given a claim $\phi \models \psi$, let $S = \mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{\nu\}$ (where $\nu$ is a new symbol which does not occur in $\phi$ or $\psi$).
 First, translate away all negations in $\phi$ using $\neg_S()$ as defined in Section 1.4.

@@ -241,11 +241,9 @@ Benthem established that modal logic is the fragment of first-order
 logic invariant under bisimulation \cite{BlackburnP:modlog}. What is
 the the fragment corresponding to eremic logic? Our Theorem
 \ref{theorem:completeLattice} suggests to look at closure under mutual
-simulation.  A better understanding of eremic logic's relationship
-with first-order logic might also lead to insight into excluded middle
-in eremic logic.
+simulation.  
 
- Van Benthem's result was generalised to monadic second
+Van Benthem's result was generalised to monadic second
 order by Janin and Walukiewicz \cite{JaninD:expcomotpmcwrtmsol} who
 showed that the bisimulation invariant fragment of monadic
 second-order logic is the modal $\mu$-calculus, an extension of modal
@@ -278,6 +276,42 @@ techniques taken for granted in the meta-theory of the modal
 $\mu$-calculus, such as the relationship between least and greatest
 fixpoints, is no longer available.
 
+\subsubsection{Excluded middle}
+
+A better understanding of eremic logic's relationship with first-order
+logic might also lead to insight into excluded middle in eremic logic.
+The logical law of excluded middle states that either a proposition or
+its negation must be true. In eremic logic
+\[
+\models \phi \lor \neg_S(\phi)
+\]
+
+\NI does not hold in general. (The negation operator $\neg_{S}(\cdot)$
+was defined in Section \ref{ELAndNegation}) For example, let $\phi$ be
+$\langle a \rangle \top$ and $S = \Sigma = \{a, b\}$.  Then
+\[
+   \phi \lor \neg_{S} \phi 
+       \quad=\quad 
+   \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
+\]
+
+\NI Now this will not in general be valid - it will be false for
+example in the model $((\{x\}, \emptyset, \{(x, \Sigma)\}), x)$, the
+model having just the root node (labelled $\Sigma$) and no transitions.
+Restricting $S$ to be a proper subset of $\Sigma = \{a, b\}$ is also not
+enough. For example with $S = \{a\}$ we have
+\[
+   \MAY{a}{\TRUE} \lor \neg_{S}(\MAY{a}{\TRUE})
+      \quad=\quad
+   \MAY{a}{\TRUE}\ \lor\ !\emptyset \lor \MAY{a}{\FALSE}
+\]
+This formula cannot hold in any eremic model which contains a
+$b$-labelled transition, but no $a$-transition from the root.
+
+Is it possible to identify classes of models that nevertheless verify
+excluded middle? The answer to this question appears to depend 
+on the chosen notion of semantic model.
+
 \subsubsection{Understanding the expressive strength of eremic logic}
 
 The expressive power of logics can be understood in several different
@@ -305,21 +339,13 @@ EL [$\land, !, \neg$] & Full eremic logic \\
 \end{center}
 
 
-\NI The top three languages are simple. In each case:
-
-\begin{itemize}
-\item
-There is no facility for expressing disjunction
-\item
-Every formula that is satisfiable has a simplest satisfying model
-\item
-There is a simple linear-time decision procedure
-\end{itemize}
-
-\NI But there are two ways in which EL[$\land, !$] is more expressive.
-Firstly, EL[$\land, !$], unlike either PL[$\land$] or HML[$\land$], is
-expressive enough to be able to distinguish between any two models
-that are not bisimilar, cf.~Theorem
+\NI The top three languages are simple. In each case: there is no
+facility for expressing disjunction, every formula that is satisfiable
+has a simplest satisfying model, and there is a simple linear-time
+decision procedure But there are two ways in which EL[$\land, !$] is
+more expressive.  Firstly, EL[$\land, !$], unlike either PL[$\land$]
+or HML[$\land$], is expressive enough to be able to distinguish
+between any two models that are not bisimilar, cf.~Theorem
 \ref{hennessymilnertheorem}\martin{What does it mean for PL to
   distinguish things up to bisimilarity?}.  The second way in which
 EL[$\land, !$] is significantly more expressive than both PL[$\land$]
