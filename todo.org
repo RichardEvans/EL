@@ -1,7 +1,6 @@
-I'm not sure about the term "complexifying operators".  In what sense
-are they complexifying? Why not call them propositional connectives or
-soemthing like that?
-
+* Check preliminaries. Remove superfluous material.
+* Put the Haskell code into separate Github repo. Document how to use the
+software.
 * Add all missing biblographic references
 * remove doubly defined labels, add missing labels
 * Cases in proofs are inconsistent across the paper

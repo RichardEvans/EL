@@ -112,12 +112,20 @@ Now
 \[
 \phi \models \psi \mbox{ iff } \forall \phi_{i=1}^n \phi_i \models \psi
 \]
-Now, to check whether each $\phi_i \models \psi$, we will construct a model of $\psi_i$ (in linear time). 
-Now define the $S$ extensions of an annotated model $\MMM$ as all models which extend the states of $\MMM$ with extra transitions taken from $S$ which respect the state labelling on $\MMM$.
-Now $\phi_i \models \psi$ if and only if all $S$-extensions of $\SIMPL{\phi_i}$ satisfy $\psi$.
-So, to check whether $\phi_i \models \psi$, we enumerate the $S$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{\phi_i}$) and check for each one whether it satisfies $\psi$.
+Now, to check whether each $\phi_i \models \psi$, we will construct a
+model of $\psi_i$ (in linear time).  Now define the $S$ extensions of
+an annotated model $\MMM$ as all models which extend the states of
+$\MMM$ with extra transitions taken from $S$ which respect the state
+labelling on $\MMM$.  Now $\phi_i \models \psi$ if and only if all
+$S$-extensions of $\SIMPL{\phi_i}$ satisfy $\psi$.  So, to check
+whether $\phi_i \models \psi$, we enumerate the $S$-extensions of
+$\SIMPL{\phi_i}$ (there are a finite number of such extensions - the
+exact number is exponential in the size of $\SIMPL{\phi_i}$) and check
+for each one whether it satisfies $\psi$.
 
-To fill out this sketch, I will describe the structure of the annotated model, define the $\mu$ function, and show how to compute the extensions of an annotated model relative to a set $S$ of symbols.
+To fill out this sketch, We will describe the structure of the
+annotated model, define the $\mu$ function, and show how to compute
+the extensions of an annotated model relative to a set $S$ of symbols.
 
 
 \subsection{Computing the Extensions of a Model}
