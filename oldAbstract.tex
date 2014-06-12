@@ -1,0 +1,45 @@
+\begin{abstract}
+\ELFULL{} is a modal logic with a novel operator expressing \emph{exclusion} between sentences. 
+
+Instead of the traditional negation operator, \ELFULL{} uses a simple non-compositional exclusion operator. 
+At a high level, the exclusion operator and the negation operator play the \emph{same role}: they are both used to make incompatible claims.
+
+Because it does not have complexifying logical operators (~, \/, =>), \ELFULL{} has a \emph{linear-time decision procedure}.
+Nevertheless, despite its simplicity, it is expressive enough to satisfy the Hennessy-Milner Theorem and Brandom's Incompatibility Semantics property.
+
+Our interest in \ELFULL{} derives from our belief that it occupies a sweet spot in logical space: it is expressive enough to satisfy key theorems (such as Hennessy-Milner) but simple enough for validity to be decidable in linear-time.
+
+In the introductory section, we motivate the preference for exclusion over negation, by appealing to the arguments of Robert Brandom.
+
+Then we present the syntax, semantics, and proof rules for \ELFULL{}, and establish key meta-theorems such as completeness and compactness.  
+We provide a decision procedure, and show that it is linear-time.
+We show that the syntactic notion
+of elementary equivalence induced by the the formulae of \ELFULL{}
+coincides with the semantic notion of mutual simulation on models.  
+
+\ELFULL{} was designed to express logical inferences between \emph{atomic sentences}. 
+We show how ELFULL{} can capture these inferences, and how it has been used as the representational core of a large industrial knowledge-based system.
+
+
+
+
+\martin{here is an alternative abstract. What do you think?}
+
+\ELFULL{} is a modal logic with a novel operator expressing
+\emph{exclusion} between sentences. Exclusion can be used to express
+the concept of negation.  We present the syntax, proof rules, and
+semantics of eremic logic, and establish key meta-theorems such as
+completeness and compactness.  We also show that the syntactic notion
+of elementary equivalence induced by the the formulae of eremic logic
+coincides with the semantic notion of bisimilarity on models.  Then we
+give a linear-time decision procedure for an important fragment of of
+eremic logic. This fragment has been used in an industrial
+application.  We argue that this fragment is a suitable query language
+for knowledge representation and logic programming. We also further
+elusidate eremic logic by translation to first-order logic as well as
+Hennessy-Milner logic. \martin{do we go the other way round?} We
+conclude with a discussion of using \ELABR{} to model features of
+natural language, such as inferences between ``atomic'' sentences,
+refining Brandom's incompatibility semantics.
+
+\end{abstract}
