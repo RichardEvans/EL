@@ -90,131 +90,14 @@ relative to $S \subseteq \Sigma$:
 
 \end{definition}
 
-\NI Note that, if $S$ is infinite, then the last two clauses will generate infinitary formulae.
+\NI Note that, if $S$ is infinite, then the last two clauses will
+generate infinitary formulae.
 
-\subsubsection{Discussion: Precisifying the Negation. }
+\subsection{A decision procedure}
 
-\NI If someone asserts that, say, Jack does not support Manchester United,
-we have so far said very little.  Until we know the \emph{range of
-  football teams} he could support, we don't know what the negation
-amounts to.  Until we have some more determinate information about the
-range of possible choices, there are an \emph{indefinite} number of
-ways in which this could be true.  But if we knew that the only
-possible teams Jack could support are Manchester United, Arsenal or
-Chelsea, then suddenly our negation has some determinate content.
-SNEL captures this intuition.  Once a negated formula has been
-precisified by specifying the range of allowable options (via the $!$
-operator), the negated claim can be made precise, and the law of
-excluded middle can be proven.
-
-\subsubsection{Discussion: Negation as Infinitary Disjunction. }
-As is well known the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.
-
-Analogously, given an infinite set $S$ of symbols, the
-negation of propositional logic can be translated into an infinitary
-disjunction of formulae in SNEL.\martin{doesn't this argument also work for a finite
-set $S$?}
-
-
-
-\subsection{A Naive Decision Procedure}
-\martin{Do we need this section?}
-Define $|\phi|$ as the degree of $\phi$:
-\begin{eqnarray*}
-|\top| & = & 0  \\
-|\bot| & = & 0  \\
-|\neg \phi| & = & | \phi |  \\
-|\phi \land \psi| & = & \mathsf{max}(| \phi |, | \psi|)  \\
-|\phi \lor \psi| & = & \mathsf{max}(| \phi |, | \psi|)  \\
-|\langle a \rangle \phi | & = & 1 + | \phi |  \\
-| \fBang S | & = & 1 
-\end{eqnarray*}
-Define the $\mathsf{symbols}$ of a formula as:
-\begin{eqnarray*}
-\mathsf{symbols}(\top) & = & \{\}  \\
-\mathsf{symbols}(\bot) & = & \{\}  \\
-\mathsf{symbols}(\neg \phi) & = & \mathsf{symbols}(\phi)  \\
-\mathsf{symbols}(\phi \land \psi) & = &\mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi)  \\
-\mathsf{symbols}(\phi \lor \psi) & = &\mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi)  \\
-\mathsf{symbols}(\langle a \rangle \phi) & = & \{a\} \cup \mathsf{symbols}(\phi)  \\
-\mathsf{symbols}(\fBang S) & = & S 
-\end{eqnarray*}
-Now define $\sigma(\phi)$ as:
-\[
-\sigma(\phi) = |\mathsf{symbols}(\phi)| + 1
-\]
-Then we can prove the following theorem:
-
-\begin{theorem}
-If a formula $\phi$ is satisfiable, then there is a finite tree-like model of height $|\phi|$ and branching factor $\sigma(\phi)$ that satisfies $\phi$.
-\end{theorem}
-\begin{proof}
-Take the original  model $(l,w)$ that satisfies $\phi$.
-Let $(l',w)$ be the generated sub-model starting at $w$. 
-It is well known that generated sub-models satisfy the same formulae, so $(l',w)$ also satisfies $\phi$.
-Now (by Proposition 2.15 of ``Modal Logic'') we can construct a tree-like model $(l'',w)$ of branching factor $\sigma(\phi)+1$ that also satisfies $\phi$.
-Now take the restriction of $(l'',w)$ to height $|\phi|$.
-Now $(l'',w)$ bisimulates $(l,w)$ to degree $|\phi|$.
-But (by Proposition 2.31 of ``Modal Logic''), if two models bisimulate to degree $|\phi|$, then they agree on all formulae of degree $|\phi|$. So the restriction of the tree-like model satisfies $\phi$.
-\end{proof}
-
-To use Theorem 1 as a decision procedure: if we have a claim $P_1, ..., P_n \models Q$,  let $ \phi = \bigwedge P_i \land \neg Q$, and look for a satisfying model of $\phi$. By Theorem 1, we only need to search a finite number of trees of height $\LEQ |\phi|$ and branching factor $\LEQ \sigma(\phi)$.
-
-\subsection{The Need for an Additional Symbol}
-Note that the function $\sigma(\phi) = |\mathsf{symbols}(\phi)| + 1$ adds one additional symbol to the symbols in $\phi$. Why is this?
-
-Consider the invalid claim that says that nothing ever exists:
-\[
-\top \nvDash \fBang []
-\]
-To see that it is invalid, we need to consider a model which includes a transition using a new symbol $\nu$ which is not in $\mathsf{symbols}(\phi)$. (After all, in this case, $\mathsf{symbols}(\top \land \neg  \fBang []) = []$). 
-So, when enumerating finite models that might satisfy $\phi$, the symbols we need to consider are:
-\[
-\mathsf{symbols}(\phi) \cup \{\nu\}
-\]
-where $\nu \notin \mathsf{symbols}(\phi)$. Another case where the extra $\nu$ symbol is needed is for showing that:
-\[
-\langle a \rangle \top \nvDash \fBang [a]
-\]
-To show this we need a model which satisfies $\langle a \rangle \top \land \neg \nvDash \fBang [a]$.
-Any satisfying counter model includes an extra transition from the root using a symbol other than $a$.
-
-\subsection{Doubly-Exponential Search Space}
-The number of trees grows at a rate which is doubly exponential.
-At level $0$, there is just one state.
-At level $1$, there are $\sigma(\phi)$ states.
-At level $h$, there are $\sigma(\phi)^h$ states.
-The total height of the tree is $|\phi|$, so the total number of states in the model is:
-\[
-\sum_{i=0}^{|\phi|} (\sigma(\phi))^i
-\]
-The different models are distinguished by which of these states are used. 
-Each state is either used or unused.
-So the total number of models is no more than $2 ^ {\sum_{i=0}^{|\phi|} (\sigma(\phi))^i}$.
-(In fact it is significantly less than this upper bound because there are restrictions on which combinations of states can be used and unused: a child cannot be used if any of its ancestors are unused).
-
-To get the exact number of trees for a given height $h$ and branching factor $b$, define the following recursive function:
-\begin{eqnarray*}
-a(0) & = & 1 \\
-a(n+1) & = & (1+a(n))^b 
-\end{eqnarray*}
-Then the number of trees is $a(h)$.
-This quickly grows enormous, as the following table shows, for $b = 3$:
-\begin{center}
-\begin{tabular}{ r | r }
-h & a(h) \\
-\hline
-0 & 1 \\
-1 & 8 \\
-2 & 729 \\
-3 & 389017000 \\
-4 & 58871587162270593034051001
-%4 & 5.8871587e+25 \\
-\end{tabular}
-\end{center}
-    
-\subsection{A More Efficient DecisionProcedure}
-We can use the fact that the $[\land, \fBang]$ fragment of SNEL has a linear-time decision procedure to build an exponential-time decision procedure for EL $[\land, \fBang, \neg]$:
+\NI We can use the fact that the $[\land, \fBang]$ fragment of SNEL
+has a linear-time decision procedure to build an exponential-time
+decision procedure for EL $[\land, \fBang, \neg]$:
 
 Given a claim $\phi \models \psi$, let $S = \mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{\nu\}$ (where $\nu$ is a new symbol which does not occur in $\phi$ or $\psi$).
 First, translate away all negations in $\phi$ using $\neg_S()$ as defined in Section 1.4.
