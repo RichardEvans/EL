@@ -142,114 +142,45 @@ do get the desired result that
 \]
 
 
-\subsection{Why Hennessy-Milner logic without negation does not satisfy 
-the Hennessy-Milner theorem}
+%% \subsection{Why Hennessy-Milner logic without negation does not satisfy 
+%% the Hennessy-Milner theorem}
 
-\martin{This subsection is a bit obsolete because we no longer have non-deterministic LTS}
+%% \martin{This subsection is a bit obsolete because we no longer have non-deterministic LTS}
 
-We can now see why in Hennessy-Milner logic without negation $p \equiv
-p'$ does \emph{not} entail $p \BISIM p'$
+%% We can now see why in Hennessy-Milner logic without negation $p \equiv
+%% p'$ does \emph{not} entail $p \BISIM p'$
 
-\begin{GRAMMAR}
-  \phi 
-    &\quad ::= \quad&
-  \top \fOr \phi_1 \AND \phi_2  \fOr \langle a \rangle \phi
-\end{GRAMMAR}
+%% \begin{GRAMMAR}
+%%   \phi 
+%%     &\quad ::= \quad&
+%%   \top \fOr \phi_1 \AND \phi_2  \fOr \langle a \rangle \phi
+%% \end{GRAMMAR}
 
-\input{figure:hml}
+%% \input{figure:hml}
 
-\NI Consider Figure \ref{figure:hml}.  Here, $x \equiv x'$ - they both
-satisfy the sub formulae of $\langle a \rangle (\langle b \rangle \top
-\AND \langle c \rangle \top)$.  But there is no bisimulation between
-$x$ and $x'$ ($y_1$ cannot be matched with $y'$ because $y'$ has an
-additional outgoing $c$-transition).
+%% \NI Consider Figure \ref{figure:hml}.  Here, $x \equiv x'$ - they both
+%% satisfy the sub formulae of $\langle a \rangle (\langle b \rangle \top
+%% \AND \langle c \rangle \top)$.  But there is no bisimulation between
+%% $x$ and $x'$ ($y_1$ cannot be matched with $y'$ because $y'$ has an
+%% additional outgoing $c$-transition).
 
-If we remove negation, Hennessy-Milner logic is insufficiently expressive to distinguish
-between these two non-bisimilar models.  When we restore negation, we
-can distinguish between these models via the formula:
+%% If we remove negation, Hennessy-Milner logic is insufficiently expressive to distinguish
+%% between these two non-bisimilar models.  When we restore negation, we
+%% can distinguish between these models via the formula:
 
-\[
-   \langle a \rangle \neg \langle c \rangle \top
-\]
+%% \[
+%%    \langle a \rangle \neg \langle c \rangle \top
+%% \]
 
-\NI Similarly, \ELABR{} is able to distinguish between these models via the
-formula:
+%% \NI Similarly, \ELABR{} is able to distinguish between these models via the
+%% formula:
 
-\[
-  \langle a \rangle ! \{b\}
-\]
+%% \[
+%%   \langle a \rangle ! \{b\}
+%% \]
 
-\NI \ELABR{}, also, has the expressive capacity to distinguish between
-non-bisimilar models. If the LTSs are finitely-branching, it can
-simulate negation (in innermost scope) via the width restriction
-operator !
+%% \NI \ELABR{}, also, has the expressive capacity to distinguish between
+%% non-bisimilar models. If the LTSs are finitely-branching, it can
+%% simulate negation (in innermost scope) via the width restriction
+%% operator !
 
-\subsection{EL, Hennessy-Milner logic and Propositional Logic}
-
-\richard{TODO: this subsection relies on an understanding of EL [$\land, !, \neg$]  - but this extension is not defined until the Appendices. Things need to be reordered!!!}
-
-\input{figure:relationships}
-Consider the following six languages:
-\begin{center}
-\begin{tabular}{ l | r }
-Language & Description \\
-\hline
-PL[$\land$] & Propositional Logic restricted to the $\land$ operator \\
-Hennessy-Milner logic[$\land$] & Hennessy-Milner Logic restricted to the $\land$ operator \\
-EL[$\land, !$] & Eremic Logic restricted to the $\land$ and $\fBang$ operators \\
-PL [$\land, \neg$] & Full Propositional Logic \\
-HML [$\land, \neg$] & Full Hennessy-Milner Logic \\
-EL [$\land, !, \neg$] & Full Eremic Logic \\
-\end{tabular}
-\end{center}
-Now the top three languages are simple to the point of triviality. In each case:
-\begin{itemize}
-\item
-There is no facility for expressing disjunction
-\item
-Every formula that is satisfiable has a simplest satisfying model
-\item
-There is a simple linear-time decision procedure
-\end{itemize}
-But there are two ways in which EL[$\land, !$]  is significantly more expressive.
-
-Firstly, EL[$\land, !$], unlike either PL[$\land$] or HML[$\land$] , is expressive enough to be able to distinguish between any two models that are not bisimilar. (See Theorem \ref{hennessymilnertheorem}).
-
-The second way in which EL[$\land, !$] is significantly more expressive than both PL[$\land$] and HML[$\land$] is in its ability to express incompatibility.
-No two formulae of PL[$\land$] (or HML[$\land$] ) are incompatible with each other. 
-But many pairs of formulae of EL[$\land, !$] are incompatible.
-(For example: $\langle a \rangle \top$ and $! []$). 
-Because EL[$\land, !$]  is expressive enough to be able to make incompatible claims, it satisfies Brandom's property of {\bf Incompatibility Semantics\footnote{$\INC{p}$ is the set of sets of formulae incompatible with $p$.}}:
-\[
-p \models q \mbox{ iff } \INC{q} \subseteq \INC{p}
-\]
-EL[$\land, !$]  is the \emph{only} logic with a linear-time decision procedure that is expressive enough to respect Incompatibility Semantics. See Theorem \ref{incompatibilitytheorem}.
-
-The bottom three language can all be decided in exponential time.
-But Hennessy-Milner logic is more expressive than PL, and EL [$\land, !, \neg$]  is more expressive than full Hennessy-Milner logic. 
-\begin{proposition}
-Full Hennessy-Milner logic  is more expressive than full PL.
-\end{proposition}
-To see this, fix a PL with the nullary operator $\top$ plus an infinite number of propositional atoms $P_{(i,j)}$, indexed by $i$ and $j$.
-Now translate each formula of Hennessy-Milner logic via the rules:
-\begin{eqnarray*}
-\SEMB{\top}  & = & \top  \\
-\SEMB{\phi \land \psi} & = & \SEMB{\phi} \land \SEMB{\psi}  \\
-\SEMB{\neg \phi} & = & \neg \SEMB{\phi}   \\
-\SEMB{\langle a_i \rangle \phi_j} & = & P_{(i,j)} 
-\end{eqnarray*}
-Now to show that Hennessy-Milner logic is more expressive, we show that there are formulae $\phi$ and $\psi$ of Hennessy-Milner logic such that
-\[
-\phi \models_{HML} \psi \mbox{ but } \SEMB{\phi} \nvDash_{PL} \SEMB{\psi}
-\]
-For example, let $\phi = \langle a \rangle \langle b \rangle \top$ and $\psi = \langle a \rangle \top$.
-Clearly, $\phi \models_{HML} \psi$. But $\SEMB{\phi} = P_{(i,j)}$ and $\SEMB{\psi} = P_{(i',j')}$ for some $i,j,i',j'$, and there are no entailments in PL between arbitrary propositional atoms.
-
-\begin{proposition}
-EL [$\land, !, \neg$]  is more expressive than full Hennessy-Milner logic
-\end{proposition}
-Given a background set $\Sigma$ of symbols, the formula $\fBang A$ of EL can be translated into Hennessy-Milner logic as:
-\[
-\bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top
-\]
-But if $\Sigma$ is infinite, then this is an infinitary disjunction.

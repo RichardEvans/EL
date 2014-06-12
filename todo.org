@@ -6,6 +6,8 @@
 * Be consistent. In particular
   - State vs node
 
+   - Action vs symbol
+
   - Names: R Brandom vs Brandom etc
 
   - as we shall demonstrate vs as we demonstrate ...

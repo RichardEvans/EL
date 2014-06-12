@@ -103,27 +103,27 @@ cannot hope to prove
 \]
 
 \NI For example, let $\phi$ be $\langle a \rangle \top$ and $S = \Sigma = \{a,
-b\}$.  Now
+b\}$.  Then
 
 \[
-   \neg_S(\langle a \rangle \top) 
+   \neg_\Sigma(\langle a \rangle \top) 
       \quad= \quad 
-   ! \{b\} \lor \langle a \rangle \neg_S(\top) 
+   ! \{b\} \lor \langle a \rangle \neg_\Sigma(\top) 
       \quad =\quad  
    ! \{b\} \lor \langle a \rangle \bot
 \]
 
 \NI The term on the right is equivalent to $! \{b\}$. So, in this case:
 \[
-   \phi \lor \neg \phi 
+   \phi \lor \neg_{\Sigma} \phi 
        \quad=\quad 
    \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
 \]
 
 \NI Now this will not in general be valid - it will be false for
 example in the model $((\{x\}, \emptyset, \{(x, \Sigma)\}), x)$, the
-model having just the root node (labelled $\Sigma$) and no transition.
-Restricting $S$ to be a proper subset of $\Sigma \{a, b\}$ is also not
+model having just the root node (labelled $\Sigma$) and no transitions.
+Restricting $S$ to be a proper subset of $\Sigma = \{a, b\}$ is also not
 enough. For example with $S = \{a\}$ we have
 \[
    \MAY{a}{\TRUE} \lor \neg_{S}(\MAY{a}{\TRUE})
@@ -135,7 +135,7 @@ $b$-labelled transition, but no $a$-transition from the root.
 
 But if we restrict our attention to the right kind of models then  excluded middle holds:
 \[
-   !\{a, b\} 
+   !\{a\} 
       \models \; 
    \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
       \quad=\quad
@@ -181,7 +181,8 @@ set $S$?}
 
 
 
-\section{A Naive Decision Procedure}
+\subsection{A Naive Decision Procedure}
+\martin{Do we need this section?}
 Define $|\phi|$ as the degree of $\phi$:
 \begin{eqnarray*}
 |\top| & = & 0  \\
@@ -276,7 +277,7 @@ h & a(h) \\
 \end{tabular}
 \end{center}
     
-\section{A More Efficient DecisionProcedure}
+\subsection{A More Efficient DecisionProcedure}
 We can use the fact that the $[\land, \fBang]$ fragment of SNEL has a linear-time decision procedure to build an exponential-time decision procedure for EL $[\land, \fBang, \neg]$:
 
 Given a claim $\phi \models \psi$, let $S = \mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{\nu\}$ (where $\nu$ is a new symbol which does not occur in $\phi$ or $\psi$).
