@@ -503,18 +503,21 @@ So $\lambda_{\NNN}(x) \supseteq \lambda_{\MMM \sqcup \MMM'}(y)$, as required.
 
 \subsection{A decision procedure for eremic logic}\label{decisionprocedure}
 
-We use the semantic constructions above to provide a linear-time decision procedure.  
-The complexity of the decision procedure shows that \ELABR{} can be useful as a
-query language in knowledge representation. 
+We use the semantic constructions above to provide a linear-time
+decision procedure.  The complexity of the decision procedure shows
+that \ELABR{} can be useful as a query language in knowledge
+representation.
 
-\NI Since \ELABR{} has no connectives for negation, disjunction or implication, its
-decision procedure is straightforward and efficient.  Although there
-are an infinite number of models which satisfy any expression, the
-satisfying models form a bounded lattice with a least upper bound.  The $\SIMPL$
-function defined above gives us the minimal model satisfying an
-expression.  Using this least upper bound, we can calculate entailment
-by checking a \emph{single model}.  To decide whether $p \models q$,
-we use the following theorem:
+Since \ELABR{} has no connectives for negation, disjunction or
+implication, its decision procedure is straightforward and efficient.
+Although there are an infinite number of models which satisfy any
+expression, we have shown that the satisfying models form a bounded
+lattice with a least upper bound.  The $\SIMPL$ function defined above
+gives us the minimal model satisfying an expression.  Using this least
+upper bound, we can calculate entailment by checking a \emph{single
+  model}.  To decide whether $p \models q$, we use the following
+theorem:\martin{Am I right in assuming that the checker first computes $\SIMPL{\phi}$  and then
+checks if $\SIMPL{\phi} \models \psi$? If so, may be we should say this explicityl.}
 
 \begin{theorem}\label{theorem:decision}
   The following are equivalent:
@@ -550,9 +553,12 @@ $\SIMPL{\phi} \models \psi$.  Construction of $\SIMPL{\phi}$ is linear in the si
 $\phi$, and computing whether a model satisfies $\psi$ is linear in the size
 of $\psi$, so computing whether $\phi \models \psi$ is $O(|\phi|+|\psi|)$.
 
-There is a Haskell implementation of the decision procedure at
-\url{https://github.com/RichardEvans/EL}.
-To see that the decision procedure is linear-time, observe that every function in the Haskell implementation is non-recursive and all iterative constructions use one of \begin{verbatim}map, filter, fold, any, all \end{verbatim}- each of which is linear in the size of its input.
+There is a Haskell implementation of the decision procedure
+\cite{HasellImplementation}.  To see that the decision procedure is
+linear-time, observe that every function in the Haskell implementation
+is non-recursive and all iterative constructions use one
+of \begin{verbatim}map, filter, fold, any, all \end{verbatim}- each of
+which is linear in the size of its input.
 
 
 

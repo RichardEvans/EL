@@ -15,9 +15,9 @@ Figure \ref{figure:elAndBangRules} presents all proof rules.
 \NI Note that $\phi$ and $\psi$ are single formulae, not sequents.  By
 using single formulae, we can avoid structural inference rules.  \ELABR{}
 proof rules can be grouped in two parts: standard rules and rules
-unique to \ELABR{}.  Standard rules are [\RULENAME{Identity}],
+unique to \ELABR{}.  Standard rules are [\RULENAME{Id}],
 [\RULENAME{$\top$-Right}], [\RULENAME{$\bot$-Left}],
-[\RULENAME{Transitivity}], [\RULENAME{$\AND$-Left 1}],
+[\RULENAME{Trans}], [\RULENAME{$\AND$-Left 1}],
 [\RULENAME{$\AND$-Left 2}] and [\RULENAME{$\AND$-Right}] hardly need
 explanation as they are variants of familiar rules for propositional
 logic, see e.g.~\cite{TroelstraAS:basprot,vanDalenD:logstr}.  We now
@@ -34,7 +34,7 @@ The rule [\RULENAME{$\bot$-Right 2}] expresses that falsity is 'global'
   $\MAY{orange}{\bot}$ is false, simply because $\bot$ is already
   false.
 
-Relatedly, the rule [\RULENAME{Transition Normal}] enables us to
+Relatedly, the rule [\RULENAME{Normal}] enables us to
 prefix an inference with a may-modality. For example \martin{add good
   example here.}. Note that it is vital for soundness that $\phi$ in $\phi
 \judge \psi$ is a single formula. If we used transitional sequents $\phi_1, ..., \phi_n \judge \psi$,
@@ -83,10 +83,10 @@ The reason is that [\RULENAME{!-Left}] can be derived as follows.
 \begin{center}
   \AxiomC{$\phi \AND\, !A'  \judge  \phi \AND\, !A'$}
   \AxiomC{$A' \subseteq A$}
-  \LeftLabel{\RULENAME{!-Right 1}}
+  \LeftLabel{\small\RULENAME{!-Right 1}}
   \BinaryInfC{$\phi \AND\, !A'  \judge  \phi \AND\, !A$}
   \AxiomC{$\phi \AND\, !A  \judge  \psi$}
-  \LeftLabel{\RULENAME{Transitivity}}
+  \LeftLabel{\small\RULENAME{Trans}}
   \BinaryInfC{$\phi \AND\, !A'  \judge  \psi$}
   \DisplayProof
 \end{center}
@@ -102,55 +102,28 @@ our premise, while [\RULENAME{!-right 1}] allows us to weaken the
 premise.
 
 \subsection{Example inferences}
-We prove that we can use $\phi \AND \psi  \judge  \xi$ to derive $\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$:
+
+\NI We prove that we can use $\phi \AND \psi \judge \xi$ to derive
+$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$:
+
 \begin{center}
   \AxiomC{$\phi \AND \psi  \judge  \xi$}
-  \LeftLabel{\RULENAME{Transition Normal}}
+  \LeftLabel{\RULENAME{Normal}}
   \UnaryInfC{$\MAY{a} (\phi \AND \psi)  \judge  \MAY{a} \xi$}
   \AxiomC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \phi \land \MAY{a} \psi$}
-  \LeftLabel{\RULENAME{Determinism}}
+  \LeftLabel{\RULENAME{Det}}
   \UnaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} (\phi \land \psi)$}
-  \LeftLabel{\RULENAME{Transitivity}}
+  \LeftLabel{\RULENAME{Trans}}
   \BinaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$}
   \DisplayProof
 \end{center}
-Next, we prove that we can derive $\MAY{a}!\{b,c\} \land \MAY{a}!\{c,d\} \judge \MAY{a}!\{c\}$:
-\begin{center}
-  \AxiomC{$!\{b,c\} \judge !\{b,c\}$}
-  \LeftLabel{\RULENAME{$\land$ Left 1}}
-  \UnaryInfC{$!\{b,c\} \land !\{c,d\} \judge !\{b,c\}$}
-  \AxiomC{$!\{c,d\} \judge !\{c,d\}$}
-  \LeftLabel{\RULENAME{$\land$ Left 2}}
-  \UnaryInfC{$!\{b,c\} \land !\{c,d\} \judge !\{c,d\}$}
-  \LeftLabel{\RULENAME{! Right 2}}
-  \BinaryInfC{$!\{b,c\} \land !\{c,d\} \judge !\{c\}$}
-  \LeftLabel{\RULENAME{Transition Normal}}
-  \UnaryInfC{$\MAY{a} (!\{b,c\} \land !\{c,d\}) \judge \MAY{a} !\{c\}$}
-  \AxiomC{$\MAY{a} !\{b,c\} \land \MAY{a} !\{c,d\} \judge \MAY{a} !\{b,c\} \land \MAY{a} !\{c,d\}$}
-  \LeftLabel{\RULENAME{Determinism}}
-  \UnaryInfC{$\MAY{a} !\{b,c\} \land \MAY{a} !\{c,d\} \judge \MAY{a} (!\{b,c\} \land !\{c,d\})$}
-  \LeftLabel{\RULENAME{Transitivity}}
-  \BinaryInfC{$\MAY{a} !\{b,c\} \land \MAY{a} !\{c,d\} \judge \MAY{a}!\{c\}$}
-  \DisplayProof
-\end{center}
-Next, we prove that we can derive $\MAY{a} !\{b\} \land \MAY{a} \MAY{c} \top \judge \MAY{d} \top$:
-\begin{center}
-  \AxiomC{$!\{b\} \land \MAY{c}\top \judge \bot$}
-  \LeftLabel{\RULENAME{Transition Normal}}
-  \UnaryInfC{$\MAY{a}(!\{b\} \land \MAY{c}\top) \judge \MAY{a} \bot$}
-  \AxiomC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top \judge \MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top$}
-  \LeftLabel{\RULENAME{Determinism}}
-  \UnaryInfC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top \judge \MAY{a}(!\{b\} \land \MAY{c}\top)$}
-  \LeftLabel{\RULENAME{Transitivity}}
-  \BinaryInfC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top  \judge \MAY{a} \bot$}  
-  \AxiomC{$\MAY{a}\bot \judge \bot$}
-  \LeftLabel{\RULENAME{Transitivity}}
-  \BinaryInfC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top  \judge \bot$}  
-  \AxiomC{$\bot \judge \MAY{d} \top$}
-  \LeftLabel{\RULENAME{Transitivity}}
-  \BinaryInfC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top  \judge  \MAY{d} \top$}    
-  \DisplayProof
-\end{center}
+
+\input{figure:elAndBangMore:bigDerivations}
+
+Figure \ref{figure:elAndBangMore:bigDerivations} demonstrates how
+to infer $\MAY{a}!\{b,c\} \land \MAY{a}!\{c,d\} \judge \MAY{a}!\{c\}$
+and $\MAY{a} !\{b\} \land \MAY{a} \MAY{c} \top \judge \MAY{d} \top$.
+
 
 \subsection{Characteristic formulae}
 
@@ -244,7 +217,7 @@ The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
 
 \item(Soundness) $\Gamma \judge \psi$ implies $\Gamma \models \psi$.
 
-\item (Completeness) $\Gamma \models \psi$ implies $\Gamma \judge \psi$.
+\item (Completeness) $\Gamma \models \psi$ implies $\Gamma \judge \psi$. \martin{This is not yet proven.}
 
 \end{enumerate}
 \end{corollary}
@@ -292,33 +265,28 @@ If $\MMM\models \phi$ then $\CHAR{\MMM} \judge \phi$.
 \NI We proceed by induction on $\phi$.
 
 \martin{no need to number cases if numbers are not referred to later.}
-\setcounter{mycase}{0}
+%\setcounter{mycase}{0}
 
-\begin{mycase}
-$\phi$ is $\top$
-\end{mycase}
-Then we can prove  $ \CHAR{\MMM} \judge \phi$ immediately using axiom {\bf $\top$ Right}.
+\CASE{$\phi$ is $\top$} Then we can prove $ \CHAR{\MMM} \judge \phi$
+immediately using axiom [\RULENAME{$\top$ Right}.
 
-\begin{mycase}
-$\phi$ is $\psi \AND \psi'$
-\end{mycase}
-By the induction hypothesis, $  \CHAR{\MMM} \judge \psi$ and $  \CHAR{\MMM} \judge \psi'$.
-The proof of $  \CHAR{\MMM} \judge \psi \AND \psi'$ follows immediately using {\bf $\AND$ Right}.
+\CASE{$\phi$ is $\psi \AND \psi'$} By the induction hypothesis, $
+\CHAR{\MMM} \judge \psi$ and $ \CHAR{\MMM} \judge \psi'$.  The proof
+of $ \CHAR{\MMM} \judge \psi \AND \psi'$ follows immediately using
+[\RULENAME{$\AND$ Right}.
 
-\begin{mycase}
-$\phi$ is $\langle a \rangle \psi$
-\end{mycase}
+\CASE{$\phi$ is $\langle a \rangle \psi$}
 If $\MMM \models \langle a \rangle \psi$, then either $\MMM = \bot$ or $\MMM$ is a  model of the form $(\CAL{L},w)$.
-\begin{subcase}
-$\MMM = \bot$
-\end{subcase}
-In this case, $  \CHAR{\MMM} =  \CHAR{\bot} = \bot$. (Recall, that we are overloading $\bot$ to mean both the  model at the bottom of our lattice and a formula (such as $\langle s \rangle \top \AND !\{\}$) which is always false).
-In this case, $  \CHAR{\bot} \judge  \langle a \rangle \psi$ using {\bf $\bot$ Left}.
 
-\begin{subcase}
- $m$ is a  model of the form $(\CAL{L},w)$
- \end{subcase}
-Given $\MMM \models \langle a \rangle \psi$, and that $\MMM$ is a  model of the form $(\CAL{L},w)$, we know that:
+\SUBCASE{$\MMM = \bot$} In this case, $ \CHAR{\MMM} = \CHAR{\bot} =
+\bot$. (Recall, that we are overloading $\bot$ to mean both the model
+at the bottom of our lattice and a formula (such as $\langle s \rangle
+\top \AND !\{\}$) which is always false).  In this case, $ \CHAR{\bot}
+\judge \langle a \rangle \psi$ using [\RULENAME{$\bot$ Left}.
+
+\SUBCASE{$m$ is a model of the form $(\CAL{L},w)$} Given $\MMM \models
+\langle a \rangle \psi$, and that $\MMM$ is a model of the form
+$(\CAL{L},w)$, we know that:
 \[
 (\CAL{L},w) \models \langle a \rangle \psi
 \]
@@ -330,25 +298,24 @@ By the induction hypothesis:
 \[
  \CHAR{(\CAL{L},w')} \judge \psi
 \]
-Now by {\bf Transition Normal}:
+Now by [\RULENAME{Normal}]:
 \[
 \langle a \rangle  \CHAR{(\CAL{L},w')} \judge \langle a \rangle \psi
 \]
-Using repeated application of {\bf $\AND$ Left}, we can show:
+Using repeated application of [\RULENAME{$\AND$ Left}], we can show:
 \[
  \CHAR{(\CAL{L},w)} \judge \langle a \rangle  \CHAR{(\CAL{L},w')}
 \]
-Finally, using {\bf Transitivity}, we derive:
+Finally, using [\RULENAME{Trans}], we derive:
 \[
  \CHAR{(\CAL{L},w)} \judge  \langle a \rangle \psi
 \]
-\begin{mycase}
-$\phi$ is $\fBang \psi$
-\end{mycase}
-If $(\CAL{L},w) \models \fBang A$, then $\lambda(w) \subseteq A$.
-Then $ \CHAR{(\CAL{L},w)} = ! \; \lambda(w) \AND \phi$.
-Now we can prove $! \; \lambda(w) \AND \phi \judge \fBang A$ using  {\bf $!$ Right 1} and repeated applications of {\bf $\AND$ Left}.
 
+\CASE{$\phi$ is $\fBang \psi$} If $(\CAL{L},w) \models \fBang A$,
+then $\lambda(w) \subseteq A$.  Then $ \CHAR{(\CAL{L},w)} = ! \;
+\lambda(w) \AND \phi$.  Now we can prove $! \; \lambda(w) \AND \phi
+\judge \fBang A$ using [\RULENAME{$!$ Right 1}] and repeated applications of
+       [\RULENAME{$\AND$ Left}].
 
 \subsection{Proof of Lemma \ref{lemma:completeness:5}}
 \label{prooflemma5}
@@ -359,18 +326,15 @@ For all formulae $\phi$, we can derive $\phi \judge \CHAR{\SIMPL{\phi}}$.
 \begin{proof}
 Induction on $\phi$.
 
-\setcounter{mycase}{0}
+%\setcounter{mycase}{0}
 
-\begin{mycase}
-$\phi$ is $\top$
-\end{mycase}
-Then we can prove  $\top \judge \top$ using either {\bf $\top$ Right} or {\bf Identity}.
+\CASE{$\phi$ is $\top$} Then we can prove $\top \judge \top$ using
+either [\RULENAME{$\top$ Right}] or [\RULENAME{Id}].
 
-\begin{mycase}
-$\phi$ is $\psi \AND \psi'$
-\end{mycase}
-By the induction hypothesis, $\psi \judge  \CHAR{\SIMPL{\psi}}$ and $\psi' \judge  \CHAR{\SIMPL{\psi'}}$.
-Using {\bf $\AND$ Left} and {\bf $\AND$ Right}, we can show:
+\CASE{$\phi$ is $\psi \AND \psi'$} By the induction hypothesis,
+$\psi \judge \CHAR{\SIMPL{\psi}}$ and $\psi' \judge
+\CHAR{\SIMPL{\psi'}}$.  Using [\RULENAME{$\AND$ Left}] and [\RULENAME{$\AND$
+  Right}], we can show:
 \[
 \psi \AND \psi' \judge  \CHAR{\SIMPL{\psi}} \AND  \CHAR{\SIMPL{\psi'}}
 \]
@@ -382,26 +346,24 @@ From Lemma \ref{final_completeness_lemma} (substituting $\SIMPL{\psi}$ for $\MMM
 \[
  \CHAR{\SIMPL{\psi}} \AND  \CHAR{\SIMPL{\psi'}} \judge  \CHAR{\SIMPL{\psi \AND \psi'}}
 \]
-Our desired result follows using {\bf Transitivity}.
+Our desired result follows using [\RULENAME{Trans}].
 
-\begin{mycase}
-$\phi$ is $\langle a \rangle \psi$
-\end{mycase}
-By the induction hypothesis, $\psi \judge  \CHAR{\SIMPL{\psi}}$.
-Now there are two sub-cases to consider, depending on whether or not $ \CHAR{\SIMPL{\psi}} = \bot$.
-\begin{subcase}
-$ \CHAR{\SIMPL{\psi}} = \bot$
-\end{subcase}
-In this case, $ \CHAR{\SIMPL{\langle a \rangle \psi}}$ also equals $\bot$. 
-By the induction hypothesis:
+\CASE{$\phi$ is $\langle a \rangle \psi$} By the induction
+hypothesis, $\psi \judge \CHAR{\SIMPL{\psi}}$.  Now there are two
+sub-cases to consider, depending on whether or not $
+\CHAR{\SIMPL{\psi}} = \bot$.  
+
+\SUBCASE{$ \CHAR{\SIMPL{\psi}} = \bot$} In this case, $
+\CHAR{\SIMPL{\langle a \rangle \psi}}$ also equals $\bot$.  By the
+induction hypothesis:
 \[
 \psi \judge \bot
 \]
-By {\bf Transition Normal}:
+By [\RULENAME{Normal}]:
 \[
 \langle a \rangle \psi \judge \langle a \rangle \bot
 \]
-By {\bf Bottom Right 2}:
+By [\RULENAME{$\bot$ Right 2}]:
 \[
 \langle a \rangle \bot \judge \bot
 \]
@@ -409,12 +371,11 @@ The desired proof that:
 \[
 \langle a \rangle \psi \judge \bot
 \]
-follows by {\bf Transitivity}.
-\begin{subcase}
-$ \CHAR{\SIMPL{\psi}} \neq \bot$
-\end{subcase}
+follows by [\RULENAME{Trans}].
+
+\SUBCASE{$ \CHAR{\SIMPL{\psi}} \neq \bot$}
 By the induction hypothesis, $\psi \judge  \CHAR{\SIMPL{\psi}}$.
-So, by {\bf Transition Normal}:
+So, by [\RULENAME{Normal}]:
 \[
 \langle a \rangle \psi \judge \langle a \rangle  \CHAR{\SIMPL{\psi}}
 \]
@@ -422,11 +383,11 @@ The desired conclusion follows from noting that:
 \[
  \langle a \rangle  \CHAR{\SIMPL{\psi}} =  \CHAR{\SIMPL{\langle a \rangle \psi}}
  \]
- \begin{mycase}
-$\phi$ is $\fBang A$
-\end{mycase}
-If $\phi$ is $\fBang A$, then $  \CHAR{\SIMPL{\phi}}$ is $\fBang A \AND \top$.
-We can prove $\fBang A \judge \fBang A \AND \top$ using {\bf $\AND$ Right}, {\bf $\top$ Right} and {\bf Identity}.
+
+ \CASE{$\phi$ is $\fBang A$} If $\phi$ is $\fBang A$, then $
+ \CHAR{\SIMPL{\phi}}$ is $\fBang A \AND \top$.  We can prove $\fBang A
+ \judge \fBang A \AND \top$ using [\RULENAME{$\AND$ Right}], [\RULENAME{$\top$
+   Right}] and [\RULENAME{Id}].
 \end{proof}
 
 \subsection{Proof of Lemma \ref{final_completeness_lemma}}
@@ -441,11 +402,9 @@ For all acyclic models $\MMM$ and $\MMM_2$, $  \CHAR{\MMM} \AND  \CHAR{\MMM_2} \
 
 There are two cases to consider, depending on whether or not $(\MMM \sqcap \MMM_2) = \bot$.
 
-\setcounter{mycase}{0}
+%\setcounter{mycase}{0}
 
-\begin{mycase}
-$(\MMM \sqcap \MMM_2) = \bot$
-\end{mycase}
+\CASE{$(\MMM \sqcap \MMM_2) = \bot$}
 If $(\MMM \sqcap \MMM_2) = \bot$, there are three possibilities:
 \begin{itemize}
 \item
@@ -455,7 +414,7 @@ $\MMM_2 = \bot$
 \item
 Neither $\MMM$ nor $\MMM_2$ are $\bot$, but together they are incompatible. 
 \end{itemize}
-If either $\MMM$ or $\MMM_2$ is $\bot$, then the proof is a simple application of {\bf Identity} followed by {\bf $\AND$ Left}.
+If either $\MMM$ or $\MMM_2$ is $\bot$, then the proof is a simple application of [\RULENAME{Id}] followed by [\RULENAME{$\AND$ Left}].
 
 Next, let us consider the case where neither $\MMM$ nor $\MMM_2$ are $\bot$, but together they are incompatible.
 Let $\MMM = (\mathcal{L}, w_1)$ and $\MMM' = (\mathcal{L}', w'_1)$.
@@ -466,36 +425,36 @@ w_1' \xrightarrow{a_1} w'_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w'_n \\
 w_n \xrightarrow{b} w_{n+1} \\
 \lambda'(w'_n) = X \text{ with } b \notin X
 \end{eqnarray*}
-Now it is easy to show, using {\bf $\AND$ Left}, that
+Now it is easy to show, using [\RULENAME{$\AND$ Left}], that
 \begin{eqnarray*}
 \CHAR{\mathsf{\MMM}} \judge \MAY{a_1} ... \MAY{a_{n-1}} \MAY{b} \top \\
 \CHAR{\mathsf{\MMM'}} \judge \MAY{a_1} ... \MAY{a_{n-1}} \fBang X
 \end{eqnarray*}
-Now using {\bf $\AND$ Left} and {\bf $\AND$ Right}:
+Now using [\RULENAME{$\AND$ Left}] and [\RULENAME{$\AND$ Right}]:
 \[
 \CHAR{\mathsf{\MMM}} \land \CHAR{\mathsf{\MMM}'} \judge  \MAY{a_1} ... \MAY{a_{n-1}} \MAY{b} \top \land  \judge \MAY{a_1} ... \MAY{a_{n-1}} \fBang X
 \]
-Now using {\bf Determinism}:
+Now using [\RULENAME{Det}]:
 \[
 \CHAR{\mathsf{\MMM}} \land \CHAR{\mathsf{\MMM}'} \judge  \MAY{a_1} ... \MAY{a_{n-1}} (\MAY{b} \top \land \fBang X)
 \]
-Now, using {\bf $\bot$ Right 1}:
+Now, using [\RULENAME{$\bot$ Right 1}]:
 \[
 \MAY{b} \top \land \fBang X \judge \bot
 \]
-Using $n-1$ applications of  {\bf $\bot$ Right 2}:
+Using $n-1$ applications of  [\RULENAME{$\bot$ Right 2}]:
 \[
 \MAY{a_1} ... \MAY{a_{n-1}} (\MAY{b} \top \land \fBang X) \judge \bot
 \]
-Finally, using {\bf Transitivity}, we derive:
+Finally, using [\RULENAME{Trans}], we derive:
 \[
 \CHAR{\mathsf{\MMM}} \land \CHAR{\mathsf{\MMM}'} \judge \bot
 \]
-\begin{mycase}
-$(\MMM \sqcap \MMM_2) \neq \bot$
-\end{mycase}
-From the construction of $\mathsf{merge}$, if $\MMM$ and $\MMM'$ are acyclic, then $\MMM \sqcap \MMM'$ is also acyclic.
-If $\MMM \sqcap \MMM'$ is acyclic, then $\CHAR{\MMM \sqcap \MMM'}$ is equivalent to a set $\Gamma$ of sentences of one of two forms:
+\CASE{$(\MMM \sqcap \MMM_2) \neq \bot$} From the construction of
+$\mathsf{merge}$, if $\MMM$ and $\MMM'$ are acyclic, then $\MMM \sqcap
+\MMM'$ is also acyclic.  If $\MMM \sqcap \MMM'$ is acyclic, then
+$\CHAR{\MMM \sqcap \MMM'}$ is equivalent to a set $\Gamma$ of
+sentences of one of two forms:
 \begin{eqnarray*}
 \MAY{a_1} ... \MAY{a_n} \top \\
 \MAY{a_1} ... \MAY{a_n} ! X
@@ -534,7 +493,7 @@ This is equivalent to the set $\Gamma$ of sentences:
 \MAY{b} \top \\
 \MAY{a}\fBang\{c,d\}
 \end{eqnarray*}
-Now using {\bf $\AND$ Right} and {\bf Determinism} we can show that
+Now using [\RULENAME{$\AND$ Right}] and [\RULENAME{Det}] we can show that
 \[
 \bigwedge_{\phi \in \Gamma} \phi \judge \CHAR{\MMM \sqcap \MMM'}
 \]
@@ -556,7 +515,7 @@ $\MMM' \models \MAY{a_1} ... \MAY{a_n} ! X$ but $\MMM \nvDash \MAY{a_1} ... \MAY
 \item
 $\MMM \models \MAY{a_1} ... \MAY{a_n} ! X_1$ and $\MMM' \models \MAY{a_1} ... \MAY{a_n} ! X_2$ and $X_1 \cap X_2 \subseteq X$
 \end{enumerate}
-In the first two cases, showing $\CHAR{\MMM} \land \CHAR{\MMM'} \judge \phi$ is just a matter of repeated application of   {\bf $\AND$ Left} and {\bf $\AND$ Right}.
+In the first two cases, showing $\CHAR{\MMM} \land \CHAR{\MMM'} \judge \phi$ is just a matter of repeated application of   [\RULENAME{$\AND$ Left}] and [\RULENAME{$\AND$ Right}].
 In the third case, let $\MMM = (\mathcal{L}, w_1)$ and $\MMM' = (\mathcal{L}', w'_1)$.
 If $\MMM \models \MAY{a_1} ... \MAY{a_n} ! X_1$ and $\MMM' \models \MAY{a_1} ... \MAY{a_n} ! X_2$ then there exists sequences $w_1, ..., w_{n+1}$ and $w'_1, ..., w'_{n+1}$ of states such that
 \begin{eqnarray*}
@@ -570,23 +529,23 @@ Now from the definition of $\CHAR{}$:
 \CHAR{(\mathcal{L}, w_{n_1})} \judge \fBang X_1 \\
 \CHAR{(\mathcal{L}', w'_{n_1})} \judge \fBang X_2
 \end{eqnarray*}
-Now using {\bf \fBang Right 2}:
+Now using [\RULENAME{\fBang Right 2}]:
 \[
 \CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})} \judge \fBang (X_1 \cap X_2)
 \]
-Using {\bf \fBang Right 1}:
+Using [\RULENAME{\fBang Right 1}]:
 \[
 \CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})} \judge \fBang X
 \]
-Using $n$ applications of {\bf Transition Normal}:
+Using $n$ applications of [\RULENAME{Normal}]:
 \[
 \MAY{a_1} ... \MAY{a_n} (\CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})}) \judge \MAY{a_1} ... \MAY{a_n} \fBang X
 \]
-Finally, using $n$ applications of {\bf Determinism}:
+Finally, using $n$ applications of [\RULENAME{Det}]:
 \[
 \CHAR{ (\mathcal{L}, w_1)} \land \CHAR{ (\mathcal{L}', w'_1)} \judge \MAY{a_1} ... \MAY{a_n} (\CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})})
 \]
-So, by {\bf Transitivity}
+So, by [\RULENAME{Trans]}
 \[
 \CHAR{\MMM} \land \CHAR{\MMM'} \judge \MAY{a_1} ... \MAY{a_n} \fBang X
 \]

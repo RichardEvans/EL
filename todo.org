@@ -1,3 +1,7 @@
+I'm not sure about the term "complexifying operators".  In what sense
+are they complexifying? Why not call them propositional connectives or
+soemthing like that?
+
 * Add all missing biblographic references
 * remove doubly defined labels, add missing labels
 * Cases in proofs are inconsistent across the paper
@@ -7,6 +11,10 @@
 * Have we discussed bisimulation invariance?
 * Be consistent. In particular
   - State vs node
+
+  - in hand vs at hand
+
+  - variables X vs x
 
   - I vs we 
 

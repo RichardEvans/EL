@@ -32,6 +32,9 @@
 \newenvironment{FIGURE}{\begin{figure}[h]\rule{\linewidth}{0.5pt}
  %\vspace{3.2mm}
 }{\rule{\linewidth}{0.5pt}\end{figure}}
+\newenvironment{SIDEWAYSFIGURE}{\begin{sidewaysfigure}[ht]\rule{\linewidth}{0.5pt}
+ %\vspace{3.2mm}
+}{\rule{\linewidth}{0.5pt}\end{sidewaysfigure}}
 \newenvironment{RULES}{\[\begin{array}{c}}{\end{array}\]}
 \newenvironment{GRAMMAR}{\[\begin{array}{lcl}}{\end{array}\]}
 \newcommand{\VERTICAL}{\  \mid\hspace{-3.0pt}\mid \ }
@@ -43,7 +46,7 @@
 \newcommand{\FOURPREMISERULE}[5]{\infer{#1 \quad #2 \quad #3 \quad #4}{#5}}
 \newcommand{\SIXPREMISERULE}[7]{\infer{#1 \quad #2 \quad #3 \quad #4 \quad #5 \quad #6}{#7}}
 \newcommand{\RULENAME}[1]{\textsc{#1}}
-\newcommand{\SMALLRULENAME}[1]{\textsc{\tiny #1}}
+\newcommand{\SMALLRULENAME}[1]{\textsc{\small #1}}
 \newcommand{\ZEROPREMISERULENAMEDRIGHT}[2]{\ZEROPREMISERULE{#1}\,\SMALLRULENAME{#2}}
 \newcommand{\ONEPREMISERULENAMEDRIGHT}[3]{\ONEPREMISERULE{#1}{#2}\,\SMALLRULENAME{#3}}
 \newcommand{\TWOPREMISERULENAMEDRIGHT}[4]{\TWOPREMISERULE{#1}{#2}{#3}\,\SMALLRULENAME{#4}}
@@ -120,9 +123,12 @@
                {|}{{$\mid$}}1               
     }
 
-\newtheorem{mycase}{Case}
-\newtheorem{subcase}{Case}
-\numberwithin{subcase}{mycase}
+
+\newcommand{\CASE}[1]{\underline{Case #1.}}
+\newcommand{\SUBCASE}[1]{\underline{Subcase #1.}}
+%\newtheorem{mycase}{Case}
+%\newtheorem{subcase}{Case}
+%\numberwithin{subcase}{mycase}
 
 
 % Dot

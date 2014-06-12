@@ -8,11 +8,11 @@ Mutual exclusion is a natural and ubiquitous concept.
 Predicate logic \emph{can} represent mutually exclusive alternatives, of course.
 To say that Pierre is the \emph{only} king of France, we can write, following Russell:
 \[
-king(france, pierre) \land \forall X . king(france, X) \rightarrow X = pierre
+king(france, pierre) \land \forall x . king(france, x) \rightarrow x = pierre
 \]
 To say that a particular traffic light, $tl$, is red - and red is its \emph{only} colour - we could write:
 \[
-colour(tl, red) \land \forall X . colour(tl, X) \rightarrow X = red
+colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red
 \]
 In predicate logic, exclusion is a \emph{derived} concept, reduced to a combination of universal quantification and identity.
 Predicate logic, in other words, uses relatively complex machinery to express a simple concept:
@@ -69,7 +69,7 @@ To say that the traffic light is currently red, and \emph{red is its only colour
 \]
 This is markedly simpler (both in terms of representation length and computational complexity) than the representation in predicate logic:
 \[
-colour(t, red) \land \forall X . colour(t, X) \rightarrow X = red
+colour(t, red) \land \forall x . colour(t, x) \rightarrow x = red
 \]
 If we want to be able to describe properties changing over time, we can add an extra transition representing the time-stamp.
 To say that that the traffic light was red at time $t_1$ and amber at time $t_2$, we can write:
@@ -121,7 +121,7 @@ If someone is male, then it is not the case that they are female
 \end{quote}
 Recast in first order logic:
 \[
-\forall X. male(X) \Rightarrow \neg female(X)
+\forall x. male(x) \Rightarrow \neg female(x)
 \]
 According to the orthodox position, the incompatibility between the two particular sentences depends on a general law involving universal quantification, implication and negation. 
 

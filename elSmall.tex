@@ -150,53 +150,35 @@ $\lambda(s)$ is infinite. Figure \ref{figure:elAndBang:moreMdels}
 presents examples of validating (and otherwise) the formula $!\{a, b,
 c\}$.
 
-\begin{example}
-The model in Figure \ref{example model} satisfies all the following formulae, amongst others:
-\begin{eqnarray*}
-\MAY{a} \\
-\MAY{a} \MAY{b} \\
-\MAY{a} \fBang \{b,c\} \\
-\MAY{a} \fBang \{b,c,d\} \\
-\MAY{c} \\
-\MAY{c} \fBang \{\} \\
-\MAY{c} \fBang \{a\} \\
-\MAY{c} \fBang \{a,b\} \\
-\MAY{a} \land \MAY{c}  \\
-\MAY{a} (\MAY{b} \land \fBang \{b,c\}
-\end{eqnarray*}
-The same model does \emph{not} satisfy any of the following formulae:
-\begin{eqnarray*}
-\MAY{b} \\
-\fBang \{a\} \\
-\fBang \{a, c\} \\
-\MAY{a} \fBang \{b\} \\
-\MAY{a} \MAY{c} \\
-\MAY{a} \MAY{b} \fBang \{c\} 
-\end{eqnarray*}
+\input{figure:elSmall}
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[node distance=1.3cm,>=stealth',bend angle=45,auto]
-  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
-  \tikzstyle{red place}=[place,draw=red!75,fill=red!20]
-  \tikzstyle{transition}=[rectangle,thick,draw=black!75,
-  			  fill=black!20,minimum size=4mm]
-  \tikzstyle{every label}=[red]
-  
-  \begin{scope}
-    \node [place] (w1) {$\Sigma$};
-    \node [place] (e1) [below left of=w1] {$\{b,c\}$}
-      edge [pre]  node[swap] {a}                 (w1);      
-    \node [place] (e2) [below right of=w1] {$\{\}$}
-      edge [pre]  node[swap] {c}                 (w1);      
-    \node [place] (e3) [below of=e1] {$\Sigma$}
-      edge [pre]  node[swap] {b}                 (e1);      
-  \end{scope}
-    
-\end{tikzpicture}
-\caption{Example Model}
-\label{example model}
-\end{figure}
+\begin{example}
+The model in Figure \ref{figure:elSmall} satisfies all the following
+formulae, amongst others:
+\[
+\begin{array}{lclclclcl}
+\MAY{a} &\qquad&
+\MAY{a} \MAY{b} &\qquad&
+\MAY{a} \fBang \{b,c\} &\qquad&
+\MAY{a} \fBang \{b,c,d\} &\qquad&
+\MAY{c} \\[1mm]
+\MAY{c} \fBang \{\} &&
+\MAY{c} \fBang \{a\} &&
+\MAY{c} \fBang \{a,b\} &&
+\MAY{a} \land \MAY{c} &&
+\MAY{a} (\MAY{b} \land \fBang \{b,c\}
+\end{array}
+\]
+The same model does \emph{not} satisfy any of the following formulae
+\[
+\MAY{b} \qquad
+\fBang \{a\} \qquad
+\fBang \{a, c\} \qquad
+\MAY{a} \fBang \{b\} \qquad
+\MAY{a} \MAY{c} \qquad
+\MAY{a} \MAY{b} \fBang \{c\} 
+\]
+
 \end{example}
 
 \begin{example}
@@ -206,6 +188,7 @@ Because \ELABR{} does not include any of the ``complexifying'' operators $\neg, 
 In Figure \ref{threemodels}, the left model is the unique simplest model satisfying$\MAY{a} \MAY{b}$.
 This property will be used in Section \ref{decisionprocedure} to construct a \emph{linear-time} decision procedure.
 \input{figure:elAndBang:models}
+
 \end{example}
 
 \begin{example}
@@ -218,13 +201,12 @@ Figure \ref{more models} shows one model that does, and one that does not, satis
 Because \ELABR{} does not include any of the ``complexifying'' operators $\neg, \lor, $ or $\Rightarrow$, the only tautological formulae that are true in all models are $\top$ and conjunctions of $\top$.
 But there are an infinite number of distinct contradictory formulae that are false in all models.
 For example:
-\begin{eqnarray*}
-\MAY{a} \land \fBang \{\} \\
-\MAY{a} \land \fBang \{b\} \\
-\MAY{a} \land \fBang \{b, c\} \\
-\MAY{b} \land \fBang \{\} \\
-...
-\end{eqnarray*}
+\[
+   \MAY{a} \land \fBang \{\} \qquad
+   \MAY{a} \land \fBang \{b\} \qquad
+   \MAY{a} \land \fBang \{b, c\} \qquad
+   \MAY{b} \land \fBang \{\} \qquad
+\]
 \end{example}
 
 \begin{definition}

@@ -54,23 +54,40 @@ The $!$ operator gives additional information to the type-checker, allowing an a
 \item
 The $!$ operator provides additional information to the compiler, allowing significantly more efficient clause ordering
 \end{itemize}
-I shall go through each of these in turn.
+We consider  each of these in turn.
 
 \subsection{Using Sub-trees of Expressions to Represent Objects}
 Consider the following facts about a gentleman named Brown:
-\begin{eqnarray*}
-\MAY{brown} & ( & \\
-& & \MAY{sex} (\MAY{male} \land \fBang \{male\}) \\
-& & \MAY{friends} (\MAY{lucy} \land \MAY{elizabeth}) \\
-& )
-\end{eqnarray*}
-All the facts which start with the prefix $\MAY{brown}$ form a sub-tree of the entire database.
-And all the facts which start with the prefix $\MAY{brown} \MAY{friends}$ form a sub-tree of that tree.
-A sub-tree can be treated as an individual via its prefix.
-The whole sub-tree can be removed in one fell swoop by deleting its associated prefix.
-So we can e.g. remove Brown's friends just by deleting the sentence $\MAY{brown} \MAY{friends}$.
-(Compare this with Prolog - where it is much harder to remove all formulae containing a particular symbol).
-A sub-tree of formulae is the \ELABR{} equivalent of an \emph{object} in an object-oriented programming language.
+%% \begin{eqnarray*}
+%% \MAY{brown} & ( & \\
+%% & & \MAY{sex} (\MAY{male} \land \fBang \{male\}) \\
+%% & & \MAY{friends} (\MAY{lucy} \land \MAY{elizabeth}) \\
+%% & )
+%% \end{eqnarray*}
+
+\[
+   \MAY{brown} 
+   \left(
+   \begin{array}{l}
+     \MAY{sex} (\MAY{male} \land \fBang \{male\}) \\
+        \qquad \AND \\
+     \MAY{friends} (\MAY{lucy} \land \MAY{elizabeth}) 
+   \end{array}
+   \right)
+\]
+\martin{I have reformated this formula. Is it correct? If not, the old
+version is commented out ...}
+
+\NI All the facts which start with the prefix $\MAY{brown}$ form a
+sub-tree of the entire database.  And all the facts which start with
+the prefix $\MAY{brown} \MAY{friends}$ form a sub-tree of that tree.
+A sub-tree can be treated as an individual via its prefix.  The whole
+sub-tree can be removed in one fell swoop by deleting its associated
+prefix.  So we can e.g. remove Brown's friends just by deleting the
+sentence $\MAY{brown} \MAY{friends}$.  (Compare this with Prolog -
+where it is much harder to remove all formulae containing a particular
+symbol).  A sub-tree of formulae is the \ELABR{} equivalent of an
+\emph{object} in an object-oriented programming language.
 
 The tree-structure of formulae also allows us to express the \emph{life-time of data} in a natural way. 
 If we wish a piece of data $d$ to exist for just the duration of a proposition $t$, then we make $t$ be a sub-expression of $d$. 
