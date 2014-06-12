@@ -1,12 +1,13 @@
-\section{Eremic logic and negation}
+\section{Eremic logic and negation}\label{ELAndNegation}
+
+\subsection{The logic $EL[\land, !, \neg]$}
 
 Our motivation for investigating eremic logic has been to give an
 alternative account of negation, based on the concept of exclusion.
 In this section we study how to recover negation in eremic logic. For
 this purpose, we enrich eremic logic with negation as well as
 disjunction, and show how negation can be explained in terms of plain
-eremic logic with disjunction. We then discuss the meaning of excluded
-middle in eremic logic.
+eremic logic with disjunction.
 
 \begin{definition}
 Given a set $\Sigma$ of symbols, the \emph{formulae of eremic logic
@@ -69,9 +70,9 @@ A$. In other words
 \]
 
 \NI Note that both, the negation of the modality and the negation of
-the tantum involve the set $\Sigma$ of actions. As we will see below in the section
-on excluded middle, it is sometimes advantageous to translate away negation with respect to 
-a subset $S \subseteq \Sigma$. 
+the tantum involve the set $\Sigma$ of actions. It is sometimes
+advantageous to translate away negation with respect to a subset $S
+\subseteq \Sigma$.\martin{We should explain why.}
 
 \begin{definition}
 The function $x \neg_{S}(\phi)$ removes negation from $\phi$
@@ -90,71 +91,6 @@ relative to $S \subseteq \Sigma$:
 \end{definition}
 
 \NI Note that, if $S$ is infinite, then the last two clauses will generate infinitary formulae.
-
-\subsection{Excluded middle}
-
-The logical law of excluded middle states that either a proposition or
-its negation must be true. In eremic logic, 
-given a formula $\phi$ and particular set $S$ of symbols, then we
-cannot hope to prove
-
-\[
-\models \phi \lor \neg_S(\phi)
-\]
-
-\NI For example, let $\phi$ be $\langle a \rangle \top$ and $S = \Sigma = \{a,
-b\}$.  Then
-
-\[
-   \neg_\Sigma(\langle a \rangle \top) 
-      \quad= \quad 
-   ! \{b\} \lor \langle a \rangle \neg_\Sigma(\top) 
-      \quad =\quad  
-   ! \{b\} \lor \langle a \rangle \bot
-\]
-
-\NI The term on the right is equivalent to $! \{b\}$. So, in this case:
-\[
-   \phi \lor \neg_{\Sigma} \phi 
-       \quad=\quad 
-   \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
-\]
-
-\NI Now this will not in general be valid - it will be false for
-example in the model $((\{x\}, \emptyset, \{(x, \Sigma)\}), x)$, the
-model having just the root node (labelled $\Sigma$) and no transitions.
-Restricting $S$ to be a proper subset of $\Sigma = \{a, b\}$ is also not
-enough. For example with $S = \{a\}$ we have
-\[
-   \MAY{a}{\TRUE} \lor \neg_{S}(\MAY{a}{\TRUE})
-      \quad=\quad
-   \MAY{a}{\TRUE}\ \lor\ !\emptyset \lor \MAY{a}{\FALSE}
-\]
-This formula cannot hold in any eremic model which contains a
-$b$-labelled transition, but no $a$-transition from the root.
-
-But if we restrict our attention to the right kind of models then  excluded middle holds:
-\[
-   !\{a\} 
-      \models \; 
-   \langle a \rangle \top \; \lor \; ! \{b\} \; \lor \; \langle a \rangle \bot
-      \quad=\quad
-   \MAY{a}{\TRUE} \lor \neg_{\{a, b\}}(\MAY{a}{\TRUE}).
-\]
-
-\NI More generally, let $\mathsf{path}(\phi)$ be the set of
-symbol-sequences in $\phi$.  So for example:
-
-\[
-\mathsf{path}(\langle a \rangle (\langle b \rangle \top \land \langle c \rangle \langle d \rangle \top)) = \{(), (a), (a, b), (a, c, d)\}
-\]
-
-\NI Then the following is valid for any formula $\phi$ (letting
-$S = \sigma(\phi)$):
-
-\[
-\bigwedge_{(a_1, ..., a_n) \in \mathsf{path}(\phi)} \langle a_1 \rangle ... \langle a_n \rangle \fBang S \models \phi \lor \neg_S (\phi)
-\]
 
 \subsubsection{Discussion: Precisifying the Negation. }
 
