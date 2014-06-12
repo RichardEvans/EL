@@ -1,3 +1,5 @@
+* Add all missing biblographic references
+* remove doubly defined labels, add missing labels
 * Cases in proofs are inconsistent across the paper
 * Each chapter its own file
 * remove all files that are not used 
@@ -6,7 +8,13 @@
 * Be consistent. In particular
   - State vs node
 
-   - Action vs symbol
+  - I vs we 
+
+  - always use strong bisimilarity instead of bisimilarity?
+
+  - Action vs symbol
+
+  - HOw rule names are written (used typefaces)
 
   - Names: R Brandom vs Brandom etc
 

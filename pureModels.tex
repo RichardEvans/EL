@@ -144,15 +144,8 @@ bisimilarity, an important concept in process theory and modal logics
 \cite{SangiorgiD:intbisac}. Bisimilarity is strictly finer than
 $\MODELEQ$, and more sensitive to branching structure.
 
-\begin{theorem}[Hennessy, Milner \cite{HennessyM:alglawfndac}]
-\label{hennessymilnertheorem}
-Let $\PPP$ and $\PPP'$ be two finitely branching pure eremic
-models. Then: $\PPP \BISIM \PPP'$ if and only if $\THEORY{\PPP} =
-\THEORY{\PPP'}$.  \martin{discuss the case of non-finitely-branching}
-\end{theorem}
-
-\NI Before proving the theorem, we need to make precise some of the
-terminology.
+\NI Before stating and proving the theorem, we need to make precise
+the used concepts.
 
 \begin{definition}
 A pure eremic model $(\LLL, s)$ is finitely branching if its
@@ -173,13 +166,19 @@ The \emph{theory} of $\PPP$, written $\THEORY{\PPP}$, is the set
 $\{\phi\ |\ \PPP \models \phi\}$.
 \end{definition}
 
-\NI We are now ready to prove Theorem \ref{hennessymilnertheorem}.
-Let $\PPP = (\LLL, w)$ and $\PPP' = (\LLL', w')$ be finitely
+\begin{theorem}[Hennessy, Milner \cite{HennessyM:alglawfndac}]
+\label{hennessymilnertheorem}
+Let $\PPP$ and $\PPP'$ be two finitely branching pure eremic
+models. Then: $\PPP \BISIM \PPP'$ if and only if $\THEORY{\PPP} =
+\THEORY{\PPP'}$.  \martin{discuss the case of non-finitely-branching}
+\end{theorem}
+
+\begin{proof}
+\NI Let $\PPP = (\LLL, w)$ and $\PPP' = (\LLL', w')$ be finitely
 branching, where $\LLL = (W, \rightarrow)$ and $(W', \rightarrow')$.
 We first show the left to right direction, so assume that $\PPP \BISIM
 \PPP'$.
 
-\begin{proof}
 The proof is by induction on formulae.  The only case which differs
 from the standard Hennessy-Milner theorem is the case for $!A$, so
 this is the only case we shall consider.  Assume $w \BISIM w'$ and $w
@@ -215,24 +214,35 @@ To prove $w \BISIM w'$, we need to show:
   y'$, then there exists a $y$ such that $x \xrightarrow{a} y$ and $(y, y') \in Z$.
 
 \end{itemize}
-To show that $(x,x') \in Z$ implies $\lambda(x) = \lambda'(x')$, we will argue by contraposition.
-Assume $\lambda(x) \neq \lambda'(x')$.
-Then either $\lambda'(x') \nsubseteq  \lambda(x)$ or $\lambda(x) \nsubseteq  \lambda'(x')$.
-If $\lambda'(x') \nsubseteq  \lambda(x)$, then $x' \nvDash \fBang \lambda(x)$.
-But $x \models \fBang \lambda(x)$, so $x$ and $x'$ satisfy different sets of propositions and are not equivalent.
-Similarly, if $\lambda(x) \nsubseteq  \lambda'(x')$ then $x \nvDash \fBang \lambda'(x')$.
-But $x' \models \fBang \lambda'(x')$, so again $x$ and $x'$ satisfy different sets of propositions and are not equivalent.
+To show that $(x,x') \in Z$ implies $\lambda(x) = \lambda'(x')$, we
+will argue by contraposition.  Assume $\lambda(x) \neq \lambda'(x')$.
+Then either $\lambda'(x') \nsubseteq \lambda(x)$ or $\lambda(x)
+\nsubseteq \lambda'(x')$.  If $\lambda'(x') \nsubseteq \lambda(x)$,
+then $x' \nvDash \fBang \lambda(x)$.  But $x \models \fBang
+\lambda(x)$, so $x$ and $x'$ satisfy different sets of propositions
+and are not equivalent.  Similarly, if $\lambda(x) \nsubseteq
+\lambda'(x')$ then $x \nvDash \fBang \lambda'(x')$.  But $x' \models
+\fBang \lambda'(x')$, so again $x$ and $x'$ satisfy different sets of
+propositions and are not equivalent.
 
-I will show the forth condition in detail. The back condition is very similar.
-To show the forth condition, assume that  $x \xrightarrow{a} y$ and that $(x,x') \in Z$ (i.e. $x \equiv x'$).
-We need to show that $\exists y'$ such that $x' \xrightarrow{a} y'$ and $(y,y') \in Z$ (i.e. $y \equiv y'$).
+We will show the forth condition in detail. The back condition is very
+similar.  To show the forth condition, assume that $x \xrightarrow{a}
+y$ and that $(x,x') \in Z$ (i.e. $x \equiv x'$).  We need to show that
+$\exists y'$ such that $x' \xrightarrow{a} y'$ and $(y,y') \in Z$
+(i.e. $y \equiv y'$).
 
-Consider the set of $y'_i$ such that $x' \xrightarrow{a} y'_i$. Since $x \xrightarrow{a} y$, $x \models \langle a \rangle \top$, and as $x \equiv x'$,  $x' \models \langle a \rangle \top$, so we know this set is non-empty.
-Further, since $(\mathcal{W}', \rightarrow')$ is finitely-branching, there is only a finite set of such $y'_i$, so we can list them $y'_1, ..., y'_n$,  where $n >= 1$.
+Consider the set of $y'_i$ such that $x' \xrightarrow{a} y'_i$. Since
+$x \xrightarrow{a} y$, $x \models \langle a \rangle \top$, and as $x
+\equiv x'$, $x' \models \langle a \rangle \top$, so we know this set
+is non-empty.  Further, since $(\mathcal{W}', \rightarrow')$ is
+finitely-branching, there is only a finite set of such $y'_i$, so we
+can list them $y'_1, ..., y'_n$, where $n >= 1$.
 
-Now, in the Hennessy-Milner theorem for HML, the proof proceeds as follows:
-assume, for reductio, that of the $y'_1, ..., y'_n$, there is no $y'_i$ such that $y \equiv y'_i$.
-Then, by the definition of $\equiv$, there must be formulae $\phi_1, ..., \phi_n$ such that for all $i$ in $1$ to $n$:
+Now, in the Hennessy-Milner theorem for HML, the proof proceeds as
+follows: assume, for reductio, that of the $y'_1, ..., y'_n$, there is
+no $y'_i$ such that $y \equiv y'_i$.  Then, by the definition of
+$\equiv$, there must be formulae $\phi_1, ..., \phi_n$ such that for
+all $i$ in $1$ to $n$:
 \[
 y'_i \models \phi_i \mbox{ and } y \nvDash \phi_i
 \]
