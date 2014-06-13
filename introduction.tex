@@ -30,14 +30,9 @@ simple concept:
     computational cost of syntax manipulation in languages with
     binders.}.
 
-\item The identity relation is also an expensive piece of
-  machinery. In first-order predicate logic, identity is a
-  special-case relation which requires an infinite axiom
-  schema\martin{that is not true inthe sense that the axioms are
-    generic (e.g. some variant of $x = y \IMPLIES \phi \IMPLIES
-    \phi\{y/x\}$ which is computationally straightforward. What is
-    expensive is the size of the search space)} (the Indiscernibility
-  of Identicals) to capture its unique properties.
+\item The identity relation also doesn't come for free because it
+  requires an infinite collection of axioms formalising the
+  indiscernibility of identicals.
 
 \end{itemize}
 
@@ -47,29 +42,30 @@ though exclusion does not, prima facie, appear to have anything to do
 with the free/bound variable distinction, or require the full power of 
 the identity relation.
 
-This paper introduces an alternative logic, \ELFULL{}, in which
-exclusion is expressed directly, as a first-class concept - rather
-than defined in terms of relatively complex machinery.  \ELFULL{} is
-the simplest logic we could find that expresses exclusion directly.
-Exclusion and conjunction are the \emph{only} logical operators.
-There is no negation, disjunction or implication.  Because of this
-simplicity, it has a linear-time decision procedure.
+This paper introduces an alternative, \ELFULL{}, where exclusion is
+expressed directly, as a first-class concept - rather being relegated
+to second-class status as a defined concept. \ELFULL{} is the simplest
+logic we could find that expresses exclusion directly.  There is no
+negation, disjunction or implication. To retain expressive power,
+eremic logic has may-modalites.  Because of this simplicity, it has a
+linear-time decision procedure.
 
-\ELFULL{} is a multi-modal logic, a variant of Hennessy-Milner Logic, that replaces negation with a different logical connective:
+\ELFULL{} is a multi-modal logic, a variant of Hennessy-Milner Logic,
+that replaces negation with a different logical connective:
 \[
    !A
 \]
-called \emph{just} $A$\martin{maybe we drop ``just $A$ in favour of
-  ``tantum $A$''?}, or \emph{tantum} $A$. Here, $A$ is a finite set of
-alternatives that exhaust all possibilities.  For example:
+called \emph{tantum} $A$. Here, $A$ is a finite set of alternatives
+that exhaust all possibilities.  For example:
 \begin{eqnarray*}
 \fBang \{green, amber, red\}
 \end{eqnarray*}
-Any statement of a fact that exceeds what tantum $A$ allows is false:
+Any statement of a fact that exceeds what tantum $A$ like
 \[
-   !\{green, amber, red\} \AND \MAY{blue}
+   !\{green, amber, red\} \AND \MAY{blue}.
 \]
-is necessarily false.  When the options are green, amber, or red, then
+allows is necessarily false.
+ When the options are green, amber, or red, then
 blue is not available.
 
 Now to say that Pierre is the only king of France, we write:
