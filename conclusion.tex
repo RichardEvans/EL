@@ -279,7 +279,16 @@ fixpoints to eremic logic:
 
 \NI Here $\PVAR{x}$ ranges over propositional variables.  Such a logic
 would be useful for talking about infinite transition systems and the
-structures of exclusion they give rise to.  What properties does the
+structures of exclusion they give rise to.  For example the phases of
+a traffic light can be described as follows.
+\[
+   \MAY{tl}{\MAY{colour}{\mu \PVAR{x}.
+       (!\{green\} \AND \MAY{green}{
+         (!\{amber\} \AND \MAY{amber}{
+           (!\{red\} \AND \MAY{red}{\PVAR{x}})})})}}
+\]
+
+ What properties does the
 eremic $\mu$-calculus have? In the absence of negation, a lot of proof
 techniques taken for granted in the meta-theory of the modal
 $\mu$-calculus, such as the relationship between least and greatest

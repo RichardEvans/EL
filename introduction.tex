@@ -14,47 +14,63 @@ To say that a particular traffic light, $tl$, is red - and red is its \emph{only
 \[
 colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red
 \]
-In predicate logic, exclusion is a \emph{derived} concept, reduced to a combination of universal quantification and identity.
-Predicate logic, in other words, uses relatively complex machinery to express a simple concept:
+In predicate logic, exclusion is a \emph{derived} concept, reduced to 
+a combination of universal quantification and identity.  Predicate
+logic, in other words, uses relatively complex machinery to express a
+simple concept:
 \begin{itemize}
-\item Quantification is an expensive concept that comes with
-      many rules governing its behaviour - such as the distinction
-      between free and bound variables\footnote{As of 2014 there is a substantial amount
-      of ongoing research regarding good formalisations of handling
-      free/bound variables, see e.g.~nominal approaches to
-      logic \cite{PittsAM:newaas,PittsAM:nomsetnasics}. The problem
-      was put in focus in recent years with the rise in interest in the
-      computational cost of syntax manipulation in languages with
-      binders.}. The costs of quantification have to be
-      borne every time one uses exclusion, \emph{even though exclusion does
-      not, prima facie, appear to have anything to do with the
-      free/bound variable distinction}.
-\item The identity relation is also an expensive piece of machinery. In first order predicate logic, identity is a special-case relation which requires an infinite axiom schema (the Indiscernibility of Identicals) to capture its unique properties.
+
+\item Quantification is an expensive concept that comes with many
+  rules governing its behaviour - such as the distinction between free
+  and bound variables\footnote{As of 2014 there is a substantial
+    amount of ongoing research regarding good formalisations of
+    handling free/bound variables, e.g.~the nominal approaches to
+    logic \cite{PittsAM:nomsetnasics}. The problem was
+    put in focus in recent years with the rising interest in the
+    computational cost of syntax manipulation in languages with
+    binders.}.
+
+\item The identity relation is also an expensive piece of
+  machinery. In first-order predicate logic, identity is a
+  special-case relation which requires an infinite axiom
+  schema\martin{that is not true inthe sense that the axioms are
+    generic (e.g. some variant of $x = y \IMPLIES \phi \IMPLIES
+    \phi\{y/x\}$ which is computationally straightforward. What is
+    expensive is the size of the search space)} (the Indiscernibility
+  of Identicals) to capture its unique properties.
+
 \end{itemize}
 
-This paper introduces an alternative logic, \ELFULL{}, in which exclusion is expressed \emph{directly}, as a first-class concept - rather than defined in terms of relatively complex machinery.
-\ELFULL{} is the simplest logic we could find that expresses exclusion directly. 
-Exclusion and conjunction are the \emph{only} logical operators. 
-There is no negation, disjunction or implication.
-Because of its extreme simplicity, it has a linear-time decision procedure.
+\NI The costs of quantification and identity, such as a larger proof
+search space, have to be borne every time one uses exclusion, even
+though exclusion does not, prima facie, appear to have anything to do
+with the free/bound variable distinction, or require the full power of 
+the identity relation.
+
+This paper introduces an alternative logic, \ELFULL{}, in which
+exclusion is expressed directly, as a first-class concept - rather
+than defined in terms of relatively complex machinery.  \ELFULL{} is
+the simplest logic we could find that expresses exclusion directly.
+Exclusion and conjunction are the \emph{only} logical operators.
+There is no negation, disjunction or implication.  Because of this
+simplicity, it has a linear-time decision procedure.
 
 \ELFULL{} is a multi-modal logic, a variant of Hennessy-Milner Logic, that replaces negation with a different logical connective:
 \[
    !A
 \]
-called \emph{just} $A$, or \emph{tantum} $A$.
-Here, $A$ is a finite set of alternatives that exhaust all
-possibilities. 
-For example:
+called \emph{just} $A$\martin{maybe we drop ``just $A$ in favour of
+  ``tantum $A$''?}, or \emph{tantum} $A$. Here, $A$ is a finite set of
+alternatives that exhaust all possibilities.  For example:
 \begin{eqnarray*}
 \fBang \{green, amber, red\}
 \end{eqnarray*}
-Any statement of a fact that exceeds what tantum $A$ allows is necessarily false:
+Any statement of a fact that exceeds what tantum $A$ allows is false:
 \[
    !\{green, amber, red\} \AND \MAY{blue}
 \]
-is necessarily false.
-If the only available options are green, amber, or red, then blue is not an available option.
+is necessarily false.  When the options are green, amber, or red, then
+blue is not available.
 
 Now to say that Pierre is the only king of France, we write:
 \[
@@ -67,7 +83,8 @@ To say that the traffic light is currently red, and \emph{red is its only colour
 \[
 \MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\})
 \]
-This is markedly simpler (both in terms of representation length and computational complexity) than the representation in predicate logic:
+This is simpler (both in terms of representation length and
+computational complexity) than the representation in predicate logic:
 \[
 colour(t, red) \land \forall x . colour(t, x) \rightarrow x = red
 \]
@@ -77,21 +94,35 @@ To say that that the traffic light was red at time $t_1$ and amber at time $t_2$
 \MAY{tl} \MAY{colour} (\MAY{t1} (\MAY{red} \land !\{red\}) \land \MAY{t2} (\MAY{amber} \land !\{amber\}))
 \]
 
-
-To summarise the argument we shall be presenting:
+To summarise the argument we shall be presenting:\martin{I suggest to massage this bullet list
+into something more fluently readable}
 \begin{itemize}
+
+\item Every fundamental logical concept needs a logic in which it can
+  be expressed naturally (ergonomically)\martin{we don't give
+    argumetns for this}
+
+\item Exclusion is a fundamental logical concept
+
 \item
-Every fundamental logical concept needs a logic in which it can be expressed naturally (ergonomically)
+First order logic does not express exclusion naturally\footnote{We
+  will precisify this claim in later sections by showing that (i)
+  first order logic's representation of exclusion is significantly
+  longer in terms of formula length than \ELFULL{}'s (see Section
+  \ref{incompatiblepredicatesinfol}); and (ii) logic programs in
+  \ELFULL{} can be optimised to run significantly faster than their
+  equivalent in FOL (see Section \ref{optimizingpreconditions}).}
+
+\item \ELFULL{} expresses exclusion directly
+
 \item
-Exclusion is a fundamental logical concept
-\item
-First order logic does not express exclusion naturally\footnote{We will precisify this claim in later sections by showing that (i) first order logic's representation of exclusion is significantly longer in terms of formula length than \ELFULL{}'s (see Section \ref{incompatiblepredicatesinfol}); and (ii) logic programs in \ELFULL{} can be optimised to run significantly faster than their equivalent in FOL (see Section \ref{optimizingpreconditions}).}
-\item
-\ELFULL{} expresses exclusion directly
-\item
-Because it expresses exclusion directly, it has various unusual features. 
-Because it eschews the complexifying logical operators $\neg, \lor$ and $\Rightarrow$, it has a \emph{linear-time} decision procedure. 
-Nevertheless, despite its simplicity, it is sufficiently expressive to satisfy both:
+Because it expresses exclusion directly, it has various unusual
+features. 
+
+\item Because it eschews the complexifying logical operators $\neg,
+  \lor$ and $\Rightarrow$, it has a \emph{linear-time} decision
+  procedure.  Nevertheless, despite its simplicity, it is sufficiently
+  expressive to satisfy both:
 \begin{itemize}
 \item
 The Hennessy-Milner theorem (Theorem \ref{theorem:completeLattice})
@@ -102,13 +133,18 @@ Brandom's Incompatibility Semantics property (Theorem \ref{incompatibilitytheore
 In the next subsections, we shall:
 \begin{itemize}
 \item
-Strengthen the claim that exclusion is a fundamental logical concept, by arguing that exclusion is conceptually prior to negation
+Strengthen the claim that exclusion is a fundamental logical concept,
+by arguing that exclusion is conceptually prior to negation
 \item
 Broaden the claim that exclusion is a fundamental logical concept, by adding other sorts of intra-sentential logical concepts that predicate logic cannot handle (naturally, or at all). These other forms of intra-sentential inferential relations can all be handled naturally in \ELFULL{}.
 \end{itemize}
 
 \subsection{Exclusion as a Fundamental Logical Concept, Conceptually Prior to Negation}
-In this section, we shall strengthen the claim that exclusion is a fundamental logical concept, by arguing that exclusion is conceptually prior to negation.
+In this section, we shall strengthen the claim that exclusion is a
+fundamental logical concept, by arguing that exclusion is conceptually
+prior to negation.\martin{Maybe we should tone down our claim here a
+  bit, and declare that the argument is a sketch or seeks to
+  communicate an intuition}
 
 Every English speaker knows that
 \begin{quote}

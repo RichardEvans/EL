@@ -11,6 +11,10 @@ software.
 * Be consistent. In particular
   - State vs node
 
+  - first-order vs first order
+
+  - Why do we use the term predicate logic at all?
+
   - in hand vs at hand
 
   - variables X vs x
