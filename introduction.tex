@@ -60,20 +60,26 @@ that exhaust all possibilities.  For example:
 \begin{eqnarray*}
 \fBang \{green, amber, red\}
 \end{eqnarray*}
-Any statement of a fact that exceeds what tantum $A$ like
+We use modalities to state  facts, for example
 \[
-   !\{green, amber, red\} \AND \MAY{blue}.
+   !\{green, amber, red\} \AND \MAY{amber}{}
 \]
-allows is necessarily false.
- When the options are green, amber, or red, then
-blue is not available.
+expresses that $amber$ is currently the case and $red$ as well as $green$ are the
+only two possible alternatives to $amber$.
 
-Now to say that Pierre is the only king of France, we write:
+Any statement that exceeds what tantum $A$ allows, like
+\[
+   !\{green, amber, red\} \AND \MAY{blue},
+\]
+is necessarily false.  When the only options are green, amber, or red,
+then blue is not available.  Now to say that Pierre is the only king
+of France, we write:
 \[
 \MAY{king}\MAY{france}(\MAY{pierre} \land \fBang \{pierre\})
 \]
-Note that \ELFULL{}'s representation of exclusion involves no universal quantifier and no identity relation.
-It is a purely propositional representation of exclusion.
+Crucially \ELFULL{}'s representation of exclusion involves no
+universal quantifier and no identity relation.  It is a purely
+propositional representation of exclusion.
 
 To say that the traffic light is currently red, and \emph{red is its only colour}, we write:
 \[
