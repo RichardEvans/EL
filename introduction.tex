@@ -62,14 +62,13 @@ that exhaust all possibilities.  For example:
 \end{eqnarray*}
 We use modalities to state  facts, for example
 \[
-   !\{green, amber, red\} \AND \MAY{amber}{}
+   \MAY{amber}{}\ \AND\ !\{green, amber, red\} 
 \]
-expresses that $amber$ is currently the case and $red$ as well as $green$ are the
-only two possible alternatives to $amber$.
-
-Any statement that exceeds what tantum $A$ allows, like
+expresses that $amber$ is currently the case and $red$ as well as
+$green$ are the only two possible alternatives to $amber$.  Any
+statement that exceeds what tantum $A$ allows, like
 \[
-   !\{green, amber, red\} \AND \MAY{blue},
+   !\{green, amber, red\}\ \AND\ \MAY{blue},
 \]
 is necessarily false.  When the only options are green, amber, or red,
 then blue is not available.  Now to say that Pierre is the only king
@@ -79,9 +78,8 @@ of France, we write:
 \]
 Crucially \ELFULL{}'s representation of exclusion involves no
 universal quantifier and no identity relation.  It is a purely
-propositional representation of exclusion.
-
-To say that the traffic light is currently red, and \emph{red is its only colour}, we write:
+propositional representation of exclusion.  To say that the traffic
+light is currently red, and red is its only colour, we write:
 \[
 \MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\})
 \]
@@ -90,56 +88,30 @@ computational complexity) than the representation in predicate logic:
 \[
 colour(t, red) \land \forall x . colour(t, x) \rightarrow x = red
 \]
-If we want to be able to describe properties changing over time, we can add an extra transition representing the time-stamp.
-To say that that the traffic light was red at time $t_1$ and amber at time $t_2$, we can write:
+If we want to be able to describe properties changing over time, we
+can add an extra transition representing the time-stamp.  To say that
+that the traffic light was red at time $t_1$ and amber at time $t_2$,
+we can write:
 \[
-\MAY{tl} \MAY{colour} (\MAY{t1} (\MAY{red} \land !\{red\}) \land \MAY{t2} (\MAY{amber} \land !\{amber\}))
+   \MAY{tl} \MAY{colour} (\MAY{t1} (\MAY{red} \land !\{red\}) \land \MAY{t2} (\MAY{amber} \land !\{amber\}))
 \]
+Change over time can be expressed in first-order logic with bounded
+quantification, but modalities do this more succinctly and variable
+free.
 
-To summarise the argument we shall be presenting:\martin{I suggest to massage this bullet list
-into something more fluently readable}
-\begin{itemize}
-
-\item Every fundamental logical concept needs a logic in which it can
-  be expressed naturally (ergonomically)\martin{we don't give
-    argumetns for this}
-
-\item Exclusion is a fundamental logical concept
-
-\item
-First order logic does not express exclusion naturally\footnote{We
-  will precisify this claim in later sections by showing that (i)
-  first order logic's representation of exclusion is significantly
-  longer in terms of formula length than \ELFULL{}'s (see Section
+Having sketched that exclusion is a natural logical concept, not
+easily expressed in first-order logic\footnote{We will precisify this
+  claim in later sections by showing that (i) first order logic's
+  representation of exclusion is significantly longer in terms of
+  formula length than \ELFULL{}'s (see Section
   \ref{incompatiblepredicatesinfol}); and (ii) logic programs in
   \ELFULL{} can be optimised to run significantly faster than their
-  equivalent in FOL (see Section \ref{optimizingpreconditions}).}
+  equivalent in FOL (see Section \ref{optimizingpreconditions}).},  we
+will now argue that exclusion is conceptually prior to negation and
+enables us to express intra-sentential logical concepts such as
+inference from $n+1$-ary to $n$-ary relations and intra-sentential
+inferential, all of which are expensive in first-order logic.
 
-\item \ELFULL{} expresses exclusion directly
-
-\item
-Because it expresses exclusion directly, it has various unusual
-features. 
-
-\item Because it eschews the complexifying logical operators $\neg,
-  \lor$ and $\Rightarrow$, it has a \emph{linear-time} decision
-  procedure.  Nevertheless, despite its simplicity, it is sufficiently
-  expressive to satisfy both:
-\begin{itemize}
-\item
-The Hennessy-Milner theorem (Theorem \ref{theorem:completeLattice})
-\item
-Brandom's Incompatibility Semantics property (Theorem \ref{incompatibilitytheorem})
-\end{itemize}
-\end{itemize}
-In the next subsections, we shall:
-\begin{itemize}
-\item
-Strengthen the claim that exclusion is a fundamental logical concept,
-by arguing that exclusion is conceptually prior to negation
-\item
-Broaden the claim that exclusion is a fundamental logical concept, by adding other sorts of intra-sentential logical concepts that predicate logic cannot handle (naturally, or at all). These other forms of intra-sentential inferential relations can all be handled naturally in \ELFULL{}.
-\end{itemize}
 
 \subsection{Exclusion as a Fundamental Logical Concept, Conceptually Prior to Negation}
 In this section, we shall strengthen the claim that exclusion is a
