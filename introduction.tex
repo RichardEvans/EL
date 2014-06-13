@@ -83,8 +83,10 @@ light is currently red, and red is its only colour, we write:
 \[
 \MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\})
 \]
+\martin{this is actually structurally the same example as pierre before.
+Let's drop one}
 This is simpler (both in terms of representation length and
-computational complexity) than the representation in predicate logic:
+computational complexity) than the representation\martin{representation twice in one sentence ... not good} in predicate logic:
 \[
 colour(t, red) \land \forall x . colour(t, x) \rightarrow x = red
 \]
@@ -101,7 +103,7 @@ free.
 
 Having sketched that exclusion is a natural logical concept, not
 easily expressed in first-order logic\footnote{We will precisify this
-  claim in later sections by showing that (i) first order logic's
+  claim in later sections by showing\martin{we don't show that mathematically, ,amybe we need to tone down our language} that (i) first order logic's
   representation of exclusion is significantly longer in terms of
   formula length than \ELFULL{}'s (see Section
   \ref{incompatiblepredicatesinfol}); and (ii) logic programs in
@@ -122,6 +124,11 @@ will now argue the following:
 \end{itemize}
 
 \subsection{Exclusion is conceptually prior to negation}
+
+\martin{Maybe we should weaken the title to ``Brandom's argument that
+  exclusion is ...'' because later we say ``In the rest of this paper,
+  we assume - without further argument - that material incompatibility
+  is conceptually prior ...''}
 
 \NI Every English speaker knows that
 \begin{quote}
@@ -149,17 +156,19 @@ The question is how one ought to construe the relation between what is explicit 
 The formalist line of thought begins with explicit propositional licenses that license inferences in virtue of their logical form. Material inferences are understood privatively: as enthymemes resulting from the suppression or hiding of one of the premises required for a proper warrant. 
 Opposed to this might be a pragmatist line of thought, beginning with material inferences\footnote{\cite{brandom2}, p.101.}.
 \end{quote}
-According to the alternative, pragmatist strategy that Sellars and Brandom propose, 
+According to the alternative, pragmatist strategy that Sellars and Brandom propose, \martin{we use propose to often. Maybe use ``In Sellars and Brandom's alternative, pragmatist strategy ...''}
 ``Jack
 is male'' is incompatible with ``Jack is female'' because ``is male''
 and ``is female'' are \emph{materially incompatible} predicates.  They
-claim that we can understand incompatible predicates even if we do
+claim that we can\martin{``can'' can be dropped} understand incompatible predicates even if we do
 not understand universal quantification or negation.  
 Material incompatibility is conceptually prior to logical negation.
 
 Imagine, to make this vivid, a primitive people speaking a
 primordial language of atomic sentences\footnote{A sentence is atomic if it does not contain another sentence as a syntactic constituent. See Section \ref{intrasentential} below for a discussion.}\martin{why do we
-make a forward reference for this but not for a lot of other concepts?}\richard{What do you suggest instead?}. These people can express
+make a forward reference for this but not for a lot of other concepts?}\richard{What do you suggest instead?}\martin{I think we should 
+use forward references (in the introduction) only very sparingly, if at all. I think we an expect the reader to understand that the introduction is just an
+introduction and lateron we expand on the subjects sketched here.}. These people can express
 sentences that \emph{are} incompatible.  But they cannot express
 \emph{that} they are incompatible.  They
 recognise when atomic sentences are incompatible, and see that one
@@ -167,12 +176,12 @@ sentence entails another - but their behaviour outreaches their ability
 to articulate it.  
 
 Over time, these people \emph{may} advance to a more
-sophisticated language where incompatibilities and entailments can be
+sophisticated language where incompatibilities and entailments can be\martin{``is made explicit'' }
 made explicit - but this is a later (and optional) development:
 \begin{quote}
 [If negation is added to the language], it lets one say that two claims are materially incompatible:``If a monochromatic patch is red, then it is not blue.'' That is, negation lets one make explicit in the form of claims - something that can be said and (so) thought - a relation that otherwise remained implicit in what one practically did, namely treat two claims as materially incompatible\footnote{\cite{brandom} pp.47-48}.
 \end{quote}
-But before they make this optional explicitating step, our primitive people understand incompatibility without understanding negation.
+But before they make\martin{``before making''?} this optional explicitating step, our primitive people understand incompatibility without understanding negation.
 If this picture of our primordial language is coherent, then material incompatibility - exclusion - is conceptually independent of logical negation.
 
 Now imagine a modification of our primitive linguistic practice in which no
@@ -191,6 +200,9 @@ If this  claim is also accepted, then material incompatibility
 is not just conceptually \emph{independent} of logical
 negation, but is conceptually \emph{prior}.
 
+\martin{We have not made good, except in the most subtle of ways, on the title of the subsection's promise that exclusion is prior to ... We have only
+talked about material incompatibility}
+
 \subsection{Negation arises as the logically weakest form of exclusion}
 
 In \cite{brandom2} and \cite{brandom}, Brandom has emphasised that logical negation is a limiting form of material incompatibility:
@@ -198,7 +210,7 @@ In \cite{brandom2} and \cite{brandom}, Brandom has emphasised that logical negat
 Incompatible sentences are Aristotelian \emph{contraries}. A sentence and its negation are \emph{contradictories}. What is the relation between these? Well, the contradictory is a contrary: any sentence is incompatible with its negation. What distinguishes the contradictory of a sentence  from all the rest of its contraries? The contradictory is the \emph{minimal} contrary: the one that is entailed by all the rest. Thus every contrary of ``Plane figure $f$ is a circle'' - for instance ``$f$ is a triangle'', ``$f$ is an octagon'', and so on - entails ``$f$ is \emph{not} a circle''.
 \end{quote}
 
-If someone asserts, say, that Jack does not support Manchester United, we have so far said very little.  
+\NI If someone asserts, say, that Jack does not support Manchester United, we have so far said very little.  
 There are so many different ways in which it could be true that Jack does not support Manchester United\footnote{We are assuming, in this example, that ``supports'' is a many-one relation - that a person can only authentically support a single football team.}:
 \begin{itemize}
 \item
@@ -210,15 +222,15 @@ He might support Chelsea
 \item
 He might not support any football team at all
 \item
-There may be no person answering to the name ``Jack''
+There may be no person\martin{nobody?} answering to the name ``Jack''
 \end{itemize}
-All the above possibilities are concrete propositions which are incompatible with Jack supporting Manchester United.
-To say that ``Jack does not support Manchester United'' is just to claim that one of these indefinitely many concrete possibilities is true.
+All the above\martin{``These possibilities ...''} possibilities are concrete propositions which are incompatible with Jack supporting Manchester United.
+To say that \martin{``that'' can be dropped here?} ``Jack does not support Manchester United'' is just to claim that one of these indefinitely many concrete possibilities is true.
 Negation is just the logically weakest form of incompatibility.
 
 In the rest of this paper, we assume - without further argument - that material incompatibility is conceptually prior to logical negation.
 We develop a simple
- modal logic to articulate Brandom's intuition formally: a language, without negation, in which we can make incompatible claims\footnote{Although this logic is inspired by Brandom's thoughts, this is not to say that he himself would endorse the approach described in this paper. As a pragmatist, Brandom stresses that dispositions or practices are prior to any logical codification - so he might not see the need for, or wisdom of, attempting to formalise these pre-logical practices in a formal logic.}.
+ modal logic to articulate Brandom's intuition formally: a language, without negation, in which we can make incompatible claims\footnote{Although this logic is inspired by Brandom's thoughts, this is not to say that he himself would endorse the approach described in this paper. As a pragmatist, Brandom stresses that dispositions or practices are prior to any \martin{``any'' can be dropped?} logical codification - so he might not see the need for, or wisdom of, attempting to \martin{``attempting to'' and be dropped and replaced by ``formalising''?}formalise these\martin{``these'' can be dropped?} pre-logical practices in a formal logic.\martin{``in a formal logic'' can be dropped.}}.
 
 
 \subsection{Intra-sentential logical concepts}
@@ -226,17 +238,18 @@ We develop a simple
 So far, we have justified the claim that exclusion is a fundamental logical concept by arguing (following Brandom) that exclusion is conceptually prior to negation. 
 
 Now exclusion is an inferential relation between \emph{atomic sentences}. 
-In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that predicate logic cannot articulate, but that \ELFULL{} is able to handle.
+In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that predicate logic cannot articulate, but that \ELFULL{} is able to handle\martin{``EL handles easily/naturally/convincingly''?}.
 
 The \emph{atomic sentences} of a natural language can be
-characterised as the sentences which do not contain any other
+characterised as\martin{drop ``can be
+characterised as'', replace by ``are''?} the sentences which do not contain any \martin{drop ``any''?} other
 sentences as constituent parts\footnote{Compare Russell \cite{russell}
   p.117: ``A sentence is of atomic form when it contains no logical
   words and no subordinate sentence''. We use a broader notion of
   atomicity by focusing solely on whether or not it contains a
   subordinate sentence, allowing logical words such as ``and'' as long
   as they are conjoining noun-phrases and not sentences.}.  According
-to this criterion, the following are atomic:
+to this criterion, the following are atomic:\martin{Maybe simpler ``In that/this sense the sentences jackl ... jack ... are atomic. In contrast... the following is not because ...'' or something like that?}
 
 \begin{itemize}
 
@@ -251,7 +264,7 @@ to this criterion, the following are atomic:
 \end{quote}
 
 \NI because it contains the complete sentence ``Jack is male'' as a
-syntactic constituent.  Note that, according to this criterion, the
+syntactic constituent.  Note that, according to this criterion\martin{I think ``according to this criterion'' can be dropped}, the
 following \emph{is} atomic, despite using ``and'' :
 
 \begin{quote}
@@ -332,8 +345,11 @@ are incompatibilities between atomic propositions. In \S 82:
 \NI But Wittgenstein does not, unfortunately, show us what this
 language would look like.  In this paper, a new modal logic is
 introduced to articulate Wittgenstein's vision.  \ELFULL{} is the simplest logic we could find that handles the various types of inferences between elementary propositions.
+\martin{So far we pitched EL as formalising Brandom's vision. Now it's LW's. Maybe it's better to say that as an additional benefit, EL \emph{also}
+elaborates LW's vision?}
 
-\subsection{Outline}
+\subsection{Outline}\martin{I suggest to consider the outline in flowing text, not bulleted. and with concrete chapter refrences , Like
+so. Section 2 introduces the syntax and sem,antics of EL, Sections 3 and 4 da da da, In section 4 ...}
 The rest of this paper is organised as follows:
 \begin{itemize}
 \item
