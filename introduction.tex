@@ -158,7 +158,8 @@ not understand universal quantification or negation.
 Material incompatibility is conceptually prior to logical negation.
 
 Imagine, to make this vivid, a primitive people speaking a
-primordial language of atomic sentences\footnote{See Section \ref{intrasentential} below for a characterisation of the atomic sentences.}. These people can express
+primordial language of atomic sentences\footnote{See Section \ref{intrasentential} below for a characterisation of the atomic sentences.}\martin{why do we
+make a forward reference for this but not for a lot of other concepts?}. These people can express
 sentences that \emph{are} incompatible.  But they cannot express
 \emph{that} they are incompatible.  They
 recognise when atomic sentences are incompatible, and see that one
@@ -170,10 +171,12 @@ made explicit - but this is a later (and optional) development.
 The core primordial language is a language of atomic sentences.
 It contains no ``complex'' logical connectives.  By ``complex'', we mean logical
 connectives that, like disjunction, generate sentences that can be
-satisfied in many different distinct ways.  Negation, disjunction,
+satisfied in many different distinct ways.
+For example ``It is raining and I'm hungry'' can be true because it does rain while I'm satiated.
+Alternatively, I might ravenous, but it's been dry for weeks.  Unlike conjunction, negation, disjunction,
 implication, existential quantification all create formulae that can
-be satisfied in many different ways (but conjunction does not). This condition will be
-precisified in Section 2: a logic is ``simple'' if the set of
+be satisfied in different ways. This condition will be
+made precise in Section 2: a logic is ``simple'' if the set of
 satisfying models of every sentence has a unique least upper
 bound. Disjunction fails to be simple because there are two equally
 simple models of $\phi \lor \psi$. Similarly, negation fails to be simple
@@ -181,7 +184,12 @@ because there are two equally simple models of $\neg (\phi \land
 \psi)$. Conjunction is the \emph{only} connective of propositional logic that is simple,
 according to this criterion.
 If this picture of our primordial language is coherent, then material incompatibility - exclusion - is conceptually independent of logical negation.
-We do not need negation to make sense of exclusion.
+We do not need negation to make sense of exclusion.\martin{I still think this paragraphs is not integrated iwth the rest: it introduces
+the concept of complex connectives ex nihilo, and the subsequent paragraphs dont even 
+mention it. It also introduces high-tech termin ology like ``least upper bound'' that are
+in stark contrast to the intuitive, non-technical language used in the rest of the introduction. Even the
+``If this picture of our primordial language is coherent ...'' doesn't really tie the prinmitive language
+together with  complex operators}
 
 Now imagine a modification of our primitive linguistic practice in which no
 sentences are ever treated as incompatible.  If one person says ``Jack
@@ -195,12 +203,13 @@ assertions.  Without exclusion, their sounds are just \emph{barks}.
 \begin{quote}
 Suppose the reporter's differential responsive dispositions to call things red are matched by those of a parrot trained to utter the same noises under the same stimulation. What practical capacities of the human distinguish the reporter from the parrot? What, besides the exercise of regular differential responsive dispositions, must one be able to \emph{do}, in order to count as having or grasping \emph{concepts}? ... To grasp or understand a concept is, according to Sellars, to have practical mastery over the inferences it is involved in... The parrot does not treat ``That's red'' as incompatible with ``That's green''\footnote{\cite{brandom2} pp.88-89, our emphasis.}.
 \end{quote}
-If this further claim is also accepted, then material incompatibility
-- exclusion - is not just conceptually \emph{independent} of logical
-negation, but is conceptually \emph{prior} to it.
+If this  claim is also accepted, then material incompatibility
+is not just conceptually \emph{independent} of logical
+negation, but is conceptually \emph{prior}.
 
 In the rest of this paper, we assume - without further argument - that material incompatibility (i.e. exclusion) is conceptually prior to logical negation.
-We develop a simple modal logic to formally articulate Brandom's intuition: a language, without negation, in which we can make incompatible claims\footnote{Although this logic is inspired by Brandom's thoughts, this is not to say that he himself would endorse the approach described in this paper. As a pragmatist, Brandom stresses that dispositions or practices are prior to any logical codification - so he might not see the need for, or wisdom of, attempting to formalise these pre-logical practices in a formal logic.}.
+We identify exclusion as conceptual core of material incompatibility and develop a simple
+ modal logic to articulate Brandom's intuition formally: a language, without negation, in which we can make incompatible claims\footnote{Although this logic is inspired by Brandom's thoughts, this is not to say that he himself would endorse the approach described in this paper. As a pragmatist, Brandom stresses that dispositions or practices are prior to any logical codification - so he might not see the need for, or wisdom of, attempting to formalise these pre-logical practices in a formal logic.}.
 
 \subsection{Negation arises as the weakest form of exclusion}
 
