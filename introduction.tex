@@ -107,7 +107,7 @@ easily expressed in first-order logic\footnote{We will precisify this
   \ref{incompatiblepredicatesinfol}); and (ii) logic programs in
   \ELFULL{} can be optimised to run significantly faster than their
   equivalent in FOL (see Section \ref{optimizingpreconditions}).},  we
-will now argue the follwing:
+will now argue the following:
 
 \begin{itemize}
 
@@ -142,59 +142,33 @@ According to the orthodox position, the incompatibility between the
 two particular sentences depends on a general law involving universal
 quantification, implication and negation.
 
-Brandom \cite{brandom2} proposes an alternative explanation: ``Jack
-is male'' is incompatible with ``Jack is female'' because ``is male''
-and ``is female'' are \emph{materially incompatible} predicates.  He
-claims that we can understand incompatible predicates even if we do
-not understand universal quantification or negation.  In summary:
-
-\begin{quote}Material
-incompatibility is conceptually prior to logical negation.
+Brandom \cite{brandom2} follows Sellars in proposing an alternative explanation.
+Brandom contrasts a formalist explanation (attempting to explain incompatibility in terms of negation) with a pragmatist explanation (explaining negation as a degenerate form of incompatibility):
+\begin{quote}
+The question is how one ought to construe the relation between what is explicit in the form of a rule or principle and what is implicit in proprieties of practice. 
+The formalist line of thought begins with explicit propositional licenses that license inferences in virtue of their logical form. Material inferences are understood privatively: as enthymemes resulting from the suppression or hiding of one of the premises required for a proper warrant. 
+Opposed to this might be a pragmatist line of thought, beginning with material inferences\footnote{\cite{brandom2}, p.101.}.
 \end{quote}
+According to the alternative, pragmatist strategy that Sellars and Brandom propose, 
+``Jack
+is male'' is incompatible with ``Jack is female'' because ``is male''
+and ``is female'' are \emph{materially incompatible} predicates.  They
+claim that we can understand incompatible predicates even if we do
+not understand universal quantification or negation.  
+Material incompatibility is conceptually prior to logical negation.
 
-\NI Imagine, to make this vivid, a primitive people speaking a
-primordial language of atomic sentences. These people can express
+Imagine, to make this vivid, a primitive people speaking a
+primordial language of atomic sentences\footnote{See Section \ref{intrasentential} below for a characterisation of the atomic sentences.}. These people can express
 sentences that \emph{are} incompatible.  But they cannot express
-\emph{that} they are incompatible or entail each other.  They
+\emph{that} they are incompatible.  They
 recognise when atomic sentences are incompatible, and see that one
-sentence entails another, and their behaviour outreaches their ability
+sentence entails another - but their behaviour outreaches their ability
 to articulate it.  Over time, these people may advance to a more
 sophisticated language where incompatibilities and entailments can be
-made explicit, for example using the negation and entailment operators
-respectively.
+made explicit - but this is a later (and optional) development.
 
-Now imagine a variation of our primitive language in which no
-sentences are ever treated as incompatible.  If one person says ``Jack
-is male'' and another says ``Jack is female'', nobody counts these
-claims as \emph{conflicting}.  The native speakers never disagree,
-back down, retract their claims, or justify them. They just make
-``assertions''\footnote{We place sneer-quotes around ``assertion''
-  because we believe, following Brandom, that in the absence of any
-  sort of procedure for the recognition and resolution of incompatible
-  claims, the sounds do not count as assertions at all.}.  Without an
-understanding of incompatibility, and the variety of behaviour that it
-engenders, we submit (following Brandom) that there is insufficient
-richness in the linguistic practice for their sounds to count as
-assertions.  Without exclusion, their sounds are just \emph{barks}.
-If this further claim is also accepted, then material incompatibility
-- exclusion - is not just conceptually \emph{independent} of logical
-negation, but is conceptually \emph{prior} to it.
-
-Whether an accurate picture of language development or not, Brandom's
-argument is sufficiently fascinating to suggest investigating the
-foundations of exlusion, i.e.~a logic without negation, implication
-and disjunction, but instead a primitive expressing
-exclusion. \martin{This sentence needs to be improved.}
-
-\textbf{rest of section, is unedited }
-
-The speakers of the core primordial language understand
-incompatibility relations between atomic sentences, but use no complex
-logical connectives.
-
-
-  This language contains atomic sentences, but has
-no ``complex'' logical connectives.  By ``complex'', we mean logical
+The core primordial language is a language of atomic sentences.
+It contains no ``complex'' logical connectives.  By ``complex'', we mean logical
 connectives that, like disjunction, generate sentences that can be
 satisfied in many different distinct ways.  Negation, disjunction,
 implication, existential quantification all create formulae that can
@@ -206,13 +180,29 @@ simple models of $\phi \lor \psi$. Similarly, negation fails to be simple
 because there are two equally simple models of $\neg (\phi \land
 \psi)$. Conjunction is the \emph{only} connective of propositional logic that is simple,
 according to this criterion.
-
-
-If this picture is coherent, then material incompatibility - exclusion - is conceptually independent of logical negation.
+If this picture of our primordial language is coherent, then material incompatibility - exclusion - is conceptually independent of logical negation.
 We do not need negation to make sense of exclusion.
 
+Now imagine a modification of our primitive linguistic practice in which no
+sentences are ever treated as incompatible.  If one person says ``Jack
+is male'' and another says ``Jack is female'', nobody counts these
+claims as \emph{conflicting}.  The native speakers never disagree,
+back down, retract their claims, or justify them. They just say things.
+Without an understanding of incompatibility, and the variety of behaviour that it
+engenders, we submit (following Brandom) that there is insufficient
+richness in the linguistic practice for their sounds to count as
+assertions.  Without exclusion, their sounds are just \emph{barks}.
+\begin{quote}
+Suppose the reporter's differential responsive dispositions to call things red are matched by those of a parrot trained to utter the same noises under the same stimulation. What practical capacities of the human distinguish the reporter from the parrot? What, besides the exercise of regular differential responsive dispositions, must one be able to \emph{do}, in order to count as having or grasping \emph{concepts}? ... To grasp or understand a concept is, according to Sellars, to have practical mastery over the inferences it is involved in... The parrot does not treat ``That's red'' as incompatible with ``That's green''\footnote{\cite{brandom2} pp.88-89, our emphasis.}.
+\end{quote}
+If this further claim is also accepted, then material incompatibility
+- exclusion - is not just conceptually \emph{independent} of logical
+negation, but is conceptually \emph{prior} to it.
 
-\subsection{Negation arising as the weakest form of exclusion}
+In the rest of this paper, we assume - without further argument - that material incompatibility (i.e. exclusion) is conceptually prior to logical negation.
+We develop a simple modal logic to formally articulate Brandom's intuition: a language, without negation, in which we can make incompatible claims\footnote{Although this logic is inspired by Brandom's thoughts, this is not to say that he himself would endorse the approach described in this paper. As a pragmatist, Brandom stresses that dispositions or practices are prior to any logical codification - so he might not see the need for, or wisdom of, attempting to formalise these pre-logical practices in a formal logic.}.
+
+\subsection{Negation arises as the weakest form of exclusion}
 
 In \cite{brandom2} and \cite{brandom}, Brandom has emphasised that logical negation is a degenerate form of material incompatibility:
 \begin{quote}
@@ -242,7 +232,7 @@ Analogously, given a set $\Sigma$ of symbols, a negated formula in proposition l
 disjunction of materially incompatible formulae in \ELFULL{}.
 
 \subsection{Intra-sentential logical concepts}
-
+\label{intrasentential}
 So far, we have justified the claim that exclusion is a fundamental logical concept by arguing (following Brandom) that exclusion is conceptually prior to negation. 
 
 Now exclusion is an inferential relation between \emph{atomic sentences}. 
