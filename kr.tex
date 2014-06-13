@@ -1,25 +1,32 @@
 \section{Using \ELFULL{} as a Knowledge Representation Language}\label{kr}
 
-\ELFULL{} has been found to be a highly-ergonomic language for the
-representation of complex simulational state.  It has been used as the
-representation language for a large, complex, highly-dynamic
-multi-agent simulation \cite{evans-and-short}.  The entire world state
-is stored as a set of formulae - all other aspects of world state are
-transient and computed as needed.  The set of true sentences are represented in a deterministic Labeled Transition System, using a non-monotonic update mechanism.  The application in which \ELABR{} has been
-proven is not a toy academic problem, but an industrial-sized
-application involving tens of thousands of rules and tens of thousands
-of atomic facts.
 
-We shall first sketch how facts are represented, before describing the advantages of \ELABR{} over a more traditional predicate-logic representation.
+\ELFULL{} has been used as the representation language for a large,
+complex, highly-dynamic multi-agent simulation \cite{evans-and-short}:
+the entire world state is stored as a set of eremic logic formulae -
+all other aspects of world state are transient and computed as needed.
+The true sentences are represented in a deterministic labeled
+transition system, using a non-monotonic update mechanism.  This
+application is not a toy problem, but industrial-sized, involving tens
+of thousands of rules and equally many atomic facts.  This
+demonstrates that eremic logic is a suitable language for representing
+complex simulational state.
 
-\subsection{How Facts are Represented in \ELABR{}}
+We shall first sketch how facts are represented, before describing the
+advantages of \ELABR{} over a more traditional predicate-logic
+representation.
 
-We used the following strategy for representing facts in \ELABR{}.
-A sentence involving a one-place predicate of the form $p(a)$ is expressed in \ELABR{} as 
+\subsection{Representing facts  in \ELABR{}}
+
+We used the following strategy for representing facts in \ELABR{}.  A
+sentence involving a one-place predicate of the form $p(a)$ is
+expressed in \ELABR{} as
 \begin{eqnarray*}
-\MAY{a} \MAY{p}
+   \MAY{a} \MAY{p}
 \end{eqnarray*}
-A sentence involving a many-to-many two-place relation of the form $r(a,b)$ is expressed in \ELABR{} as
+
+\NI A sentence involving a many-to-many two-place relation of the form
+$r(a,b)$ is expressed in \ELABR{} as
 \begin{eqnarray*}
 \MAY{a} \MAY{r} \MAY{b}
 \end{eqnarray*}
@@ -37,11 +44,15 @@ But to say that ``Jack is married to Joan'' (where``is-married-to'' is a many-on
 \end{eqnarray*}
 Colloquially, we might say that ``Jack is married to Joan - and only Joan''.
 Note that we chose to adopt an \emph{object-oriented} representation, in which the relations are placed in infix position so that the facts about an object are ``contained'' within the object.
+\martin{Isn't that just a presentational detail? I think we can drop it.}
 But we \emph{could} have chosen an alternative strategy, in which the predicate/relation symbols are to the left of the first argument. (The reason for choosing the infix notation will become clear in the next subsection).
 
 \subsection{Practical Advantages of \ELABR{} as a Knowledge-Representation Language}
+\martin{I think we can drop this subsection header.}
 
-When applied to a large knowledge base, \ELFULL{} has been found to have a number of advantages over traditional predicate logic as a language to represent simulational state:
+\NI When applied to a large knowledge base, \ELFULL{} has been found
+to have a number of advantages over traditional predicate logic as a
+language to represent simulational state:
 \begin{itemize}
 \item
 The notion of a sub-tree in \ELABR{} gives us a natural way to represent \emph{objects}
