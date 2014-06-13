@@ -27,21 +27,23 @@ following grammar.
 \end{GRAMMAR}
 \end{definition}
 
-\NI  Before presenting models and the satisfaction relation, we sketch
+\NI Before presenting models and the satisfaction relation, we sketch
 the meaning of formulae informally. $\TRUE$ is truth and $\phi \AND
 \psi$ is the conjunction of formulae $\phi$ and $\psi$. Clearly
 $\MAY{a}{\phi}$ is the may-modality which asserts that the current
-state may do action $a$ and in doing $a$ transitions into a now state
-at which $\phi$ holds.  The key novelty of eremic logic is $!A$,
-pronounced ``just $A$, or ``tantum $A$. The core intuition about $!A$
-is that if a model validates $!A$ at the current state, then the only
+state may do action $a$, and in doing $a$ transitions evolves into a
+now state at which $\phi$ holds. Tantum $A$, from Latin ``tantum''
+meaning ``only'' and written $!A$, is the key novelty of eremic logic.
+$!A$ means that if $!A$ holds at the current state, then the only
 modalities $\MAY{a}{}$ available at the corrent state are those with
-$a \in A$. 
+$a \in A$.
 
-The set of actions must be non-empty to avoid that the logic is
-trivial. The restriction to finite subsets of action substantially
+The set $\Sigma$ of actions must be non-empty to avoid that the logic
+is trivial. The restriction to finite subsets of action substantially
 simplifies the meta-theory of the logic.
 
+We assume that $\MAY{a}{\phi}$ binds more tightly than conjunction, so
+$\MAY{a}{\phi} \AND \psi$ is short for $(\MAY{a}{\phi}) \AND \psi$.
 We often abbreviate $\MAY{a}{\TRUE}$ to $\MAY{a}{}$. We define falsity
 $\FALSE$ as $!\emptyset \AND \MAY{a}{}$ where $a$ is an arbitrary
 action. Note that in the absence of conventional negation, we cannot
@@ -62,16 +64,18 @@ stated otherwise.
 described in Section \ref{preliminaries}, augmented with labels on
 states.
 
+%% \begin{definition}
+
+%% \NI We say $\LLL$ is \emph{deterministic} if $x \TRANS{a} y$ and $x \TRANS{a} z$ imply that $y = z$. Otherwise $\LLL$ is
+%% \emph{non-deterministic}.
+%% \end{definition}
+
 \begin{definition}
-
-\NI We say $\LLL$ is \emph{deterministic} if $x \TRANS{a} y$ and $x \TRANS{a} z$ imply that $y = z$. Otherwise $\LLL$ is
-\emph{non-deterministic}.
-\end{definition}
-
-An \emph{eremic transition system} is a triple $\LLL = (S, \rightarrow,
-\lambda)$, where $(S, \rightarrow)$ is a \emph{deterministic} labelled transition system
-over $\Sigma$, and $\lambda$ is a function from states to sets of
-actions (not necessarily finite), subject to the following constraints:
+An \emph{eremic transition system} is a triple $\LLL = (S,
+\rightarrow, \lambda)$, where $(S, \rightarrow)$ is a deterministic
+labelled transition system over $\Sigma$, and $\lambda$ is a function
+from states to sets of actions (not necessarily finite), subject to
+the following constraints:
 \begin{itemize}
 
 \item For all states $s \in S$ it is the case that $ \{a \fOr \exists
@@ -82,6 +86,7 @@ actions (not necessarily finite), subject to the following constraints:
   $\Sigma$. We call this condition \emph{well-sizedness}.
 
 \end{itemize}
+\end{definition}
 
 \NI The intended interpretation is that $\lambda(w)$ is the set of
 allowed transition symbols emanating from $w$.  The $\lambda$ function
@@ -124,7 +129,6 @@ satisfaction relation for eremic formulae.
 The \emph{satisfaction relation} $\MMM \models \phi$ is defined
 inductively by the following clauses, where we assume that $\MMM =
 (\LLL, s)$ and $\LLL = (S, \rightarrow, \lambda)$.
-
 \[
 \begin{array}{lclcl}
   \MMM & \models & \top   \\
@@ -133,28 +137,23 @@ inductively by the following clauses, where we assume that $\MMM =
   \MMM & \models & \fBang A &\mbox{ iff } & \lambda(s) \subseteq A
 \end{array}
 \]
-
 \end{definition}
 
-\NI The first three clauses are standard, and Figure
-\ref{figure:elAndBang:models} gives examples of models for the formula
-$\MAY{a}{\MAY{b}{\TRUE}}$.  The last clause enforces the intended
-meaning of $!A$: the available modalities in the model are \emph{at
-  least as constrained} as required by $!A$. They may even be more
-constrained, if the inclusion $\lambda(s) \subseteq A$ is proper. We
-note in the case where the set $\Sigma$ of actions is infinite,
-allowing $\lambda(s)$ to return arbitrary inifinite sets in addition
-to $\sigma$ does not make a difference because $A$ is finite by
-construction, so $\lambda(s) \subseteq A$ can never hold when
-$\lambda(s)$ is infinite. Figure \ref{figure:elAndBang:moreMdels}
-presents examples of validating (and otherwise) the formula $!\{a, b,
-c\}$.
+\NI The first three clauses are standard. The last clause enforces the
+intended meaning of $!A$: the available modalities in the model are
+\emph{at least as constrained} as required by $!A$. They may even be
+more constrained if the inclusion $\lambda(s) \subseteq A$ is
+proper. We note in the case where the set $\Sigma$ of actions is
+infinite, allowing $\lambda(s)$ to return arbitrary inifinite sets in
+addition to $\sigma$ does not make a difference because $A$ is finite
+by construction, so $\lambda(s) \subseteq A$ can never hold when
+$\lambda(s)$ is infinite. 
 
 \input{figure:elSmall}
 
-\begin{example}
-The model in Figure \ref{figure:elSmall} satisfies all the following
-formulae, amongst others:
+We continue with concrete examples.  The model in Figure
+\ref{figure:elSmall} satisfies all the following formulae, amongst
+others:
 \[
 \begin{array}{lclclclcl}
 \MAY{a} &\qquad&
@@ -179,35 +178,34 @@ The same model does \emph{not} satisfy any of the following formulae
 \MAY{a} \MAY{b} \fBang \{c\} 
 \]
 
-\end{example}
+\NI Figure \ref{threemodels} shows various models of $\MAY{a} \MAY{b}$. 
 
-\begin{example}
-Figure \ref{threemodels} shows various models of $\MAY{a} \MAY{b}$. 
-
-Because \ELABR{} does not include any of the ``complexifying'' operators $\neg, \lor, $ or $\Rightarrow$, \ELABR{} has the unusual property that every satisfiable formula has a unique (up to isomorphism) simplest model that satisfies it.
-In Figure \ref{threemodels}, the left model is the unique simplest model satisfying$\MAY{a} \MAY{b}$.
-This property will be used in Section \ref{decisionprocedure} to construct a \emph{linear-time} decision procedure.
+Because \ELABR{} does not include the operators $\neg, \lor, $ or
+$\Rightarrow$, \ELABR{} has the unusual property that every
+satisfiable formula has a unique (up to isomorphism) simplest model
+that satisfies it.  In Figure \ref{threemodels}, the left model is the
+unique simplest model satisfying$\MAY{a} \MAY{b}$.  This property will
+be used in Section \ref{decisionprocedure} to construct a
+\emph{linear-time} decision procedure.
 \input{figure:elAndBang:models}
 
-\end{example}
-
-\begin{example}
-Figure \ref{more models} shows one model that does, and one that does not, satisfy the formula $\fBang \{a,b\}$.
+Figure \ref{more models} shows one model that does, and one that does
+not, satisfy the formula $\fBang \{a,b\}$.  Both models validate
+$!\{a, b, c\}$.
 
 \input{figure:elAndBang:moreMdels}
-\end{example}
 
-\begin{example}
-Because \ELABR{} does not include any of the ``complexifying'' operators $\neg, \lor, $ or $\Rightarrow$, the only tautological formulae that are true in all models are $\top$ and conjunctions of $\top$.
-But there are an infinite number of distinct contradictory formulae that are false in all models.
-For example:
+Because \ELABR{} does not include any of the ``complexifying''
+operators $\neg, \lor, $ or $\Rightarrow$, the only tautological
+formulae that are true in all models are $\top$ and conjunctions of
+$\top$.  But there are an infinite number of distinct contradictory
+formulae that are false in all models.  For example:
 \[
    \MAY{a} \land \fBang \{\} \qquad
    \MAY{a} \land \fBang \{b\} \qquad
    \MAY{a} \land \fBang \{b, c\} \qquad
    \MAY{b} \land \fBang \{\} \qquad
 \]
-\end{example}
 
 \begin{definition}
 Let $\Gamma$ be an arbitrary set of formulae. We say \emph{$\Gamma$
@@ -217,6 +215,7 @@ provided for all eremic models $\MMM$ if it is the case that $\MMM
 \richard{We do not define $\models \Gamma$ for a set $\Gamma$, only for individual formulae - do we want to change this definition to be of the form $\phi \models \psi$?}
 \end{definition}
 
+ARSE
 \begin{example}
 \ELABR{} shares with HML the following implications:
 \begin{eqnarray*}

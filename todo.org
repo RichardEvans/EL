@@ -1,3 +1,6 @@
+* Explain genesis of Brandom in
+\footnote{Itself a development of Sellars,
+  Hegel and Kant.}
 * Check preliminaries. Remove superfluous material.
 * Put the Haskell code into separate Github repo. Document how to use the
 software.
