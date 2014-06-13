@@ -1,11 +1,38 @@
 \section{Conclusion}\label{conclusion}
 
-\NI We have proposed eremic logic, a multi-modal logic based on
-exclusion as a logical primitive. We have investigated key
+Eremic Logic is a simple logic of atomic sentences.
+It contains no ``complex'' logical connectives.  
+By ``complex'', we mean logical
+connectives that, like disjunction, generate sentences that can be
+satisfied in many different distinct ways.
+Negation, disjunction,
+implication, existential quantification all create formulae that can
+be satisfied in different ways. 
+This condition was
+made precise in Section \ref{boundedlattice}: a logic is ``simple'' if the set of
+satisfying models of every sentence has a unique least upper
+bound. 
+Disjunction fails to be simple because there are two equally
+simple models of $\phi \lor \psi$. 
+Similarly, negation fails to be simple
+because there are two equally simple models of $\neg (\phi \land
+\psi)$. 
+Conjunction is the \emph{only} connective of propositional logic that is simple,
+according to this criterion.
+
+As is well known, the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.
+Analogously, given a set $\Sigma$ of symbols, a negated formula in proposition logic can be translated into a (possibly infinitary)
+disjunction of materially incompatible formulae in \ELFULL{}.
+Eremic Logic is an attempt to formalise Sellars' and Brandom's view that material incompatibility is conceptually prior to logical negation.
+
+In this paper, we have defined eremic logic as a multi-modal logic based on
+exclusion as a logical primitive. 
+We have investigated key
 meta-theoretic properties of the logic, related eremic logic to
 first-order logic and Hennessy-Milner logic, and we have explored
 applications in the philosophy of language, knowledge representation
-and the semantics of concurrent processes. We end this paper with a
+and the semantics of concurrent processes. 
+We end this paper with a
 discussion of related work and open problems.
 
 \subsection{Related work} 
