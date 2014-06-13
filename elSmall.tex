@@ -168,7 +168,10 @@ others:
 \MAY{a} (\MAY{b} \land \fBang \{b,c\}
 \end{array}
 \]
-The same model does \emph{not} satisfy any of the following formulae
+
+\NI Here we assume, as we do with all subsequent such figures, that
+the top note is the root.  The same model does \emph{not} satisfy any
+of the following formulae
 \[
 \MAY{b} \qquad
 \fBang \{a\} \qquad
@@ -178,58 +181,74 @@ The same model does \emph{not} satisfy any of the following formulae
 \MAY{a} \MAY{b} \fBang \{c\} 
 \]
 
-\NI Figure \ref{threemodels} shows various models of $\MAY{a} \MAY{b}$. 
-
-Because \ELABR{} does not include the operators $\neg, \lor, $ or
-$\Rightarrow$, \ELABR{} has the unusual property that every
-satisfiable formula has a unique (up to isomorphism) simplest model
-that satisfies it.  In Figure \ref{threemodels}, the left model is the
-unique simplest model satisfying$\MAY{a} \MAY{b}$.  This property will
-be used in Section \ref{decisionprocedure} to construct a
-\emph{linear-time} decision procedure.
-\input{figure:elAndBang:models}
-
-Figure \ref{more models} shows one model that does, and one that does
-not, satisfy the formula $\fBang \{a,b\}$.  Both models validate
+\NI Figure \ref{threemodels} shows various models of $\MAY{a} \MAY{b}$
+and Figure \ref{more models} shows one model that does, and one that
+does not, satisfy the formula $\fBang \{a,b\}$.  Both models validate
 $!\{a, b, c\}$.
+
+\ELABR{} does not have the operators $\neg, \lor, $ or $\Rightarrow$.
+This has the following two signification consequences.  First, every
+satisfiable formula has a unique (up to isomorphism) simplest model.
+In Figure \ref{threemodels}, the left model is the unique simplest
+model satisfying$\MAY{a} \MAY{b}$.  We will clarify below that model
+simplicity is closely related to the process theoretic concept of
+similarity, and use the existence of unique simplest models to
+construct a \emph{linear-time} decision procedure.
+
+\input{figure:elAndBang:models}
 
 \input{figure:elAndBang:moreMdels}
 
-Because \ELABR{} does not include any of the ``complexifying''
-operators $\neg, \lor, $ or $\Rightarrow$, the only tautological
-formulae that are true in all models are $\top$ and conjunctions of
-$\top$.  But there are an infinite number of distinct contradictory
-formulae that are false in all models.  For example:
+Secondly, the only tautological formulae that are true in all models
+are $\top$ and conjunctions of $\top$.  But there are an infinite
+number of distinct contradictory formulae that are false in all
+models.  For example:
 \[
    \MAY{a} \land \fBang \{\} \qquad
    \MAY{a} \land \fBang \{b\} \qquad
    \MAY{a} \land \fBang \{b, c\} \qquad
    \MAY{b} \land \fBang \{\} \qquad
 \]
+\martin{Do we use or at least discuss this fact later? If not, either drop, or elaborate.}
 
-\begin{definition}
-Let $\Gamma$ be an arbitrary set of formulae. We say \emph{$\Gamma$
-  semantically implies $\phi$}, written $\Gamma \models \phi$,
-provided for all eremic models $\MMM$ if it is the case that $\MMM
-\models \Gamma$ implies $\MMM \models \phi$. 
-\richard{We do not define $\models \Gamma$ for a set $\Gamma$, only for individual formulae - do we want to change this definition to be of the form $\phi \models \psi$?}
+%% \begin{definition}
+%% Let $\Gamma$ be an arbitrary set of formulae. We say \emph{$\Gamma$
+%%   semantically implies $\phi$}, written $\Gamma \models \phi$,
+%% provided for all eremic models $\MMM$ if it is the case that $\MMM
+%% \models \Gamma$ implies $\MMM \models \phi$. 
+%% \richard{We do not define $\models \Gamma$ for a set $\Gamma$, only for individual formulae - do we want to change this definition to be of the form $\phi \models \psi$?}
+%% \end{definition}
+
+\NI The semantic consequence relation is standard.\martin{actually
+  it's not because the premise can have only one formula. Maybe we
+  should elaborate upon this? I think it's intimately related to the
+  absence of negation. In classical logic we can use $\Gamma \models
+  \phi$ because only a finite bit already implies $ \phi$ and that can
+  easily be proven. In EL ... not so much}
+
+\begin{definition} 
+ We say the formula $\phi$ \emph{semantically implies} $\psi$, written $\phi
+   \models \psi$, provided for all eremic models $\MMM$ if it is the
+   case that $\MMM \models \phi$ then also $\MMM \models \phi$.
 \end{definition}
 
-ARSE
 \begin{example}
-\ELABR{} shares with HML the following implications:
+\ELABR{} shares with other (multi)-modal logics the following
+implications:
 \begin{eqnarray*}
-\MAY{a} \MAY{b} \models \MAY{a} \\
+\MAY{a} \MAY{b} \models \MAY{a} 
+ \qquad\qquad
 \MAY{a} (\MAY{b} \land \MAY{c}) \models \MAY{a} \MAY{b}
 \end{eqnarray*}
-But because \ELABR{} is restricted to deterministic models, it also validates the following formula (which HML does not):
+As \ELABR{} is restricted to deterministic models, it also
+validates the following formula:
 \begin{eqnarray*}
 \MAY{a} \MAY{b} \land \MAY{a} \MAY{b}  \models \MAY{a} (\MAY{b} \land \MAY{c})
 \end{eqnarray*}
 \ELABR{} also validates all implications in which the set of constraints is relaxed from left to right. For example:
 \begin{eqnarray*}
-\fBang \{\} \models \fBang \{a\} \\
-\fBang \{\} \models \fBang \{a, b\} \\
-...
+\fBang \{\} \models \fBang \{a\} 
+ \qquad\qquad
+\fBang \{\} \models \fBang \{a, b\} 
 \end{eqnarray*}
 \end{example}

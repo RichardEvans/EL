@@ -1,13 +1,17 @@
 
 \section{Capturing Inferences Between Atomic Sentences}
-\ELFULL{} arose as an attempt to answer the question: what is the simplest logic that can capture inferences between atomic sentences of natural language? 
-In this section, we first enumerate the sorts of inferences we are trying to capture.
-Then we show how \ELABR{} can handle these inferences.
-Finally, we compare our approach with the various attempts to handle these inferences in First Order Logic.
+
+\NI \ELFULL{} arose as an attempt to answer the question: what is the
+simplest logic that can capture inferences between atomic sentences of
+natural language?  In this section, we enumerate the sorts of
+inferences we are trying to capture.  Then we show how \ELABR{}
+handles these inferences.  Finally, we compare our approach with the
+various attempts at expressing the inferences in first-order logic.
 
 \subsection{Intra-Atomic Inferences in Natural Language}
-Natural language admits many types of inference between atomic sentences.
-First, exclusion:
+
+\NI Natural language admits many types of inference between atomic
+sentences.  First, exclusion:
 \begin{quote}
 ``Jack is male'' is incompatible with ``Jack is female''
 \end{quote}
@@ -28,54 +32,64 @@ Fifth, inferences from conjunctions of sentences to conjunction of predicates\fo
 ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
 \end{quote}
 
-All these types of inference can be handled directly and naturally in \ELABR{}, as we shall now show.
+\NI They all can be handled directly and naturally in \ELABR{}, as we
+shall now show.
 
 
 \subsection{Intra-Atomic Inferences in \ELFULL{}}
-We shall show that each of the following inferences can be naturally expressed in \ELABR{}:
-\begin{itemize}
-\item
-``Jack is male'' is incompatible with ``Jack is female''
-\item
-``Jack loves Jill'' implies ``Jack loves''\footnote{Although natural languages are full of examples of inferences from dyadic to monadic predicates, there are certain supposed counterexamples to the general rule that a dyadic predicate always implies a monadic one. For example, ``Jack explodes the device'' does not, on its most natural reading, imply that ``Jack explodes''. Our response to cases like this is to distinguish between two distinct monadic predicates $explodes_1$ and $explodes_2$:
-\begin{itemize}
-\item
-$X explodes_1$ iff $X$ is an object that undergoes an explosion
-\item
-$X explodes_2$ iff $X$ is an agent that initiates an explosion
-\end{itemize}
-Now ``Jack explodes the device'' does imply that ``Jack $explodes_2$'' but does not imply that ``Jack $explodes_1$''. 
-There is no deep problem here - just another case where natural language overloads the same word in different situation to have different meanings.}
-\item
-``Jack walks quickly'' implies ``Jack walks''
-\item
-``Jack loves Jill'' and ``Jack loves Joan'' together imply that ``Jack loves Jill and Joan''
-\item
-``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
-\end{itemize}
-First, incompatibility. ``Jack is male'' and ``Jack is female'' are translated into \ELABR{} as the pair of incompatible sentences:
+%% We shall show that each of the following inferences can be naturally expressed in \ELABR{}:
+%% \begin{itemize}
+%% \item
+%% ``Jack is male'' is incompatible with ``Jack is female''
+%% \item
+%% ``Jack loves Jill'' implies ``Jack loves''\footnote{Although natural languages are full of examples of inferences from dyadic to monadic predicates, there are certain supposed counterexamples to the general rule that a dyadic predicate always implies a monadic one. For example, ``Jack explodes the device'' does not, on its most natural reading, imply that ``Jack explodes''. Our response to cases like this is to distinguish between two distinct monadic predicates $explodes_1$ and $explodes_2$:
+%% \begin{itemize}
+%% \item
+%% $X explodes_1$ iff $X$ is an object that undergoes an explosion
+%% \item
+%% $X explodes_2$ iff $X$ is an agent that initiates an explosion
+%% \end{itemize}
+%% Now ``Jack explodes the device'' does imply that ``Jack $explodes_2$'' but does not imply that ``Jack $explodes_1$''. 
+%% There is no deep problem here - just another case where natural language overloads the same word in different situation to have different meanings.}
+%% \item
+%% ``Jack walks quickly'' implies ``Jack walks''
+%% \item
+%% ``Jack loves Jill'' and ``Jack loves Joan'' together imply that ``Jack loves Jill and Joan''
+%% \item
+%% ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
+%% \end{itemize}
+
+Incompatibility such as that between ``Jack is male'' and ``Jack is
+female'' is translated into \ELABR{} as the pair\martin{what do we mean by ``pair'' here? Conjunction?} of incompatible
+sentences:
 \begin{eqnarray*}
-\MAY{jack} \MAY{sex} (\MAY{male} \land \fBang \{male\}) \\
+\MAY{jack} \MAY{sex} (\MAY{male} \land \fBang \{male\}) 
+   \qquad\qquad
 \MAY{jack} \MAY{sex} (\MAY{female} \land \fBang \{female\})
 \end{eqnarray*}
-Second, entailment from dyadic to monadic predicates:
+
+\NI Entailment from dyadic to monadic predicates:
 ``Jack loves Jill'' is translated into \ELABR{} as:
 \begin{eqnarray*}
-\MAY{jack} \MAY{loves} \MAY{jill}
+   \MAY{jack} \MAY{loves} \MAY{jill}
 \end{eqnarray*}
-This directly entails:
+The semantics of modalities ensures that this directly entails:
 \begin{eqnarray*}
-\MAY{jack} \MAY{loves}
+   \MAY{jack} \MAY{loves}
 \end{eqnarray*}
-Similarly, \ELABR{} supports inferences from triadic to dyadic predicates:
+
+\NI Similarly, \ELABR{} supports inferences from triadic to dyadic
+predicates:
 \begin{quote}
-``Jack passed the biscuit to Mary'' implies ``Jack passed the biscuit''
+  ``Jack passed the biscuit to Mary'' implies ``Jack passed the biscuit''
 \end{quote}
-This can be expressed directly in \ELABR{} as:
+
+\NI This can be expressed directly in \ELABR{} as:
 \[
-\MAY{jack} \MAY{passed} \MAY{biscuit} \MAY{to} (\MAY{mary} \land !\{mary\}) \models \MAY{jack} \MAY{passed} \MAY{biscuit}
+   \MAY{jack} \MAY{passed} \MAY{biscuit} \MAY{to} (\MAY{mary} \land !\{mary\}) \models \MAY{jack} \MAY{passed} \MAY{biscuit}
 \]
-Third, adverbial inferences: 
+
+\NI Adverbial inferences is captures in eremic logic as follows.
 \begin{eqnarray*}
 \MAY{jack} \MAY{walks} \MAY{quickly}
 \end{eqnarray*}
@@ -83,81 +97,102 @@ entails:
 \begin{eqnarray*}
 \MAY{jack} \MAY{walks}
 \end{eqnarray*}
-Fourth, \ELABR{} directly supports inferences from conjunctions of sentences to conjunctions of noun-phrases.
-As our models are \emph{deterministic labelled transition systems}, we have the general rule that
-\[
-\MAY{a} \MAY{b} \land \MAY{a} \MAY{c} \models \MAY{a} (\MAY{b} \land \MAY{c})
-\]
-from which it follows that 
+
+\NI \ELABR{} directly supports inferences from conjunctions of
+sentences to conjunctions of noun-phrases.  As our models are
+deterministic, we have the general rule that $ \MAY{a} \MAY{b} \land
+\MAY{a} \MAY{c} \models \MAY{a} (\MAY{b} \land \MAY{c})$ from which
+it follows that
 \begin{eqnarray*}
-\MAY{jack} \MAY{loves} \MAY{jill}
-\end{eqnarray*}
-and:
-\begin{eqnarray*}
-\MAY{jack} \MAY{loves} \MAY{joan}
+   \MAY{jack} \MAY{loves} \MAY{jill}
+      \qquad\text{and}\qquad
+   \MAY{jack} \MAY{loves} \MAY{joan}
 \end{eqnarray*}
 together imply
 \begin{eqnarray*}
 \MAY{jack} \MAY{loves} (\MAY{jill} \land \MAY{joan})
 \end{eqnarray*}
-Using the same rule, we can infer that
+
+\NI Using the same rule, we can infer that
 \begin{eqnarray*}
-\MAY{jack} \MAY{bruised} \land \MAY{jack} \MAY{humiliated}
+   \MAY{jack} \MAY{bruised} \land \MAY{jack} \MAY{humiliated}
 \end{eqnarray*}
-together imply
+
+\NI together imply
 \begin{eqnarray*}
 \MAY{jack} (\MAY{bruised} \land \MAY{humiliated})
 \end{eqnarray*}
  
-\subsection{Representing Incompatible Predicates in Predicate Logic}
-\label{incompatiblepredicatesinfol}
-How are incompatible predicates represented in traditional Predicate Logic?
-Brachman and Levesque\cite{brachman} introduce the topic of incompatible predicates by remarking:
+\subsection{Representing incompatible predicates in predicate logic}\label{incompatiblepredicatesinfol}
+
+\martin{why ``predicate logic'' here. Why not stick to ``first-order logic''?}
+
+\NI How are incompatible predicates represented in traditional
+Predicate Logic?  Brachman and Levesque\cite{brachman} introduce the
+topic of incompatible predicates by remarking:
 \begin{quote}
-We would consider it quite ``obvious'' in this domain that if it were asserted that $John$ were a $Man$, then we should answer ``no'' to the query $Woman(John)$.
+   We would consider it quite ``obvious'' in this domain that if it
+   were asserted that $John$ were a $Man$, then we should answer
+   ``no'' to the query $Woman(John)$.
 \end{quote}
-They propose adding an extra axiom to express the incompatibility:
+
+\NI They propose adding an extra axiom to express the incompatibility:
 \[
-(\forall x) Man(x) \rightarrow \neg Woman(x)
-\]   
-This proposal imposes an authoring burden on the knowledge-representer.
-We would have to add an extra axiom for every pair of incompatible predicates.
-This proposal becomes particularly burdensome when dealing with large sets of incompatible predicates. 
-For example, suppose there are 50 football teams, and a person can only support one team at a time. 
-We would need to add $C^{50}_2$ axioms:
-The incompatibility axioms start to get large and unwieldy:
-\begin{eqnarray}
-(\forall x) \neg (SupportsArsenal(x) \land SupportsLiverpool(x)) \nonumber \\
-(\forall x) \neg (SupportsArsenal(x) \land SupportsManUtd(x)) \nonumber \\
-(\forall x) \neg (SupportsLiverpool(x) \land SupportsManUtd(x)) \nonumber \\
-... \nonumber
-\end{eqnarray}   
-Or, if we treat the football-teams as objects, and have a two-place $Supports$ relation between people and teams, we could have:
+   \forall x. ( Man(x) \rightarrow \neg Woman(x) )
+\]  
+ 
+\NI This proposal imposes an authoring burden on the
+knowledge-representer.  We would have to add an extra axiom for every
+pair of incompatible predicates.  This proposal becomes particularly
+burdensome when dealing with large sets of incompatible predicates.
+For example, suppose there are 50 football teams, and a person can
+only support one team at a time.  We would need to add $C \cdot {50 \choose 2}$
+axioms: incompatibility axioms would become large and unwieldy:
 \[
-(\forall x,y,z) \; \; Supports(x,y) \land y \neq z \rightarrow \neg Supports(x,z)
+\begin{array}{l}
+  \forall x.  \neg (SupportsArsenal(x) \land SupportsLiverpool(x))  \\
+  \forall x.  \neg (SupportsArsenal(x) \land SupportsManUtd(x))  \\
+  \forall x.  \neg (SupportsLiverpool(x) \land SupportsManUtd(x))  \\
+  \qquad \qquad \qquad \vdots
+\end{array}
+\]
+
+\NI Or, if we treat the football-teams as objects, and have a
+two-place $Supports$ relation between people and teams, we could have:
+\[
+   \forall x, y, z. (Supports(x,y) \land y \neq z \rightarrow \neg Supports(x,z))
 \]   
-Together with the Unique Names Assumption (which lets us assume that each football team is distinct from all the others), this certainly captures the desired uniqueness condition.
-But it does so by using relatively complex logical machinery.
+
+\NI Together with the Unique Names Assumption (which lets us assume
+that each football team is distinct from all the others), this
+certainly captures the desired uniqueness condition.  But it does so
+by using relatively complex logical machinery.
 
 \subsection{Supporting Inferences from Dyadic to Monadic Predicates in Predicate Logic}
 If we want to capture the inference from ``Jack loves Jill`` to ``Jack loves'' in predicate logic, we have to add a non-logical axiom:
 \[
 (\forall x, y) Loves(x,y) \rightarrow Loves(x)
 \]
-We would have to add an extra non-logical axiom like this for every n-place predicate.
-This is cumbersome at best. 
-In \ELABR{}, by contrast, we do not need to introduce any non-logical machinery at all to capture these inferences because they all follow from the general rule that $\MAY{a} \MAY{b} \models \MAY{a}$.
 
-\subsection{Supporting Adverbial Inferences in Predicate Logic}
-How can we represent verbs in traditional predicate logic so as to support adverbial inference?
-Davidson \cite{davidson2} proposed that every $n$-place action verb be analysed as an $n+1$-place predicate, with an additional slot representing an event.
-For example, he  analysed ``I flew my spaceship to the Morning Star'' as 
+\NI We would have to add an extra non-logical axiom like this for every
+n-place predicate.  This is cumbersome at best.  In \ELABR{}, by
+contrast, we do not need to introduce any non-logical machinery at all
+to capture these inferences because they all follow from the general
+rule that $\MAY{a} \MAY{b} \models \MAY{a}$.
+
+\subsection{Supporting adverbial inferences in predicate logic}
+
+\NI How can we represent verbs in traditional predicate logic so as to
+support adverbial inference?  Davidson \cite{davidson2} proposed that
+every $n$-place action verb be analysed as an $n$+1-place predicate,
+with an additional slot representing an event.  For example, he
+analysed ``I flew my spaceship to the Morning Star'' as
 \[
-(\exists x) Flew(I, MySpaceship, x) \land To(x, TheMorningStar)
+\exists x. ( Flew(I, MySpaceship, x) \land To(x, TheMorningStar))
 \]
 This implies 
 \[
-(\exists x) Flew(I, MySpaceship, x)
+\exists x.  Flew(I, MySpaceship, x)
 \]
 This captures the inference from ``I flew my spaceship to the Morning Star'' to ``I flew my spaceship''.
 
@@ -165,45 +200,51 @@ Predicate Logic cannot support logical inferences between elementary proposition
 If it is going to support inferences from adverbial sentences, it \emph{cannot} treat them as elementary propositions and must instead \emph{reinterpret} them as logically complex propositions.
 The cost of Davidson's proposal is that a seemingly simple sentence, such as ``Jones walks'', turns out on closer inspection not be elementary at all,  but to involve existential quantification:
 \[
-(\exists x) Walks(Jones, x)
+\exists x.  Walks(Jones, x)
 \]
-Although Predicate Logic can handle some of these inferences, it can only do so by reinterpreting the sentences as logically-complex compound propositions. 
-It uses more complex machinery to achieve the same results that \ELFULL{} gets directly.
 
-\subsection{Comparison}
-We have been looking at five types of inference between atomic sentences:
+\NI Although Predicate Logic can handle some of these inferences, it
+can only do so by reinterpreting the sentences as logically-complex
+compound propositions.
+
+\subsection{Summary}
+We looked at five types of inference between atomic
+sentences:\martin{I dont' think we need to repeat them all as
+  bullets. Or at least we can put them in the flowing text. }
 \begin{itemize}
-\item
-Incompatibility
-\item
-Inferences from dyadic predicates to monadic predicates
-\item
-Adverbial inferences
-\item
-Inferences from conjunctions of sentences to conjunctions of noun-phrases
-\item
-Inferences from conjunctions of sentences to conjunctions of predicates
+
+\item Incompatibility.
+\item Inferences from dyadic predicates to monadic predicates.
+\item Adverbial inferences.
+\item Inferences from conjunctions of sentences to conjunctions of noun-phrases.
+\item Inferences from conjunctions of sentences to conjunctions of predicates.
+
 \end{itemize}
-\ELFULL{} can handle all five types of inference directly and naturally.
-Traditional predicate logic has a harder time.
-Traditional predicate logic \emph{can} express incompatibility. But it can only do so by bringing in relatively complex machinery - a universal quantifier, a conditional, and a negation operator. \ELFULL{}, by contrast, expresses the source of the incompatibility \emph{directly} using the $!$ operator.
-Again, predicate logic \emph{can} express adverbial inferences. But, again, it can only do so by introducing relatively complex machinery (quantification over events). 
 
-But when it comes to inferences from conjunctions of sentences to conjunctions of noun-phrases (or predicates), predicate logic has nothing to say because it has no way of expressing conjunctions between noun-phrases (or predicates) \emph{at all}. In predicate logic, ``Jack is bruised and humiliated'' has to be regimented into ``Jack is bruised and Jack is humiliated''. 
-This might seem, to anyone who has not already become desensitised to the differences between predicate logic and our ergonomic mother tongue, to be exactly the wrong way around.
+\NI \ELFULL{} can handle all five directly and naturally.  Traditional
+predicate logic has a harder time.  Traditional predicate logic
+\emph{can} express incompatibility, but only using complex machinery -
+universal quantification, a conditional, negation. \ELFULL{}, by
+contrast, expresses the source of the incompatibility \emph{directly}
+using the $!$ operator.  Again, predicate logic \emph{can} express
+adverbial inferences, but at the cost of using quantification over
+events.  When it comes to inferences from conjunctions of sentences to
+conjunctions of noun-phrases (or predicates), predicate logic has
+nothing to say because it has no way of expressing conjunctions
+between noun-phrases (or predicates) \emph{at all}. In predicate
+logic, ``Jack is bruised and humiliated'' has to be regimented into
+``Jack is bruised and Jack is humiliated''.  This might seem, to
+anyone who has not already become desensitised to the differences
+between predicate logic and our ergonomic mother tongue,\martin{A tad polemical ...} to be exactly
+the wrong way around.
 
-\subsection{An Expressive Limitation}
-As we have seen, \ELFULL{} can handle inferences where predicates are conjoined:
-\begin{quote}
-``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
-\end{quote}
-It can also handle inferences where predicate-objects are conjoined:
-\begin{quote}
-``Jack loves Jill'' and ``Jack loves Joan'' together imply that ``Jack loves Jill and Joan''
-\end{quote}
-But it cannot express related inferences where the \emph{subjects} are conjoined. For example:
+However, eremic logic cannot handle all instances of sub-propositional inferences.
+An example are inferences where the \emph{subjects} are conjoined such  as
 \begin{quote}
 ``Jack loves Jill'' and ``Jim loves Jill'' together imply that ``Jack and Jim love Jill''
 \end{quote}
-\ELFULL{} has no way to conjoin noun-phrases in subject-position.
-We plan to address this representational issue in future work.
+
+\NI \ELFULL{} has no way to conjoin noun-phrases in subject-position.
+
+%We plan to address this representational issue in future
+%work. \martin{no need to make promises. Only the facts ...}
