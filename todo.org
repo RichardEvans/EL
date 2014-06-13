@@ -14,6 +14,8 @@ software.
 * Be consistent. In particular
   - State vs node
 
+  - Implication: \rightarrow vs horseshoe
+
   - first-order vs first order
 
   - Why do we use the term predicate logic at all?
