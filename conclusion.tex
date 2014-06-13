@@ -21,7 +21,7 @@ Conjunction is the \emph{only} connective of propositional logic that is simple,
 according to this criterion.
 
 As is well known, the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.
-Analogously, given a set $\Sigma$ of symbols, a negated formula in proposition logic can be translated into a (possibly infinitary)
+Analogously, given a set $\Sigma$ of symbols, a negated formula in proposition logic can be translated into a 
 disjunction of materially incompatible formulae in \ELFULL{}.
 Eremic Logic is an attempt to formalise Sellars' and Brandom's view that material incompatibility is conceptually prior to logical negation.
 
@@ -37,13 +37,44 @@ discussion of related work and open problems.
 
 \subsection{Related work} 
 
-Eremic logic emerged out of an engagement with Brandom's
-incompatibility semantics.  Its formal presentation and developemnt
-owes to modal logic in general and Hennessy-Milner logic in
+Eremic logic started as an attempt to formalise the Sellars/Brandom idea that material incompatibility is conceptually prior to logical negation.
+Its formal presentation and development
+owes much to modal logic in general and Hennessy-Milner logic in
 particular.
 
-\subsubsection{Brandom's Incompatibility Semantics}
+\subsubsection{Incompatibility as a Fundamental Semantic Relation}
 
+According to Brandom's, the notion of incompatibility is more than just a pre-logical version of negation. 
+It also has a \emph{modal} component:
+\begin{quote}
+The notion of incompatibility can be thought of as a sort of conceptual vector-product of a \emph{negative} component and a \emph{modal} component. It is \emph{non}-com\emph{possibility}\footnote{\cite{brandom} p.126.}.
+\end{quote}
+Incompatibility is the fundamental master concept that Brandom uses to make sense of the notion of \emph{object} and \emph{agent}.
+
+First, \emph{object-hood}.
+Treating ``$A$ is $\phi$'' and ``$B$ is $\psi$'' as incompatible (where $\phi$ and $\psi$ are incompatible predicates) \emph{just is} what it is to treat $A$ and $B$ as the same object:
+\begin{quote}
+It is not impossible for two different objects to have incompatible properties - say, being copper and electrically insulating. What is impossible is for \emph{one and the same object} to do so. 
+Objects play the conceptual functional role of \emph{units of account for alethic modal incompatibilities}. 
+A single object just is what cannot have incompatible properties (at the same time).
+\end{quote}
+
+Second, \emph{agent-hood}.
+Just as an object \emph{cannot} have incompatible properties, just so a subject \emph{should not} ascribe incompatible properties to something.
+To say that two sentences are incompatible is to say that an agent who holds one \emph{should not} hold the other.
+\begin{quote}
+Objects play the conceptual functional role of \emph{units of account for alethic modal incompatibilities}. 
+It is an essential individuating feature of the metaphysical categorical sortal metaconcept \emph{object} that objects have the metaproperty of \emph{modally} repelling incompatibilities...
+And, in a parallel fashion, subjects too are individuated by the way they normatively `repel' incompatible commitments.
+It is not impermissible for two different subjects to have incompatible commitments - say, for me to take the coin to be copper and you take it to be an electrical insulator. What is impermissible is for \emph{one and the same subject} to do so. Subjects play the conceptual functional role of \emph{units of account for deontic normative incompatibilities}. 
+That is, it is an essential individuating feature of the metaphysical categorical sortal metaconcept \emph{subject} that subjects have the metaproperty of \emph{normatively} repelling incompatibilities. A single subject just is what ought not to have incompatible commitments (at the same time)\footnote{\cite{brandom} p.192.}.
+\end{quote}
+Brandom sees this as a rearticulation of Kant's project in the First Critique:
+\begin{quote}
+The account of feedback loops of perception-and-performance normatively governed by relations of material inference and incompatibility is a pragmatic version of Kant's account of synthesising a transcendental unity of apperception\footnote{\cite{brandom} p.187.}.
+\end{quote}
+
+\subsubsection{Other stuff} 
 The origins of eremic logic lay in classical philosophy, in particular
 in Hegel's work on ``\emph{bestimmte Negation}'' (determinate
 negation).  In his \emph{Wissenschaft der Logic}
@@ -55,22 +86,9 @@ twentieth century, determinate negation has been important in the
 Neo-Marxist tradition of the Frankfurt School, in particular in
 Adorno's negative dialectics \cite{AdornoTW:negdia}, but also in the .
 analytic tradition. In particular Brandom ...
+\richard{Personally, I would like to delete this paragraph. It seems a little vague, and we mention the roots of the Sellars/Brandom view elsewhere.}
 
-
-In \cite{brandom2} and \cite{brandom}, Brandom has emphasised that
-logical negation is a degenerate case of material incompatibility:
-
-\begin{quote}
-Incompatible sentences are Aristotelian \emph{contraries}. A sentence
-and its negation are \emph{contradictories}. What is the relation
-between these? Well, the contradictory is a contrary: any sentence is
-incompatible with its negation. What distinguishes the contradictory
-of a sentence from all the rest of its contraries? The contradictory
-is the \emph{minimal} contrary: the one that is entailed by all the
-rest. Thus every contrary of ``Plane figure $f$ is a circle'' - for
-instance ``$f$ is a triangle'', ``$f$ is an octagon'', and so on -
-entails ``$f$ is \emph{not} a circle''.
-\end{quote}
+\subsubsection{Brandom's Incompatibility Semantics}
 
 \NI In \cite{brandom}, Chapter 5, Appendix I, Brandom developed a new
 type of semantics, Incompatibility Semantics, that takes material
