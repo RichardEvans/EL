@@ -54,21 +54,35 @@ But we \emph{could} have chosen an alternative strategy, in which the predicate/
 to have a number of advantages over traditional predicate logic as a
 language to represent simulational state:
 \begin{itemize}
-\item
-The notion of a sub-tree in \ELABR{} gives us a natural way to represent \emph{objects}
-\item
-The update rule (described above) means that \emph{garbage collection} of invalid data happens automatically.
-\item
-\ELABR{} allows a simpler less error-prone way of specifying \emph{postconditions} of actions
-\item
-The $!$ operator gives additional information to the type-checker, allowing an author to specify her intent more precisely
-\item
-The $!$ operator provides additional information to the compiler, allowing significantly more efficient clause ordering
+
+\item The notion of a sub-tree in \ELABR{} gives us a natural way to
+  represent \emph{objects}
+
+\item The update rule (described above) means that \emph{garbage
+  collection}\martin{Can we expect readers to understand what that
+  means or why it is significant?} of invalid data happens
+  automatically.
+
+\item \ELABR{} allows a simpler less error-prone way of specifying
+  \emph{postconditions} of actions
+
+\item The $!$ operator gives additional information to the type-checker,
+allowing an author to specify her intent more precisely
+
+\item The $!$ operator provides additional information to the
+  compiler, allowing significantly more efficient clause ordering
+
 \end{itemize}
 We consider  each of these in turn.
 
 \subsection{Using Sub-trees of Expressions to Represent Objects}
-Consider the following facts about a gentleman named Brown:
+
+\martin{This section is about the algorithmic advantages of
+  representing facts as trees, and how EL supports a tree-presentation
+  of facts. It's probably an interesting statement about the world
+  that it can often be represented in this way.}
+
+\NI Consider the following facts about a gentleman named Brown:
 %% \begin{eqnarray*}
 %% \MAY{brown} & ( & \\
 %% & & \MAY{sex} (\MAY{male} \land \fBang \{male\}) \\
@@ -94,19 +108,20 @@ sub-tree of the entire database.  And all the facts which start with
 the prefix $\MAY{brown} \MAY{friends}$ form a sub-tree of that tree.
 A sub-tree can be treated as an individual via its prefix.  The whole
 sub-tree can be removed in one fell swoop by deleting its associated
-prefix.  So we can e.g. remove Brown's friends just by deleting the
-sentence $\MAY{brown} \MAY{friends}$.  (Compare this with Prolog -
+prefix.\martin{Is it clear to the uninitiated reader why this is significant? Shall we relate it to garbage collection mentioned above?}  So we can e.g. remove Brown's friends just by deleting the
+sentence $\MAY{brown} \MAY{friends}$.  (Compare this with Prolog\martin{maybe we could structure the kr.tex section as an extended comparison with Prolog. That
+might be informative for those readers who know Prolog.} -
 where it is much harder to remove all formulae containing a particular
 symbol).  A sub-tree of formulae is the \ELABR{} equivalent of an
 \emph{object} in an object-oriented programming language.
 
-The tree-structure of formulae also allows us to express the \emph{life-time of data} in a natural way. 
+The tree-structure of formulae also allows us to express the \emph{life-time of data} in a natural way. \martin{this is not about EL as such but about sequences of EL ...}
 If we wish a piece of data $d$ to exist for just the duration of a proposition $t$, then we make $t$ be a sub-expression of $d$. 
 For example, if we want the friendships of an agent to exist just as long as the agent, then we place the relationships inside the agent: 
 \[
 \MAY{brown} \MAY{friends}
 \]
-Now, when we remove $\MAY{brown}$ all the sub-trees, including the data about who he is friends with, will be automatically deleted as well.
+Now, when we remove $\MAY{brown}$ all the sub-trees, including the data about who he is friends with, will be automatically deleted as well.\martin{does that fall under garbage collection?}
 
 Another advantage of using a tree structure is that we get a form of \emph{automatic currying} which simplifies queries.
 So if, for example, Brown is married to Elizabeth, then the database would contain 
@@ -120,7 +135,13 @@ In \ELFULL{}, if we want to find out whether Brown is married, we can query the 
 In traditional predicate logic, if $married$ is a two-place predicate, then we need to fill in the extra argument place with a free variable - we would need to find out if there exists an $X$ such that $married(brown, X)$ - this is slower to compute and more cumbersome to type. 
 
 \subsection{Simpler Postconditions}
-When expressing the pre- and post-conditions of an action, planners based on predicate logic\footnote{An early example is STRIPS \cite{strips}.} have to explicitly describe the propositions that are removed when an action is performed:
+\martin{The section heading is not informative, the section could do with an introduction,
+because a new subject is started (action planning and execution)}
+
+When expressing the pre- and post-conditions of an action, planners
+based on predicate logic\footnote{An early example is STRIPS
+  \cite{strips}.} have to explicitly describe the propositions that
+are removed when an action is performed:\martin{say why we are using a new font here. What does it signify?}
 \begin{verbatim}
 action move(A, X, Y)
     preconditions
@@ -137,7 +158,10 @@ action move (A, X, Y)
     postconditions
         add: <A><at>(<Y> /\ !{Y})
 \end{verbatim}
-The ``!" operator makes it clear that something can only be at one place at a time, and the non-monotonic update rule \emph{automatically} removes the old invalid location data.
+The ``!" operator makes it clear that something can only be at one
+place at a time, and the non-monotonic update rule\martin{We have not
+  explained the non-monotonic update rule.  What is it?}
+\emph{automatically} removes the old invalid location data.
 
 \subsection{Using the $!$ Operator to Optimize Preconditions}
 \label{optimizingpreconditions}
@@ -176,17 +200,19 @@ Now it is able to find all results by just searching $n$ instances - a significa
 This optimisation has made a significant difference to the run-time cost in our industrial application.
 
 
-\subsection{Non-Deterministic EL Cannot Express Incompatibility}
+\subsection{Non-deterministic eremic logic cannot express incompatibility}
 
-We have experimented with a version of EL in which the models are \emph{non-deterministic} labeled-transition systems.
-Although non-determinism makes some of the constructions simpler, non-deterministic EL is unable to express incompatibility properly.
-
-Consider, for example, the claim that Jack is married to Jill. 
+We have experimented with a version of EL in which the models are
+\emph{non-deterministic} labeled-transition systems.  Although
+non-determinism makes some of the constructions simpler,
+non-deterministic EL is unable to express incompatibility properly.
+Consider, for example, the claim that Jack is married to Jill\martin{Actually, the
+formalisation below says Jack is married to Jill, and Jill only.}. 
 In standard deterministic EL this would be rendered as:
 \begin{eqnarray*}
 \MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\})
 \end{eqnarray*}
-There are three levels at which this claim can be denied.
+There are three levels at which this claim can be denied.\martin{Jack could be a polygamist}
 First, we can claim that Jack is married to someone else - Joan, say:
 \begin{eqnarray*}
 \MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
@@ -200,8 +226,12 @@ Third, we can claim that Jack does not exist at all. Bob and Jill, for example, 
 \fBang \{bob, jill\}
 \end{eqnarray*}
 
-Now we can assert the same sentences in non-deterministic EL, but they are \emph{no longer incompatible with our original sentence}.
-In non-deterministic EL, the following sentences are fully compatible (as long as there are two separate transitions labelled with $married$, or two separate transitions labelled with $jack$):
+Now we can assert the same sentences in non-deterministic EL, but they
+are \emph{no longer incompatible with our original sentence}.  In
+non-deterministic EL, the following sentences are compatible (as long
+as there are two separate transitions labelled with $married$, or two
+separate transitions labelled with $jack$):\martin{Maybe add a figure that shows
+the relevant non-deterministic LTS?}
 \begin{eqnarray*}
 \MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\}) \\
 \MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
@@ -212,7 +242,8 @@ Similarly, the following sentences are fully compatible as long as there are two
 \MAY{jack} \fBang \{unmarried\}
 \end{eqnarray*}
 
-Relatedly, non-deterministic EL does not satisfy Brandom's Incompatibility Semantics property:
+Relatedly, non-deterministic EL does not satisfy Brandom's Incompatibility Semantics property:\martin{I don't think we have formally defined it so far. This important
+concept should maybe not be introduced as a side remark.}
 \[
 \phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
 \]
