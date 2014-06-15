@@ -100,7 +100,7 @@ Again, this is significantly less verbose than the equivalent in predicate logic
 \forall x. light(x) \rightarrow \exists y . colour(x,y) \land (y = green \; \lor \; y = amber \; \lor \; y = red) \land \forall z . colour(x,z) \rightarrow y = z
 \]
 
-\subsection{A translation from first-order logic to first-order eremic logic}
+\subsection{A translation from first-order logic to first-order eremic logic}\label{translationFOLtoFOEL}
 
 We now sketch how to translate from first-order logic to eremic
 logic. Given that the latter is not nearly as expressive as the
@@ -152,7 +152,10 @@ follows.
 
 \end{itemize}
 
-\NI A first-order model $\CAL{M}$ for the signature above is called
+\NI Note that $\SEMB{\cdot}$ translates quantifier free formulae into
+the (quantifier-free) eremic logic of Section \ref{coreEL}.
+
+A first-order model $\CAL{M}$ for the signature above is called
 \emph{nice} provided the interpretation $r^{\CAL{M}}$ of all relations
 $i \in R_2^{inj}$ is injective, i.e.~whenever $(x, y), (x, z) \in
 i^{\CAL{M}}$, then $y = z$. We now translate nice models $\CAL{M}$
