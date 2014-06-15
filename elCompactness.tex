@@ -1,43 +1,37 @@
-\section{Compactness}
+\section{Compactness and the standard translation to first-order logic }
 \label{compactness}
 
-Here, we prove a compactness theorem via a translation into
-first-order logic. 
+This section studies embeddings of eremic logic into first-order
+logic, and proves that eremic logic has compactness using one.
 
 \subsection{The standard translation from  \ELABR{} into 
             first-order logic}\label{standardTranslation}
 
-We now present a translation from EL to first-order logic. We have two
-key purposes in mind:
-
-\begin{itemize}
-
-\item To facilitate the comparison between EL and conventional
-  first-order logic, to pin down precisely where EL and first-order
-  logic differ and where they don't.
-
-\item To enable technology transfer between EL and other logics. We
-  are inspired here in particular by the standard translation of modal
-  logic into first-order logic \cite{BlackburnP:modlog} which has
-  allows the transfer of interesting results such as compactness to
-  modal logic, but has also given rise to many interesting concepts in
-  first-order logic.  Historically, fragments of first-order logic
-  that were studied were defined by quantifier hierarchies. Modal
-  logics picks out very different fragments. For example fragments
-  closed under bisimulation, guarded fragments, fragments with
-  restricted numbers of variables.
-
-\end{itemize}
+Studying a new logic is interesting not just for the concepts the
+operations of the logic formalise, but also because logics do not live
+in isolation. We can study how a logics embeds into other logics.
+This helps explain not just the new logic, but also casts a new light
+onto the the logic that is the target of the embedding. For example
+the standard translation of modal logic into first-order logic gives
+rise to interesting fragments like the finite variable fragments, the
+fragments closed under bisimulation, guarded fragments that have been
+investigated heavily, etc. The standard translation also allow us to
+push techniques, constructions and results between logics.
 
 \input{figure:embedding}
 
-\NI We will translate EL into a restricted fragment of first-order
-logic (cf.~Figure \ref{figure:embedding}). The first-order signature
-$\SSS$ has a nullary predicate $\top$, a family of unary predicates
-$\RESTRICT{A}{\cdot}$, one for each finite subset $A \subseteq
-\Sigma$, and a family of binary predicates $\ARROW{a}{x}{y}$, one for
-each action $a \in \Sigma$.  The intended interpretation is as
-follows.
+\NI We now translate EL into a restricted fragment of first-order
+logic (cf.~Figure \ref{figure:embedding}). 
+
+\begin{definition}
+The first-order signature $\SSS$ has a nullary predicate $\top$, a
+family of unary predicates $\RESTRICT{A}{\cdot}$, one for each finite
+subset $A \subseteq \Sigma$, and a family of binary predicates
+$\ARROW{a}{x}{y}$, one for each action $a \in \Sigma$. 
+
+\end{definition}
+
+\NI The intended interpretation is as follows.
 
 \begin{itemize}
 
@@ -59,7 +53,7 @@ is true if
 \NI Note that if $\Sigma$ is infinite, then $\RESTRICT{A}{\cdot}$ and
 $\ARROW{a}{\cdot}{\cdot}$ are infinite families of relations.
 
-
+\begin{definition}
  Choose two fixed variables $x, y$, let $a$ range over actions in
 $\Sigma$, and $A$ over finite subsets of $\Sigma$. Then the restricted
 fragment of FOL that is the target of our translation is given by the
@@ -71,9 +65,12 @@ following grammar, where $w, z$ range over $x, y$.
   \top \fOr \ARROW{a}{w}{z}\fOr \RESTRICT{A}{z} \fOr \phi \AND \psi \fOr \exists x. \phi 
 \end{GRAMMAR}
 
+\end{definition}
+
 \NI Notice that this fragment of FOL has no negation, disjunction,
 implication, or universal quantification. 
 
+\begin{definition}
 The translations $\SEMB{\phi}_x$ and $\SEMB{\phi}_y$ of an EL formula
 $\phi$ are given relative to a state, denoted by either $x$ or $y$.
 
@@ -97,8 +94,10 @@ $\phi$ are given relative to a state, denoted by either $x$ or $y$.
 \end{array}
 \]
 
+\end{definition}
+
 \NI The translations on the left and right are identical except for
-switching $x$ and $y$. We continue with some example translations.
+switching $x$ and $y$. Here is an example translation.
 
 \[
    \SEMB{\langle a \rangle \top \AND \fBang \{a\}}_x 
@@ -106,19 +105,15 @@ switching $x$ and $y$. We continue with some example translations.
    \exists y.(\ARROW{a}{x}{y} \AND \top ) \AND \RESTRICT{\{a\}}{x}
 \]
 
-\martin{Shall we discuss 1 or 2 more? Maybe one that illustrates the
-variable switching?}
-
-\NI We now establish the correctness of the encoding. The key issue
-issue is that not every first-order model of our first-order signature
+\NI We now establish the correctness of the encoding. The key issue is
+that not every first-order model of our first-order signature
 corresponds to an eremic model. The problem is that eremic models have
 constraints that are not enforced by our signature, e.g.~$s \TRANS{a}
-t$ implies that $a \in \lambda(s)$. Such models are 'junk' from the
-point of view of \ELABR{}. 
-
-We deal with this problem following ideas from modal logic
-\cite{BlackburnP:modlog}: we add a translation $\SEMB{\LLL}$ for
-eremic transition systems, and then prove the following theorem.
+t$ implies that $a \in \lambda(s)$. Such models contain 'junk' from
+the point of view of \ELABR{}.  We deal with this problem following
+ideas from modal logic \cite{BlackburnP:modlog}: we add a translation
+$\SEMB{\LLL}$ for eremic transition systems, and then prove the
+following theorem.
 
 \begin{theorem}[correspondence theorem]\label{correspondence:theorem:1}
 Let $\phi$ be an \ELABR{} formula and $\MMM = (\LLL, s)$ an eremic
@@ -217,27 +212,32 @@ logic, getting a set of first-order formulae such that each finite
 subset has a first-order model. By compactness of first-order logic we
 obtain a first-order model of the translated modal formulae. Then we
 translate that first-order model back to modal logic, obtaining a
-model for the original modal formulae, as required.
+model for the original modal formulae, as required. The last step
+proceeds without a hitch because the modal and the first-order notions
+of models are identical,f save for details of prensentation.
 
 Unfortunately we cannot do the same with the translation from \ELABR{}
 to first-order logic presented in the previous section. The problem
 are the first-order models termed 'junk' above: they do not correspond
-to eremic transition systems.  For example the constraint $s
-\TRANS{a} t$ implies $a \in \lambda(s)$ might be violated. After all,
-merely having signature $\SSS$ is not strong enough a constraint. The
-target language of the translation from the previous section is not
-expressive enough to have formulae that can guarantee such
-constraints.  As we have no reason to belive that the first-order
+to eremic transition systems.  For example the constraint $s \TRANS{a}
+t$ implies $a \in \lambda(s)$ might be violated. In the case of eremic
+logic, merely having signature $\SSS$ is not strong enough a
+constraint. The target language of the translation from the previous
+section is not expressive enough to have formulae that can guarantee
+such constraints.  As we have no reason to belive that the first-order
 model whose existence is guarnateed by compactness isn't 'junk', we
 cannot use this translation.
 
 We solve this problem with a second translation from \ELABR{} to
 first-order logic, this time into a more expressive fragment were we
-can constrain first-order models enough to ensure that they always can
-be translated back to \ELFULL{}.
+can constrain first-order models easily using first-order formulae to
+ensure that they always can be translated back to \ELFULL{}.  The
+second embedding translates \ELFULL{} to two-sorted first-order logic
+(which can easily be reduced to first-order logic
+\cite{EndertonHB:matinttl}).
 
-The second embedding translates \ELFULL{} to two-sorted first-order
-logic. The many-sorted first-order signature $\SSS'$ is given as follows.
+\begin{definition}
+The two-sorted first-order signature $\SSS'$ is given as follows.
 \begin{itemize}
 
 \item $\SSS'$ has two sorts, states and actions. 
@@ -257,14 +257,13 @@ are no state constants.
   transition is labelled $a$.
 
 \end{itemize}
+\end{definition}
 
 \NI So $\SSS'$ is a relational signature, i.e.~has no function
-symbols.  The intended interpretation should should be
-clear.\martin{Phrase this better.}
+symbols. 
 
-With the target logic in place, we can now present a second encoding
-$\SEMBTWO{\phi}_x$ of \ELABR{} formulae.
-
+\begin{definition}
+The encoding $\SEMBTWO{\phi}_x$ of \ELABR{} formulae is given by the following clauses.
 \begin{eqnarray*}
   \SEMBTWO{\top}_x & \ = \ & \top
      \\
@@ -274,6 +273,8 @@ $\SEMBTWO{\phi}_x$ of \ELABR{} formulae.
      \\
   \SEMBTWO{\fBang A}_x & = & \forall^{act} a.(\ALLOWED{}{x}{a} \IMPLIES a \in A) 
 \end{eqnarray*}
+
+\end{definition}
 
 \NI Here we use $\exists^{st}$ to indicate that the quantifier ranges
 of the sort of states, and $\forall^{act}$ for a quantifier ranging
@@ -365,8 +366,9 @@ Finally $!A$.
 
 \end{proof}
 
-\NI We now use the translation $\SEMBTWO{\phi}_x$ to show that \ELABR{} must also have compactness. The key steps in the proof are
-simple, following standard techniques from modal logic
+\NI We use the translation $\SEMBTWO{\phi}_x$ to show that \ELABR{}
+must also have compactness. The key steps in the proof are simple,
+following standard techniques from modal logic
 \cite{BlackburnP:modlog}:
 
 \begin{enumerate}
@@ -378,8 +380,8 @@ simple, following standard techniques from modal logic
   \{\SEMBTWO{\phi}\ |\ \phi \in T\}$ of first-order formulae such that
   each finite subset has a first-order model $\SEMBTWO{\LLL}$.
 
-\item By compactness of first-order logic, we can find a first-order
-  model $\CAL{M}$ of $\SEMBTWO{T}$.
+\item By compactness of (two-sorted) first-order logic, we can find a
+  first-order model $\CAL{M}$ of $\SEMBTWO{T}$.
 
 \item\label{compactness:step:4} Convert $\CAL{M}$ into an eremic transition system
   $\CAL{M}^{\sharp}$ such that $(\CAL{M}^{\sharp}, s) \models T$.
@@ -397,16 +399,18 @@ that guarantees that models satisfying the formula are admissible.
 \begin{eqnarray*}
    \phi_{admis} 
       & \ =\ &
-   \forall^{st} s.\forall^{act} a.\forall^{st} t.( \ARROWTWO{}{s}{a}{t} \IMPLIES \ALLOWED{}{s}{a}) \\
+   \forall^{st} s.\forall^{act} a.\forall^{st} t.( \ARROWTWO{}{s}{a}{t} \IMPLIES \ALLOWED{}{s}{a}) 
+\end{eqnarray*}
+
+\NI Clearly, whenever a model satisfies $\phi_{admis}$, then it must
+be admissible. Likewise we use a formula $\phi_{det}$ to ensure model
+determinism.
+\begin{eqnarray*}
    \phi_{det} 
       & \ =\ &
    \forall^{st} s.\forall^{act} a.\forall^{st} t.\forall^{st} t'.
    ((\ARROWTWO{}{s}{a}{t}  \AND \ARROWTWO{}{s}{a}{t'} ) \IMPLIES t = t' )   
 \end{eqnarray*}
-
-\NI Clearly, whenever a model satisfies $\phi_{admis}$, then it must
-be admissible, and whenever it satisfies $\phi_{det}$ is is a
-deterministic transition system.
 
 \begin{lemma}\label{compactness:lemma:23399}
 If $\LLL$ is an eremic transistion system then $\SEMBTWO{\LLL} \models
@@ -415,14 +419,21 @@ If $\LLL$ is an eremic transistion system then $\SEMBTWO{\LLL} \models
 
 \begin{proof}
 Straightforward from the definitions.
-
 \end{proof}
 
 \NI We can now add, without changing satisfiability, $\phi_{admis}
 \AND \phi_{det}$ to any set of first-order formulae that has a model
 that is the translation of an eremic model.
 
-%% We deal with the absence of well-sizedness by 
+We also need to deal with well-sizedness in first-order models,
+because nothing we have discussed so far prevents models whose node
+labels are infinite sets that are not $\Sigma$.  Moreover, a model may
+interpret the set of actions with a proper superset of $\Sigma$.  Such
+models are not directly convertible to eremic models. We solve these
+problems by simply removing all actions that are not in $\Sigma$ and
+all transitions involving such actions.  Moreover, we simply map all
+infinite node-labels to $\Sigma$. It is easy to see that this does not
+change satisfiability of (translations of) eremic formulae.
 
 %% First we add a formula $\phi_a$ for each action $a \in \Sigma$.
 %% \begin{eqnarray*}
@@ -507,7 +518,6 @@ eremic transition system with actions $\Sigma$.
 \end{lemma}
 \begin{proof}
 Immediate from the definitions.
-
 \end{proof}
 
 \begin{theorem}[correspondence theorem]\label{correspondence:theorem:223}
@@ -523,69 +533,68 @@ all \ELABR{} formulae $\phi$ with actions from $\Sigma$:
 Here $X$ is the set of all elements in the universe of $\CAL{M}$ interpreting
 actions that are not in $\Sigma$.
 \begin{proof}
-The proof proceeds by induction on the structure of $\phi$. \textbf{To do.}
+The proof proceeds by induction on the structure of $\phi$. \martin{To do. But it's obvious}
 \end{proof}
 
 \begin{definition}
-Let $T$ be a set of \ELABR{} formulae, and $\MMM$ an eremic model.  We
+Let $\Gamma$ be a set of \ELABR{} formulae, and $\MMM$ an eremic model.  We
 write $\MMM \models T$ provided $\MMM \models \phi$ for all $\phi \in
-T$.  We say $T$ is \emph{satisfiable} provided $\MMM \models T$.
+T$.  We say $\Gamma$ is \emph{satisfiable} provided $\MMM \models T$.
 \end{definition}
 
 \begin{theorem}[Compactness of \ELFULL{}]
-A set $T$ of \ELABR{} formulae is satisfiable iff each finite subset of
-$T$ is satisfiable.
+A set $\Gamma$ of \ELABR{} formulae is satisfiable iff each finite subset of
+$\Gamma$ is satisfiable.
 \end{theorem}
 \begin{proof}
-For the non-trivial direction, let $T$ be a set of \ELABR{} formulae
+For the non-trivial direction, let $\Gamma$ be a set of \ELABR{} formulae
 such that any finite subset has an eremic model. Define 
 \[
-  \SEMBTWO{T} 
+  \SEMBTWO{\Gamma} 
      \ =\ 
-  \{\SEMBTWO{\phi}\ |\ \phi \in T\} 
+  \{\SEMBTWO{\phi}\ |\ \phi \in \Gamma\} 
      \qquad\qquad
-  T^*
+  \Gamma^*
      \ =\ 
-  \SEMBTWO{T} \cup \{\phi_{admis} \AND  \phi_{det}\}
+  \SEMBTWO{\Gamma} \cup \{\phi_{admis} \AND  \phi_{det}\}
 \]
-which both are sets of first-order formulae. Clearly each finite subset $T'$ of 
-$T^*$ has a first-order model. Why? First consider the subset $T'_{EL}$ of $T'$
+which both are sets of first-order formulae. Clearly each finite subset $\Gamma'$ of 
+$\Gamma^*$ has a first-order model. Why? First consider the subset $\Gamma'_{EL}$ of $\Gamma'$
 which is given as follows.
 \[
-   T'_{EL} \ =\ \{ \phi \in T\ |\ \SEMBTWO{\phi} \in T' \}
+   \Gamma'_{EL} \ =\ \{ \phi \in \Gamma\ |\ \SEMBTWO{\phi} \in \Gamma' \}
 \]
-Since $T'_{EL}$ is finite, by assumption there is an eremic model 
+Since $\Gamma'_{EL}$ is finite, by assumption there is an eremic model 
 \[
-   (\LLL, s) \models T'_{EL}
+   (\LLL, s) \models \Gamma'_{EL}
 \]
 which means we can apply Theorem \ref{correspondence:theorem:223} to get
 \[
-   \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{T'_{EL}},
+   \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{\Gamma'_{EL}},
 \]
-By construction $T' \setminus \SEMBTWO{T'_{EL}} \subseteq
+By construction $\Gamma' \setminus \SEMBTWO{\Gamma'_{EL}} \subseteq
 \{\phi_{admis} \AND \phi_{det}\}$, so all we have to
-show for $T'$ to have a model is that
+show for $\Gamma'$ to have a model is that
 \[
     \SEMBTWO{\LLL} \models_{x \mapsto s} \{\phi_{admis}\} \cup \{ \phi_a\ |\ a \in \Sigma\},
 \]
 but that is a direct consequence of Lemma
 \ref{compactness:lemma:23399}.  That
-means each finite subset of $T^*$ has a model and by appealing to
+means each finite subset of $\Gamma^*$ has a model and by appealing to
 compactness of first-order many-sorted logic (which is an immediate
 consequence of compactenss of one-sorted first-order logic
 \cite{EndertonHB:matinttl}), we know there must be a first-order model
-$\CAL{M}$ of $T^*$, i.e.
+$\CAL{M}$ of $\Gamma^*$, i.e.
 \[
-   \CAL{M} \models T^*.
+   \CAL{M} \models \Gamma^*.
 \]
 Since $\CAL{M} \models \phi_{admis} \AND \phi_{det}$ we can apply
 Theorem \ref{correspondence:theorem:223} that also
 \[
-   (\CAL{M}^{\sharp} \setminus X, s) \models T
+   (\CAL{M}^{\sharp} \setminus X, s) \models \Gamma
 \]
 where $X$ is the set of all actions in $\CAL{M}^{\sharp}$ that are not
-in $\Sigma$. Hence $T$ is satisfiable.
- 
+in $\Sigma$. Hence $\Gamma$ is satisfiable. 
 \end{proof}
 
 

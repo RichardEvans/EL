@@ -59,6 +59,9 @@ The largest simulation from $\MMM_1$ to $\MMM_2$ is denoted $\MMM_1
 simulation from $\MMM_1$ to $\MMM_2$, and the union of all such
 simulations.  If $\MMM_1 \SIM \MMM_2$ we say $\MMM_2$
 \emph{simulates} $\MMM_1$.
+
+We write $\MODELEQ$ for $\SIM \cap \SIM^{-1}$. We call $\MODELEQ$ the
+\emph{multual simulation} relation.
 \end{definition}
 
 \begin{definition}
@@ -72,7 +75,7 @@ theories of models. In what follows, we will mostly be interested in
 $\SIM^{-1}$, so we give it its own symbol.
 
 \begin{definition}
-Let $\MODELLEQ$  be short for $\SIM^{-1}$.
+Let $\MODELLEQ$  be short for $\SIM^{-1}$. 
 \end{definition}
 
 \NI Figure \ref{figure:leq} gives some examples of models and how they
@@ -80,22 +83,30 @@ are related by $\MODELLEQ$.
 
 \input{figure:leq}
 
-\begin{theorem}\label{theorem:completeLattice}
-$\MMM' \MODELLEQ \MMM$ if and only if
-$\THEORY{\MMM} \subseteq  \THEORY{\MMM'}$.
+\begin{theorem}[Characterisation of elementary equivalence]\label{theorem:completeLattice}
+\begin{enumerate}
+
+\item\label{theorem:completeLattice:1} $\MMM' \MODELLEQ \MMM$ if and
+  only if $\THEORY{\MMM} \subseteq \THEORY{\MMM'}$.
+
+\item\label{theorem:completeLattice:2} $\MMM' \MODELEQ \MMM$ if and
+  only if $\THEORY{\MMM} = \THEORY{\MMM'}$.
+
+\end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Assume $\MMM' \MODELLEQ \MMM$ and $\MMM \models \phi$.  We must show
-$\MMM' \models \phi$.  Let $\MMM = (\LLL, w)$ and $\MMM' = (\LLL',
-w')$.  The proof proceeds by induction on $\phi$.  The cases for
-$\top$ and $\land$ are trivial.  Assume $\phi = \MAY{a}\psi$ and
-assume $(\LLL, w) \models \MAY{a}\psi$.  Then $w \xrightarrow{a} x$
-and $(\LLL, x) \models \psi$.  As $\MMM'$ simulates $\MMM$, there is
-an $x'$ such that $(x,x') \in R$ and $w' \xrightarrow{a} x'$.  By the
-induction hypothesis, $(\LLL', x') \models \psi$.  Therefore, by the
-semantic clause for $\MAY{}$, $(\LLL', w') \models \MAY{a}\psi$.  Assume
-now that $\phi = \; ! \; A$, for some finite $A \subseteq \Sigma$, and
+For (\ref{theorem:completeLattice:1}) assume $\MMM' \MODELLEQ \MMM$
+and $\MMM \models \phi$.  We must show $\MMM' \models \phi$.  Let
+$\MMM = (\LLL, w)$ and $\MMM' = (\LLL', w')$.  The proof proceeds by
+induction on $\phi$.  The cases for $\top$ and $\land$ are trivial.
+Assume $\phi = \MAY{a}\psi$ and assume $(\LLL, w) \models
+\MAY{a}\psi$.  Then $w \xrightarrow{a} x$ and $(\LLL, x) \models
+\psi$.  As $\MMM'$ simulates $\MMM$, there is an $x'$ such that
+$(x,x') \in R$ and $w' \xrightarrow{a} x'$.  By the induction
+hypothesis, $(\LLL', x') \models \psi$.  Therefore, by the semantic
+clause for $\MAY{}$, $(\LLL', w') \models \MAY{a}\psi$.  Assume now
+that $\phi = \; ! \; A$, for some finite $A \subseteq \Sigma$, and
 that $(\LLL, w) \models \; ! \; A$.  By the semantic clause for $!$,
 $\lambda(w) \subseteq A$.  Since $(\LLL', w') \MODELLEQ (\LLL, w)$, by
 the definition of simulation of eremic transition systems, $\lambda(w)
@@ -136,16 +147,23 @@ the other hand, $\lambda(x)$ is infinite, then $\lambda(x) = \Sigma$
 (because the only infinite node labelling that we allow is
 $\Sigma$). Every node labelling is a subset of $\Sigma$, so here too,
 $\lambda(x) = \Sigma \supseteq \lambda'(x')$.  
+
+This establishes (\ref{theorem:completeLattice:1}), and
+(\ref{theorem:completeLattice:2}) is immediate from the definitions.
+
+
 \end{proof}
 
-Theorem \ref{theorem:completeLattice} illustrates from a
-model-theoretic point of view one dimension of how classical and
-eremic logic differ. In classical logic the theory of each model is
-complete, and $\THEORY{\CAL{M}} \subseteq \THEORY{\CAL{N}}$ already
-implies that $\THEORY{\CAL{M}} = \THEORY{\CAL{N}}$, i.e.~$\CAL{M}$ and
-$\CAL{N}$ are elementarily equivalent. \ELFULL{}'s lack of negation
-changes this drastically, and gives $\MODELLEQ$ the structure of a
-non-trivial bounded lattice as we shall demonstrate below.
+\NI Theorem
+\ref{theorem:completeLattice}.\ref{theorem:completeLattice:1}
+illustrates from a model-theoretic point of view one dimension of how
+classical and eremic logic differ. In classical logic the theory of
+each model is complete, and $\THEORY{\CAL{M}} \subseteq
+\THEORY{\CAL{N}}$ already implies that $\THEORY{\CAL{M}} =
+\THEORY{\CAL{N}}$, i.e.~$\CAL{M}$ and $\CAL{N}$ are elementarily
+equivalent. \ELFULL{}'s lack of negation changes this drastically, and
+gives $\MODELLEQ$ the structure of a non-trivial bounded lattice as we
+shall demonstrate below.
 
 But first we show that $\MODELEQ$ is a strictly coarser relation than 
 bisimilarity.
@@ -362,7 +380,7 @@ where
 S' & = & S \; [ w / w' \; | \; (w,w') \in ids] \\
 \rightarrow' & = & \rightarrow \; [ w / w' \; | \; (w,w') \in ids] \\
 \lambda' & = & \lambda \; [ w / w' \; | \; (w,w') \in ids]
-\end{eqnarray*}
+\end{eqnarray*}\martin{What is the meaning of square brackets $[...]$?}
 The $\mathsf{getIds}$ function returns the set of extra state-identification pairs that need to be added to respect determinism:
 \[
 \mathsf{getIds}(\mathcal{L}, \mathcal{L}', ids) = \{(x,x') \; | \; (w,w') \in ids, \exists a \; . \; w \xrightarrow{a} x, w' \xrightarrow{a} x'\}
@@ -434,7 +452,11 @@ In this case, given $\lambda_{\MMM}(w) \supseteq \lambda_{\NNN}(y)$ and $\lambda
 \end{proof}
 
 \subsection{Computing the least upper bound ($\sqcup$)}
-Intuitively, the least upper bound of two models $\MMM$ and $\MMM'$ contains the intersection of the transitions of $\MMM$ and $\MMM'$ for every associated pair of states in $\MMM$ and $\MMM'$, and the union of the node-labellings.
+
+\NI Intuitively, the least upper bound of two models $\MMM$ and
+$\MMM'$ contains the intersection of the transitions of $\MMM$ and
+$\MMM'$ for every associated pair of states in $\MMM$ and $\MMM'$, and
+the union of the node-labellings.
 
 Formally, define the least upper bound ($\sqcup$) of two models as:
 \begin{eqnarray*}
@@ -442,20 +464,39 @@ Formally, define the least upper bound ($\sqcup$) of two models as:
 \bot \sqcup \MMM & = & \MMM \\
 (\CAL{L},w) \sqcup (\CAL{L}',w') & = & \mathsf{lub}(\CAL{L}, \CAL{L}', (\MMM_\top, z), \{(w, w', z)\})
 \end{eqnarray*}
-where $\MMM_\top$ is the topmost model $(\mathcal{W}=\{z\}, \rightarrow=\{\}, \lambda=\{z \mapsto \Sigma\})$ for some state $z$.
-$\mathsf{lub}$ takes four parameters: the two eremic transition systems $\CAL{L}$ and $\CAL{L}'$, an accumulator representing the constructed result so far, and a list of state triples (each triple contains one state from each of the two input models plus the state of the accumulated result) to consider next.
-It is defined as:
+
+\NI where $\MMM_\top$ is the topmost model $(\mathcal{W}=\{z\},
+\rightarrow=\{\}, \lambda=\{z \mapsto \Sigma\})$ for some state $z$.
+$\mathsf{lub}$ takes four parameters: the two eremic transition
+systems $\CAL{L}$ and $\CAL{L}'$, an accumulator representing the
+constructed result so far, and a list of state triples (each triple
+contains one state from each of the two input models plus the state of
+the accumulated result) to consider next.  It is defined as:
 \begin{eqnarray*}
-\mathsf{lub}(\CAL{L}, \CAL{L}', \MMM, \{\}) & = & \MMM \\
-\mathsf{lub}(\CAL{L}, \CAL{L}', ((\mathcal{W}, \rightarrow, \lambda), y), \{(w,w',x)\} \cup R) & = & \mathsf{lub}(\CAL{L}, \CAL{L}', ((\mathcal{W} \cup \mathcal{W}', \rightarrow \cup \rightarrow', \lambda'), y), R' \cup R\}
+  \mathsf{lub}(\CAL{L}, \CAL{L}', \MMM, \{\}) 
+     &\quad =\quad & 
+  \MMM \\
+  \mathsf{lub}(\CAL{L}, \CAL{L}', ((\mathcal{W}, \rightarrow, \lambda), y), \{(w,w',x)\} \cup R) 
+     & = & 
+  \mathsf{lub}(\CAL{L}, \CAL{L}', ((\mathcal{W} \cup \mathcal{W}', \rightarrow \cup \rightarrow', \lambda'), y), R' \cup R\}
 \end{eqnarray*}
 where:
 \begin{eqnarray*}
-\{(a_i, w_i, w'_i) \;|\; i = 1 ... n\} & = & \mathsf{sharedT}((\CAL{L},w), (\CAL{L}',w')) \\
-\mathcal{W}' & = & \{x_i \;|\; i = 1 ... n\} \\
-\rightarrow' & = & \{(x, a_i, x_i) \;|\; i = 1 ... n\} \\
-\lambda' & = & \lambda [x \mapsto \lambda(w) \cup \lambda(w)'] \\
-R' & = & \{(w_i, w'_i, x_i) \;|\; i = 1 ... n\}
+  \{(a_i, w_i, w'_i) \;|\; i = 1 ... n\} 
+     &\quad =\quad & 
+  \mathsf{sharedT}((\CAL{L},w), (\CAL{L}',w')) \\
+  \mathcal{W}' 
+     & = & 
+  \{x_i \;|\; i = 1 ... n\} \\
+  \rightarrow' 
+     & = & 
+  \{(x, a_i, x_i) \;|\; i = 1 ... n\} \\
+  \lambda' 
+     & = & 
+  \lambda [x \mapsto \lambda(w) \cup \lambda(w)'] \\
+  R' 
+     & = & 
+  \{(w_i, w'_i, x_i) \;|\; i = 1 ... n\}
 \end{eqnarray*}
 Here, $\mathsf{sharedT}$ returns the shared transitions between two models, and is defined as:
 \[
@@ -504,20 +545,21 @@ So $\lambda_{\NNN}(x) \supseteq \lambda_{\MMM \sqcup \MMM'}(y)$, as required.
 \subsection{A decision procedure for eremic logic}\label{decisionprocedure}
 
 We use the semantic constructions above to provide a linear-time
-decision procedure.  The complexity of the decision procedure shows
-that \ELABR{} can be useful as a query language in knowledge
+decision procedure.  The complexity of the decision procedure is an
+indication that \ELABR{} is useful as a query language in knowledge
 representation.
 
-Since \ELABR{} has no connectives for negation, disjunction or
-implication, its decision procedure is straightforward and efficient.
-Although there are an infinite number of models which satisfy any
-expression, we have shown that the satisfying models form a bounded
-lattice with a least upper bound.  The $\SIMPL$ function defined above
-gives us the minimal model satisfying an expression.  Using this least
-upper bound, we can calculate entailment by checking a \emph{single
-  model}.  To decide whether $p \models q$, we use the following
-theorem:\martin{Am I right in assuming that the checker first computes $\SIMPL{\phi}$  and then
-checks if $\SIMPL{\phi} \models \psi$? If so, may be we should say this explicityl.}
+Eremic logic's lack of connectives for negation, disjunction or
+implication is the key reason for the efficiency of the decision
+procedure.  Although there are an infinite number of models which
+satisfy any\martin{falsity?} expression, we have shown that the satisfying models form
+a bounded lattice with a least upper bound.  The $\SIMPL$ function
+defined above gives us the minimal model satisfying an expression.
+Using this least upper bound, we can calculate entailment by checking
+a \emph{single model}.  To decide whether $p \models q$, we use the
+following theorem:\martin{Am I right in assuming that the checker
+  first computes $\SIMPL{\phi}$ and then checks if $\SIMPL{\phi}
+  \models \psi$? If so, may be we should say this explicityl.}
 
 \begin{theorem}\label{theorem:decision}
   The following are equivalent:
@@ -554,11 +596,12 @@ $\phi$, and computing whether a model satisfies $\psi$ is linear in the size
 of $\psi$, so computing whether $\phi \models \psi$ is $O(|\phi|+|\psi|)$.
 
 There is a Haskell implementation of the decision procedure
-\cite{HasellImplementation}.  To see that the decision procedure is
+\cite{HaskellImplementation}.  To see that the decision procedure is
 linear-time, observe that every function in the Haskell implementation
-is non-recursive and all iterative constructions use one
-of \begin{verbatim}map, filter, fold, any, all \end{verbatim}- each of
-which is linear in the size of its input.
+is non-recursive and all iterative constructions use one of
+\texttt{map}, \texttt{filter}, \texttt{fold}, \texttt{any},
+\texttt{all} - each of which is linear in the size of its input, hence
+so is the overall program.\martin{There's probably some theorem to this effect. Probably needs careful formulation to be true.}
 
 
 

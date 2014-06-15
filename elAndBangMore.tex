@@ -57,9 +57,33 @@ introduced. We discuss the relationship between EL and linear logic in
 general, and linear logic's additive conjunction in Section
 \ref{conclusion}.
 
-Note that the logic has no axioms. One reason for a purely rule-based
+That the logic has no axioms. One reason for a purely rule-based
 presentation is the absence of implication in the present fragment of
 EL. \martin{explain in more detail!}
+
+\subsection{Example inferences}
+
+\NI We prove that we can use $\phi \AND \psi \judge \xi$ to derive
+$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$:
+
+\begin{center}
+  \AxiomC{$\phi \AND \psi  \judge  \xi$}
+  \LeftLabel{\RULENAME{Normal}}
+  \UnaryInfC{$\MAY{a} (\phi \AND \psi)  \judge  \MAY{a} \xi$}
+  \AxiomC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \phi \land \MAY{a} \psi$}
+  \LeftLabel{\RULENAME{Det}}
+  \UnaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} (\phi \land \psi)$}
+  \LeftLabel{\RULENAME{Trans}}
+  \BinaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$}
+  \DisplayProof
+\end{center}
+
+\input{figure:elAndBangMore:bigDerivations}
+
+Figure \ref{figure:elAndBangMore:bigDerivations} demonstrates how
+to infer $\MAY{a}!\{b,c\} \land \MAY{a}!\{c,d\} \judge \MAY{a}!\{c\}$
+and $\MAY{a} !\{b\} \land \MAY{a} \MAY{c} \top \judge \MAY{d} \top$.
+
 
 \subsection{\RULENAME{!-Left} and \RULENAME{!-Right}}
 
@@ -100,29 +124,6 @@ asserting that $!A'$ is as strong as, or a stronger statement than
 $!A$. [\RULENAME{!-Left}] simply states that we can always strengthen
 our premise, while [\RULENAME{!-right 1}] allows us to weaken the
 premise.
-
-\subsection{Example inferences}
-
-\NI We prove that we can use $\phi \AND \psi \judge \xi$ to derive
-$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$:
-
-\begin{center}
-  \AxiomC{$\phi \AND \psi  \judge  \xi$}
-  \LeftLabel{\RULENAME{Normal}}
-  \UnaryInfC{$\MAY{a} (\phi \AND \psi)  \judge  \MAY{a} \xi$}
-  \AxiomC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \phi \land \MAY{a} \psi$}
-  \LeftLabel{\RULENAME{Det}}
-  \UnaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} (\phi \land \psi)$}
-  \LeftLabel{\RULENAME{Trans}}
-  \BinaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$}
-  \DisplayProof
-\end{center}
-
-\input{figure:elAndBangMore:bigDerivations}
-
-Figure \ref{figure:elAndBangMore:bigDerivations} demonstrates how
-to infer $\MAY{a}!\{b,c\} \land \MAY{a}!\{c,d\} \judge \MAY{a}!\{c\}$
-and $\MAY{a} !\{b\} \land \MAY{a} \MAY{c} \top \judge \MAY{d} \top$.
 
 
 \subsection{Characteristic formulae}
@@ -392,6 +393,8 @@ The desired conclusion follows from noting that:
 
 \subsection{Proof of Lemma \ref{final_completeness_lemma}}
 \label{prooflemma6}
+
+\martin{There is some confusion about lemma numbers. Which lemma are we proving here?}
 Finally, to fill the hole in Case 2 of Lemma \ref{lemma:completeness:5} above, we need to show that:
 \begin{lemma}
 \label{final_completeness_lemma}
