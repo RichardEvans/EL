@@ -1,10 +1,9 @@
 \section{Alternative semantics for eremic logic}\label{pureModels}
 
 In Section \ref{coreEL} we used node-labelled transition systems as
-models for eremic logic. The purpose of the node labels was to state
-the constrains, if any, on outgoing actions. This concern is reflected
-in the semantics of $!A$.
-
+models for eremic logic. The purpose of the node labels was to express
+constrains, if any, on outgoing actions. This concern is reflected in
+the semantics of $!A$.
 \[
 \begin{array}{lclcl}
   ((S, \rightarrow, \lambda), s) & \models & !A  &\mbox{\quad iff\quad } & \lambda(s) \subseteq A
@@ -21,9 +20,9 @@ as models. This gives rise to a subtly different theory that we now
 explore, albeit not in depth.
 
 \begin{definition}
-By a \emph{pure eremic model}, ranged over by $\PPP$, we mean a pair
-$(\LLL, s)$ where $\LLL = (S, \rightarrow)$ is a labelled transition
-system and $s \in S$ a state.
+By a \emph{pure eremic model}, ranged over by $\PPP, \PPP', ...$, we
+mean a pair $(\LLL, s)$ where $\LLL = (S, \rightarrow)$ is a labelled
+transition system and $s \in S$ a state.
 \end{definition}
 
 \NI Adapting the satisfaction relation to pure eremic models is
@@ -42,17 +41,15 @@ inductively by the following clauses, where we assume that $\MMM =
   \MMM & \models & A &\mbox{ iff } & \{a\ |\ \exists t.s \TRANS{a} t \} \subseteq A
 \end{array}
 \]
+\end{definition}
 
 \NI Note that all but the last clause are unchanged from Definition
 \ref{ELsatisfaction}.
-\end{definition}
 
-In this interpretation, $!A$ can easily be seen to restrict the
-out-degree of the current state $s$, i.e.~it constraints the 'width'
-of the graph.
-
-It is easy to see that all rules in Figure \ref{figure:elAndBangRules}
-are sound with respect to the new semantics too\martin{what about
+In this interpretation, $!A$ restricts the out-degree of the current
+state $s$, i.e.~it constraints the 'width' of the graph.  It is easy
+to see that all rules in Figure \ref{figure:elAndBangRules} are sound
+with respect to the new semantics too\martin{what about
   completeness?}.  The key advantage pure eremic models have is their
 simplicity: they are unadorned labelled transition systems, the key
 model of concurrency theory \cite{SassoneV:modcontac}. The connection
@@ -142,10 +139,8 @@ models. We shall now carry out a similar analysis for pure eremic
 models, and show that elementary equivalence coincides with
 bisimilarity, an important concept in process theory and modal logics
 \cite{SangiorgiD:intbisac}. Bisimilarity is strictly finer than
-$\MODELEQ$, and more sensitive to branching structure.
-
-\NI Before stating and proving the theorem, we need to make precise
-the used concepts.
+$\MODELEQ$, and more sensitive to branching structure.  Before stating
+and proving the theorem, we need to make precise the used concepts.
 
 \begin{definition}
 A pure eremic model $(\LLL, s)$ is finitely branching if its
