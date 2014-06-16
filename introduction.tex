@@ -83,8 +83,6 @@ light is currently red, and red is its only colour, we write:
 \[
 \MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\})
 \]
-\martin{this is actually structurally the same example as pierre before.
-Let's drop one}
 This is simpler (both in terms of representation length and
 computational complexity) than the representation\martin{representation twice in one sentence ... not good} in predicate logic:
 \[
@@ -103,12 +101,11 @@ free.
 
 Having sketched that exclusion is a natural logical concept, not
 easily expressed in first-order logic\footnote{We will precisify this
-  claim in later sections by showing\martin{we don't show that mathematically, ,amybe we need to tone down our language} that (i) first order logic's
-  representation of exclusion is significantly longer in terms of
-  formula length than \ELFULL{}'s (see Section
-  \ref{incompatiblepredicatesinfol}); and (ii) logic programs in
-  \ELFULL{} can be optimised to run significantly faster than their
-  equivalent in FOL (see Section \ref{optimizingpreconditions}).},  we
+  claim in later sections; first order logic's representation of
+  exclusion is longer in terms of formula length than \ELFULL{}'s (see
+  Section \ref{incompatiblepredicatesinfol}); and (ii) logic programs
+  in \ELFULL{} can be optimised to run significantly faster than their
+  equivalent in FOL (see Section \ref{optimizingpreconditions}).}, we
 will now argue the following:
 
 \begin{itemize}
@@ -123,12 +120,7 @@ will now argue the following:
 
 \end{itemize}
 
-\subsection{Exclusion is conceptually prior to negation}
-
-\martin{Maybe we should weaken the title to ``Brandom's argument that
-  exclusion is ...'' because later we say ``In the rest of this paper,
-  we assume - without further argument - that material incompatibility
-  is conceptually prior ...''}
+\subsection{Material incompatibility as conceptually prior to negation}
 
 \NI Every English speaker knows that
 \begin{quote}
@@ -164,44 +156,63 @@ claim that we can\martin{``can'' can be dropped} understand incompatible predica
 not understand universal quantification or negation.  
 Material incompatibility is conceptually prior to logical negation.
 
-Imagine, to make this vivid, a primitive people speaking a
-primordial language of atomic sentences\footnote{A sentence is atomic if it does not contain another sentence as a syntactic constituent. See Section \ref{intrasentential} below for a discussion.}\martin{why do we
-make a forward reference for this but not for a lot of other concepts?}\richard{What do you suggest instead?}\martin{I think we should 
-use forward references (in the introduction) only very sparingly, if at all. I think we an expect the reader to understand that the introduction is just an
-introduction and lateron we expand on the subjects sketched here.}. These people can express
-sentences that \emph{are} incompatible.  But they cannot express
-\emph{that} they are incompatible.  They
-recognise when atomic sentences are incompatible, and see that one
-sentence entails another - but their behaviour outreaches their ability
-to articulate it.  
+Imagine, to make this vivid, a primitive people speaking a primordial
+language of atomic sentences\footnote{A sentence is atomic if it does
+  not contain another sentence as a syntactic constituent.}. These people can express sentences
+that \emph{are} incompatible.  But they cannot express \emph{that}
+they are incompatible.  They recognise when atomic sentences are
+incompatible, and see that one sentence entails another - but their
+behaviour outreaches their ability to articulate it.
 
 Over time, these people \emph{may} advance to a more
 sophisticated language where incompatibilities and entailments can be\martin{``is made explicit'' }
 made explicit - but this is a later (and optional) development:
 \begin{quote}
-[If negation is added to the language], it lets one say that two claims are materially incompatible:``If a monochromatic patch is red, then it is not blue.'' That is, negation lets one make explicit in the form of claims - something that can be said and (so) thought - a relation that otherwise remained implicit in what one practically did, namely treat two claims as materially incompatible\footnote{\cite{brandom} pp.47-48}.
+[If negation is added to the language], it lets one say that two
+claims are materially incompatible:``If a monochromatic patch is red,
+then it is not blue.'' That is, negation lets one make explicit in the
+form of claims - something that can be said and (so) thought - a
+relation that otherwise remained implicit in what one practically did,
+namely treat two claims as materially
+incompatible\footnote{\cite{brandom} pp.47-48}.
 \end{quote}
-But before they make\martin{``before making''?} this optional explicitating step, our primitive people understand incompatibility without understanding negation.
-If this picture of our primordial language is coherent, then material incompatibility - exclusion - is conceptually independent of logical negation.
 
-Now imagine a modification of our primitive linguistic practice in which no
-sentences are ever treated as incompatible.  If one person says ``Jack
-is male'' and another says ``Jack is female'', nobody counts these
-claims as \emph{conflicting}.  The native speakers never disagree,
-back down, retract their claims, or justify them. They just say things.
-Without an understanding of incompatibility, and the variety of behaviour that it
-engenders, we submit (following Brandom) that there is insufficient
-richness in the linguistic practice for their sounds to count as
-assertions.  Without exclusion, their sounds are just \emph{barks}.
+\NI But before they make\martin{``before making''?} this optional
+explicitating step, our primitive people understand incompatibility
+without understanding negation.  If this picture of our primordial
+language is coherent, then material incompatibility is conceptually
+independent of logical negation.
+
+Now imagine a modification of our primitive linguistic practice in
+which no sentences are ever treated as incompatible.  If one person
+says ``Jack is male'' and another says ``Jack is female'', nobody
+counts these claims as \emph{conflicting}.  The native speakers never
+disagree, back down, retract their claims, or justify them. They just
+say things.  Without an understanding of incompatibility, and the
+variety of behaviour that it engenders, we submit (following Brandom)
+that there is insufficient richness in the linguistic practice for
+their sounds to count as assertions.  Without material
+incompatibility, their sounds are just \emph{barks}.
 \begin{quote}
-Suppose the reporter's differential responsive dispositions to call things red are matched by those of a parrot trained to utter the same noises under the same stimulation. What practical capacities of the human distinguish the reporter from the parrot? What, besides the exercise of regular differential responsive dispositions, must one be able to \emph{do}, in order to count as having or grasping \emph{concepts}? ... To grasp or understand a concept is, according to Sellars, to have practical mastery over the inferences it is involved in... The parrot does not treat ``That's red'' as incompatible with ``That's green''\footnote{\cite{brandom2} pp.88-89, our emphasis.}.
-\end{quote}
-If this  claim is also accepted, then material incompatibility
-is not just conceptually \emph{independent} of logical
-negation, but is conceptually \emph{prior}.
 
-\martin{We have not made good, except in the most subtle of ways, on the title of the subsection's promise that exclusion is prior to ... We have only
-talked about material incompatibility}
+  Suppose the reporter's differential responsive dispositions to call
+  things red are matched by those of a parrot trained to utter the
+  same noises under the same stimulation. What practical capacities of
+  the human distinguish the reporter from the parrot? What, besides
+  the exercise of regular differential responsive dispositions, must
+  one be able to \emph{do}, in order to count as having or grasping
+  \emph{concepts}? ... To grasp or understand a concept is, according
+  to Sellars, to have practical mastery over the inferences it is
+  involved in... The parrot does not treat ``That's red'' as
+  incompatible with ``That's green''\footnote{\cite{brandom2}
+    pp.88-89, our emphasis.}.
+\end{quote}
+
+\NI If this claim is also accepted, then material incompatibility is
+not just conceptually \emph{independent} of logical negation, but is
+conceptually \emph{prior}.  The rest of the paper elaborates on
+Brandom's understanding of material incompatibility, and identifies as
+well as formalises exclusion as its conceptual core.
 
 \subsection{Negation arises as the logically weakest form of exclusion}
 
