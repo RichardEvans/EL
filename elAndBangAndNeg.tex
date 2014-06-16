@@ -77,7 +77,7 @@ subset $S \subseteq \Sigma$. We use this finitely-restricted version of
 negation in the decision procedure below.
 
 \begin{definition}
-The function $x \neg_{S}(\phi)$ removes negation from $\phi$
+The function $\neg_{S}(\phi)$ removes negation from $\phi$
 relative to $S \subseteq \Sigma$:
 
 \begin{align*}
@@ -97,23 +97,24 @@ generate infinitary formulae.
 
 \subsection{A decision procedure}
 
-\NI We can use the fact that the $[\land, \fBang]$ fragment of SNEL
+\NI We can use the fact that the $[\land, \fBang]$ fragment of SNEL\martin{That term is now obsolete.}
 has a linear-time decision procedure to build an exponential-time
 decision procedure for EL $[\land, \fBang, \neg]$:
 
-Given a claim $\phi \models \psi$, let $S = \mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{\nu\}$ (where $\nu$ is a new symbol which does not occur in $\phi$ or $\psi$).
+Given a claim $\phi \models \psi$, let $S = \mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{a\}$ (where $a$ is a new symbol which does not occur in $\phi$ or $\psi$).
 First, translate away all negations in $\phi$ using $\neg_S()$ as defined in Section 1.4.
 Let the result be $\phi'$.
 Second, reduce $\phi'$ to Disjunctive Normal Form by repeated application of the rewrite rules:
 \begin{eqnarray*}
-\phi \land (\psi \lor \xi) & \leadsto & (\phi \land \psi) \lor (\phi \land \xi)  \\
+\phi \land (\psi \lor \xi) & \quad \leadsto \quad& (\phi \land \psi) \lor (\phi \land \xi)  \\
 (\phi \lor \psi) \land \xi & \leadsto & (\phi \land \xi) \lor (\psi \land \xi) 
 \end{eqnarray*}
 Let the resulting disjuncts be $\phi_1, ..., \phi_n$. 
 Now 
 \[
-\phi \models \psi \mbox{ iff } \forall \phi_{i=1}^n \phi_i \models \psi
+\phi \models \psi \quad\text{ iff }\quad \forall \phi_{i=1}^n \phi_i \models \psi
 \]
+\martin{What does $\forall \phi_{i=1}^n \phi_i$ mean?}
 Now, to check whether each $\phi_i \models \psi$, we will construct a
 model of $\psi_i$ (in linear time).  Now define the $S$ extensions of
 an annotated model $\MMM$ as all models which extend the states of
@@ -125,8 +126,8 @@ $\SIMPL{\phi_i}$ (there are a finite number of such extensions - the
 exact number is exponential in the size of $\SIMPL{\phi_i}$) and check
 for each one whether it satisfies $\psi$.
 
-To fill out this sketch, We will describe the structure of the
-annotated model, define the $\mu$ function, and show how to compute
+To fill out this sketch, we will describe the structure of the
+annotated model, define the $\mu$\martin{THe $\mu$ function doesn't appearto occur elsewhere.} function, and show how to compute
 the extensions of an annotated model relative to a set $S$ of symbols.
 
 
