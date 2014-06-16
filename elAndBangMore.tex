@@ -118,35 +118,20 @@ premise.
 
 \subsection{Characteristic formulae}
 
-In order to prove completeness, below, we need the notion of a \emph{characteristic formula} of a model: the simplest (in terms of entailment) formula that describes the model.
-
+In order to prove completeness, below, we need the notion of a
+\emph{characteristic formula} of a model: the simplest (in terms of
+entailment) formula that describes the model.
 The function $\SIMPL{\cdot}$ goes from formulae to (equivalence
-classes of) models. Now we go the other way: given a(n equivalence class of a) model $\MMM$, we
-compute its characteristic formula $\CHAR{m}$. The formula
-$\CHAR{\MMM}$ characterises the model $\MMM$ in the following
-sense. \martin{Check that they are true. Proofs?}
+classes of) models. Now we go the other way: given a(n equivalence
+class of a) model $\MMM$, we compute its characteristic formula
+$\CHAR{m}$. The formula $\CHAR{\MMM}$ characterises fully the model
+$\MMM$.  Characteristic formulae are investigated in the process
+calculi \cite{AcetoL:chaforfata} and Hoare logics
+\cite{HondaK:descriptive,ChargueraudA:provertcf}.  We leave it to
+further work to relate our use of characteristic formulae with these
+theory traditions. 
 
-\begin{itemize}
-
-\item  $\MMM \models \phi$ implies $\CHAR{\MMM} \models \phi$.
-
-\item  $\MMM \models \CHAR{ \MMM' }$ exactly when $\MMM \MODELLEQ \MMM'$.
-
-\item $\MMM = \BIGLUB \{\MMM' \ |\ \MMM' \models \CHAR{\MMM} \}$.
-
-\end{itemize}
-
-\martin{we must define $\BIGLUB$!}
-\richard{It is defined below. Should we move it up?}
-\martin{Where? Not in this section? Isn't $\BIGLUB$ explained as 
-part of the general bla on quotienting?}
-
-\NI This notion of characteristic formula is closely related to
-characteristic formulae in Hennessy-Milner logic
-\cite{AcetoL:chaforfata} and Hoare logics
-\cite{HondaK:descriptive,ChargueraudA:provertcf}. Here is the
-definition of $\CHAR{\cdot}$ (again we omit specifying that the function really
-returns $\MODELEQ$-equivalence classes of models).
+Here is the definition of $\CHAR{\cdot}$.
 
 \begin{eqnarray*}
   \CHAR{\bot} &\ =\ & \langle a \rangle \top \AND ! \emptyset  \mbox{ for some fixed symbol }a \in \Sigma  \\
@@ -155,8 +140,8 @@ returns $\MODELEQ$-equivalence classes of models).
 
 \NI Note that $\bot$ requires a particular symbol $a \in \Sigma$. This is why we required, in Section \ref{elsyntax}, that $\Sigma$ is non-empty.
 
-\NI The functions $\mathsf{bang}(\cdot)$ and $\mathsf{trans}$\martin{We don't seem to be using $\mathsf{trans}$} on
-models are given by the following clauses.
+\NI The functions $\mathsf{bang}(\cdot)$ on models are given by the
+following clauses.
 
 \begin{eqnarray*}
   \mathsf{bang}((S,\rightarrow,\lambda),w) 
@@ -167,15 +152,16 @@ models are given by the following clauses.
   \end{cases} \\
 \end{eqnarray*}
 
-\NI Note that $\CHAR{\MMM}$ is finite if $\MMM$ contains no cycles and if
-$\lambda(x)$ is either $\Sigma$ or finite for all states $x$.
-Note also that $\SIMPL{\cdot}$ and $\CHAR{\cdot}$ are inverses of each other in that:
+\NI Note that $\CHAR{\MMM}$ is finite if $\MMM$ contains no cycles and
+if $\lambda(x)$ is either $\Sigma$ or finite for all states $x$.  We
+state without proof that $\SIMPL{\cdot}$ and $\CHAR{\cdot}$ are
+inverses of each other in that:
 
 \begin{itemize}
 
-\item $\SIMPL{\CHAR{\MMM}} \ = \  \MMM$. \martin{Is this set-theoretic equality?}
+\item $\SIMPL{\CHAR{\MMM}} \ \MODELEQ \  \MMM$. 
 
-\item $\CHAR{\SIMPL{\phi}}$ iff $\phi$.\martin{is this $\vdash$ or $\models$?}
+\item $\models \CHAR{\SIMPL{\phi}}$ iff $\models\phi$.
 
 \end{itemize}
 
