@@ -71,9 +71,15 @@ And, in a parallel fashion, subjects too are individuated by the way they normat
 It is not impermissible for two different subjects to have incompatible commitments - say, for me to take the coin to be copper and you take it to be an electrical insulator. What is impermissible is for \emph{one and the same subject} to do so. Subjects play the conceptual functional role of \emph{units of account for deontic normative incompatibilities}. 
 That is, it is an essential individuating feature of the metaphysical categorical sortal metaconcept \emph{subject} that subjects have the metaproperty of \emph{normatively} repelling incompatibilities. A single subject just is what ought not to have incompatible commitments (at the same time)\footnote{\cite{brandom} p.192.}.
 \end{quote}
-Sellars and Brandom follow Hegel's  \emph{Wissenschaft der Logic} \cite{HegelGWF:wisdlog} in seeing material implication as a foundational concept from which even the supposedly primitive ideas of object and agent can be explicated.
-If incompatibility is to fill this fundamental load-bearing role, we should explore all possible ways of formalising it. 
-The tantum operator is the simplest formalisation we could find in which incompatible propositions can be expressed.
+
+\NI Sellars and Brandom follow Hegel's \emph{Wissenschaft der Logic}
+\cite{HegelGWF:wisdlog} in seeing material implication \martin{incompatibility?} as a
+foundational concept from which even the supposedly primitive ideas of
+object and agent can be explicated.  If incompatibility is to fill
+this fundamental load-bearing role, we should explore all possible
+ways of formalising it.  The tantum operator is the simplest
+formalisation we could find in which incompatible propositions can be
+expressed.
 
 \subsubsection{Brandom's Incompatibility Semantics}
 
@@ -97,7 +103,7 @@ function. Given a set $X \subseteq \mathcal{L}$ and an individual
 sentence $\phi \in \mathcal{L}$:
 
 \[
-   X \models \phi \text{ iff } \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
+   X \models \phi\quad \text{ iff }\quad \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
 \]
 
 \NI Now, given material incompatibility (as captured by the
@@ -106,7 +112,7 @@ as a \emph{derived} concept. Using $N \phi$ for the negation of
 $\phi$, he introduces negation via the rule:
 
 \[
-   \{N \phi\} \in \mathcal{I}(X) \text{ iff } X \models \phi
+   \{N \phi\} \in \mathcal{I}(X)\quad \text{ iff }\quad X \models \phi
 \]
 
 \NI Brandom goes on to show that the $N$ operator, as defined, satisfies
@@ -147,10 +153,10 @@ linearity puts type-based resource handling on a sound logical basis.
 Linear logic splits conjunction into two: additive and multiplicative
 conjunction The former, additive conjunction $A \& B$, is especially
 interesting in the context of \ELFULL{}. It can be interpreted
-\cite{AbramskyS:comintoll} as an external choice operation in the
-terminology of CSP \cite{HoareC:comseq}. External, because the choice
-is offered to the environment.  This interpretation has been
-influential in the study of types for process calculus,
+\cite{AbramskyS:comintoll} as, in the terminology of process calculus,
+an external choice operation. External, because the choice is offered
+to the environment.  This interpretation has been influential in the
+study of types for process calculus,
 e.g.~\cite{HondaK:unitypsfsifLONG,TakeuchiK:intbaslaits,HondaK:lanpriatdfscbp}.
 Implicitly, additive conjunction gives an explicit upper bound on how
 many different options the environment can choose from. For example in
@@ -167,7 +173,7 @@ and likewise for choosing $B$. To be sure, the alternatives in $A \&
 B$ may themselves contain further additive conjunctions, and in this
 way express how exclusion changes 'over time'.
 
-In summary, \ELABR{} and linear logic offer an operator that restricts
+In summary, \ELABR{} and linear logic offer  operators that restrict
 the available options. How are they related? Linear logic has an
 explicit linear negation $(\cdot)^{\bot}$ which, unlike classical
 negation, is constructive. In constrast, \ELABR{} defines a restricted
@@ -176,97 +182,56 @@ reconciled?
 
 \subsubsection{Process calculus}
 
-Another formalism that has a form of explicit description of mutually
-exclusive option as a core primitive are process calculi. They are
-models of computation based on the idea of message passing between
-actors running in parallel. Labelled transition systems are often used
-as models for process calculi, and many concepts, for example
-bisimulations and Hennessy-Milner logic, used for developing eremic
-logic originated from process theory (although some, such as
-bisimulation, evolved independently in other contexts).
+Process calculi are models of concurrent computation.  They are based
+on the idea of message passing between actors running in parallel.
+Labelled transition systems are often used as models for process
+calculi, and many concepts used in the development of eremic logic,
+for example bisimulations and Hennessy-Milner logic, originated in
+process theory (although some, such as bisimulation, evolved
+independently in other contexts).
 
-Process calculi traditionally have sums, which, in their most general
-form, are:
+Process calculi typically feature a construct called sum, that is an
+explicit description of mutually exclusive option:
 \[
      \sum_{i \in I} P_i
 \]
 That is a process that can internally choose, or be chosen to evolve
 into the process $P_i$ for each $i$. Once the choice is made, all
-other options disappear.  Usually, so much generality is not
-considered. Instead, input-guarded sums are much better behaved (and
-strictly less expressive):
-  \[
-     \sum_{i \in I} x_{i}(v_i)P_i
-  \]
-This is a process that can receive a message on each channel $x_i$
-and, if such a message arrives with payload $y$, evolve into
-$P_i{y/v_i}$ which is the process obtained from $P_i$ by substituting
-$y$ for the bound variable $v_i$.  An even better behaved process is
-obtained if all inputs use the same input channel and we have only
-finitely many alternatives:
-  \[
-     \sum_{i = 1}^n x(v)P_i
-  \]
-  Simplifying a great deal, this can be seen as a proof for linear
-  logic's additive conjunction
-  \[
-     \&_{i = 1}^n x(v)A_i
-  \]
-  provided each $P_i$ is a proof of $A_i$.  It is possible to extend
-  the Curry-Howard correspondence to (fragments of) linear logic on
-  one side and process calculi on the other \cite{GaySJ:typcalosp}.
+other options disappear.  Sums also relate closely to linear logic's
+additive conjunction. Is this conceptual proximity a coincidence or
+indicative of deeper common structure?
 
-In this way, process calculi are related to linear logic (by using
-formulae as types) and to eremic logic (because processes and eremic
-formulae can be modelled by labelled transition systems, and because
-eremic logic is close to logics for processes).\martin{rephrase. How
-  did process theory influence EL?}
 
 \subsubsection{Failures/divergences in process calculi}
 
-Our eremic models are remarkably close to a form of the
-failures/divergences models that has been used in the denotational
-semantics of process calculi, primarily Hoare's CSP
-\cite{HoareC:comseq,RoscoeAW:theapoc} and its descendants.  In this
-model, the denotation of a process $P$ is given as a pair
-
-\[
-   (traces(P), fail(P))
-\]
-
-where $traces(P) = \{ \sigma\ |\ (\sigma, X) \in \SEMB{P} \}$ are
-$P$'s traces, and $fail(P)$ it's failures.  A \emph{failure} is a pair
-$(\sigma, R)$ where $\sigma \in \Sigma^*$ and $R \subseteq
-\Sigma$. The intended interpretation is that a process $P$ has failure
-$(\sigma, R)$ provided that $\sigma$ is a trace of $P$ and after $P$
-executes all the actions in $\sigma$ it refuses to do any action given
-in $R$. The denotation $\SEMB{P}$ of $P$ in a failures/divergences
-model is the the set of all of $P$'s failures. The set $ traces(P)$ is
+Our eremic models are close to a form of the failures/divergences
+models that has been used in the denotational semantics of process
+calculi, primarily Hoare's CSP \cite{HoareC:comseq,RoscoeAW:theapoc}
+and its descendants.  In this model, the denotation of a process $P$
+is given as a pair $(traces(P), fail(P))$ where $traces(P) = \{
+\sigma\ |\ (\sigma, X) \in \SEMB{P} \}$ are $P$'s traces, and
+$fail(P)$ it's failures.  A \emph{failure} is a pair $(\sigma, R)$
+where $\sigma \in \Sigma^*$ and $R \subseteq \Sigma$. The intended
+interpretation is that a process $P$ has failure $(\sigma, R)$
+provided that $\sigma$ is a trace of $P$ and after $P$ executes all
+the actions in $\sigma$ it refuses to do any action given in $R$. The
+denotation $\SEMB{P}$ of $P$ in a failures/divergences model is the
+the set of all of $P$'s failures. The set $ traces(P)$ is
 prefix-closed, hence gives rise of a deterministic labelled transition
-system.
-\begin{itemize}
-
-\item States are given by the set $traces(P)$ of all traces.
-
-\item Transitions are of the form $\sigma \TRANS{a} \sigma.a$, where
-  $\sigma.a$ is the string extending $\sigma$ with the action $a$.
-
-\item Start state is the empty string.
-
-\end{itemize}
-We can decorate all states as follows:
-\[
-   \lambda (\sigma) = \Sigma \setminus R
-\]
-provided that $(\sigma, R) \in \SEMB{P}$.  Whenever the set $\Sigma$
-of symbols is finite, we obtain an eremic model this way.
+system: States are given by the set $traces(P)$ of all traces.
+Transitions are of the form $\sigma \TRANS{a} \sigma.a$, where
+$\sigma.a$ is the string extending $\sigma$ with the action $a$.  The
+start state is the empty string.  We can decorate all states as
+follows: $ \lambda (\sigma) = \Sigma \setminus R $ provided that
+$(\sigma, R) \in \SEMB{P}$.  Whenever the set $\Sigma$ of symbols is
+finite, we obtain an eremic model this way.
 
 While the failures/divergences semantics of CSP are somewhat more
 complicated due to the possibility of diverging programs, the close
-connection between eremic logic and the denotation semantics, as well
-as the syntatic similarity with Hennessy-Milner logic suggest that it
-might be fruitful to investigate how eremic logic can be used as a
-program logic for process calculi.
+connection between eremic models and the denotations of CSP processes,
+as well as the syntatic similarity with Hennessy-Milner logic suggest
+that it might be fruitful to investigate how eremic logic can be used
+as a program logic for process calculi.
 
 \subsection{Open problems} 
 
@@ -452,15 +417,13 @@ Eremic logic can express the same thing in finitary ways.
 
 \subsubsection{Compactness, ultraproducts and eremic logic}
 
-Another interesting open question is to do with
-ultra-products. Mathematical logic knows three substantially different
-approaches towards proving compactness: G\"odel's original approach,
-refined by Morley and many others, uses proof rules and the
-completeness theorem. It thus mixes syntax and semantics. Our proof in
-Section \ref{compactnessProof} exemplifies the second approach: proof
-by translation that piggy-backs on the compactness of other
-logics. Finally, the model-theoretic approach uses ultra-products as a
-tool for 'gluing' together the models that guarantee finite
+Mathematicals knows three substantially different approaches for
+proving compactness: G\"odel's original approach, refined by Morley
+and many others, uses proof rules and the completeness theorem.  Our
+proof in Section \ref{compactnessProof} works by translation and
+piggy-backs on the compactness of first-order logic. Finally, the
+model-theoretic approach uses ultra-products as a tool for 'gluing'
+together the models that guarantee finite
 satisfiability. Ultra-products are quotients of reduced products by an
 ultra-filter. The conditions defining ultra-filters are carefully
 chosen to ensure that the quotient is indeed an appropriate model with

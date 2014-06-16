@@ -22,6 +22,8 @@ software.
 * Be consistent. In particular
   - State vs node
 
+  - capitalisation of "Brandom's incompatibility ..."
+
   - time complexity vs time-complexity
 
   - Implication: \rightarrow vs horseshoe
@@ -167,6 +169,8 @@ mono (μόνο). If we go creative we could simply say
   - Bernhard Reus at Sussex
   - Billiejoe Charlton
   - Aram Lintzel
+  - Jaroslav Peregrin
+  - TY
   - Giacomo Turbanti <turbanti.giacomo@gmail.com> 
   - Bat
   - http://rasmuskrendsvig.dk/ 
