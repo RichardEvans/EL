@@ -1,6 +1,6 @@
 \section{Introduction}\label{introduction}
 
-Natural language is full of mutually-exclusive alternatives.
+Natural language is full of incompatible alternatives.
 If Pierre is the current king of France, then nobody else can simultaneously fill that role.
 A traffic light can be green, amber or red - but it cannot be more than one colour at a time.
 Mutual exclusion is a natural and ubiquitous concept.
@@ -14,9 +14,8 @@ To say that a particular traffic light, $tl$, is red - and red is its \emph{only
 \[
 colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red
 \]
-In predicate logic, exclusion is a \emph{derived} concept, reduced to 
-a combination of universal quantification and identity.  Predicate
-logic, in other words, uses relatively complex machinery to express a
+In \fol, incompatibility is a \emph{derived} concept, reduced to 
+a combination of universal quantification and identity.  \FOL, in other words, uses relatively complex machinery to express a
 simple concept:
 \begin{itemize}
 
@@ -37,15 +36,15 @@ simple concept:
 \end{itemize}
 
 \NI The costs of quantification and identity, such as a larger proof
-search space, have to be borne every time one uses exclusion, even
-though exclusion does not, prima facie, appear to have anything to do
+search space, have to be borne every time one uses incompatibility - even
+though incompatibility does not, prima facie, appear to have anything to do
 with the free/bound variable distinction, or require the full power of 
 the identity relation.
 
-This paper introduces an alternative, \ELFULL{}, where exclusion is
-expressed directly, as a first-class concept - rather being relegated
+This paper introduces an alternative, \ELFULL{}, where incompatibility is
+expressed directly, as a first-class concept - rather than being relegated
 to second-class status as a defined concept. \ELFULL{} is the simplest
-logic we could find that expresses exclusion directly.  There is no
+logic we could find that expresses incompatibility directly.  There is no
 negation, disjunction or implication. To retain expressive power,
 eremic logic has may-modalites.  Because of this simplicity, it has a
 linear-time decision procedure.
@@ -76,15 +75,15 @@ of France, we write:
 \[
 \MAY{king}\MAY{france}(\MAY{pierre} \land \fBang \{pierre\})
 \]
-Crucially \ELFULL{}'s representation of exclusion involves no
+Crucially \ELFULL{}'s representation involves no
 universal quantifier and no identity relation.  It is a purely
-propositional representation of exclusion.  To say that the traffic
+propositional representation.  To say that the traffic
 light is currently red, and red is its only colour, we write:
 \[
 \MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\})
 \]
 This is simpler (both in terms of representation length and
-computational complexity) than the representation\martin{representation twice in one sentence ... not good} in predicate logic:
+computational complexity) than the formulation in \fol:
 \[
 colour(t, red) \land \forall x . colour(t, x) \rightarrow x = red
 \]
@@ -99,10 +98,10 @@ Change over time can be expressed in first-order logic with bounded
 quantification, but modalities do this more succinctly and variable
 free.
 
-Having sketched that exclusion is a natural logical concept, not
+Having claimed that incompatibility is a natural logical concept, not
 easily expressed in first-order logic\footnote{We will precisify this
   claim in later sections; first order logic's representation of
-  exclusion is longer in terms of formula length than \ELFULL{}'s (see
+  incompatibility is longer in terms of formula length than \ELFULL{}'s (see
   Section \ref{incompatiblepredicatesinfol}); and (ii) logic programs
   in \ELFULL{} can be optimised to run significantly faster than their
   equivalent in FOL (see Section \ref{optimizingpreconditions}).}, we
@@ -110,13 +109,9 @@ will now argue the following:
 
 \begin{itemize}
 
-\item Exclusion is conceptually prior to negation.
+\item Incompatibility is conceptually prior to negation.
 
-\item In particular, negation arises as the weakest form of exclusion.
-
-\item Exclusion enables us to express easily intra-sentential logical
-  concepts such as inference from dyadic to monadic relations which
-  are expensive in first-order logic.
+\item In particular, negation arises as the weakest form of incompatibility.
 
 \end{itemize}
 
@@ -148,11 +143,10 @@ The question is how one ought to construe the relation between what is explicit 
 The formalist line of thought begins with explicit propositional licenses that license inferences in virtue of their logical form. Material inferences are understood privatively: as enthymemes resulting from the suppression or hiding of one of the premises required for a proper warrant. 
 Opposed to this might be a pragmatist line of thought, beginning with material inferences\footnote{\cite{brandom2}, p.101.}.
 \end{quote}
-According to the alternative, pragmatist strategy that Sellars and Brandom propose, \martin{we use propose to often. Maybe use ``In Sellars and Brandom's alternative, pragmatist strategy ...''}
-``Jack
+According to the alternative, pragmatist strategy of Sellars and Brandom, ``Jack
 is male'' is incompatible with ``Jack is female'' because ``is male''
 and ``is female'' are \emph{materially incompatible} predicates.  They
-claim that we can\martin{``can'' can be dropped} understand incompatible predicates even if we do
+claim we can understand incompatible predicates even if we do
 not understand universal quantification or negation.  
 Material incompatibility is conceptually prior to logical negation.
 
@@ -165,8 +159,7 @@ incompatible, and see that one sentence entails another - but their
 behaviour outreaches their ability to articulate it.
 
 Over time, these people \emph{may} advance to a more
-sophisticated language where incompatibilities and entailments can be\martin{``is made explicit'' }
-made explicit - but this is a later (and optional) development:
+sophisticated language where incompatibilities are made explicit', using some sort of negation operator - but this is a later (and optional) development:
 \begin{quote}
 [If negation is added to the language], it lets one say that two
 claims are materially incompatible:``If a monochromatic patch is red,
@@ -177,7 +170,7 @@ namely treat two claims as materially
 incompatible\footnote{\cite{brandom} pp.47-48}.
 \end{quote}
 
-\NI But before they make\martin{``before making''?} this optional
+\NI But before making this optional
 explicitating step, our primitive people understand incompatibility
 without understanding negation.  If this picture of our primordial
 language is coherent, then material incompatibility is conceptually
@@ -210,9 +203,7 @@ incompatibility, their sounds are just \emph{barks}.
 
 \NI If this claim is also accepted, then material incompatibility is
 not just conceptually \emph{independent} of logical negation, but is
-conceptually \emph{prior}.  The rest of the paper elaborates on
-Brandom's understanding of material incompatibility, and identifies as
-well as formalises exclusion as its conceptual core.
+conceptually \emph{prior}.  
 
 \subsection{Negation arises as the logically weakest form of material incompatibility}
 
@@ -242,34 +233,32 @@ He might support Chelsea
 \item
 He might not support any football team at all
 \item
-There may be no person\martin{nobody?} answering to the name ``Jack''
+There may be nobody answering to the name ``Jack''
 \end{itemize}
-All the above\martin{``These possibilities ...''} possibilities are concrete propositions which are incompatible with Jack supporting Manchester United.
-To say that \martin{``that'' can be dropped here?} ``Jack does not support Manchester United'' is just to claim that one of these indefinitely many concrete possibilities is true.
+These possibilities are concrete propositions which are incompatible with Jack supporting Manchester United.
+To say ``Jack does not support Manchester United'' is just to claim that one of these indefinitely many concrete possibilities is true.
 Negation is just the logically weakest form of incompatibility.
 
 In the rest of this paper, we assume - without further argument - that material incompatibility is conceptually prior to logical negation.
 We develop a simple
- modal logic to articulate Brandom's intuition formally: a language, without negation, in which we can make incompatible claims\footnote{Although this logic is inspired by Brandom's thoughts, this is not to say that he himself would endorse the approach described in this paper. As a pragmatist, Brandom stresses that dispositions or practices are prior to any \martin{``any'' can be dropped?} logical codification - so he might not see the need for, or wisdom of, attempting to \martin{``attempting to'' and be dropped and replaced by ``formalising''?}formalise these\martin{``these'' can be dropped?} pre-logical practices in a formal logic.\martin{``in a formal logic'' can be dropped.}}.
-
+ modal logic to articulate Brandom's intuition formally: a language, without negation, in which we can nevertheless make incompatible claims\footnote{Although this logic is inspired by Brandom's thoughts, this is not to say that he himself would endorse the approach described in this paper. As a pragmatist, Brandom stresses that dispositions or practices are prior to logical codification - so he might not see the need for, or wisdom of, formalising pre-logical practices.}.
 
 \subsection{Intra-sentential logical concepts}
 \label{intrasentential}
-So far, we have justified the claim that exclusion is a fundamental logical concept by arguing (following Brandom) that exclusion is conceptually prior to negation. 
+So far, we have justified the claim that incompatibility is a fundamental logical concept by arguing (following Brandom) that incompatibility is conceptually prior to negation. 
 
-Now exclusion is an inferential relation between \emph{atomic sentences}. 
-In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that predicate logic cannot articulate, but that \ELFULL{} is able to handle\martin{``EL handles easily/naturally/convincingly''?}.
+Now incompatibility is an inferential relation between \emph{atomic sentences}. 
+In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that \fol cannot articulate, but that \ELFULL{} handles naturally.
 
 The \emph{atomic sentences} of a natural language can be
-characterised as\martin{drop ``can be
-characterised as'', replace by ``are''?} the sentences which do not contain any \martin{drop ``any''?} other
+characterised as the sentences which do not contain any other
 sentences as constituent parts\footnote{Compare Russell \cite{russell}
   p.117: ``A sentence is of atomic form when it contains no logical
   words and no subordinate sentence''. We use a broader notion of
   atomicity by focusing solely on whether or not it contains a
   subordinate sentence, allowing logical words such as ``and'' as long
   as they are conjoining noun-phrases and not sentences.}.  According
-to this criterion, the following are atomic:\martin{Maybe simpler ``In that/this sense the sentences jackl ... jack ... are atomic. In contrast... the following is not because ...'' or something like that?}
+to this criterion, the following are atomic:
 
 \begin{itemize}
 
@@ -284,7 +273,7 @@ to this criterion, the following are atomic:\martin{Maybe simpler ``In that/this
 \end{quote}
 
 \NI because it contains the complete sentence ``Jack is male'' as a
-syntactic constituent.  Note that, according to this criterion\martin{I think ``according to this criterion'' can be dropped}, the
+syntactic constituent.  Note that, according to this criterion, the
 following \emph{is} atomic, despite using ``and'' :
 
 \begin{quote}
@@ -306,7 +295,7 @@ sentences of a natural language.  For example:
 
 \end{itemize}
 
-\NI Some of these inferential relations are \emph{exclusion}
+\NI Some of these inferential relations are \emph{incompatibility}
 relations (two sentences cannot both be true) while others are
 \emph{entailment} relations (if one sentence is true, the other must
 also be true).  The main question this paper seeks to answer is:
@@ -372,7 +361,7 @@ between atomic sentences.
 \ref{coreEL} introduces the syntax and semantics of eremic logic with
 examples. Section \ref{naturalLanguageInference} discusses how how
 eremic logic can be used to model adverbial inferences and inferences
-from dyadic to monadic predicates.  Section \ref{kr} describes
+from dyadic to monadic s.  Section \ref{kr} describes
 informally how eremic logic is useful as a knowledge representation
 language.  Section \ref{elAndBangCore} presents core results of the
 paper, in particular a semantic characterisation of elementary
