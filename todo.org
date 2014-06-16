@@ -1,3 +1,4 @@
+* Too many of our sentences start with "But ..." Is this elegant?
 * Make a clear point somewhere that tree models are
 all we need.
 
@@ -21,6 +22,8 @@ software.
 * Have we discussed bisimulation invariance?
 * Be consistent. In particular
   - State vs node
+
+  - Fullstop at the end of short sentences, (e.g. in bullets)
 
   - capitalisation of "Brandom's incompatibility ..."
 
