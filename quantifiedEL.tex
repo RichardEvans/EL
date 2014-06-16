@@ -76,17 +76,17 @@ In quantified eremic logic, we can say that there is exactly one king of France,
 \[
 \exists x . \MAY{king} \MAY{france} ! \{x\} \land \MAY{x} \MAY{bald}
 \]
-Expressing this in predicate logic is significantly more cumbersome:
+Expressing this in \fol{} is significantly more cumbersome:
 \[
 \exists x. king(france, x) \land bald(x) \land \forall y. king(france, y) \rightarrow y = x
 \]
-The predicate logic version uses an extra universal quantifier, and also requires the identity relation (which itself requires the schema of the Indiscernibility of Identicals ).
+The \fol{} version uses an extra universal quantifier, and also requires the identity relation (which itself requires the schema of the Indiscernibility of Identicals ).
 
 To say that every person has exactly one sex, which is either male or female, we can write in quantified eremic logic:
 \[
 \forall x . \MAY{x} \MAY{person} \rightarrow \MAY{x} \MAY{sex} ! \{male, female\} \land \exists y . \MAY{x} \MAY{sex} (\MAY{y} \land \fBang \{y\})
 \]
-This is significantly more elegant than the equivalent in predicate logic:
+This is significantly more elegant than the equivalent in \fol{}:
 \[
 \forall x. person(x) \rightarrow \exists y . sex(x,y) \land (y = male \; \lor \; y = female) \land \forall z . sex(x,z) \rightarrow y = z
 \]
@@ -95,7 +95,7 @@ To say that every traffic light is coloured either green, amber or red, we can w
 \[
 \forall x. \MAY{x} \MAY{light} \rightarrow \MAY{x} \MAY{colour} !\{green, amber, red\} \land \exists y . \MAY{x} \MAY{colour} (\MAY{y} \land !\{y\})
 \]
-Again, this is significantly less verbose than the equivalent in predicate logic:
+Again, this is significantly less verbose than the equivalent in \fol{}:
 \[
 \forall x. light(x) \rightarrow \exists y . colour(x,y) \land (y = green \; \lor \; y = amber \; \lor \; y = red) \land \forall z . colour(x,z) \rightarrow y = z
 \]
