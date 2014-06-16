@@ -189,11 +189,14 @@ The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
 proved below. 
 
 \begin{definition}
-We write $\phi_1, ...,
-\phi_n \judge \psi$ whenever $\BIGAND_{i}\phi_i \judge \psi$.  For
-arbitrary sets $\Gamma$ of formulae, we write $\Gamma \judge \psi$
-provided there are $\phi_1, ..., \phi_n \in \Gamma$ such that $\phi_1,
-..., \phi_n \judge \psi$.
+Let $\Gamma$ be an arbitrary set of eremic formulae. We write $\MMM
+\models \Gamma$ provided $\MMM \models \phi$ for all $\phi \in
+\Gamma$.  We write $\Gamma \models \phi$ if for all eremic models
+$\MMM$ $\MMM \models \Gamma$ implies $\MMM \models \phi$.  We write
+$\phi_1, ..., \phi_n \judge \psi$ whenever $\BIGAND_{i}\phi_i \judge
+\psi$.  For arbitrary sets $\Gamma$ of formulae, we write $\Gamma
+\judge \psi$ provided there are $\phi_1, ..., \phi_n \in \Gamma$ such
+that $\phi_1, ..., \phi_n \judge \psi$.
 \end{definition}
 
 \begin{corollary}
