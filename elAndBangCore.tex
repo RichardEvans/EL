@@ -379,8 +379,13 @@ where
 S' & = & S \; [ w / w' \; | \; (w,w') \in ids] \\
 \rightarrow' & = & \rightarrow \; [ w / w' \; | \; (w,w') \in ids] \\
 \lambda' & = & \lambda \; [ w / w' \; | \; (w,w') \in ids]
-\end{eqnarray*}\martin{What is the meaning of square brackets $[...]$?}
-The $\mathsf{getIds}$ function returns the set of extra state-identification pairs that need to be added to respect determinism:
+\end{eqnarray*}
+
+\NI Here $[ w / w' \; | \; (w,w') \in ids]$ means the simultaneous
+substitution of $w$ for $w'$ for all pairs $(w, w')$ in $ids$.  The
+$\mathsf{getIds}$ function returns the set of extra
+state-identification pairs that need to be added to respect
+determinism:
 \[
 \mathsf{getIds}(\mathcal{L}, \mathcal{L}', ids) = \{(x,x') \; | \; (w,w') \in ids, \exists a \; . \; w \xrightarrow{a} x, w' \xrightarrow{a} x'\}
 \]
@@ -550,15 +555,23 @@ representation.
 
 Eremic logic's lack of connectives for negation, disjunction or
 implication is the key reason for the efficiency of the decision
-procedure.  Although there are an infinite number of models which
-satisfy any\martin{falsity?} expression, we have shown that the satisfying models form
-a bounded lattice with a least upper bound.  The $\SIMPL$ function
-defined above gives us the minimal model satisfying an expression.
-Using this least upper bound, we can calculate entailment by checking
-a \emph{single model}.  To decide whether $p \models q$, we use the
-following theorem:\martin{Am I right in assuming that the checker
-  first computes $\SIMPL{\phi}$ and then checks if $\SIMPL{\phi}
-  \models \psi$? If so, may be we should say this explicityl.}
+procedure.  Although any satisfiable formula has an infinite number of
+models, we have shown that the satisfying models form a bounded
+lattice with a least upper bound.  The $\SIMPL$ function defined above
+gives us the minimal model satisfying an expression.  Using this least
+upper bound, we can calculate entailment by checking a \emph{single
+  model}.  To decide whether $p \models q$, we use the following
+algorithm.
+
+\begin{enumerate}
+
+\item Compute $\SIMPL{\phi}$.
+
+\item Check if $\SIMPL{\phi} \models \psi$.
+
+\end{enumerate}
+
+\NI The correctness of this algorithm is given by the follow theorm.
 
 \begin{theorem}\label{theorem:decision}
   The following are equivalent:

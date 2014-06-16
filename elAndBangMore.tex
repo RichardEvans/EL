@@ -35,31 +35,21 @@ The rule [\RULENAME{$\bot$-Right 2}] expresses that falsity is 'global'
   false.
 
 Relatedly, the rule [\RULENAME{Normal}] enables us to
-prefix an inference with a may-modality. For example \martin{add good
-  example here.}. Note that it is vital for soundness that $\phi$ in $\phi
-\judge \psi$ is a single formula. If we used transitional sequents $\phi_1, ..., \phi_n \judge \psi$,
-then the rule
+prefix an inference with a may-modality. 
+This rule can also be stated in the the following more general
+form:
 \[
-   \ONEPREMISERULE
+   \ONEPREMISERULENAMEDRIGHT
    {
-     \phi_1, ..., \phi_n \judge \psi
+     \phi_1\AND ...\AND \phi_n \judge \psi
    }
    {
-     \MAY{a}{\phi_1}, ..., \MAY{a}{\phi_n} \judge \MAY{a}{\psi}
-   }
+     \MAY{a}{\phi_1}\AND ...\AND \MAY{a}{\phi_n} \judge \MAY{a}{\psi}
+   }{Normal-Multi}
 \]
-is unsound. \martin{explain why, and why this is significant}. \richard{I think this rule is only unsound if we allow non-determinstic models.}
-This
-restriction is also in place in \cite{GaySJ:typcalosp} where a
-Curry-Howard corrospondence between a fragment of linear logic
-\cite{GirardJY:linlog,GirardJY:protyp} and a process calculus is
-introduced. We discuss the relationship between EL and linear logic in
-general, and linear logic's additive conjunction in Section
-\ref{conclusion}.
 
-That the logic has no axioms. One reason for a purely rule-based
-presentation is the absence of implication in the present fragment of
-EL. \martin{explain in more detail!}
+\NI But it is not necessary, because [\RULENAME{Normal-Multi}] is
+derivable from [\RULENAME{Normal}] as we show in the examples below.
 
 \subsection{Example inferences}
 
