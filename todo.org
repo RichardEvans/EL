@@ -16,7 +16,7 @@ software.
 
   - Implication: \rightarrow vs horseshoe
 
-  - first-order vs first order
+  - first-order vs first order, Remove predicate -> first
 
   - Why do we use the term predicate logic at all?
 

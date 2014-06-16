@@ -48,9 +48,7 @@ We often abbreviate $\MAY{a}{\TRUE}$ to $\MAY{a}{}$. We define falsity
 $\FALSE$ as $!\emptyset \AND \MAY{a}{}$ where $a$ is an arbitrary
 action. Note that in the absence of conventional negation, we cannot
 readily define disjunction, implication, or must-modalities by de
-Morgan duality. We discuss later \martin{Where?} how some of the usual
-propositional connectives can be (partially) recovered. \martin{What
-  about must modalities?}
+Morgan duality. 
 
 \begin{convention}
 From now on we assume a fixed set $\Sigma$ of actions, except where
@@ -199,25 +197,30 @@ construct a \emph{linear-time} decision procedure.
 
 \input{figure:elAndBang:moreMdels}
 
-Secondly, the only tautological formulae that are true in all models
-are $\top$ and conjunctions of $\top$.  But there are an infinite
-number of distinct contradictory formulae that are false in all
-models.  For example:
+Secondly, EL is different from other logics in that there is an
+asymmetry between tautologies and contradictories: logics with
+conventional negation have an infinite number of non-trivial
+tautologies as well as an infinite number of contradictories.  In
+contrast, because eremic logic has no negation or disjunction
+operator, it is expressively limited in the tautologies it can
+express: top and conjunctions of top are its sole tautologies. On the
+other hand, the tantum operator, enables an infinite number of
+contradictories to be expressed.  For example:
 \[
    \MAY{a} \land \fBang \{\} \qquad
    \MAY{a} \land \fBang \{b\} \qquad
    \MAY{a} \land \fBang \{b, c\} \qquad
    \MAY{b} \land \fBang \{\} \qquad
 \]
-\martin{Do we use or at least discuss this fact later? If not, either drop, or elaborate.}
 
-%% \begin{definition}
-%% Let $\Gamma$ be an arbitrary set of formulae. We say \emph{$\Gamma$
-%%   semantically implies $\phi$}, written $\Gamma \models \phi$,
-%% provided for all eremic models $\MMM$ if it is the case that $\MMM
-%% \models \Gamma$ implies $\MMM \models \phi$. 
-%% \richard{We do not define $\models \Gamma$ for a set $\Gamma$, only for individual formulae - do we want to change this definition to be of the form $\phi \models \psi$?}
-%% \end{definition}
+
+%% \begin{definition} Let $\Gamma$ be an arbitrary set of formulae. We
+%% say \emph{$\Gamma$ semantically implies $\phi$}, written $\Gamma
+%% \models \phi$, provided for all eremic models $\MMM$ if it is the
+%% case that $\MMM \models \Gamma$ implies $\MMM \models \phi$.
+%% \richard{We do not define $\models \Gamma$ for a set $\Gamma$, only
+%% for individual formulae - do we want to change this definition to
+%% be of the form $\phi \models \psi$?}  \end{definition}
 
 \NI The semantic consequence relation is standard.\martin{actually
   it's not because the premise can have only one formula. Maybe we
