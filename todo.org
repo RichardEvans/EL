@@ -1,3 +1,11 @@
+* Make a clear point somewhere that tree models are
+all we need.
+
+This is a general insight that holds for all modal logics, and
+is the case becasue bisimulation can't distinguish between LTS and their
+tree unflodings. 
+
+If we put this in, we can probably clean up some stuff.
 * Explain genesis of Brandom in
 \footnote{Itself a development of Sellars,
   Hegel and Kant.}

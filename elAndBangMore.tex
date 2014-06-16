@@ -133,12 +133,18 @@ theory traditions.
 
 Here is the definition of $\CHAR{\cdot}$.
 
+\begin{definition}
+Let $\MMM$ be an eremic model that is a tree.
 \begin{eqnarray*}
   \CHAR{\bot} &\ =\ & \langle a \rangle \top \AND ! \emptyset  \mbox{ for some fixed symbol }a \in \Sigma  \\
   \CHAR{\MMM, w} & = & \mathsf{bang}(\MMM,w) \AND \bigwedge_{w \xrightarrow{a} w'} \langle a \rangle \CHAR{\MMM, w'}  
 \end{eqnarray*}
 
-\NI Note that $\bot$ requires a particular symbol $a \in \Sigma$. This is why we required, in Section \ref{elsyntax}, that $\Sigma$ is non-empty.
+\end{definition}
+
+\NI Note that $\bot$ requires a particular symbol $a \in \Sigma$. This
+is why we required, in Section \ref{elsyntax}, that $\Sigma$ is
+non-empty.
 
 \NI The functions $\mathsf{bang}(\cdot)$ on models are given by the
 following clauses.
@@ -155,7 +161,7 @@ following clauses.
 \NI Note that $\CHAR{\MMM}$ is finite if $\MMM$ contains no cycles and
 if $\lambda(x)$ is either $\Sigma$ or finite for all states $x$.  We
 state without proof that $\SIMPL{\cdot}$ and $\CHAR{\cdot}$ are
-inverses of each other in that:
+inverses of each other (for tree models $\MMM$) in that:
 
 \begin{itemize}
 
@@ -243,7 +249,6 @@ If $\MMM\models \phi$ then $\CHAR{\MMM} \judge \phi$.
 
 \NI We proceed by induction on $\phi$.
 
-\martin{no need to number cases if numbers are not referred to later.}
 %\setcounter{mycase}{0}
 
 \CASE{$\phi$ is $\top$} Then we can prove $ \CHAR{\MMM} \judge \phi$
@@ -317,11 +322,18 @@ $\psi \judge \CHAR{\SIMPL{\psi}}$ and $\psi' \judge
 \[
 \psi \AND \psi' \judge  \CHAR{\SIMPL{\psi}} \AND  \CHAR{\SIMPL{\psi'}}
 \]
-Lemma \ref{final_completeness_lemma}, proven below, states that, for all acyclic models $\MMM$ and $\MMM_2$:
-\[
-  \CHAR{\MMM} \AND  \CHAR{\MMM_2} \judge  \CHAR{\MMM \sqcap \MMM_2}
-\]
-From Lemma \ref{final_completeness_lemma} (substituting $\SIMPL{\psi}$ for $\MMM$ and $\SIMPL{\psi'}$ for $\MMM_2$, and noting that $\SIMPL{}$ always produces acyclic models), it follows that:
+
+
+In order to continue the proof, we need the following lemma, proven
+in the next subsection.
+
+\begin{lemma}
+\label{final_completeness_lemma}
+For all eremic  models $\MMM$ and $\MMM_2$ that are trees, $ \CHAR{\MMM} \AND
+\CHAR{\MMM_2} \judge \CHAR{\MMM \sqcap \MMM_2}$.
+\end{lemma}
+
+\NI From Lemma \ref{final_completeness_lemma} (substituting $\SIMPL{\psi}$ for $\MMM$ and $\SIMPL{\psi'}$ for $\MMM_2$, and noting that $\SIMPL{}$ always produces acyclic models), it follows that:
 \[
  \CHAR{\SIMPL{\psi}} \AND  \CHAR{\SIMPL{\psi'}} \judge  \CHAR{\SIMPL{\psi \AND \psi'}}
 \]
@@ -372,16 +384,12 @@ The desired conclusion follows from noting that:
 \subsection{Proof of Lemma \ref{final_completeness_lemma}}
 \label{prooflemma6}
 
-\martin{There is some confusion about lemma numbers. Which lemma are we proving here?}
-Finally, to fill the hole in Case 2 of Lemma \ref{lemma:completeness:5} above, we need to show that:
-\begin{lemma}
-\label{final_completeness_lemma}
-For all acyclic models $\MMM$ and $\MMM_2$, $  \CHAR{\MMM} \AND  \CHAR{\MMM_2} \judge  \CHAR{\MMM \sqcap \MMM_2}$.
-\end{lemma}
+We can now finish the proof of Lemma \ref{lemma:completeness:5} by
+giving the missing proof of Lemma \ref{final_completeness_lemma}.
 
 \begin{proof}
-
-There are two cases to consider, depending on whether or not $(\MMM \sqcap \MMM_2) = \bot$.
+There are two cases to consider, depending on whether or not $(\MMM
+\sqcap \MMM_2) = \bot$.
 
 %\setcounter{mycase}{0}
 
