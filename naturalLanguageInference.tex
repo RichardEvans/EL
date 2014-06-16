@@ -68,7 +68,15 @@ sentences:
 \MAY{jack} \MAY{sex} (\MAY{female} \land \fBang \{female\})
 \end{eqnarray*}
 
-\NI Entailment from dyadic to monadic predicates:
+\NI Entailment from dyadic to monadic predicates\footnote{Although natural languages are full of examples of inferences from dyadic to monadic predicates, there are certain supposed counterexamples to the general rule that a dyadic predicate always implies a monadic one. For example, ``Jack explodes the device'' does not, on its most natural reading, imply that ``Jack explodes''. Our response to cases like this is to distinguish between two distinct monadic predicates $explodes_1$ and $explodes_2$:
+ \begin{itemize}
+ \item
+ $X explodes_1$ iff $X$ is an object that undergoes an explosion
+ \item
+ $X explodes_2$ iff $X$ is an agent that initiates an explosion
+ \end{itemize}
+ Now ``Jack explodes the device'' does imply that ``Jack $explodes_2$'' but does not imply that ``Jack $explodes_1$''. 
+There is no deep problem here - just another case where natural language overloads the same word in different situation to have different meanings.}:
 ``Jack loves Jill'' is translated into \ELABR{} as:
 \begin{eqnarray*}
    \MAY{jack} \MAY{loves} \MAY{jill}
