@@ -33,8 +33,6 @@ above, except for the obvious clauses for negation and disjunction:
 %\MMM \models \phi \lor \psi &\mbox{ iff }& \MMM \models \phi \text{ or }   \MMM \models \psi
 \end{eqnarray*}
 
-\martin{Can we say something about the proof rules for EL$[\land, !, \neg]$?}
-
 Negation is a core operation of classical logic, and its absence makes
 eremic logic unusual. In order to understand eremic logic better, we
 now investigate how negation can be seen as a definable abbreviation
@@ -56,7 +54,7 @@ disjunction can be expressed in eremic logic:
 
 \NI Hence, we can see $\neg \MAY{a}{\phi}$ as a shorthand for 
 \[
-   \Sigma \setminus \{a\} \OR \MAY{a}{\neg \phi}
+   !(\Sigma \setminus \{a\}) \OR \MAY{a}{\neg \phi}
 \]
 
 \NI Negation still occurs in this term, but prefixing a formula of
@@ -72,7 +70,11 @@ A$. In other words
 \NI Note that both, the negation of the modality and the negation of
 the tantum involve the set $\Sigma$ of actions. It is sometimes
 advantageous to translate away negation with respect to a subset $S
-\subseteq \Sigma$.\martin{We should explain why.}
+\subseteq \Sigma$.  So far, we have defined negation with respect to
+the whole (possibly infinite) set \Sigma. For technical reasons, we
+generalise negation and define it with respect to a \emph{finite}
+subset S \subseteq \Sigma. We use this finitely-restricted version of
+negation in the decision procedure below.
 
 \begin{definition}
 The function $x \neg_{S}(\phi)$ removes negation from $\phi$

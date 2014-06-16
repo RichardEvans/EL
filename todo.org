@@ -165,9 +165,14 @@ mono (μόνο). If we go creative we could simply say
   - Bernhard Reus at Sussex
   - Billiejoe Charlton
   - Aram Lintzel
+  - Giacomo Turbanti <turbanti.giacomo@gmail.com> 
   - Bat
   - http://rasmuskrendsvig.dk/ 
   - Coalgebraic modal guys (like Alexander Kurz) but not sure
+
+Ask all these people: who else could be interested,
+were they recommend it could be published, if they have
+suggestions for related work we forgot to mention.
 
 * Could it make sense to prepare a little video presentation (using
   Screenflow, or recording professionally), maybe 15 minutes, to
