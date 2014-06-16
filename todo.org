@@ -22,6 +22,8 @@ software.
 * Be consistent. In particular
   - State vs node
 
+  - time complexity vs time-complexity
+
   - Implication: \rightarrow vs horseshoe
 
   - first-order vs first order, Remove predicate -> first

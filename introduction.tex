@@ -366,25 +366,35 @@ are incompatibilities between atomic propositions. In \S 82:
 language would look like.  EL is one way of formalising inferences
 between atomic sentences.
 
+\subsection{Outline}
 
-\subsection{Outline}\martin{I suggest to consider the outline in flowing text, not bulleted. and with concrete chapter refrences , Like
-so. Section 2 introduces the syntax and sem,antics of EL, Sections 3
-and 4 da da da, In section 4 ...  We should also say something along
-the lines of: A Haskell implementation of the decision procedure can
-be found in \cite{HaskellImplementation}.}  The rest of this paper is
-organised as follows:
-\begin{itemize}
-\item
-We describe the syntax and semantics of \ELFULL{}
-\item
-We provide inference rules, and prove soundness, completeness and compactness
-\item
-We describe a \emph{linear-time} decision procedure
-\item
-We prove a version of the Hennessy-Milner theorem
-\item
-We show that \ELFULL{} satisfies Brandom's Incompatibility Semantics requirement
-\item
-We show how \ELFULL{} has been used as an ergonomic knowledge-representation language in an industrial application
-\end{itemize}
-
+\NI The rest of this paper is organised as follows: Section
+\ref{coreEL} introduces the syntax and semantics of eremic logic with
+examples. Section \ref{naturalLanguageInference} discusses how how
+eremic logic can be used to model adverbial inferences and inferences
+from dyadic to monadic predicates.  Section \ref{kr} describes
+informally how eremic logic is useful as a knowledge representation
+language.  Section \ref{elAndBangCore} presents core results of the
+paper, in particular a semantic characterisation of elementary
+equivalence and a decision procedure with linear time-complexity. The
+decision procedure has been implemented in Haskell and is available
+for public use \cite{HaskellImplementation} under a liberal
+open-source license.\martin{add a license blurb on Github}.  This
+section also shows that Brandom's incompatibility semantics condition
+holds for eremic logic.  Section \ref{elAndBangMore} presents the
+proof rules for eremic logic and proves completeness. Section
+\ref{compactness} provides two translations from eremic into
+first-order logic, and proves compactness using one of them.  Section
+\ref{ELAndNegation} investigates the role of negation in eremic logic
+in two ways: by introducing a variant of eremic logic with negation,
+and with a decision procedure for this fragment that has an
+exponential time-complexity.  Section \ref{relatingELToOtherLogics}
+relates eremic logic and Hennessy-Milner Logic.  Section
+\ref{quantifiedEL} extends eremic logic with first-order quantifiers
+and sketches the translation of first-order formulae into first-order
+eremic logic. The conclusion surveys related work and lists open
+problems.  Appendix \ref{pureModels} outlines a different approach to
+giving the semantics of eremic logics, including a characterisation of
+the corresponding elementary equivalence. The appendix also discusses
+the question of non-deterministic models. The remaining appendices
+present routine proof of facts used in the main section.
