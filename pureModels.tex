@@ -1,5 +1,7 @@
 \section{Alternative semantics for eremic logic}\label{pureModels}
 
+\martion{Integrate in appendix}
+
 In Section \ref{coreEL} we used node-labelled transition systems as
 models for eremic logic. The purpose of the node labels was to express
 constrains, if any, on outgoing actions. This concern is reflected in
@@ -352,3 +354,54 @@ non-deterministic models. The rules of inference in Figure
 
 We don't pursue the investigation of non-deterministic models in this
 text, and leave it as future work.
+
+\subsection{Non-deterministic eremic logic cannot express incompatibility}
+\martin{Integrate with rest}
+
+We have experimented with a version of EL in which the models are
+\emph{non-deterministic} labeled-transition systems.  Although
+non-determinism makes some of the constructions simpler,
+non-deterministic EL is unable to express incompatibility properly.
+Consider, for example, the claim that Jack is married to Jill\martin{Actually, the
+formalisation below says Jack is married to Jill, and Jill only.}. 
+In standard deterministic EL this would be rendered as:
+\begin{eqnarray*}
+\MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\})
+\end{eqnarray*}
+There are three levels at which this claim can be denied.\martin{Jack could be a polygamist}
+First, we can claim that Jack is married to someone else - Joan, say:
+\begin{eqnarray*}
+\MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
+\end{eqnarray*}
+Second, we can claim that Jack is unmarried (specifically, that being unmarried is Jack's only property):
+\begin{eqnarray*}
+\MAY{jack} !\{unmarried\}
+\end{eqnarray*}
+Third, we can claim that Jack does not exist at all. Bob and Jill, for example, are the only people in our domain:
+\begin{eqnarray*}
+\fBang \{bob, jill\}
+\end{eqnarray*}
+
+Now we can assert the same sentences in non-deterministic EL, but they
+are \emph{no longer incompatible with our original sentence}.  In
+non-deterministic EL, the following sentences are compatible (as long
+as there are two separate transitions labelled with $married$, or two
+separate transitions labelled with $jack$):\martin{Maybe add a figure that shows
+the relevant non-deterministic LTS?}
+\begin{eqnarray*}
+\MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\}) \\
+\MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
+\end{eqnarray*}
+Similarly, the following sentences are fully compatible as long as there are two separate transitions labelled with $jack$:
+\begin{eqnarray*}
+\MAY{jack} \MAY{married}\\
+\MAY{jack} \fBang \{unmarried\}
+\end{eqnarray*}
+
+Relatedly, non-deterministic EL does not satisfy Brandom's Incompatibility Semantics property:\martin{I don't think we have formally defined it so far. This important
+concept should maybe not be introduced as a side remark.}
+\[
+\phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
+\]
+To take a simple counter-example, $\MAY{a}\MAY{b}$ implies $\MAY{a}$, but not conversely.
+But in non-deterministic EL, the set of sentences incompatible with $\MAY{a}\MAY{b}$ is identical with the set of sentences incompatible with  $\MAY{a}$.

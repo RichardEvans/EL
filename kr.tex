@@ -45,19 +45,14 @@ But to say that ``Jack is married to Joan'' (where``is-married-to'' is a many-on
 
 \NI The tranlation is detailed later in Section
 \ref{translationFOLtoFOEL}.  Colloquially, we might say that ``Jack is
-married to Joan - and only Joan''.  Note that we chose to adopt an
-\emph{object-oriented} representation, in which the relations are
-placed in infix position so that the facts about an object are
-``contained'' within the object.  \martin{Isn't that just a
-  presentational detail? I think we can drop it.}  But we \emph{could}
+married to Joan - and only Joan''.  Note that the  relations are
+placed in infix position,  so that the facts about an object are
+``contained'' within the object.   But we \emph{could}
 have chosen an alternative strategy, in which the predicate/relation
 symbols are to the left of the first argument. (The reason for
 choosing the infix notation will become clear in the next subsection).
-
-\subsection{Practical Advantages of \ELABR{} as a Knowledge-Representation Language}
-\martin{I think we can drop this subsection header.}
-
-\NI When applied to a large knowledge base, \ELFULL{} has been found
+ 
+When applied to a large knowledge base, \ELFULL{} has been found
 to have a number of advantages over traditional predicate logic as a
 language to represent simulational state:
 \begin{itemize}
@@ -207,55 +202,6 @@ Now it is able to find all results by just searching $n$ instances - a significa
 This optimisation has made a significant difference to the run-time cost in our industrial application.
 
 
-\subsection{Non-deterministic eremic logic cannot express incompatibility}
-
-We have experimented with a version of EL in which the models are
-\emph{non-deterministic} labeled-transition systems.  Although
-non-determinism makes some of the constructions simpler,
-non-deterministic EL is unable to express incompatibility properly.
-Consider, for example, the claim that Jack is married to Jill\martin{Actually, the
-formalisation below says Jack is married to Jill, and Jill only.}. 
-In standard deterministic EL this would be rendered as:
-\begin{eqnarray*}
-\MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\})
-\end{eqnarray*}
-There are three levels at which this claim can be denied.\martin{Jack could be a polygamist}
-First, we can claim that Jack is married to someone else - Joan, say:
-\begin{eqnarray*}
-\MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
-\end{eqnarray*}
-Second, we can claim that Jack is unmarried (specifically, that being unmarried is Jack's only property):
-\begin{eqnarray*}
-\MAY{jack} !\{unmarried\}
-\end{eqnarray*}
-Third, we can claim that Jack does not exist at all. Bob and Jill, for example, are the only people in our domain:
-\begin{eqnarray*}
-\fBang \{bob, jill\}
-\end{eqnarray*}
-
-Now we can assert the same sentences in non-deterministic EL, but they
-are \emph{no longer incompatible with our original sentence}.  In
-non-deterministic EL, the following sentences are compatible (as long
-as there are two separate transitions labelled with $married$, or two
-separate transitions labelled with $jack$):\martin{Maybe add a figure that shows
-the relevant non-deterministic LTS?}
-\begin{eqnarray*}
-\MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\}) \\
-\MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
-\end{eqnarray*}
-Similarly, the following sentences are fully compatible as long as there are two separate transitions labelled with $jack$:
-\begin{eqnarray*}
-\MAY{jack} \MAY{married}\\
-\MAY{jack} \fBang \{unmarried\}
-\end{eqnarray*}
-
-Relatedly, non-deterministic EL does not satisfy Brandom's Incompatibility Semantics property:\martin{I don't think we have formally defined it so far. This important
-concept should maybe not be introduced as a side remark.}
-\[
-\phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
-\]
-To take a simple counter-example, $\MAY{a}\MAY{b}$ implies $\MAY{a}$, but not conversely.
-But in non-deterministic EL, the set of sentences incompatible with $\MAY{a}\MAY{b}$ is identical with the set of sentences incompatible with  $\MAY{a}$.
 
 
 
