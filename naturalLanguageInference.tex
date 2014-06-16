@@ -134,7 +134,7 @@ together imply
 \subsection{Representing incompatible predicates in \FOL}\label{incompatiblepredicatesinfol}
 
 \NI How are incompatible predicates represented in traditional
-\fol?  Brachman and Levesque\cite{brachman} introduce the
+\fol{}?  Brachman and Levesque\cite{brachman} introduce the
 topic of incompatible predicates by remarking:
 \begin{quote}
    We would consider it quite ``obvious'' in this domain that if it
@@ -175,7 +175,7 @@ certainly captures the desired uniqueness condition.  But it does so
 by using relatively complex logical machinery.
 
 \subsection{Supporting Inferences from Dyadic to Monadic Predicates in Predicate Logic}
-If we want to capture the inference from ``Jack loves Jill`` to ``Jack loves'' in predicate logic, we have to add a non-logical axiom:
+If we want to capture the inference from ``Jack loves Jill`` to ``Jack loves'' in \fol{}, we have to add a non-logical axiom:
 \[
 (\forall x, y) Loves(x,y) \rightarrow Loves(x)
 \]
@@ -186,9 +186,9 @@ contrast, we do not need to introduce any non-logical machinery at all
 to capture these inferences because they all follow from the general
 rule that $\MAY{a} \MAY{b} \models \MAY{a}$.
 
-\subsection{Supporting adverbial inferences in predicate logic}
+\subsection{Supporting adverbial inferences in \fol{}}
 
-\NI How can we represent verbs in traditional predicate logic so as to
+\NI How can we represent verbs in traditional \fol{} so as to
 support adverbial inference?  Davidson \cite{davidson2} proposed that
 every $n$-place action verb be analysed as an $n$+1-place predicate,
 with an additional slot representing an event.  For example, he
@@ -216,16 +216,16 @@ compound propositions.
 \subsection{Summary}
 We have looked at various types of inference between atomic
 sentences. \ELFULL{} can handle them directly and naturally.  Traditional
-\fol has a harder time: it
+\fol{} has a harder time: it
 \emph{can} express incompatibility, but only using complex machinery -
 universal quantification, a conditional, negation. \ELFULL{}, by
 contrast, expresses the source of the incompatibility \emph{directly}
-using the $!$ operator.  Again, \fol \emph{can} express
+using the $!$ operator.  Again, \fol{} \emph{can} express
 adverbial inferences, but at the cost of using quantification over
 events.  When it comes to inferences from conjunctions of sentences to
-conjunctions of noun-phrases (or predicates), \fol has
+conjunctions of noun-phrases (or predicates), \fol{} has
 nothing to say because it has no way of expressing conjunctions
-between noun-phrases (or predicates) \emph{at all}. In \fol, ``Jack is bruised and humiliated'' has to be regimented into
+between noun-phrases (or predicates) \emph{at all}. In \fol{}, ``Jack is bruised and humiliated'' has to be regimented into
 ``Jack is bruised and Jack is humiliated''.  This might seem, to the uninitiated, to be the
 wrong way around.  
 

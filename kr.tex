@@ -2,24 +2,25 @@
 
 
 \ELFULL{} has been used as the representation language for a large,
-complex, highly-dynamic multi-agent simulation \cite{evans-and-short}:
-the entire world state is stored as a set of eremic logic formulae -
+complex, dynamic multi-agent simulation \cite{evans-and-short}.
+This
+is an industrial-sized application, involving tens
+of thousands of rules and facts. 
+In this program, the entire world state is stored as a set of eremic logic formulae -
 all other aspects of world state are transient and computed as needed.
-The true sentences are represented in a deterministic labeled
-transition system, using a non-monotonic update mechanism.  This
-application is not a toy problem, but industrial-sized, involving tens
-of thousands of rules and equally many atomic facts.  This
-demonstrates that eremic logic is a suitable language for representing
-complex simulational state.
+The current true sentences are represented in a deterministic labeled
+transition system.
 
-We shall first sketch how facts are represented, before describing the
-advantages of \ELABR{} over a more traditional predicate-logic
+We shall first sketch how facts are represented, before describing some
+advantages of \ELABR{} over a more traditional \fol{}
 representation.
 
 \subsection{Representing facts  in \ELABR{}}
 
-We used the following strategy for representing facts in \ELABR{}.  A
-sentence involving a one-place predicate of the form $p(a)$ is
+We used the following strategy for representing facts in \ELABR{}.  
+(The translation is detailed later in Section
+\ref{translationFOLtoFOEL}).  
+A sentence involving a one-place predicate of the form $p(a)$ is
 expressed in \ELABR{} as
 \begin{eqnarray*}
    \MAY{a} \MAY{p}
@@ -43,54 +44,14 @@ But to say that ``Jack is married to Joan'' (where``is-married-to'' is a many-on
 \MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
 \end{eqnarray*}
 
-\NI The tranlation is detailed later in Section
-\ref{translationFOLtoFOEL}.  Colloquially, we might say that ``Jack is
+\NI Colloquially, we might say that ``Jack is
 married to Joan - and only Joan''.  Note that the  relations are
 placed in infix position,  so that the facts about an object are
 ``contained'' within the object.   But we \emph{could}
 have chosen an alternative strategy, in which the predicate/relation
-symbols are to the left of the first argument. (The reason for
-choosing the infix notation will become clear in the next subsection).
+symbols are to the left of the first argument.
  
-When applied to a large knowledge base, \ELFULL{} has been found
-to have a number of advantages over traditional predicate logic as a
-language to represent simulational state:
-\begin{itemize}
-
-\item The notion of a sub-tree in \ELABR{} gives us a natural way to
-  represent \emph{objects}
-
-\item The update rule (described above) means that \emph{garbage
-  collection}\martin{Can we expect readers to understand what that
-  means or why it is significant?} of invalid data happens
-  automatically.
-
-\item \ELABR{} allows a simpler less error-prone way of specifying
-  \emph{postconditions} of actions
-
-\item The $!$ operator gives additional information to the type-checker,
-allowing an author to specify her intent more precisely
-
-\item The $!$ operator provides additional information to the
-  compiler, allowing significantly more efficient clause ordering
-
-\end{itemize}
-We consider  each of these in turn.
-
-\subsection{Using Sub-trees of Expressions to Represent Objects}
-
-\martin{This section is about the algorithmic advantages of
-  representing facts as trees, and how EL supports a tree-presentation
-  of facts. It's probably an interesting statement about the world
-  that it can often be represented in this way.}
-
-\NI Consider the following facts about a gentleman named Brown:
-%% \begin{eqnarray*}
-%% \MAY{brown} & ( & \\
-%% & & \MAY{sex} (\MAY{male} \land \fBang \{male\}) \\
-%% & & \MAY{friends} (\MAY{lucy} \land \MAY{elizabeth}) \\
-%% & )
-%% \end{eqnarray*}
+Consider the following facts about a gentleman named Brown:
 
 \[
    \MAY{brown} 
@@ -102,30 +63,31 @@ We consider  each of these in turn.
    \end{array}
    \right)
 \]
-\martin{I have reformated this formula. Is it correct? If not, the old
-version is commented out ...}
 
 \NI All the facts which start with the prefix $\MAY{brown}$ form a
 sub-tree of the entire database.  And all the facts which start with
 the prefix $\MAY{brown} \MAY{friends}$ form a sub-tree of that tree.
-A sub-tree can be treated as an individual via its prefix.  The whole
-sub-tree can be removed in one fell swoop by deleting its associated
-prefix.\martin{Is it clear to the uninitiated reader why this is significant? Shall we relate it to garbage collection mentioned above?}  So we can e.g. remove Brown's friends just by deleting the
-sentence $\MAY{brown} \MAY{friends}$.  (Compare this with Prolog\martin{maybe we could structure the kr.tex section as an extended comparison with Prolog. That
-might be informative for those readers who know Prolog.} -
-where it is much harder to remove all formulae containing a particular
-symbol).  A sub-tree of formulae is the \ELABR{} equivalent of an
+A sub-tree can be treated as an individual via its prefix.  
+A sub-tree of formulae is the \ELABR{} equivalent of an
 \emph{object} in an object-oriented programming language.
 
-The tree-structure of formulae also allows us to express the \emph{life-time of data} in a natural way. \martin{this is not about EL as such but about sequences of EL ...}
+To model change over time, we assert and retract statements from the database, using a non-monotonic update mechanism.
+If a fact is inserted into the database that involves a node-labelling restricting the available transitions emanating from that node, then all transitions out of that node that are incompatible with the restriction are removed.
+So, for example, if the database currently contains the fact that the traffic light is amber, and then we update the database to assert the traffic light is red:
+\[
+\MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\})
+\]
+Now the restriction on the node (that red is the only transition) means that the previous transition from that node (the transition labelled with amber) is automatically removed.
+
+The tree-structure of formulae allows us to express the \emph{life-time of data} in a natural way. 
 If we wish a piece of data $d$ to exist for just the duration of a proposition $t$, then we make $t$ be a sub-expression of $d$. 
 For example, if we want the friendships of an agent to exist just as long as the agent, then we place the relationships inside the agent: 
 \[
 \MAY{brown} \MAY{friends}
 \]
-Now, when we remove $\MAY{brown}$ all the sub-trees, including the data about who he is friends with, will be automatically deleted as well.\martin{does that fall under garbage collection?}
+Now, when we remove $\MAY{brown}$ all the sub-trees, including the data about who he is friends with, will be automatically deleted as well.
 
-Another advantage of using a tree structure is that we get a form of \emph{automatic currying} which simplifies queries.
+Another advantage of our representation is that we get a form of \emph{automatic currying} which simplifies queries.
 So if, for example, Brown is married to Elizabeth, then the database would contain 
 \begin{eqnarray*}
 \MAY{brown} \MAY{married} (\MAY{elizabeth} \land \fBang \{elizabeth\})
@@ -134,16 +96,16 @@ In \ELFULL{}, if we want to find out whether Brown is married, we can query the 
 \begin{eqnarray*}
 \MAY{brown} \MAY{married}
 \end{eqnarray*}
-In traditional predicate logic, if $married$ is a two-place predicate, then we need to fill in the extra argument place with a free variable - we would need to find out if there exists an $X$ such that $married(brown, X)$ - this is slower to compute and more cumbersome to type. 
+In \fol, if $married$ is a two-place predicate, then we need to fill in the extra argument place with a free variable - we would need to find out if there exists an $X$ such that $married(brown, X)$ - this is slower to compute and more cumbersome to type. 
 
 \subsection{Simpler Postconditions}
-\martin{The section heading is not informative, the section could do with an introduction,
-because a new subject is started (action planning and execution)}
+
+In this section, we contrast the representation in action languages based on \fol{}\footnote{E.g. STRIPS \cite{strips}}, with our \ELABR{}-based representation.
+Action definitions are rendered in typewriter font.
 
 When expressing the pre- and post-conditions of an action, planners
-based on predicate logic\footnote{An early example is STRIPS
-  \cite{strips}.} have to explicitly describe the propositions that
-are removed when an action is performed:\martin{say why we are using a new font here. What does it signify?}
+based on \fol{} have to explicitly describe the propositions that
+are removed when an action is performed:
 \begin{verbatim}
 action move(A, X, Y)
     preconditions
@@ -161,8 +123,7 @@ action move (A, X, Y)
         add: <A><at>(<Y> /\ !{Y})
 \end{verbatim}
 The ``!" operator makes it clear that something can only be at one
-place at a time, and the non-monotonic update rule\martin{We have not
-  explained the non-monotonic update rule.  What is it?}
+place at a time, and the non-monotonic update rule described above
 \emph{automatically} removes the old invalid location data.
 
 \subsection{Using the $!$ Operator to Optimize Preconditions}
@@ -180,7 +141,7 @@ Rules like this create a large search-space because we need to find all instance
 If we express the rule in \ELFULL{}, the compiler is able to use the extra information expressed in the $!$ operator to reorder the literals to find the result significantly faster.
 Assuming someone can only have a single spouse at any moment, the rule is expressed in \ELFULL{} as:
 \begin{verbatim}
-married_couple_at_home * X * Y :-
+married_couple_at_home(X, Y) :-
     <welsh> <X>,
     <welsh> <Y>,
     <spouse> <X> (<Y> /\ !{Y}).
@@ -193,13 +154,13 @@ It can see that, once $X$ is instantiated, the following literal can be instanti
 The \emph{tantum} operator can be used by the compiler to see that there is at most one $Y$ who is the spouse of $X$.
 So the compiler reorders the clauses to produce:
 \begin{verbatim}
-married_couple_at_home * X * Y :-
+married_couple_at_home (X, Y) :-
     <welsh> <X>,
     <spouse> <X> (<Y> /\ !{Y}),
     <welsh> <Y>.
 \end{verbatim}	
 Now it is able to find all results by just searching $n$ instances - a significant optimization.
-This optimisation has made a significant difference to the run-time cost in our industrial application.
+In our application, this optimisation has made a significant difference to the run-time cost of query evaluation.
 
 
 

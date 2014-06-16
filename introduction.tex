@@ -14,8 +14,8 @@ To say that a particular traffic light, $tl$, is red - and red is its \emph{only
 \[
 colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red
 \]
-In \fol, incompatibility is a \emph{derived} concept, reduced to 
-a combination of universal quantification and identity.  \FOL, in other words, uses relatively complex machinery to express a
+In \fol{}, incompatibility is a \emph{derived} concept, reduced to 
+a combination of universal quantification and identity.  \FOL{}, in other words, uses relatively complex machinery to express a
 simple concept:
 \begin{itemize}
 
@@ -83,9 +83,9 @@ light is currently red, and red is its only colour, we write:
 \MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\})
 \]
 This is simpler (both in terms of representation length and
-computational complexity) than the formulation in \fol:
+computational complexity) than the formulation in \fol{}:
 \[
-colour(t, red) \land \forall x . colour(t, x) \rightarrow x = red
+colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red
 \]
 If we want to be able to describe properties changing over time, we
 can add an extra transition representing the time-stamp.  To say that
@@ -104,7 +104,7 @@ easily expressed in first-order logic\footnote{We will precisify this
   incompatibility is longer in terms of formula length than \ELFULL{}'s (see
   Section \ref{incompatiblepredicatesinfol}); and (ii) logic programs
   in \ELFULL{} can be optimised to run significantly faster than their
-  equivalent in FOL (see Section \ref{optimizingpreconditions}).}, we
+  equivalent in \FOL{} (see Section \ref{optimizingpreconditions}).}, we
 will now argue the following:
 
 \begin{itemize}
@@ -248,7 +248,7 @@ We develop a simple
 So far, we have justified the claim that incompatibility is a fundamental logical concept by arguing (following Brandom) that incompatibility is conceptually prior to negation. 
 
 Now incompatibility is an inferential relation between \emph{atomic sentences}. 
-In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that \fol cannot articulate, but that \ELFULL{} handles naturally.
+In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that \fol{} cannot articulate, but that \ELFULL{} handles naturally.
 
 The \emph{atomic sentences} of a natural language can be
 characterised as the sentences which do not contain any other
