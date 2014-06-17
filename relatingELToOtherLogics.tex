@@ -1,6 +1,7 @@
 
-\section{Relating EL to Propositional Logic and Hennessy-Milner Logic}\label{relatingELToOtherLogics}
-\martin{we don't do much on propositional logic in this chapter, so title is misleading}
+\section{Relating \cathoristic\ to Propositional Logic and Hennessy-Milner Logic}\label{relatingELToOtherLogics}
+\martin{we don't do much on propositional logic in this chapter, so title is misleading.
+What about merging this section with the next on quantified CL?}
 
 \subsection{Comparing \Cathoristic{} with Hennessy-Milner Logic}
 
@@ -79,7 +80,7 @@ $\SEMB{\cdot}$:
 
 \NI If $\Sigma$ is an infinite set, then the translation of a $!$
 formula will be an infinitary formula.  If $\Sigma$ is finite, then
-the size of the Hennessy-Milner logic formula will be of the order of $n * | \Sigma |$
+the size of the Hennessy-Milner logic formula will be of the order of $n \cdot | \Sigma |$
 larger than the original cathoristic formula, where $n$ is the number of
 $!$ operators occurring in the cathoristic formula). In both logics we
 use the number of logical operators as a measure of size.
@@ -120,7 +121,7 @@ To see this, consider an entailment which relies on determinism, such as
 \MAY{a} \MAY{b} \land \MAY{a} \MAY{c} \models \MAY{a} (\MAY{b} \land \MAY{c})
 \]
 
-\NI The entailment (\ref{invalidEntailment}) is valid in EL because of
+\NI The entailment (\ref{invalidEntailment}) is valid in \cathoristic\ because of
 the restriction to deterministic models, but is not valid in
 Hennessy-Milner logic, where it is invalidated by any model with two
 outgoing $a$ transitions, one of which satisfies $\MAY{b}$ and one of
