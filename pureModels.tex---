@@ -193,7 +193,7 @@ but not conversely.  But in non-deterministic EL, the set of sentences
 incompatible with $\MAY{a}\MAY{b}$ is identical with the set of
 sentences incompatible with $\MAY{a}$.
 
-\subsection{Semantic characterisation of elementary equivalence for 
+\subsection{A semantic characterisation of elementary equivalence for 
 pure cathoristic models}
 
 In Section \ref{elementaryEquivalence} we presented a semantic
@@ -232,7 +232,7 @@ $\{\phi\ |\ \PPP \models \phi\}$.
 \label{hennessymilnertheorem}
 Let $\PPP$ and $\PPP'$ be two finitely branching pure cathoristic
 models. Then: $\PPP \BISIM \PPP'$ if and only if $\THEORY{\PPP} =
-\THEORY{\PPP'}$. 
+\THEORY{\PPP'}$.  \martin{discuss the case of non-finitely-branching}
 \end{theorem}
 
 \begin{proof}

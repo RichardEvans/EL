@@ -65,6 +65,7 @@
 
   - capitalisation, e.g. Cathoristic Logic vs Cathoristic logic vs cathoristic logic etc.
 
+* Don't display \subsubsections in table of content
 * Weird size issue in appendix: figure captions are not shrunk.
 * [17/06/2014 17:11:26] Martin Berger: BTW, which sentence structure do you prefer:
 [17/06/2014 17:11:28] Martin Berger: Translating from cathoristic logic to first-order logic

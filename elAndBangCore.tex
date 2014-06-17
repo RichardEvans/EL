@@ -5,7 +5,7 @@ partial ordering $\MODELLEQ$ on models, and show how the partial
 ordering can be extended into a bounded lattice.  We use the bounded
 lattice in the  decision procedure for entailment in \cathoristic.
 
-\subsection{A semantic characterisation of elementary equivalence}\label{elementaryEquivalence}
+\subsection{Semantic characterisation of elementary equivalence}\label{elementaryEquivalence}
 
 Elementary equivalence induces a notion of model equivalence: two
 models are elementarily equivalent exactly when they make the same
@@ -265,7 +265,7 @@ Haskell implementation \cite{HaskellImplementation} uses a different
 approach: instead of equivalence classes, it uses canonical
 representatives. 
 
-\subsection{Extending $\MODELLEQ$ to a bounded lattice}
+\subsection{The bounded lattice of models}
 \label{boundedlattice}
 It turns out that $\MODELLEQ $ on ($\MODELEQ$-equivalence classes of)
 models is not just a partial order, but a bounded lattice, except
@@ -308,7 +308,7 @@ There are two equally-simple models satisfying $p \Rightarrow q$
 But as \cathoristic{} does not have disjunction, negation or implication, it does satisfy this unusual property.
 In \cathoristic{}, both the quadratic-time decision procedure and the completeness proof rely on computing the simplest model that satisfies a formula. 
 
-\subsection{Computing the simplest model satisfying a formula}
+\subsection{The simplest model satisfying a formula}
 \label{simpl}
 
 Given $\MODELLEQ $, we can define $\SIMPL{\phi}$, the simplest model w.r.t.~$\MODELLEQ $ that
@@ -496,7 +496,7 @@ In this case, given $\lambda_{\MMM}(w) \supseteq \lambda_{\NNN}(y)$ and $\lambda
 
 \end{proof}
 
-\subsection{Computing the least upper bound ($\sqcup$)}
+\subsection{Least upper bound ($\sqcup$) of models}
 
 \NI Intuitively, the least upper bound of two models $\MMM$ and
 $\MMM'$ contains the intersection of the transitions of $\MMM$ and
