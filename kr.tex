@@ -1,15 +1,17 @@
-\section{Using \Cathoristic{} as a Knowledge Representation Language}\label{kr}
+\section{Using \Cathoristic{} as a knowledge representation language}\label{kr}
 
 
-\Cathoristic{} has been used as the representation language for a large,
-complex, dynamic multi-agent simulation \cite{evans-and-short}.
-This
-is an industrial-sized application, involving tens
-of thousands of rules and facts. 
-In this program, the entire world state is stored as a set of \cathoristic{} formulae -
-all other aspects of world state are transient and computed as needed.
-The current true sentences are represented in a deterministic labeled
-transition system.
+\Cathoristic{} has been used as the representation language for a
+large, complex, dynamic multi-agent simulation \cite{evans-and-short}.
+This is an industrial-sized application, involving tens of thousands
+of rules and facts.\martin{Maybe also mention that it's a commercial
+  service with a large numbert of paying users, maybe also mention it
+  was part of Second Life?}  In this program, the entire world state
+is stored as a set of \cathoristic{} formulae - all other aspects of
+world state are transient and computed as needed.  The current true
+sentences are represented in a deterministic labeled transition
+system.\martin{Can we say ``... are represented in a cathoristic model''?}
+\martin{What is the relation of the CL formulae and the LTS?}
 
 We shall first sketch how facts are represented, before describing some
 advantages of \cathoristic{} over a more traditional \fol{}
@@ -98,66 +100,66 @@ In \cathoristic{}, if we want to find out whether Brown is married, we can query
 \end{eqnarray*}
 In \fol, if $married$ is a two-place predicate, then we need to fill in the extra argument place with a free variable - we would need to find out if there exists an $X$ such that $married(brown, X)$ - this is slower to compute and more cumbersome to type. 
 
-\subsection{Simpler Postconditions}
+\subsection{Simpler postconditions}
 
 In this section, we contrast the representation in action languages based on \fol{}\footnote{E.g. STRIPS \cite{strips}}, with our \cathoristic{}-based representation.
 Action definitions are rendered in typewriter font.
 
 When expressing the pre- and post-conditions of an action, planners
-based on \fol{} have to explicitly describe the propositions that
+based on \fol{} have explicitly to describe the propositions that
 are removed when an action is performed:
 \begin{verbatim}
-action move(A, X, Y)
-    preconditions
-        at(A, X)
-    postconditions
-        add: at(A, Y) 
-        remove: at(A, X)
+   action move(A, X, Y)
+       preconditions
+           at(A, X)
+       postconditions
+           add: at(A, Y) 
+           remove: at(A, X)
 \end{verbatim}
 Here, we need to explicitly state that when $A$ moves from $X$ to $Y$, $A$ is no longer at $X$. It might seem obvious to us that if $A$ is now at $Y$, he is no longer at $X$ - but we need to explicitly tell the system this. This is unnecessary, cumbersome and error-prone. In \cathoristic{}, by contrast, the exclusion operator means we do not need to specify the facts that are no longer true:
 \begin{verbatim}
-action move (A, X, Y)
-    preconditions
-        <A><at>(<X> /\ !{X})
-    postconditions
-        add: <A><at>(<Y> /\ !{Y})
+   action move (A, X, Y)
+       preconditions
+           <A><at>(<X> /\ !{X})
+       postconditions
+           add: <A><at>(<Y> /\ !{Y})
 \end{verbatim}
 The ``!" operator makes it clear that something can only be at one
 place at a time, and the non-monotonic update rule described above
 \emph{automatically} removes the old invalid location data.
 
-\subsection{Using the $!$ Operator to Optimize Preconditions}
+\subsection{Using tantum $!$  to optimise preconditions}
 \label{optimizingpreconditions}
 Suppose, for example, we want to find all married couples who are both Welsh.
 In Prolog, we might write something like:
 \begin{verbatim}
-married_couple_at_home(X, Y) :-
-    welsh(X),
-    welsh(Y),
-    spouse(X,Y).
+   married_couple_at_home(X, Y) :-
+       welsh(X),
+       welsh(Y),
+       spouse(X,Y).
 \end{verbatim}	
 Rules like this create a large search-space because we need to find all instances of $welsh(X)$ and all instances of  $welsh(Y)$ and take the cross-product \cite{smith-and-genesereth}. If there are $n$ Welsh people, then we will be searching $n^2$ instances of $(X,Y)$ substitutions.
 
 If we express the rule in \cathoristic{}, the compiler is able to use the extra information expressed in the $!$ operator to reorder the literals to find the result significantly faster.
 Assuming someone can only have a single spouse at any moment, the rule is expressed in \cathoristic{} as:
 \begin{verbatim}
-married_couple_at_home(X, Y) :-
-    <welsh> <X>,
-    <welsh> <Y>,
-    <spouse> <X> (<Y> /\ !{Y}).
+   married_couple_at_home(X, Y) :-
+       <welsh> <X>,
+       <welsh> <Y>,
+       <spouse> <X> (<Y> /\ !{Y}).
 \end{verbatim}	
 Now the compiler is able to reorder these literals to minimize the search-space. 
 It can see that, once $X$ is instantiated, the following literal can be instantiated without increasing the search-space:
 \begin{verbatim}
-<spouse> <X> (<Y> /\ !{Y})
+   <spouse> <X> (<Y> /\ !{Y})
 \end{verbatim}
 The \emph{tantum} operator can be used by the compiler to see that there is at most one $Y$ who is the spouse of $X$.
 So the compiler reorders the clauses to produce:
 \begin{verbatim}
-married_couple_at_home (X, Y) :-
-    <welsh> <X>,
-    <spouse> <X> (<Y> /\ !{Y}),
-    <welsh> <Y>.
+   married_couple_at_home (X, Y) :-
+       <welsh> <X>,
+       <spouse> <X> (<Y> /\ !{Y}),
+       <welsh> <Y>.
 \end{verbatim}	
 Now it is able to find all results by just searching $n$ instances - a significant optimization.
 In our application, this optimisation has made a significant difference to the run-time cost of query evaluation.
