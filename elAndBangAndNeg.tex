@@ -1,9 +1,7 @@
 \section{\Cathoristic{} and negation}\label{ELAndNegation}
 
-\NI Our motivation for investigating \cathoristic{} has been to give an
-alternative account of negation, based on the concept of exclusion.
-In this section we study how (partially) to recover negation. For this
-purpose, we enrich \cathoristic{} with negation, and show how negation
+\NI We have presented \cathoristic{} as a language, without negation, that can express incompatible claims .
+In this section, we study how \cathoristic{}  is enriched when we add the negation operator, and show how negation
 can be explained in terms of plain \cathoristic{} with disjunction.
 
 \subsection{Syntax and semantics}
@@ -23,8 +21,8 @@ for $\neg (\neg \phi \land \neg \psi )$, and $\phi \IMPLIES \psi$  abbreviates
 $\neg\phi \OR \psi$.
 \end{definition}
 
-The semantics of \cathoristic\ with negation is just as that of
-\cathoristic\ without, except for the obvious clause for negation.
+The semantics of \cathoristic\ with negation is just that of plain
+\cathoristic\, except for the obvious clause for negation.
 \begin{eqnarray*}
 \MMM \models \neg \phi &\quad\mbox{ iff }\quad& \MMM \nvDash \phi  
 %\MMM \models \phi \lor \psi &\mbox{ iff }& \MMM \models \phi \text{ or }   \MMM \models \psi
@@ -37,8 +35,8 @@ in \cathoristic{} with disjunction. The key idea is that
 \[
    \neg \MAY{a}{\phi}
 \]
-can be false in two ways: there is no $a$-labelled action at the
-current state, or there is, but $\phi$ is false. Both arms of this
+can be false in two ways: either there is no $a$-labelled action at the
+current state - or there is, but $\phi$ is false. Both arms of this
 disjunction can be expressed in \cathoristic{}:
 
 \begin{itemize}
@@ -66,10 +64,9 @@ A$. In other words
 
 \NI When $\Sigma$ is infinite, then so is the disjunction.
 
-Note that both, the negation of the modality and the negation of
-the tantum involve the set $\Sigma$ of actions. It is sometimes
-advantageous to translate away negation with respect to a subset $S
-\subseteq \Sigma$.  So far, we have defined negation with respect to
+Note that both the negation of the modality and the negation of
+the tantum involve the set $\Sigma$ of actions. 
+So far, we have defined negation with respect to
 the whole (possibly infinite) set $\Sigma$. For technical reasons, we
 generalise negation and define it with respect to a \emph{finite}
 subset $S \subseteq \Sigma$. We use this finitely-restricted version of
@@ -77,7 +74,7 @@ negation in the decision procedure below.
 
 \begin{definition}
 The function $\neg_{S}(\phi)$ removes negation from $\phi$
-relative to $S \subseteq \Sigma$:
+relative to a finite subset $S \subseteq \Sigma$:
 
 \begin{align*}
   \neg_{S}(\top) &\ =\  \bot  &
@@ -91,15 +88,12 @@ relative to $S \subseteq \Sigma$:
 
 \end{definition}
 
-\NI Note that, if $S$ is infinite, then the last two clauses will
-generate infinitary formulae.
-
 \subsection{A decision procedure}
 
-\NI We can use the fact that the \cathoristic\ has a quadratic-time
+\NI We can use the fact that \cathoristic\ has a quadratic-time
 decision procedure to build an exponential-time decision procedure for
 \cathoristic\ with negation.  Given $\phi \models \psi$, let $S =
-\mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{a\}$ where
+\mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{a\}$ - where
 $a$ is a new symbol which does not occur in $\phi$ or $\psi$.  First,
 translate away all negations in $\phi$ using $\neg_S()$ as defined in
 Section 1.4.  Let the result be $\phi'$.  Second, reduce $\phi'$ to
@@ -111,34 +105,14 @@ Disjunctive Normal Form by repeated application of the rewrite rules:
 Let the resulting disjuncts be $\phi_1, ..., \phi_n$. 
 Now 
 \[
-\phi \models \psi \quad\text{ iff }\quad \forall \phi_{i=1}^n \phi_i \models \psi
+\phi \models \psi \quad\text{ iff }\quad \phi_i \models \psi \text{ for all } i = 1 .. n
 \]
-\martin{What does $\forall \phi_{i=1}^n \phi_i$ mean?}
-Now, to check whether each $\phi_i \models \psi$, we will construct a
-model of $\psi_i$ (in quadratic time\martin{is that true, maybe we omit this claim.}).  Now define the $S$ extensions of
+Now, to check whether each $\phi_i \models \psi$, 
+we will construct a series of $S$-extensions of $\phi_i$, and check whether each such $S$-extension satisfies $\psi$.
+We shall define the $S$ extensions of
 an annotated model $\MMM$ as all models which extend the states of
 $\MMM$ with extra transitions taken from $S$ which respect the state
-labelling on $\MMM$.  Now $\phi_i \models \psi$ if and only if all
-$S$-extensions\martin{What is that?} of $\SIMPL{\phi_i}$ satisfy $\psi$.  So, to check
-whether $\phi_i \models \psi$, we enumerate the $S$-extensions of
-$\SIMPL{\phi_i}$ (there are a finite number of such extensions - the
-exact number is exponential in the size of $\SIMPL{\phi_i}$) and check
-for each one whether it satisfies $\psi$.
-
-To fill out this sketch, we will describe the structure of the
-annotated model, define the $\mu$\martin{THe $\mu$ function doesn't appearto occur elsewhere.} function, and show how to compute
-the extensions of an annotated model relative to a set $S$ of symbols.
-
-
-\subsection{Computing the Extensions of a Model}
-
-\martin{Maybe merge this subsection with the previous.}
-
-Since to check whether $\phi_i \models \psi$, we enumerate the
-$S$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of such
-extensions - the exact number is exponential in the size of
-$\SIMPL{\phi_i}$) and check for each one whether it satisfies $\psi$.
-
+labelling on $\MMM$.  
 \begin{definition}
 Given an cathoristic transition system $(\mathcal{W},\rightarrow,\lambda)$,  and a set $S$ of symbols, then $(\mathcal{W'},\rightarrow',\lambda')$ is a {\bf $S$-extension} of $(\mathcal{W},\rightarrow,\lambda)$ if it is a valid LTS (recall Definition 1) and for all $(x,a,y) \in \rightarrow'$, either:
 \begin{itemize} 
@@ -149,7 +123,6 @@ $(x, a, y) \in \rightarrow$,  or;
 \end{itemize}
 \end{definition}
 In other words, $\MMM'$ is an extension of an annotated model $\MMM$, if all its transitions are either from $\MMM$ or involve states of $\MMM$ transitioning via elements of $S$ to new states not appearing in $\MMM$ or $\MMM'$.
-
 The number of extensions can quickly grow very large.
 If the model $\MMM$ has $n$ states, then the number of possible extensions is:
 \[
@@ -157,3 +130,10 @@ If the model $\MMM$ has $n$ states, then the number of possible extensions is:
 \] 
 But recall that we are computing these extensions in order to verify $\psi$. So we can make a significant optimisation by restricting the height of each tree to $|\psi|$.
 
+Now $\phi_i \models \psi$ if and only if all $S$-extensions of $\SIMPL{\phi_i}$ satisfy $\psi$.  
+So, to check
+whether $\phi_i \models \psi$, we enumerate the $S$-extensions of
+$\SIMPL{\phi_i}$ (there are a finite number of such extensions - the
+exact number is exponential in the size of $\SIMPL{\phi_i}$) and check
+for each one whether it satisfies $\psi$.
+There is a Haskell implementation of this decision procedure available at \cite{HaskellImplementation}.
