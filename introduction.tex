@@ -19,9 +19,9 @@ a combination of universal quantification and identity.  \FOL{}, in other words,
 simple concept:
 \begin{itemize}
 
-\item Quantification is an expensive concept that comes with many
+\item Quantification is an expensive operation that comes with many
   rules governing its behaviour - such as the distinction between free
-  and bound variables\footnote{As of 2014 there is a substantial
+  and bound variables\footnote{As of 2014\richard{Can we drop the ``As of 2014''?}  there is a substantial
     amount of ongoing research regarding good formalisations of
     handling free/bound variables, e.g.~the nominal approaches to
     logic \cite{PittsAM:nomsetnasics}. The problem was
@@ -29,8 +29,8 @@ simple concept:
     computational cost of syntax manipulation in languages with
     binders.}.
 
-\item The identity relation also doesn't come for free because it
-  requires an infinite collection of axioms formalising the
+\item The identity relation is also relatively expensive, as it
+  requires an infinite collection of axioms to formalise the
   indiscernibility of identicals.
 
 \end{itemize}
@@ -44,9 +44,11 @@ the identity relation.
 This paper introduces an alternative, \cathoristic{}, where incompatibility is
 expressed directly, as a first-class concept - rather than being relegated
 to second-class status as a defined concept. \Cathoristic{} is the simplest
-logic we could find that expresses incompatibility directly.  There is no
-negation, disjunction or implication. To retain expressive power,
-\cathoristic{} has may-modalities.  Because of this simplicity, it has a
+logic we could find in which incompatible statements can be expressed.  
+To express facts, \cathoristic{}
+uses the has may-modalities of Hennessy-Milner logic.  But in \cathoristic{}, there is no
+negation, disjunction or implication. Because 
+of this simplicity, it has a
 quadratic-time decision procedure.
 
 \Cathoristic{} is a multi-modal logic, a variant of Hennessy-Milner Logic,
@@ -75,7 +77,7 @@ of France, we write:
 \[
 \MAY{king}\MAY{france}(\MAY{pierre} \land \fBang \{pierre\})
 \]
-Crucially \cathoristic{}'s representation involves no
+Crucially, \cathoristic{}'s representation involves no
 universal quantifier and no identity relation.  It is a purely
 propositional representation.  To say that the traffic
 light is currently red, and red is its only colour, we write:
@@ -95,8 +97,7 @@ we can write:
    \MAY{tl} \MAY{colour} (\MAY{t1} (\MAY{red} \land !\{red\}) \land \MAY{t2} (\MAY{amber} \land !\{amber\}))
 \]
 Change over time can be expressed in first-order logic with bounded
-quantification, but modalities do this more succinctly and variable
-free.
+quantification - but modalities do this more succinctly, without introducing bound variables.
 
 Having claimed that incompatibility is a natural logical concept, not
 easily expressed in first-order logic\footnote{We will precisify this
@@ -151,7 +152,7 @@ not understand universal quantification or negation.
 Material incompatibility is conceptually prior to logical negation.
 
 Imagine, to make this vivid, a primitive people speaking a primordial
-language of atomic sentences\footnote{A sentence is atomic if it does
+language of atomic sentences\footnote{In this paper, we define a sentence as \emph{atomic} if it does
   not contain another sentence as a syntactic constituent.}. These people can express sentences
 that \emph{are} incompatible.  But they cannot express \emph{that}
 they are incompatible.  They recognise when atomic sentences are
@@ -207,8 +208,8 @@ conceptually \emph{prior}.
 
 \subsection{Negation arises as the logically weakest form of material incompatibility}
 
-In \cite{brandom2} and \cite{brandom}, Brandom has emphasised that
-logical negation is a limiting form of material incompatibility:
+In \cite{brandom2} and \cite{brandom}, Brandom describes 
+logical negation as a limiting form of material incompatibility:
 \begin{quote}
 Incompatible sentences are Aristotelian \emph{contraries}. A sentence
 and its negation are \emph{contradictories}. What is the relation
@@ -256,8 +257,8 @@ sentences as constituent parts\footnote{Compare Russell \cite{russell}
   p.117: ``A sentence is of atomic form when it contains no logical
   words and no subordinate sentence''. We use a broader notion of
   atomicity by focusing solely on whether or not it contains a
-  subordinate sentence, allowing logical words such as ``and'' as long
-  as they are conjoining noun-phrases and not sentences.}.  According
+  subordinate sentence, allowing logical words such as ``and'' \emph{as long
+  as they are conjoining noun-phrases} and not sentences.}.  According
 to this criterion, the following are atomic:
 
 \begin{itemize}
@@ -351,7 +352,7 @@ are incompatibilities between atomic propositions. In \S 82:
 \end{quote}
 
 \NI Wittgenstein does not, unfortunately, show us what this
-language would look like.  \Cathoristic{} is one way of formalising inferences
+language would look like.  \Cathoristic{} is one way of formalising these sorts of inferences
 between atomic sentences.
 
 \subsection{Outline}
