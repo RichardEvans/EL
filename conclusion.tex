@@ -24,8 +24,9 @@ is simple, according to this criterion.
 Let us define a logic as ``simple'' if the set of satisfying
 models of every sentence has a unique least upper bound. 
 We saw in Theorem \ref{theorem:decision} of Section \ref{boundedlattice} that \cathoristic{} is simple, according to this definition.
+It is because of this simplicity that it has a quadratic-time decision procedure.
 \martin{I think this is still only tangentally related to the rest of the conclusion}
-
+\richard{What do you want to do? Remove it? Put it somewhere else?}
  We close this paper with a discussion of related work and open
 problems.
 
@@ -35,56 +36,6 @@ We have defined \cathoristic{} as a multi-modal logic based on
 exclusion as a logical primitive and investigated its key properties.
 Its formal presentation and development owes much to modal
 logic in general, and Hennessy-Milner logic in particular.
-
-\subsubsection{Incompatibility as a Fundamental Semantic Relation}
-According to Brandom's, the notion of incompatibility is more than just a pre-logical version of negation. 
-It also has a \emph{modal} component:
-\begin{quote}
-The notion of incompatibility can be thought of as a sort of conceptual vector-product of a \emph{negative} component and a \emph{modal} component. It is \emph{non}-com\emph{possibility}\footnote{\cite{brandom} p.126.}.
-\end{quote}
-Incompatibility is the fundamental master concept that Brandom uses to make sense of the notion of \emph{object} and \emph{agent}.
-
-First, \emph{object-hood}.
-Treating ``$A$ is $\phi$'' and ``$B$ is $\psi$'' as incompatible (where $\phi$ and $\psi$ are incompatible predicates) \emph{just is} what it is to treat $A$ and $B$ as the same object:
-\begin{quote}
-It is not impossible for two different objects to have incompatible properties - say, being copper and electrically insulating. What is impossible is for \emph{one and the same object} to do so. 
-Objects play the conceptual functional role of \emph{units of account for alethic modal incompatibilities}. 
-A single object just is what cannot have incompatible properties (at the same time).
-\end{quote}
-It is only because we are continually resolving incompatibilities that we are able to represent an external (mind-independent) object at all:
-\begin{quote}
-Shouldering the responsibility of repair and rectification of incompatible commitments is what one has to \emph{do} in order to be taking one's claims to be \emph{about} an objective world
-\end{quote}
-Second, \emph{agent-hood}.
-Just as an object \emph{cannot} have incompatible properties, just so a subject \emph{should not} ascribe incompatible properties to something.
-To say that two sentences are incompatible is to say that an agent who holds one \emph{should not} hold the other.
-\begin{quote}
-Objects play the conceptual functional role of \emph{units of account for alethic modal incompatibilities}. 
-It is an essential individuating feature of the metaphysical categorical sortal metaconcept \emph{object} that objects have the metaproperty of \emph{modally} repelling incompatibilities...
-And, in a parallel fashion, subjects too are individuated by the way they normatively `repel' incompatible commitments.
-It is not impermissible for two different subjects to have incompatible commitments - say, for me to take the coin to be copper and you take it to be an electrical insulator. What is impermissible is for \emph{one and the same subject} to do so. Subjects play the conceptual functional role of \emph{units of account for deontic normative incompatibilities}. 
-That is, it is an essential individuating feature of the metaphysical categorical sortal metaconcept \emph{subject} that subjects have the metaproperty of \emph{normatively} repelling incompatibilities. A single subject just is what ought not to have incompatible commitments (at the same time)\footnote{\cite{brandom} p.192.}.
-\end{quote}
-
-\martin{The stuff above is really interesting, but doesn't directly relate to the 
-main body of the paper.}
-\richard{The reason I included it is to strengthen the claim that incompatibility is a fundamental notion: it is according to Hegel/Sellars/Brandom the fundamental master-concept from which objects and agents arise. Do you think we should delete it??}\martin{I don't
-think the conclusion should argue anything about the paper. If we need to bolster 
-the imporance of incompatibility, then I suggest to add it to the introduction.
-Alternatively, we could pitch it as futher work: this paper shows that 
-we get somnething very interesting from the notion of incompatibitlity, and
-Hegel/Sellars/Brandom use incompatibility for X, Y, and Z, then maybe 
-we we should also look at X, Y and Z. But we don't really need more about Incompatibility as a Fundamental Semantic Relation in
-terms of related work.}
-
-\NI Sellars and Brandom follow Hegel's \emph{Wissenschaft der Logic}
-\cite{HegelGWF:wisdlog} in seeing material incompatibility as a
-foundational concept from which even the supposedly primitive ideas of
-object and agent can be explicated.  If incompatibility is to fill
-this fundamental load-bearing role, we should explore all possible
-ways of formalising it.  The tantum operator is the simplest
-formalisation we could find in which incompatible propositions can be
-expressed.
 
 \subsubsection{Brandom's Incompatibility Semantics}
 
@@ -508,20 +459,22 @@ ultra-filters for \cathoristic{} look like that can be used to prove
 compactness directly on models?
 
 \subsubsection{Extending \cathoristic{} with dualities}
-
-Even if not explicitly defined, conventional modal logics have not
-just a may modality, but also its dual, the must modality. This is a
-direct consequence of the presence of negation: $\MUST{a}{\phi} = \neg
-\MAY{a}{\neg \phi}$. In \cathoristic{} the situation is different: since
+In any modal logic with negation, the may modality and the must modality are interdefinable:
+\[
+\MUST{a}{\phi} = \neg
+\MAY{a}{\neg \phi}
+\]
+In \cathoristic{}, the situation is different: since
 negation is not available, adding $\MUST{a}{\phi}$ is a substantial
-change to the logic: for example the processes in Figure
-\ref{figure:counterexample}, indistinguishable by cathoristic formulae, are
+change to the logic.
+For example, the processes in Figure
+\ref{figure:counterexample}\richard{Which figure is this?}, indistinguishable by cathoristic formulae, are
 separated by
   \[
      \MUST{a}{\MAY{b}{}},
   \]
   assuming the usual semantics: $(\LLL, s) \models \MUST{a}{\phi}$ if
-  $s \TRANS{a} t$ implies that $(\LLL, t) \models \phi$. That means
+  $s \TRANS{a} t$ implies that $(\LLL, t) \models \phi$. This means
   Theorem \ref{theorem:completeLattice} fails. What notion of model
   equivalence does elementary equivalence become in this scenario?
   What do complete proof rules look like?
