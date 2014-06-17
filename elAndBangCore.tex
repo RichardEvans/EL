@@ -647,30 +647,35 @@ and computing whether a model satisfies $\psi$ is of order $|\psi|
 \times |\phi|$, so computing whether $\phi \models \psi$ is quadratic
 time.
 
-There is a Haskell implementation of the decision procedure
-\cite{HaskellImplementation}.  The reader is invited to inspect the Haskell code to verify that the algorithm runs in quadratic time.
+Before moving on to incompatibility semantics, we would like to point
+to the Haskell implementation of the decision procedure
+\cite{HaskellImplementation} and to sketch why \cathoristic{} has 
+an efficient decision procedure.  
 
-\subsubsection{\Cathoristic{} is a ``simple'' logic}
-The reason \cathoristic{} has a quadratic-time decision procedure is that it contains no
-``complex'' logical connectives.  
-By ``complex'', we mean logical
-connectives that, like disjunction, generate sentences that can be
-satisfied in many different distinct ways.  
-Negation, disjunction,
-implication, existential quantification all create formulae that can
-be satisfied in different ways.  
- Disjunction
-is complex because there are two equally simple models of
-$\phi \lor \psi$.  
-Negation is complex because
-there are two equally simple models of $\neg (\phi \land \psi)$.
-Conjunction is the \emph{only} connective of propositional logic that
-is not complex, according to this definition.
+The reason is that it contains no ``complex'' logical connectives.
+``Complex'' in this context means logical connectives that, generate
+sentences that can be satisfied in different and substantially
+distinct ways.  Negation, disjunction, implication, existential
+quantification all give rise to formulae that are complex in this
+sense.  As an example, disjunction is complex because there are two
+equally \martin{equally simple, can we say that? What if $\phi = \top$
+  and $\psi$ is a complex formula?} simple models of $\phi \lor
+\psi$.\martin{We aslo need to distinbgusih this notion of simplicty
+  from others we use elsewhere, e.g. $\SIMPL{.}$ and $\MODELLEQ$}
+Negation is complex because there are two equally simple models of
+$\neg (\phi \land \psi)$.  Conjunction is the \emph{only} connective
+of propositional logic that is not complex, according to this
+definition.  Let us define a logic as ``simple'' if the set of
+satisfying models of every sentence has a unique least upper bound.
+We saw in Theorem \ref{theorem:decision} of Section
+\ref{boundedlattice} that \cathoristic{} is simple, according to this
+definition.  It is because of this simplicity that it has a
+quadratic-time decision procedure.  \martin{There are two separate,
+  unconnected arguments: one about connective complexity, and one
+  about logic simplicity. We should tie them together if poss,
+  otherwise say there are two differnt reasons for the quadriatic
+  compleixty.}
 
-Let us define a logic as ``simple'' if the set of satisfying
-models of every sentence has a unique least upper bound. 
-We saw in Theorem \ref{theorem:decision} of Section \ref{boundedlattice} that \cathoristic{} is simple, according to this definition.
-It is because of this simplicity that it has a quadratic-time decision procedure.
 
 \subsection{Incompatibility semantics}\label{incompatibility}
 
