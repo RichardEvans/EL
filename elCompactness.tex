@@ -4,24 +4,23 @@
 This section studies embeddings of \cathoristic{} into first-order
 logic, and proves that \cathoristic{} has compactness using one.
 
-\subsection{The standard translation from  \cathoristic{} into 
+\subsection{Translating from  cathoristic to
             first-order logic}\label{standardTranslation}
 
-Studying a new logic is interesting not just for the concepts the
-operations of the logic formalise, but also because logics do not live
-in isolation. We can study how a logics embeds into other logics.
-This helps explain not just the new logic, but also casts a new light
-onto the the logic that is the target of the embedding. For example
-the standard translation of modal logic into first-order logic gives
-rise to interesting fragments like the finite variable fragments, the
-fragments closed under bisimulation, guarded fragments that have been
-investigated heavily, etc. The standard translation also allow us to
+Studying a new logic is interesting not just for the ideas the logic
+formalises, but also because logics do not live in isolation: we can
+study how a logics embeds into other logics.  This casts a new light
+on the logic that is the target of the embedding. he standard
+translation of modal into first-order logic is a fruitful example as
+gives rise to interesting fragments like the finite variable
+fragments, the fragment closed under bisimulation, guarded fragments,
+that have been investigated heavily. Translations also enable us to
 push techniques, constructions and results between logics.
 
-\input{figure:embedding}
+%\input{figure:embedding}
 
-\NI We now translate EL into a restricted fragment of first-order
-logic (cf.~Figure \ref{figure:embedding}). 
+We now translate \cathoristic into a restricted fragment of
+first-order logic.
 
 \begin{definition}
 The first-order signature $\SSS$ has a nullary predicate $\top$, a
@@ -50,7 +49,7 @@ is true if
 
 \end{itemize}
 
-\NI Note that if $\Sigma$ is infinite, then $\RESTRICT{A}{\cdot}$ and
+\NI If $\Sigma$ is infinite, then $\RESTRICT{A}{\cdot}$ and
 $\ARROW{a}{\cdot}{\cdot}$ are infinite families of relations.
 
 \begin{definition}
@@ -67,11 +66,11 @@ following grammar, where $w, z$ range over $x, y$.
 
 \end{definition}
 
-\NI Notice that this fragment of FOL has no negation, disjunction,
-implication, or universal quantification. 
+\NI This fragment has no negation, disjunction, implication, or
+universal quantification.
 
 \begin{definition}
-The translations $\SEMB{\phi}_x$ and $\SEMB{\phi}_y$ of an EL formula
+The translations $\SEMB{\phi}_x$ and $\SEMB{\phi}_y$ of cathoristic formula 
 $\phi$ are given relative to a state, denoted by either $x$ or $y$.
 
 \[
@@ -98,7 +97,6 @@ $\phi$ are given relative to a state, denoted by either $x$ or $y$.
 
 \NI The translations on the left and right are identical except for
 switching $x$ and $y$. Here is an example translation.
-
 \[
    \SEMB{\langle a \rangle \top \AND \fBang \{a\}}_x 
       = 
@@ -107,11 +105,10 @@ switching $x$ and $y$. Here is an example translation.
 
 \NI We now establish the correctness of the encoding. The key issue is
 that not every first-order model of our first-order signature
-corresponds to an cathoristic model. The problem is that cathoristic models have
-constraints that are not enforced by our signature, e.g.~$s \TRANS{a}
-t$ implies that $a \in \lambda(s)$. Such models contain 'junk' from
-the point of view of \cathoristic{}.  We deal with this problem following
-ideas from modal logic \cite{BlackburnP:modlog}: we add a translation
+corresponds to an cathoristic model because determinism, well-sizedness and
+admissibility are not enforced by our signature alone. In other words,
+models may contain 'junk'.  We deal with this problem following ideas
+from modal logic \cite{BlackburnP:modlog}: we add a translation
 $\SEMB{\LLL}$ for cathoristic transition systems, and then prove the
 following theorem.
 
@@ -124,10 +121,7 @@ model.
 And likewise for $\SEMB{\phi}_y$.
 \end{theorem}
 
-\NI Before proving the theorem, we define $\SEMB{\LLL}$, which, given
-an cathoristic transition system $\LLL$, produces a corresponding
-first-order model for the signature $\SSS$ introduced above. The
-translation is simple.
+\NI The definition of $\SEMB{\LLL}$ is simple.
 
 \begin{definition}
 Let $\LLL = (S, \rightarrow, \lambda)$ be an cathoristic transition
@@ -195,14 +189,13 @@ definitions.
      &\text{iff}&
   \MMM \models\ !A.
 \end{eqnarray*}
-
 \end{proof}
 
 \subsection{Compactness by translation into first-order logic}\label{compactnessProof}
 
 \NI First-order logic has compactness: a set $S$ of sentences has a
-model exactly when every finite subset of $S$ does \cite[Chapter
-  4.3]{EndertonHB:matinttl}. What about \cathoristic{}? 
+model exactly when every finite subset of $S$ does. What about
+\cathoristic{}?
 
 We can prove compactness of modal logics using the standard
 translation from modal to first-order logic \cite{BlackburnP:modlog}:
@@ -214,30 +207,24 @@ obtain a first-order model of the translated modal formulae. Then we
 translate that first-order model back to modal logic, obtaining a
 model for the original modal formulae, as required. The last step
 proceeds without a hitch because the modal and the first-order notions
-of models are identical,f save for details of prensentation.
+of models are identical, save for details of presentation.
 
-Unfortunately we cannot do the same with the translation from \cathoristic{}
-to first-order logic presented in the previous section. The problem
-are the first-order models termed 'junk' above: they do not correspond
-to cathoristic transition systems.  For example the constraint $s \TRANS{a}
-t$ implies $a \in \lambda(s)$ might be violated. In the case of \cathoristic{}, 
-merely having signature $\SSS$ is not strong enough a
-constraint. The target language of the translation from the previous
-section is not expressive enough to have formulae that can guarantee
-such constraints.  As we have no reason to belive that the first-order
+Unfortunately we cannot do the same with the translation from
+\cathoristic{} to first-order logic presented in the previous
+section. The problem are the first-order models termed 'junk' above.
+The target language of the translation from the previous section is
+not expressive enough to have formulae that can guarantee such
+constraints.  As we have no reason to belive that the first-order
 model whose existence is guarnateed by compactness isn't 'junk', we
-cannot use this translation.
-
-We solve this problem with a second translation from \cathoristic{} to
-first-order logic, this time into a more expressive fragment were we
-can constrain first-order models easily using first-order formulae to
-ensure that they always can be translated back to \cathoristic{}.  The
-second embedding translates \cathoristic{} to two-sorted first-order logic
-(which can easily be reduced to first-order logic
-\cite{EndertonHB:matinttl}).
+cannot use this translation.  We solve this problem with a second
+translation, this time into a more expressive first-order fragment
+were we can constrain first-order models easily using formulae. The
+fragment we use now lives in two-sorted first-order logic (which can
+easily be reduced to first-order logic \cite{EndertonHB:matinttl}).
 
 \begin{definition}
-The two-sorted first-order signature $\SSS'$ is given as follows.
+The two-sorted first-order signature $\SSS'$ is given as follows.\martin{We need to mention
+two-sorted signatures etc in the preliminaries}
 \begin{itemize}
 
 \item $\SSS'$ has two sorts, states and actions. 
@@ -276,27 +263,20 @@ The encoding $\SEMBTWO{\phi}_x$ of \cathoristic{} formulae is given by the follo
 
 \end{definition}
 
-\NI Here we use $\exists^{st}$ to indicate that the quantifier ranges
-of the sort of states, and $\forall^{act}$ for a quantifier ranging
-over actions. The expression $a \in A$ is a shorthand for the
-first-order formula
+\NI Here we use $\exists^{st}$ to indicate that this existential
+quantifier ranges of the sort of states, and $\forall^{act}$ for the
+universal quantifier ranging over actions. The expression $a \in A$ is
+a shorthand for the first-order formula
 \[
    a = a_1 \OR a = a_2 \OR \cdots \OR a = a_n
 \]
-assuming that $A = \{a_1, ..., a_n\}$. Since by definition, $A$ is always a finite
-set, this is well-defined.
-
-Note that the translation above could be restricted to a two-variable
-fragment. Moreover, the standard reduction from many-sorted to
-one-sorted first-order logic, does not increase the number of
-variables used (although predicates are added, one per sort)
-\cite{EndertonHB:matinttl}. For simplicity we will not consider this
-matter further.
-
-Before we can state and prove a correspondence theorem for
-$\SEMBTWO{\phi}_x$ along the lines of Theorem
-\ref{correspondence:theorem:1}, we must also translate cathoristic
-  transition systems $\SEMBTWO{\LLL}$.
+assuming that $A = \{a_1, ..., a_n\}$. Since by definition, $A$ is
+always a finite set, this is well-defined.  The translation could be
+restricted to a two-variable fragment. Moreover, the standard
+reduction from many-sorted to one-sorted first-order logic does not
+increase the number of variables used (although predicates are added,
+one per sort). We will not consider this matter further here.  We must
+also translate cathoristic transition systems $\SEMBTWO{\LLL}$.
 
 \begin{definition}
 Let $\LLL = (S, \rightarrow, \lambda)$ be an cathoristic transition
@@ -348,7 +328,6 @@ The case for the may modality proceeds as follows.
      &\quad\text{iff}\quad
    \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{\MAY{a}{\phi}}_x
 \end{alignat*}
-\martin{the 2nd to last inference may need elaboration!}
 
 Finally $!A$.
 \begin{alignat*}{2}
@@ -362,49 +341,41 @@ Finally $!A$.
      &\quad\text{iff}\quad
   \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{!A}_x
 \end{alignat*}
-\martin{again, some steps need elaboration? Also should this go in the appendix?}
-
 \end{proof}
 
-\NI We use the translation $\SEMBTWO{\phi}_x$ to show that \cathoristic{}
-must also have compactness. The key steps in the proof are simple,
-following standard techniques from modal logic
-\cite{BlackburnP:modlog}:
+\NI We use the following steps in our compactness proof.
 
 \begin{enumerate}
 
-\item Choose a set $T$ of \cathoristic{} formulae, such that each finite
-  subset $T'$ of $T$ has an cathoristic model $(\LLL, s)$.
+\item Choose a set $\Gamma$ of \cathoristic{} formulae such that each finite
+  subset $\Gamma'$ of $\Gamma$ has an cathoristic model $(\LLL, s)$.
 
-\item Using the translations gives a set $\SEMBTWO{T} =
-  \{\SEMBTWO{\phi}\ |\ \phi \in T\}$ of first-order formulae such that
+\item The translation gives a set $\SEMBTWO{\Gamma} =
+  \{\SEMBTWO{\phi}\ |\ \phi \in \Gamma\}$ of first-order formulae such that
   each finite subset has a first-order model $\SEMBTWO{\LLL}$.
 
 \item By compactness of (two-sorted) first-order logic, we can find a
-  first-order model $\CAL{M}$ of $\SEMBTWO{T}$.
+  first-order model $\CAL{M}$ of $\SEMBTWO{\Gamma}$.
 
 \item\label{compactness:step:4} Convert $\CAL{M}$ into an cathoristic transition system
-  $\CAL{M}^{\sharp}$ such that $(\CAL{M}^{\sharp}, s) \models T$.
+  $\CAL{M}^{\sharp}$ such that $(\CAL{M}^{\sharp}, s) \models \Gamma$.
 
 \end{enumerate}
 
 \NI The problematic step is (\ref{compactness:step:4}), for how would
-we know that the model $\CAL{M}$ can be converted back to an cathoristic
-transition system? Why should $\CAL{M}$ exhibit admissibility or
-well-sizedness? Why would the transition relation be deterministic?
-The mere fact that $\CAL{M}$ is a first-order model of signature
-$\SSS'$ is not strong enough to guarantee these properties.  We deal
-with this in two ways. To ensure admissibility, we define a formula
-that guarantees that models satisfying the formula are admissible.
+we know that the first-order model $\CAL{M}$ can be converted back to
+an cathoristic transition system? What if it contains 'junk' in the
+sense described above?  We deal with this by adding formulae to 
+$\SEMBTWO{\Gamma}$ that preserve finite-satisfiability but force the
+first-order models to be convertable to cathoristic models.
+ To ensure admissibility we use this formula.
 \begin{eqnarray*}
    \phi_{admis} 
       & \ =\ &
    \forall^{st} s.\forall^{act} a.\forall^{st} t.( \ARROWTWO{}{s}{a}{t} \IMPLIES \ALLOWED{}{s}{a}) 
 \end{eqnarray*}
 
-\NI Clearly, whenever a model satisfies $\phi_{admis}$, then it must
-be admissible. Likewise we use a formula $\phi_{det}$ to ensure model
-determinism.
+\NI The formula $\phi_{det}$ ensures model determinism.
 \begin{eqnarray*}
    \phi_{det} 
       & \ =\ &
@@ -423,15 +394,15 @@ Straightforward from the definitions.
 
 \NI We can now add, without changing satisfiability, $\phi_{admis}
 \AND \phi_{det}$ to any set of first-order formulae that has a model
-that is the translation of an cathoristic model.
+that is the translation of a cathoristic model.
 
 We also need to deal with well-sizedness in first-order models,
-because nothing we have discussed so far prevents models whose node
-labels are infinite sets that are not $\Sigma$.  Moreover, a model may
-interpret the set of actions with a proper superset of $\Sigma$.  Such
-models are not directly convertible to cathoristic models. We solve these
-problems by simply removing all actions that are not in $\Sigma$ and
-all transitions involving such actions.  Moreover, we simply map all
+because nothing discussed so far prevents models whose node labels are
+infinite sets without being $\Sigma$.  Moreover, a model may interpret
+the set of actions with a proper superset of $\Sigma$.  This also
+prevents conversion to cathoristic models. We solve these problems by
+simply removing all actions that are not in $\Sigma$ and all
+transitions involving such actions.  Moreover, we simply map all
 infinite node-labels to $\Sigma$. It is easy to see that this does not
 change satisfiability of (translations of) cathoristic formulae.
 
@@ -533,11 +504,11 @@ all \cathoristic{} formulae $\phi$ with actions from $\Sigma$:
 Here $X$ is the set of all elements in the universe of $\CAL{M}$ interpreting
 actions that are not in $\Sigma$.
 \begin{proof}
-The proof proceeds by induction on the structure of $\phi$. \martin{To do. But it's obvious}
+The proof proceeds by induction on the structure of $\phi$. 
 \end{proof}
 
 \begin{definition}
-Let $\Gamma$ be a set of \cathoristic{} formulae, and $\MMM$ an cathoristic model.  We
+Let $\Gamma$ be a set of cathoristic formulae, and $\MMM$ an cathoristic model.  We
 write $\MMM \models T$ provided $\MMM \models \phi$ for all $\phi \in
 T$.  We say $\Gamma$ is \emph{satisfiable} provided $\MMM \models T$.
 \end{definition}
@@ -559,20 +530,20 @@ such that any finite subset has an cathoristic model. Define
   \SEMBTWO{\Gamma} \cup \{\phi_{admis} \AND  \phi_{det}\}
 \]
 which both are sets of first-order formulae. Clearly each finite subset $\Gamma'$ of 
-$\Gamma^*$ has a first-order model. Why? First consider the subset $\Gamma'_{EL}$ of $\Gamma'$
+$\Gamma^*$ has a first-order model. Why? First consider the subset $\Gamma'_{CL}$ of $\Gamma'$
 which is given as follows.
 \[
-   \Gamma'_{EL} \ =\ \{ \phi \in \Gamma\ |\ \SEMBTWO{\phi} \in \Gamma' \}
+   \Gamma'_{CL} \ =\ \{ \phi \in \Gamma\ |\ \SEMBTWO{\phi} \in \Gamma' \}
 \]
-Since $\Gamma'_{EL}$ is finite, by assumption there is an cathoristic model 
+Since $\Gamma'_{CL}$ is finite, by assumption there is an cathoristic model 
 \[
-   (\LLL, s) \models \Gamma'_{EL}
+   (\LLL, s) \models \Gamma'_{CL}
 \]
 which means we can apply Theorem \ref{correspondence:theorem:223} to get
 \[
-   \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{\Gamma'_{EL}},
+   \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{\Gamma'_{CL}},
 \]
-By construction $\Gamma' \setminus \SEMBTWO{\Gamma'_{EL}} \subseteq
+By construction $\Gamma' \setminus \SEMBTWO{\Gamma'_{CL}} \subseteq
 \{\phi_{admis} \AND \phi_{det}\}$, so all we have to
 show for $\Gamma'$ to have a model is that
 \[
