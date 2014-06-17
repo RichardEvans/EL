@@ -3,15 +3,12 @@
 
 \Cathoristic{} has been used as the representation language for a
 large, complex, dynamic multi-agent simulation \cite{evans-and-short}.
-This is an industrial-sized application, involving tens of thousands
-of rules and facts.\martin{Maybe also mention that it's a commercial
-  service with a large numbert of paying users, maybe also mention it
-  was part of Second Life?}  In this program, the entire world state
+This is an industrial-sized application\footnote{This is a commercial application with thousands of paying users, available for download on the App Store for iPad.}, involving tens of thousands
+of rules and facts.  
+In this program, the entire world state
 is stored as a set of \cathoristic{} formulae - all other aspects of
 world state are transient and computed as needed.  The current true
-sentences are represented in a deterministic labeled transition
-system.\martin{Can we say ``... are represented in a cathoristic model''?}
-\martin{What is the relation of the CL formulae and the LTS?}
+sentences are represented in a cathoristic model.
 
 We shall first sketch how facts are represented, before describing some
 advantages of \cathoristic{} over a more traditional \fol{}
@@ -33,7 +30,7 @@ $r(a,b)$ is expressed in \cathoristic{} as
 \begin{eqnarray*}
 \MAY{a} \MAY{r} \MAY{b}
 \end{eqnarray*}
-But a sentence involving a many-to-one two-place relation of the form $r(a,b)$ is expressed in \cathoristic{}:
+But a sentence involving a many-to-one two-place relation of the form $r(a,b)$ is expressed as:
 \begin{eqnarray*}
 \MAY{a} \MAY{r} (\MAY{b} \land \fBang \{b\})
 \end{eqnarray*}
@@ -49,9 +46,8 @@ But to say that ``Jack is married to Joan'' (where``is-married-to'' is a many-on
 \NI Colloquially, we might say that ``Jack is
 married to Joan - and only Joan''.  Note that the  relations are
 placed in infix position,  so that the facts about an object are
-``contained'' within the object.   But we \emph{could}
-have chosen an alternative strategy, in which the predicate/relation
-symbols are to the left of the first argument.
+``contained'' within the object.   
+One reason for this particular way of structuring the data will be explained below.
  
 Consider the following facts about a gentleman named Brown:
 
@@ -106,7 +102,7 @@ In this section, we contrast the representation in action languages based on \fo
 Action definitions are rendered in typewriter font.
 
 When expressing the pre- and post-conditions of an action, planners
-based on \fol{} have explicitly to describe the propositions that
+based on \fol{} have to explicitly describe the propositions that
 are removed when an action is performed:
 \begin{verbatim}
    action move(A, X, Y)
@@ -124,7 +120,7 @@ Here, we need to explicitly state that when $A$ moves from $X$ to $Y$, $A$ is no
        postconditions
            add: <A><at>(<Y> /\ !{Y})
 \end{verbatim}
-The ``!" operator makes it clear that something can only be at one
+The tantum operator $!$ makes it clear that something can only be at one
 place at a time, and the non-monotonic update rule described above
 \emph{automatically} removes the old invalid location data.
 
