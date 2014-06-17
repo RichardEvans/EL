@@ -93,10 +93,12 @@ incompatibility - rather than truth-assignment - as the semantically
 primitive notion.
 
 Incompatibility Semantics applies to any language, $\mathcal{L}$,
-given as a set of sentences.  It uses an incompatibility function
-$\mathcal{I}$, that, given a set of sentences $S \subseteq
-\mathcal{L}$, produces the set of sets of sentences that are
-incompatible with $S$.  We assume that $\mathcal{I}$ satisfies the
+given as a set of sentences.  Given a predicate $\mathsf{Inc}(X)$ which is true of sets $X \subseteq \mathcal{L}$ that are incompatible, he defines an incompatibility function
+$\mathcal{I}$ from subsets of $\mathcal{L}$ to sets of subsets of $\mathcal{L}$:
+\[
+X \in \mathcal{I}(Y) \text{ iff } \mathsf{Inc}(X \cup Y)
+\]
+We assume that $\mathcal{I}$ satisfies the
 monotonicity requirement (Brandom calls it ``Persistence''):
 \[
    \text{If } X \in \mathcal{I}(Y) \text{ and } X \subseteq X' \text{ then } X' \in \mathcal{I}(Y)
@@ -112,22 +114,20 @@ sentence $\phi \in \mathcal{L}$:
 
 \NI Now, given material incompatibility (as captured by the
 $\mathcal{I}$ function) and entailment, he introduces logical negation
-as a \emph{derived} concept. Using $N \phi$ for the negation of
-$\phi$, he introduces negation via the rule:
+as a \emph{derived} concept via the rule:
 
 \[
-   \{N \phi\} \in \mathcal{I}(X)\quad \text{ iff }\quad X \models \phi
+   \{\neg \phi\} \in \mathcal{I}(X)\quad \text{ iff }\quad X \models \phi
 \]
 
-\NI Brandom goes on to show that the $N$ operator, as defined, satisfies
+\NI Brandom goes on to show that the $\neg$ operator, as defined, satisfies
 the laws of classical negation.  He also introduces a modal operator,
 again defined in terms of material incompatibility, and shows that
 this operator satisfies the laws of $S5$.
 
 \Cathoristic{} was inspired by Brandom's vision that material
 incompatibility is conceptually prior to logical negation: in other
-words, it is possible for a community of language users to deploy a
-language including a material incompatibility relation, even if that
+words, it is possible for a community of language users to make incompatible claims, even if that
 language has no explicit logical operators such as negation.  The
 language users of this simple language may go on to introduce logical
 operators, in order to make certain inferential properties explicit -
@@ -137,7 +137,43 @@ addition was already in order as it is.
 The approach taken in this paper takes Brandom's original insight in a
 different direction.  While Brandom defines an unusual (non
 truth-conditional) semantics that applies to any language, we have
-defined a unusual logic with a standard (truth-conditional) semantics.
+defined an unusual logic with a standard (truth-conditional) semantics, and then shown that this logic satisfies the Brandomian connection between incompatibility and entailment.
+
+\subsubsection{Peregrin}\label{peregrin}
+
+In \cite{peregrin}, Peregrin provided a set of general structural rules that any logic must satisfy if it is to connect incompatibility ($\mathsf{Inc}$) and entailment ($\models$) via the Brandomian constraint:
+\[
+X \models \phi \text{ iff } \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
+\]
+The general structural rules are:
+\begin{eqnarray*}
+(\bot) & & \text{if } \mathsf{Inc}(X) \text{ and } X \subseteq Y \text{ then } \mathsf{Inc}(Y) \\
+(\models 1) & & \phi, X \models \phi \\
+(\models 2) & & \text{if }X, \phi \models \psi \text{ and } Y \models \phi \text{ then } X, Y \models \psi \\
+(\bot \models 2) & & \text{if } X \models \phi \text{ for all } \phi, \text{ then } \mathsf{Inc}(X) \\
+(\models \bot 2) & & \text{if } \mathsf{Inc}(Y \cup \{\phi\}) \text{ implies } \mathsf{Inc}(Y \cup X) \text{ for all } Y, \text{ then } X \models \phi
+\end{eqnarray*}
+Peregrin showed that if a logic satisfied the above laws, then incompatibility and entailment are mutually interdefinable, and the logic satisfies the Brandomian constraint:
+\[
+X \models \phi \text{ iff } \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
+\]
+Next, Peregrin gave a pair of laws for defining negation in terms of $\mathsf{Inc}$ and $\models$\footnote{The converse of $(\neg 2)$ follows from $(\neg 1)$ and the general structural laws above.}:
+\begin{eqnarray*}
+(\neg 1) & & \mathsf{Inc}(\{\phi, \neg \phi\}) \\
+(\neg 2) & & \text{if } \mathsf{Inc}(X, \phi) \text{ then } X \models \neg \phi
+\end{eqnarray*}
+These laws characterise intuitionistic negation as the \emph{minimal incompatible}\footnote{$\psi$ is the minimal incompatible of $\phi$ iff for all $\xi$, if $\mathsf{Inc}(\{\phi\} \cup \{\xi\})$ then $\xi \models \psi$.}.
+Now, in \cite{brandom}, Brandom defined negation slightly differently. He used the rule:
+\begin{eqnarray*}
+(\neg B) & &\mathsf{Inc}(X, \neg \phi) \text{ iff } X \models \phi
+\end{eqnarray*}
+Using this stronger rule, we can infer the classical law of double-negation: $\neg \neg \phi \models \phi$.
+Peregrin established that Brandom's rule for negation entail $(\neg 1)$ and $(\neg 2)$ above, but not conversely: Brandom's rule is stronger than Peregrin's minimal laws $(\neg 1)$ and $(\neg 2)$.
+
+Peregrin concludes that the Brandomian constraint between incompatibility and entailment is satisfied by many different logics. 
+Brandom and Aker happened to choose a particular rule for negation that led to classical logic, but the general connection between incompatibility and entailment is satisfied by many different logics, including intuitionistic logic.
+This paper supports Peregrin's conclusion: we have shown that \cathoristic{} also satisfies the Brandomian constraint.
+
 
 \subsubsection{Linear logic}
 
@@ -318,7 +354,7 @@ $\langle a \rangle \top$ and $S = \Sigma = \{a, b\}$.  Then
 
 \NI Now this will not in general be valid - it will be false for
 example in the model $((\{x\}, \emptyset, \{(x, \Sigma)\}), x)$, the
-model having just the root node (labelled $\Sigma$) and no transitions.
+model having just the start state (labelled $\Sigma$) and no transitions.
 Restricting $S$ to be a proper subset of $\Sigma = \{a, b\}$ is also not
 enough. For example with $S = \{a\}$ we have
 \[
@@ -327,7 +363,7 @@ enough. For example with $S = \{a\}$ we have
    \MAY{a}{\TRUE}\ \lor\ !\emptyset \lor \MAY{a}{\FALSE}
 \]
 This formula cannot hold in any cathoristic model which contains a
-$b$-labelled transition, but no $a$-transition from the root.
+$b$-labelled transition, but no $a$-transition from the start state.
 
 Is it possible to identify classes of models that nevertheless verify
 excluded middle? The answer to this question appears to depend 
