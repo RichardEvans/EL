@@ -29,17 +29,13 @@ following grammar.
 \NI Before presenting models and the satisfaction relation, we sketch
 the meaning of formulae informally. $\TRUE$ is truth and $\phi \AND
 \psi$ is the conjunction of formulae $\phi$ and $\psi$. Clearly
-$\MAY{a}{\phi}$ is the may-modality which asserts that the current
-state may do action $a$, and in doing $a$ transitions evolves into a
-now state at which $\phi$ holds. Tantum $A$, from Latin ``tantum''
-meaning ``only'' and written $!A$, is the key novelty of \cathoristic{}.
-$!A$ means that if $!A$ holds at the current state, then the only
-modalities $\MAY{a}{}$ available at the corrent state are those with
-$a \in A$.
-
-The set $\Sigma$ of actions must be non-empty to avoid that the logic
-is trivial. The restriction to finite subsets of action substantially
-simplifies the meta-theory of the logic.
+$\MAY{a}{\phi}$ is a may-modality which asserts that the current state
+can do action $a$, and in doing $a$ evolves into a new state at which
+$\phi$ holds. Tantum $A$, from Latin ``tantum'' meaning ``only'' and
+written $!A$, is the key novelty of \cathoristic{}.  Asserting $!A$
+means: in the current state at most the modalities $\MAY{a}{}$ are
+available that satisfy $a \in A$.  The set $\Sigma$ of actions must be
+non-empty to avoid that the logic is trivial. 
 
 We assume that $\MAY{a}{\phi}$ binds more tightly than conjunction, so
 $\MAY{a}{\phi} \AND \psi$ is short for $(\MAY{a}{\phi}) \AND \psi$.
@@ -57,8 +53,8 @@ stated otherwise.
 \subsection{Semantics}
 
 \NI The semantics of \cathoristic{} is close to Hennessy-Milner logic
-\cite{HennessyM:alglawfndac} but uses \emph{deterministic} transition systems, as
-described in Section \ref{preliminaries}, augmented with labels on
+\cite{HennessyM:alglawfndac} but uses \emph{deterministic} transition
+systems (cf.~Section \ref{preliminaries}) augmented with labels on
 states.
 
 %% \begin{definition}
@@ -113,13 +109,12 @@ relative to a state in the ambient cathoristic transition system, giving
 rise to the following definition.
 
 \begin{definition}
-A \emph{cathoristic model}, ranged over by $\MMM, \MMM', ...$, is a pair
-$(\LLL, s)$, where $\LLL$ is an cathoristic transition system $(S,
-\rightarrow, \lambda)$, and $s$ is a state from $S$. We call $s$ the
-\emph{root} of the model.
-
-An cathoristic model with root $r$ is a \emph{tree}, provided the
-underlying transition system is a tree with root $r$.
+A \emph{cathoristic model}, ranged over by $\MMM, \MMM', ...$, is a
+pair $(\LLL, s)$, where $\LLL$ is an cathoristic transition system
+$(S, \rightarrow, \lambda)$, and $s$ is a state from $S$. We call $s$
+the \emph{start state} of the model.  An cathoristic model with start
+state $s$ is a \emph{tree} if the underlying transition system is a
+tree with start state $s$.
 \end{definition}
 
 \NI With cathoristic models at hand, we can finally formalise the
@@ -143,11 +138,11 @@ inductively by the following clauses, where we assume that $\MMM =
 intended meaning of $!A$: the available modalities in the model are
 \emph{at least as constrained} as required by $!A$. They may even be
 more constrained if the inclusion $\lambda(s) \subseteq A$ is
-proper. We note in the case where the set $\Sigma$ of actions is
-infinite, allowing $\lambda(s)$ to return arbitrary inifinite sets in
-addition to $\sigma$ does not make a difference because $A$ is finite
-by construction, so $\lambda(s) \subseteq A$ can never hold when
-$\lambda(s)$ is infinite. 
+proper. For infinite sets $\Sigma$ of actions, allowing $\lambda(s)$
+to return arbitrary inifinite sets in addition to $\sigma$ does not
+make a difference because $A$ is finite by construction, so
+$\lambda(s) \subseteq A$ can never hold anyway for infinite
+$\lambda(s)$.
 
 \input{figure:elSmall}
 
@@ -170,7 +165,7 @@ others:
 \]
 
 \NI Here we assume, as we do with all subsequent such figures, that
-the top note is the root.  The same model does \emph{not} satisfy any
+the top note is the start state.  The same model does not satisfy any
 of the following formulae
 \[
 \MAY{b} \qquad
@@ -186,14 +181,14 @@ and Figure \ref{more models} shows one model that does, and one that
 does not, satisfy the formula $\fBang \{a,b\}$.  Both models validate
 $!\{a, b, c\}$.
 
-\Cathoristic{} does not have the operators $\neg, \lor, $ or $\Rightarrow$.
-This has the following two signification consequences.  First, every
-satisfiable formula has a unique (up to isomorphism) simplest model.
-In Figure \ref{threemodels}, the left model is the unique simplest
-model satisfying$\MAY{a} \MAY{b}$.  We will clarify below that model
-simplicity is closely related to the process theoretic concept of
-similarity, and use the existence of unique simplest models to
-construct a \emph{quadratic-time} decision procedure.
+\Cathoristic{} does not have the operators $\neg, \lor, $ or
+$\Rightarrow$.  This has the following two signification consequences.
+First, every satisfiable formula has a unique (up to isomorphism)
+simplest model.  In Figure \ref{threemodels}, the left model is the
+unique simplest model satisfying$\MAY{a} \MAY{b}$.  We will clarify
+below that model simplicity is closely related to the process
+theoretic concept of similarity, and use the existence of unique
+simplest models to construct a quadratic-time decision procedure.
 
 \input{figure:elAndBang:models}
 
@@ -248,7 +243,7 @@ validates the following formula:
 \end{eqnarray*}
 \Cathoristic{} also validates all implications in which the set of constraints is relaxed from left to right. For example:
 \begin{eqnarray*}
-\fBang \{\} \models \fBang \{a\} 
+\fBang \{c\} \models \fBang \{a, b, c\} 
  \qquad\qquad
 \fBang \{\} \models \fBang \{a, b\} 
 \end{eqnarray*}
