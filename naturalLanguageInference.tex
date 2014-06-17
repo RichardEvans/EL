@@ -97,7 +97,7 @@ predicates:
    \MAY{jack} \MAY{passed} \MAY{biscuit} \MAY{to} (\MAY{mary} \land !\{mary\}) \models \MAY{jack} \MAY{passed} \MAY{biscuit}
 \]
 
-\NI Adverbial inferences is captures in \cathoristic{} as follows.
+\NI Adverbial inferences is captured in \cathoristic{} as follows.
 \begin{eqnarray*}
 \MAY{jack} \MAY{walks} \MAY{quickly}
 \end{eqnarray*}
@@ -144,7 +144,7 @@ topic of incompatible predicates by remarking:
 
 \NI They propose adding an extra axiom to express the incompatibility:
 \[
-   \forall x. ( Man(x) \rightarrow \neg Woman(x) )
+   \forall x. ( Man(x) \Rightarrow \neg Woman(x) )
 \]  
  
 \NI This proposal imposes an burden on the knowledge-representer: an
@@ -165,7 +165,7 @@ support one team at a time.  We would need to add $C \cdot {50 \choose
 \NI Or, if we treat the football-teams as objects, and have a
 two-place $Supports$ relation between people and teams, we could have:
 \[
-   \forall x, y, z. (Supports(x,y) \land y \neq z \rightarrow \neg Supports(x,z))
+   \forall x, y, z. (Supports(x,y) \land y \neq z \Rightarrow \neg Supports(x,z))
 \]   
 
 \NI If we also assume that each football team is distinct from all the
@@ -176,7 +176,7 @@ it does so by using relatively complex logical machinery.
 If we want to capture the inference from ``Jack loves Jill`` to ``Jack
 loves'' in \fol{}, we can use a non-logical axiom:
 \[
-(\forall x, y) Loves(x,y) \rightarrow Loves(x)
+(\forall x, y) Loves(x,y) \Rightarrow Loves(x)
 \]
 
 \NI We would have to add an extra  axiom like this for every
@@ -201,9 +201,9 @@ This implies
 \]
 This captures the inference from ``I flew my spaceship to the Morning Star'' to ``I flew my spaceship''.
 
-Predicate Logic cannot support logical inferences between elementary propositions. 
-If it is going to support inferences from adverbial sentences, it \emph{cannot} treat them as elementary propositions and must instead \emph{reinterpret} them as logically complex propositions.
-The cost of Davidson's proposal is that a seemingly simple sentence, such as ``Jones walks'', turns out on closer inspection not be elementary at all,  but to involve existential quantification:
+Predicate Logic cannot support logical inferences between atomic sentences. 
+If it is going to support inferences from adverbial sentences, it \emph{cannot} treat them as atomic and must instead \emph{reinterpret} them as logically complex propositions.
+The cost of Davidson's proposal is that a seemingly simple sentence - such as ``Jones walks'' - turns out, on closer inspection, not to be atomic at all -  but to involve existential quantification:
 \[
 \exists x.  Walks(Jones, x)
 \]
@@ -215,7 +215,7 @@ compound propositions.
 \subsection{Summary}
 We have looked at inference between atomic sentences. \Cathoristic{}
 can handle them directly and naturally.  Traditional \fol{} has a
-harder time: it can express incompatibility, but only using
+harder time: it can express incompatibility, but only by using
 complex machinery - universal quantification, a conditional,
 negation. \Cathoristic{}, by contrast, expresses the source of the
 incompatibility \emph{directly} using the $!$ operator.  Again, \fol{}
@@ -225,12 +225,13 @@ conjunctions of sentences to conjunctions of noun-phrases (or
 predicates), \fol{} has nothing to say because it has no way of
 expressing conjunctions between noun-phrases (or predicates) \emph{at
   all}. In \fol{}, ``Jack is bruised and humiliated'' has to be
-regimented into ``Jack is bruised and Jack is humiliated''.  This
-might seem, to the uninitiated, to be the wrong way around.
+regimented into ``Jack is bruised and Jack is humiliated''.  
+It is not entirely clear this is a step in the right direction.
 
-However, \cathoristic{} cannot handle all instances of
-sub-propositional inferences.  An example are inferences where the
-\emph{subjects} are conjoined such as
+However, \cathoristic{} cannot handle \emph{all} instances of
+sub-propositional inferences.  
+One example that \cathoristic\ cannot handle is where the
+\emph{subjects} are conjoined, such as
 \begin{quote}
 ``Jack loves Jill'' and ``Jim loves Jill'' together imply that ``Jack and Jim love Jill''
 \end{quote}
