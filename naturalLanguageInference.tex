@@ -1,14 +1,14 @@
 
-\section{Capturing Inferences Between Atomic Sentences}\label{naturalLanguageInference}
+\section{Capturing inferences between atomic sentences}\label{naturalLanguageInference}
 
-\NI \Cathoristic{} arose as an attempt to answer the question: what is the
-simplest logic that can capture inferences between atomic sentences of
-natural language?  In this section, we enumerate the sorts of
-inferences we are trying to capture.  Then we show how \cathoristic{}
-handles these inferences.  Finally, we compare our approach with the
-various attempts at expressing the inferences in first-order logic.
+\NI \Cathoristic{} arose in parts as an attempt to answer the
+question: what is the simplest logic that can capture inferences
+between atomic sentences of natural language?  In this section, we
+give examples of such inferences, and then show how \cathoristic{}
+handles them.  We also compare our approach with attempts at
+expressing the inferences in first-order logic.
 
-\subsection{Intra-Atomic Inferences in Natural Language}
+\subsection{Intra-atomic inferences in natural language}
 
 \NI Natural language admits many types of inference between atomic
 sentences.  First, exclusion:
@@ -36,7 +36,7 @@ Fifth, inferences from conjunctions of sentences to conjunction of predicates\fo
 shall now show.
 
 
-\subsection{Intra-Atomic Inferences in \Cathoristic{}}
+\subsection{Intra-atomic inferences in \cathoristic{}}
 %% We shall show that each of the following inferences can be naturally expressed in \cathoristic{}:
 %% \begin{itemize}
 %% \item
@@ -131,10 +131,10 @@ together imply
 \MAY{jack} (\MAY{bruised} \land \MAY{humiliated})
 \end{eqnarray*}
  
-\subsection{Representing incompatible predicates in \FOL}\label{incompatiblepredicatesinfol}
+\subsection{Representing incompatible predicates in \fol}\label{incompatiblepredicatesinfol}
 
-\NI How are incompatible predicates represented in traditional
-\fol{}?  Brachman and Levesque\cite{brachman} introduce the
+\NI How are incompatible predicates represented in 
+\fol{}?  Brachman and Levesque \cite{brachman} introduce the
 topic of incompatible predicates by remarking:
 \begin{quote}
    We would consider it quite ``obvious'' in this domain that if it
@@ -147,13 +147,12 @@ topic of incompatible predicates by remarking:
    \forall x. ( Man(x) \rightarrow \neg Woman(x) )
 \]  
  
-\NI This proposal imposes an authoring burden on the
-knowledge-representer.  We would have to add an extra axiom for every
-pair of incompatible predicates.  This proposal becomes particularly
-burdensome when dealing with large sets of incompatible predicates.
-For example, suppose there are 50 football teams, and a person can
-only support one team at a time.  We would need to add $C \cdot {50 \choose 2}$
-axioms: incompatibility axioms would become large and unwieldy:
+\NI This proposal imposes an burden on the knowledge-representer: an
+extra axiom must be added for every pair of incompatible predicates.
+This is burdensome for large sets of incompatible predicates.  For
+example, suppose there are 50 football teams, and a person can only
+support one team at a time.  We would need to add $C \cdot {50 \choose
+  2}$\martin{Remind me what $C$ is for?} axioms, which is unwieldy.
 \[
 \begin{array}{l}
   \forall x.  \neg (SupportsArsenal(x) \land SupportsLiverpool(x))  \\
@@ -169,20 +168,20 @@ two-place $Supports$ relation between people and teams, we could have:
    \forall x, y, z. (Supports(x,y) \land y \neq z \rightarrow \neg Supports(x,z))
 \]   
 
-\NI Together with the Unique Names Assumption (which lets us assume
-that each football team is distinct from all the others), this
-certainly captures the desired uniqueness condition.  But it does so
-by using relatively complex logical machinery.
+\NI If we also assume that each football team is distinct from all the
+others, this certainly captures the desired uniqueness condition.  But
+it does so by using relatively complex logical machinery.
 
-\subsection{Supporting Inferences from Dyadic to Monadic Predicates in Predicate Logic}
-If we want to capture the inference from ``Jack loves Jill`` to ``Jack loves'' in \fol{}, we have to add a non-logical axiom:
+\subsection{Supporting inferences from dyadic to monadic predicates in \fol}
+If we want to capture the inference from ``Jack loves Jill`` to ``Jack
+loves'' in \fol{}, we can use a non-logical axiom:
 \[
 (\forall x, y) Loves(x,y) \rightarrow Loves(x)
 \]
 
-\NI We would have to add an extra non-logical axiom like this for every
-n-place predicate.  This is cumbersome at best.  In \cathoristic{}, by
-contrast, we do not need to introduce any non-logical machinery at all
+\NI We would have to add an extra  axiom like this for every
+$n$-place predicate.  This is cumbersome at best.  In \cathoristic{}, by
+contrast, we do not need to introduce any non-logical machinery 
 to capture these inferences because they all follow from the general
 rule that $\MAY{a} \MAY{b} \models \MAY{a}$.
 
@@ -214,23 +213,23 @@ can only do so by reinterpreting the sentences as logically-complex
 compound propositions.
 
 \subsection{Summary}
-We have looked at various types of inference between atomic
-sentences. \Cathoristic{} can handle them directly and naturally.  Traditional
-\fol{} has a harder time: it
-\emph{can} express incompatibility, but only using complex machinery -
-universal quantification, a conditional, negation. \Cathoristic{}, by
-contrast, expresses the source of the incompatibility \emph{directly}
-using the $!$ operator.  Again, \fol{} \emph{can} express
-adverbial inferences, but at the cost of using quantification over
-events.  When it comes to inferences from conjunctions of sentences to
-conjunctions of noun-phrases (or predicates), \fol{} has
-nothing to say because it has no way of expressing conjunctions
-between noun-phrases (or predicates) \emph{at all}. In \fol{}, ``Jack is bruised and humiliated'' has to be regimented into
-``Jack is bruised and Jack is humiliated''.  This might seem, to the uninitiated, to be the
-wrong way around.  
+We have looked at inference between atomic sentences. \Cathoristic{}
+can handle them directly and naturally.  Traditional \fol{} has a
+harder time: it can express incompatibility, but only using
+complex machinery - universal quantification, a conditional,
+negation. \Cathoristic{}, by contrast, expresses the source of the
+incompatibility \emph{directly} using the $!$ operator.  Again, \fol{}
+\emph{can} express adverbial inferences, but at the cost of using
+quantification over events.  When it comes to inferences from
+conjunctions of sentences to conjunctions of noun-phrases (or
+predicates), \fol{} has nothing to say because it has no way of
+expressing conjunctions between noun-phrases (or predicates) \emph{at
+  all}. In \fol{}, ``Jack is bruised and humiliated'' has to be
+regimented into ``Jack is bruised and Jack is humiliated''.  This
+might seem, to the uninitiated, to be the wrong way around.
 
-However, \cathoristic{} cannot handle all instances
-of sub-propositional inferences.  An example are inferences where the
+However, \cathoristic{} cannot handle all instances of
+sub-propositional inferences.  An example are inferences where the
 \emph{subjects} are conjoined such as
 \begin{quote}
 ``Jack loves Jill'' and ``Jim loves Jill'' together imply that ``Jack and Jim love Jill''
