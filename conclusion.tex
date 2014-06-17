@@ -1,18 +1,25 @@
 \section{Conclusion}\label{conclusion}
 
-The work described here was inspired by Sellars' and Brandom's claim
-that material incompatibility is conceptually prior to logical
-negation.
-\Cathoristic{} is a logic without negation in which you can, nevertheless, make incompatible claims.
+We have defined \cathoristic{}, a multi-modal logic based on
+exclusion as a logical primitive and investigated its key properties.
+We close with an overview of related work and a discussion of 
+open problems.
+
+
+%% The work described here was inspired by Sellars' and Brandom's claim
+%% that material incompatibility is conceptually prior to logical
+%% negation.
+%% \Cathoristic{} is a logic without negation in which you can, nevertheless, make incompatible claims.\martin{We can drop this
+%% paragraph and start straightaway with ``related work''!}
 
 \subsection{Related work} 
 
-We have defined \cathoristic{} as a multi-modal logic based on
-exclusion as a logical primitive and investigated its key properties.
-Its formal presentation and development owes much to modal
-logic in general, and Hennessy-Milner logic in particular.
 
-\subsubsection{Brandom's Incompatibility Semantics}
+\subsubsection{Brandom's incompatibility semantics}
+\martin{I think this whole subsection can be dropped. Instead we say something like:
+``we have already discussed the importance of Brandom's work in the introduction'' ... ALso we don't
+need to introduce this new maths here. We have truely mentioned Brandom and incompatibility often enoguh!}
+
 
 \NI In \cite{brandom}, Chapter 5, Appendix I, Brandom developed a new
 type of semantics, Incompatibility Semantics, that takes material
@@ -20,8 +27,10 @@ incompatibility - rather than truth-assignment - as the semantically
 primitive notion.
 
 Incompatibility Semantics applies to any language, $\mathcal{L}$,
-given as a set of sentences.  Given a predicate $\mathsf{Inc}(X)$ which is true of sets $X \subseteq \mathcal{L}$ that are incompatible, he defines an incompatibility function
-$\mathcal{I}$ from subsets of $\mathcal{L}$ to sets of subsets of $\mathcal{L}$:
+given as a set of sentences.  Given a predicate $\mathsf{Inc}(X)$
+which is true of sets $X \subseteq \mathcal{L}$ that are incompatible,
+he defines an incompatibility function $\mathcal{I}$ from subsets of
+$\mathcal{L}$ to sets of subsets of $\mathcal{L}$:
 \[
 X \in \mathcal{I}(Y) \text{ iff } \mathsf{Inc}(X \cup Y)
 \]
@@ -66,42 +75,83 @@ different direction.  While Brandom defines an unusual (non
 truth-conditional) semantics that applies to any language, we have
 defined an unusual logic with a standard (truth-conditional) semantics, and then shown that this logic satisfies the Brandomian connection between incompatibility and entailment.
 
-\subsubsection{Peregrin on Defining Negation In Incompatibility Semantics}\label{peregrin}
+\subsubsection{Peregrin on negation in incompatibility semantics}\label{peregrin}
 
-In \cite{peregrin}, Peregrin provided a set of general structural rules that any logic must satisfy if it is to connect incompatibility ($\mathsf{Inc}$) and entailment ($\models$) via the Brandomian constraint:
+In \cite{peregrin}, Peregrin provided a set of general structural
+rules that any logic must satisfy if it is to connect incompatibility
+($\mathsf{Inc}$) and entailment ($\models$) via the Brandomian
+constraint:
+\martin{I would use present tense and write something like this:
+Peregrin \cite{peregrin} investigates the  structural
+rules that any logic must satisfy if it is to connect incompatibility
+($\mathsf{Inc}$) and entailment ($\models$) via the Brandomian
+constraint:''}
+\[
+X \models \phi \quad\text{ iff }\quad \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
+\]
+
+\NI The general structural rules are:
+\begin{eqnarray*}
+  (\bot) & & \text{if } \mathsf{Inc}(X) \text{ and } X \subseteq Y \text{ then } \mathsf{Inc}(Y) \\
+  (\models 1) & & \phi, X \models \phi \\
+  (\models 2) & & \text{if }X, \phi \models \psi \text{ and } Y \models \phi \text{ then } X, Y \models \psi \\
+  (\bot \models 2) & & \text{if } X \models \phi \text{ for all } \phi, \text{ then } \mathsf{Inc}(X) \\
+  (\models \bot 2) & & \text{if } \mathsf{Inc}(Y \cup \{\phi\}) \text{ implies } \mathsf{Inc}(Y \cup X) \text{ for all } Y, \text{ then } X \models \phi
+\end{eqnarray*}
+
+\NI Peregrin showed that if a logic satisfied the above laws, then
+incompatibility and entailment are mutually interdefinable, and the
+logic satisfies the Brandomian constraint:
 \[
 X \models \phi \text{ iff } \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
 \]
-The general structural rules are:
-\begin{eqnarray*}
-(\bot) & & \text{if } \mathsf{Inc}(X) \text{ and } X \subseteq Y \text{ then } \mathsf{Inc}(Y) \\
-(\models 1) & & \phi, X \models \phi \\
-(\models 2) & & \text{if }X, \phi \models \psi \text{ and } Y \models \phi \text{ then } X, Y \models \psi \\
-(\bot \models 2) & & \text{if } X \models \phi \text{ for all } \phi, \text{ then } \mathsf{Inc}(X) \\
-(\models \bot 2) & & \text{if } \mathsf{Inc}(Y \cup \{\phi\}) \text{ implies } \mathsf{Inc}(Y \cup X) \text{ for all } Y, \text{ then } X \models \phi
-\end{eqnarray*}
-Peregrin showed that if a logic satisfied the above laws, then incompatibility and entailment are mutually interdefinable, and the logic satisfies the Brandomian constraint:
-\[
-X \models \phi \text{ iff } \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
-\]
-Next, Peregrin gave a pair of laws for defining negation in terms of $\mathsf{Inc}$ and $\models$\footnote{The converse of $(\neg 2)$ follows from $(\neg 1)$ and the general structural laws above.}:
-\begin{eqnarray*}
-(\neg 1) & & \mathsf{Inc}(\{\phi, \neg \phi\}) \\
-(\neg 2) & & \text{if } \mathsf{Inc}(X, \phi) \text{ then } X \models \neg \phi
-\end{eqnarray*}
-These laws characterise intuitionistic negation as the \emph{minimal incompatible}\footnote{$\psi$ is the minimal incompatible of $\phi$ iff for all $\xi$, if $\mathsf{Inc}(\{\phi\} \cup \{\xi\})$ then $\xi \models \psi$.}.
-Now, in \cite{brandom}, Brandom defined negation slightly differently. He used the rule:
-\begin{eqnarray*}
-(\neg B) & &\mathsf{Inc}(X, \neg \phi) \text{ iff } X \models \phi
-\end{eqnarray*}
-Using this stronger rule, we can infer the classical law of double-negation: $\neg \neg \phi \models \phi$.
-Peregrin established that Brandom's rule for negation entail $(\neg 1)$ and $(\neg 2)$ above, but not conversely: Brandom's rule is stronger than Peregrin's minimal laws $(\neg 1)$ and $(\neg 2)$.
+\martin{We just cited this constraint above, no need for repetition}
 
-Peregrin concludes that the Brandomian constraint between incompatibility and entailment is satisfied by many different logics. 
-Brandom and Aker happened to choose a particular rule for negation that led to classical logic, but the general connection between incompatibility and entailment is satisfied by many different logics, including intuitionistic logic.
-This paper supports Peregrin's conclusion: we have shown that \cathoristic{} also satisfies the Brandomian constraint.
+\NI Next, Peregrin gave a pair of laws for defining negation in terms
+of $\mathsf{Inc}$ and $\models$\footnote{The converse of $(\neg 2)$
+  follows from $(\neg 1)$ and the general structural laws above.}:
+\begin{eqnarray*}
+  (\neg 1) & & \mathsf{Inc}(\{\phi, \neg \phi\}) \\
+  (\neg 2) & & \text{if } \mathsf{Inc}(X, \phi) \text{ then } X \models \neg \phi
+\end{eqnarray*}
 
-\subsubsection{Peregrin and Turbanti on Defining Necessity In Incompatibility Semantics}\label{peregrin}
+\NI These laws characterise intuitionistic negation as the
+\emph{minimal incompatible}\footnote{$\psi$ is the minimal
+  incompatible of $\phi$ iff for all $\xi$, if $\mathsf{Inc}(\{\phi\}
+  \cup \{\xi\})$ then $\xi \models \psi$.}.  Now, in \cite{brandom},
+Brandom defined negation slightly differently. He used the rule:
+\begin{eqnarray*}
+  (\neg B) & &\mathsf{Inc}(X, \neg \phi) \text{ iff } X \models \phi
+\end{eqnarray*}
+Using this stronger rule, we can infer the classical law of
+double-negation: $\neg \neg \phi \models \phi$.  Peregrin established
+that Brandom's rule for negation entail $(\neg 1)$ and $(\neg 2)$
+above, but not conversely: Brandom's rule is stronger than Peregrin's
+minimal laws $(\neg 1)$ and $(\neg 2)$.\martin{Nothing in our paper is
+  about the relationship between negation and incompatibility, so no
+  need to intro that stuff here.}
+
+Peregrin concludes that the Brandomian constraint between
+incompatibility and entailment is satisfied by many different logics.
+Brandom and Aker happened to choose a particular rule for negation
+that led to classical logic, but the general connection between
+incompatibility and entailment is satisfied by many different logics,
+including intuitionistic logic.  This paper supports Peregrin's
+conclusion: we have shown that \cathoristic{} also satisfies the
+Brandomian constraint.
+
+\martin{I think the subsectin can be much shorter, like so: Peregrin
+  \cite{peregrin} investigates the structural rules that any logic
+  must satisfy if it is to connect incompatibility ($\mathsf{Inc}$)
+  and entailment  as suggested by Brandom.  Peregrin concludes that  many
+  logics do this, including intuitionistic logic.  This paper
+  supports Peregrin's conclusion since  \cathoristic{}
+  also satisfies ...}
+
+\subsubsection{Peregrin and Turbanti on defining necessity in incompatibility semantics}\label{peregrin}
+
+\martin{As with the previous section, I think this section is too long and connectes only looselyw
+with our paper. I think some of it might fit better into the open question section.}
 
 In \cite{brandom}, Brandom gave a rule for defining necessity in terms of incompatibility and entailment:
 \[
