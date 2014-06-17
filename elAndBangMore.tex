@@ -9,7 +9,9 @@ axioms.
 \[
   \phi \judge \psi.
 \]
-Figure \ref{figure:elAndBangRules} presents all proof rules. 
+We also write $\judge \phi$ as a shorthand for $\top \judge
+\phi$.\martin{Do we use this?}  Figure \ref{figure:elAndBangRules}
+presents all proof rules.
 \end{definition}
 
 \NI Note that $\phi$ and $\psi$ are single formulae, not sequents.  By
@@ -188,34 +190,34 @@ The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
 \NI Soundness is immediate from the definitions. Completeness is
 proved below. 
 
-\begin{definition}
-Let $\Gamma$ be an arbitrary set of eremic formulae. We write $\MMM
-\models \Gamma$ provided $\MMM \models \phi$ for all $\phi \in
-\Gamma$.  We write $\Gamma \models \phi$ if for all eremic models
-$\MMM$ $\MMM \models \Gamma$ implies $\MMM \models \phi$.  We write
-$\phi_1, ..., \phi_n \judge \psi$ whenever $\BIGAND_{i}\phi_i \judge
-\psi$.  For arbitrary sets $\Gamma$ of formulae, we write $\Gamma
-\judge \psi$ provided there are $\phi_1, ..., \phi_n \in \Gamma$ such
-that $\phi_1, ..., \phi_n \judge \psi$.
-\end{definition}
+%% \begin{definition}
+%% Let $\Gamma$ be an arbitrary set of eremic formulae. We write $\MMM
+%% \models \Gamma$ provided $\MMM \models \phi$ for all $\phi \in
+%% \Gamma$.  We write $\Gamma \models \phi$ if for all eremic models
+%% $\MMM$ $\MMM \models \Gamma$ implies $\MMM \models \phi$.  We write
+%% $\phi_1, ..., \phi_n \judge \psi$ whenever $\BIGAND_{i}\phi_i \judge
+%% \psi$.  For arbitrary sets $\Gamma$ of formulae, we write $\Gamma
+%% \judge \psi$ provided there are $\phi_1, ..., \phi_n \in \Gamma$ such
+%% that $\phi_1, ..., \phi_n \judge \psi$.
+%% \end{definition}
 
-\begin{corollary}
-The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
-\begin{enumerate}
+%% \begin{corollary}
+%% The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
+%% \begin{enumerate}
 
-\item(Soundness) $\Gamma \judge \psi$ implies $\Gamma \models \psi$.
+%% \item(Soundness) $\Gamma \judge \psi$ implies $\Gamma \models \psi$.
 
-\item (Completeness) $\Gamma \models \psi$ implies $\Gamma \judge \psi$. \martin{This is not yet proven.}
+%% \item (Completeness) $\Gamma \models \psi$ implies $\Gamma \judge \psi$. \martin{This is not yet proven.}
 
-\end{enumerate}
-\end{corollary}
+%% \end{enumerate}
+%% \end{corollary}
 
-\begin{proof}
-For soundness assume that $\MMM$ is a model with $\MMM \models
-\Gamma$.  We know that $\Gamma \judge \psi$ means that we can find a
-finite number of formulae $\phi_i \in \Gamma$ with $\AND_i \phi \judge
-\psi$.  By soundness then also $\AND_i \phi \models \psi$, hence
-clearly $\Gamma \models \psi$.
+%% \begin{proof}
+%% For soundness assume that $\MMM$ is a model with $\MMM \models
+%% \Gamma$.  We know that $\Gamma \judge \psi$ means that we can find a
+%% finite number of formulae $\phi_i \in \Gamma$ with $\AND_i \phi \judge
+%% \psi$.  By soundness then also $\AND_i \phi \models \psi$, hence
+%% clearly $\Gamma \models \psi$.
 
 \NI To prove completeness,  we will show that $\phi
 \models \psi$ implies there is a derivation of $\phi \judge \psi$.  Our proof
@@ -244,7 +246,7 @@ $\CHAR{\SIMPL{\phi}} \judge \psi$ by Lemma \ref{lemma:completeness:4}.  But we
 also have, by Lemma \ref{lemma:completeness:5}, $\phi \judge
 \CHAR{\SIMPL{\phi}} $.  So by transitivity, we have $\phi \judge \psi$.  
 
-\end{proof}
+
 
 \subsection{Proof of Lemma \ref{lemma:completeness:4}}
 \label{prooflemma4}

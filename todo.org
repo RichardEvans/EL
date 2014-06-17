@@ -1,13 +1,3 @@
-Work on narrative for later sections
-
-Complexity of decision. We could analyse Haskell. What did your friend say
-
-General completeness still unclear.
-
-Replace linear with quadratic
-
-Remove general completeness
-
 * Prove  Haskell decisoin proce compexity is quadratic
 * Prove general completenss
 * Explain the meaning of "Cathoristic".
