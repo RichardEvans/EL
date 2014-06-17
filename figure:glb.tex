@@ -88,7 +88,7 @@
   \end{scope} 
   \begin{scope}[xshift=8cm]
     \node [place] (w1) {$\{a\}$};
-    \node [place] (e1) [below of=w1] {$\Sigma $}
+    \node [place] (e1) [below of=w1] {$\{b, c\} $}
       edge [pre]  node[swap] {a}                 (w1);      
     \node [place] (e2) [below left of=e1] {$\Sigma $}
       edge [pre]  node[swap] {b}                 (e1);      
@@ -100,7 +100,7 @@
   \draw (2,0) node {$\sqcap$};
   \draw (6,0) node {$=$};
 \end{tikzpicture}
-\caption{Example of $\sqcap$. \textbf{the label in the target of the $\TRANS{a}$ transition on the right is wrong?}}
+\caption{Example of $\sqcap$. }
 \end{figure}
 
 \begin{figure}[H]
