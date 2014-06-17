@@ -1,46 +1,47 @@
 \section{Conclusion}\label{conclusion}
 
-\Cathoristic{} is a simple logic of atomic sentences.
-It contains no ``complex'' logical connectives.  
-By ``complex'', we mean logical
+\Cathoristic{} is a simple logic of atomic sentences.  It contains no
+``complex'' logical connectives.  By ``complex'', we mean logical
 connectives that, like disjunction, generate sentences that can be
-satisfied in many different distinct ways.
-Negation, disjunction,
+satisfied in many different distinct ways.  Negation, disjunction,
 implication, existential quantification all create formulae that can
-be satisfied in different ways. 
-This condition was
-made precise in Section \ref{boundedlattice}: a logic is ``simple'' if the set of
-satisfying models of every sentence has a unique least upper
-bound. 
-Disjunction fails to be simple because there are two equally
-simple models of $\phi \lor \psi$. 
-Similarly, negation fails to be simple
-because there are two equally simple models of $\neg (\phi \land
-\psi)$. 
-Conjunction is the \emph{only} connective of propositional logic that is simple,
-according to this criterion.
+be satisfied in different ways.  This condition was made precise in
+Section \ref{boundedlattice}:\martin{We say nothing about simplicity
+  in that section!} a logic is ``simple'' if the set of satisfying
+models of every sentence has a unique least upper bound.  Disjunction
+fails to be simple because there are two equally simple models of
+$\phi \lor \psi$.  Similarly, negation fails to be simple because
+there are two equally simple models of $\neg (\phi \land \psi)$.
+Conjunction is the \emph{only} connective of propositional logic that
+is simple, according to this criterion.
 
-As is well known, the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.
-Analogously, given a set $\Sigma$ of symbols, a negated formula in proposition logic can be translated into a 
+As is well known, the existential quantifier of Predicate Logic can be
+translated into an infinitary disjunction of propositions in
+Propositional Logic.  Analogously, given a set $\Sigma$ of symbols, a
+negated formula in proposition logic can be translated into a
 disjunction of materially incompatible formulae in \cathoristic{}.
-\Cathoristic{} is an attempt to formalise Sellars' and Brandom's view that material incompatibility is conceptually prior to logical negation.
+\Cathoristic{} is an attempt to formalise Sellars' and Brandom's view
+that material incompatibility is conceptually prior to logical
+negation.
 
-In this paper, we have defined \cathoristic{} as a multi-modal logic based on
-exclusion as a logical primitive. 
-We have investigated key
-meta-theoretic properties of the logic, related \cathoristic{} to
-first-order logic and Hennessy-Milner logic, and we have explored
-applications in the philosophy of language, knowledge representation
-and the semantics of concurrent processes. 
-We end this paper with a
-discussion of related work and open problems.
+\martin{I don't think the two paragraphs above should be in the
+  conclusion because they essentially develop new material. The
+  conclusion is not the right place for that, except as a suggestion
+  for further work. }
+
+We have defined \cathoristic{} as a multi-modal logic based on
+exclusion as a logical primitive and investigated its key properties.
+We close this paper with a discussion of related work and open
+problems.
 
 \subsection{Related work} 
 
-\Cathoristic{} started as an attempt to formalise the Sellars/Brandom idea that material incompatibility is conceptually prior to logical negation.
-Its formal presentation and development
-owes much to modal logic in general and Hennessy-Milner logic in
-particular.
+\Cathoristic{} started as an attempt to formalise the Sellars/Brandom
+idea that material incompatibility is conceptually prior to logical
+negation.\martin{Actually ... CL started as an attempt to formalise the Sellars/Brandom
+idea OF material incompatibility ... we don't make arguments for priority. If anything, 
+our translation into FOL could be seen as (weak) arguments against priority}  Its formal presentation and development owes much to modal
+logic in general and Hennessy-Milner logic in particular.
 
 \subsubsection{Incompatibility as a Fundamental Semantic Relation}
 According to Brandom's, the notion of incompatibility is more than just a pre-logical version of negation. 
@@ -71,6 +72,9 @@ And, in a parallel fashion, subjects too are individuated by the way they normat
 It is not impermissible for two different subjects to have incompatible commitments - say, for me to take the coin to be copper and you take it to be an electrical insulator. What is impermissible is for \emph{one and the same subject} to do so. Subjects play the conceptual functional role of \emph{units of account for deontic normative incompatibilities}. 
 That is, it is an essential individuating feature of the metaphysical categorical sortal metaconcept \emph{subject} that subjects have the metaproperty of \emph{normatively} repelling incompatibilities. A single subject just is what ought not to have incompatible commitments (at the same time)\footnote{\cite{brandom} p.192.}.
 \end{quote}
+
+\martin{The stuff above is really interesting, but doesn't directly relate to the 
+main body of the paper.}
 
 \NI Sellars and Brandom follow Hegel's \emph{Wissenschaft der Logic}
 \cite{HegelGWF:wisdlog} in seeing material incompatibility as a
@@ -134,12 +138,6 @@ The approach taken in this paper takes Brandom's original insight in a
 different direction.  While Brandom defines an unusual (non
 truth-conditional) semantics that applies to any language, we have
 defined a unusual logic with a standard (truth-conditional) semantics.
-
-\subsubsection{Linguistics}
-
-Linguists have also investigated how mutually exclusive alternatives
-are expressed \cite{OKeeffeA:rouhanocl}, but, to the best of our
-knowledge have not proposed formal theories of linguistic exclusion.
 
 \subsubsection{Linear logic}
 
@@ -232,6 +230,14 @@ connection between cathoristic models and the denotations of CSP processes,
 as well as the syntatic similarity with Hennessy-Milner logic suggest
 that it might be fruitful to investigate how \cathoristic{} can be used
 as a program logic for process calculi.
+
+\subsubsection{Linguistics}
+
+Linguists have also investigated how mutually exclusive alternatives
+are expressed, often in the context of antonymy
+\cite{OKeeffeA:rouhanocl,AronoffM:hanlin,AllanK:conencos}, but, to the
+best of our knowledge have not proposed formal theories of linguistic
+exclusion.
 
 \subsection{Open problems} 
 
