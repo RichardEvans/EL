@@ -224,17 +224,13 @@ contradictories to be expressed.  For example:
 %% for individual formulae - do we want to change this definition to
 %% be of the form $\phi \models \psi$?}  \end{definition}
 
-\NI The semantic consequence relation is standard.\martin{actually
-  it's not because the premise can have only one formula. Maybe we
-  should elaborate upon this? I think it's intimately related to the
-  absence of negation. In classical logic we can use $\Gamma \models
-  \phi$ because only a finite bit already implies $ \phi$ and that can
-  easily be proven. In EL ... not so much}
-
+\NI Now we present the semantic consequence relation
+.
 \begin{definition} 
  We say the formula $\phi$ \emph{semantically implies} $\psi$, written $\phi
    \models \psi$, provided for all cathoristic models $\MMM$ if it is the
    case that $\MMM \models \phi$ then also $\MMM \models \phi$.
+   We sometimes write $\models \phi$ as a shorthand for $\top \models \phi$.
 \end{definition}
 
 \begin{example}
