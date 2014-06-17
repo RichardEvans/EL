@@ -650,6 +650,28 @@ time.
 There is a Haskell implementation of the decision procedure
 \cite{HaskellImplementation}.  The reader is invited to inspect the Haskell code to verify that the algorithm runs in quadratic time.
 
+\subsubsection{\Cathoristic{} is a ``simple'' logic}
+The reason \cathoristic{} has a quadratic-time decision procedure is that it contains no
+``complex'' logical connectives.  
+By ``complex'', we mean logical
+connectives that, like disjunction, generate sentences that can be
+satisfied in many different distinct ways.  
+Negation, disjunction,
+implication, existential quantification all create formulae that can
+be satisfied in different ways.  
+ Disjunction
+is complex because there are two equally simple models of
+$\phi \lor \psi$.  
+Negation is complex because
+there are two equally simple models of $\neg (\phi \land \psi)$.
+Conjunction is the \emph{only} connective of propositional logic that
+is not complex, according to this definition.
+
+Let us define a logic as ``simple'' if the set of satisfying
+models of every sentence has a unique least upper bound. 
+We saw in Theorem \ref{theorem:decision} of Section \ref{boundedlattice} that \cathoristic{} is simple, according to this definition.
+It is because of this simplicity that it has a quadratic-time decision procedure.
+
 \subsection{Incompatibility semantics}\label{incompatibility}
 
 \NI One of \cathoristic{}'s key features is that it satisfies Brandom's
