@@ -1,6 +1,8 @@
 * Be consistent. In particular
   - State vs node
 
+  Symbol for multiplicaiton * vs \cdot
+
   - \textbf vs \emph for emphasis
 
   - sub-set vs subset and super-set vs superset
@@ -63,7 +65,16 @@
 
   - capitalisation, e.g. Cathoristic Logic vs Cathoristic logic vs cathoristic logic etc.
 
+* Weird size issue in appendix: figure captions are not shrunk.
+* [17/06/2014 17:11:26] Martin Berger: BTW, which sentence structure do you prefer:
+[17/06/2014 17:11:28] Martin Berger: Translating from cathoristic logic to first-order logic
+[17/06/2014 17:11:34] Martin Berger: or Translating from cathoristic  to first-order logic
+[17/06/2014 17:11:43] Richard Evans: I think I marginally prefer the second
+[17/06/2014 17:11:53] Martin Berger: I massively prefer the second
 * Remove all remains of EL, Eremic, eremic
+* Remove stupidities like
+  - the the, an an ...
+  - e.g. Bla, cf. bla ...
 * Prove  Haskell decisoin proce compexity is quadratic
 * Prove general completenss
 * Explain the meaning of "Cathoristic".
