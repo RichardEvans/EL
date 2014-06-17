@@ -28,20 +28,22 @@ following grammar.
 
 \NI Before presenting models and the satisfaction relation, we sketch
 the meaning of formulae informally. $\TRUE$ is truth and $\phi \AND
-\psi$ is the conjunction of formulae $\phi$ and $\psi$. Clearly
-$\MAY{a}{\phi}$ is a may-modality which asserts that the current state
-can do action $a$, and in doing $a$ evolves into a new state at which
-$\phi$ holds. Tantum $A$, from Latin ``tantum'' meaning ``only'' and
+\psi$ is the conjunction of formulae $\phi$ and $\psi$. 
+Asserting that $\MAY{a}{\phi}$ is stating that the current state
+can transition via action $a$ to a new state at which
+$\phi$ holds. Tantum\footnote{``Tantum'' is Latin for ``only''.} $A$, 
 written $!A$, is the key novelty of \cathoristic{}.  Asserting $!A$
 means: in the current state at most the modalities $\MAY{a}{}$ are
-available that satisfy $a \in A$.  The set $\Sigma$ of actions must be
-non-empty to avoid that the logic is trivial. 
+available that satisfy $a \in A$.  
 
 We assume that $\MAY{a}{\phi}$ binds more tightly than conjunction, so
 $\MAY{a}{\phi} \AND \psi$ is short for $(\MAY{a}{\phi}) \AND \psi$.
 We often abbreviate $\MAY{a}{\TRUE}$ to $\MAY{a}{}$. We define falsity
 $\FALSE$ as $!\emptyset \AND \MAY{a}{}$ where $a$ is an arbitrary
-action. Note that in the absence of conventional negation, we cannot
+action in $\Sigma$. 
+Hence, $\Sigma$ must be
+non-empty. 
+Note that in the absence of conventional negation, we cannot
 readily define disjunction, implication, or must-modalities by de
 Morgan duality. 
 
@@ -64,7 +66,7 @@ states.
 %% \end{definition}
 
 \begin{definition}
-An \emph{cathoristic transition system} is a triple $\LLL = (S,
+A \emph{cathoristic transition system} is a triple $\LLL = (S,
 \rightarrow, \lambda)$, where $(S, \rightarrow)$ is a deterministic
 labelled transition system over $\Sigma$, and $\lambda$ is a function
 from states to sets of actions (not necessarily finite), subject to
@@ -105,20 +107,19 @@ of nodes:
 restrictions makes some definitions and proofs slightly easier.
 
 As with other modal logics, satisfaction of formulae is defined
-relative to a state in the ambient cathoristic transition system, giving
+relative to a particular state in the transition system, giving
 rise to the following definition.
 
 \begin{definition}
 A \emph{cathoristic model}, ranged over by $\MMM, \MMM', ...$, is a
-pair $(\LLL, s)$, where $\LLL$ is an cathoristic transition system
+pair $(\LLL, s)$, where $\LLL$ is a cathoristic transition system
 $(S, \rightarrow, \lambda)$, and $s$ is a state from $S$. We call $s$
 the \emph{start state} of the model.  An cathoristic model with start
 state $s$ is a \emph{tree} if the underlying transition system is a
 tree with start state $s$.
 \end{definition}
 
-\NI With cathoristic models at hand, we can finally formalise the
-satisfaction relation for cathoristic formulae.
+\NI Satisfaction of a formula is defined relative to a cathoristic model.
 
 \begin{definition}\label{ELsatisfaction}
 The \emph{satisfaction relation} $\MMM \models \phi$ is defined
@@ -165,7 +166,7 @@ others:
 \]
 
 \NI Here we assume, as we do with all subsequent such figures, that
-the top note is the start state.  The same model does not satisfy any
+the top node is the start state.  The same model does not satisfy any
 of the following formulae
 \[
 \MAY{b} \qquad
@@ -182,7 +183,7 @@ does not, satisfy the formula $\fBang \{a,b\}$.  Both models validate
 $!\{a, b, c\}$.
 
 \Cathoristic{} does not have the operators $\neg, \lor, $ or
-$\Rightarrow$.  This has the following two signification consequences.
+$\Rightarrow$.  This has the following two significant consequences.
 First, every satisfiable formula has a unique (up to isomorphism)
 simplest model.  In Figure \ref{threemodels}, the left model is the
 unique simplest model satisfying$\MAY{a} \MAY{b}$.  We will clarify
@@ -200,8 +201,8 @@ conventional negation have an infinite number of non-trivial
 tautologies as well as an infinite number of contradictories.  In
 contrast, because \cathoristic{} has no negation or disjunction
 operator, it is expressively limited in the tautologies it can
-express: top and conjunctions of top are its sole tautologies. On the
-other hand, the tantum operator, enables an infinite number of
+express: $\top$ and conjunctions of $\top$ are its sole tautologies. On the
+other hand, the tantum operator enables an infinite number of
 contradictories to be expressed.  For example:
 \[
    \MAY{a} \land \fBang \{\} \qquad
@@ -219,8 +220,7 @@ contradictories to be expressed.  For example:
 %% for individual formulae - do we want to change this definition to
 %% be of the form $\phi \models \psi$?}  \end{definition}
 
-\NI Now we present the semantic consequence relation
-.
+\NI Next, we present the semantic consequence relation.
 \begin{definition} 
  We say the formula $\phi$ \emph{semantically implies} $\psi$, written $\phi
    \models \psi$, provided for all cathoristic models $\MMM$ if it is the
