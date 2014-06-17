@@ -1,10 +1,10 @@
 
 \section{Capturing Inferences Between Atomic Sentences}\label{naturalLanguageInference}
 
-\NI \ELFULL{} arose as an attempt to answer the question: what is the
+\NI \Cathoristic{} arose as an attempt to answer the question: what is the
 simplest logic that can capture inferences between atomic sentences of
 natural language?  In this section, we enumerate the sorts of
-inferences we are trying to capture.  Then we show how \ELABR{}
+inferences we are trying to capture.  Then we show how \cathoristic{}
 handles these inferences.  Finally, we compare our approach with the
 various attempts at expressing the inferences in first-order logic.
 
@@ -32,12 +32,12 @@ Fifth, inferences from conjunctions of sentences to conjunction of predicates\fo
 ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
 \end{quote}
 
-\NI They all can be handled directly and naturally in \ELABR{}, as we
+\NI They all can be handled directly and naturally in \cathoristic{}, as we
 shall now show.
 
 
-\subsection{Intra-Atomic Inferences in \ELFULL{}}
-%% We shall show that each of the following inferences can be naturally expressed in \ELABR{}:
+\subsection{Intra-Atomic Inferences in \Cathoristic{}}
+%% We shall show that each of the following inferences can be naturally expressed in \cathoristic{}:
 %% \begin{itemize}
 %% \item
 %% ``Jack is male'' is incompatible with ``Jack is female''
@@ -60,7 +60,7 @@ shall now show.
 %% \end{itemize}
 
 Incompatibility such as that between ``Jack is male'' and ``Jack is
-female'' is translated into \ELABR{} as the pair of incompatible
+female'' is translated into \cathoristic{} as the pair of incompatible
 sentences:
 \begin{eqnarray*}
 \MAY{jack} \MAY{sex} (\MAY{male} \land \fBang \{male\}) 
@@ -77,7 +77,7 @@ sentences:
  \end{itemize}
  Now ``Jack explodes the device'' does imply that ``Jack $explodes_2$'' but does not imply that ``Jack $explodes_1$''. 
 There is no deep problem here - just another case where natural language overloads the same word in different situation to have different meanings.}:
-``Jack loves Jill'' is translated into \ELABR{} as:
+``Jack loves Jill'' is translated into \cathoristic{} as:
 \begin{eqnarray*}
    \MAY{jack} \MAY{loves} \MAY{jill}
 \end{eqnarray*}
@@ -86,18 +86,18 @@ The semantics of modalities ensures that this directly entails:
    \MAY{jack} \MAY{loves}
 \end{eqnarray*}
 
-\NI Similarly, \ELABR{} supports inferences from triadic to dyadic
+\NI Similarly, \cathoristic{} supports inferences from triadic to dyadic
 predicates:
 \begin{quote}
   ``Jack passed the biscuit to Mary'' implies ``Jack passed the biscuit''
 \end{quote}
 
-\NI This can be expressed directly in \ELABR{} as:
+\NI This can be expressed directly in \cathoristic{} as:
 \[
    \MAY{jack} \MAY{passed} \MAY{biscuit} \MAY{to} (\MAY{mary} \land !\{mary\}) \models \MAY{jack} \MAY{passed} \MAY{biscuit}
 \]
 
-\NI Adverbial inferences is captures in eremic logic as follows.
+\NI Adverbial inferences is captures in \cathoristic{} as follows.
 \begin{eqnarray*}
 \MAY{jack} \MAY{walks} \MAY{quickly}
 \end{eqnarray*}
@@ -106,7 +106,7 @@ entails:
 \MAY{jack} \MAY{walks}
 \end{eqnarray*}
 
-\NI \ELABR{} directly supports inferences from conjunctions of
+\NI \Cathoristic{} directly supports inferences from conjunctions of
 sentences to conjunctions of noun-phrases.  As our models are
 deterministic, we have the general rule that $ \MAY{a} \MAY{b} \land
 \MAY{a} \MAY{c} \models \MAY{a} (\MAY{b} \land \MAY{c})$ from which
@@ -181,7 +181,7 @@ If we want to capture the inference from ``Jack loves Jill`` to ``Jack loves'' i
 \]
 
 \NI We would have to add an extra non-logical axiom like this for every
-n-place predicate.  This is cumbersome at best.  In \ELABR{}, by
+n-place predicate.  This is cumbersome at best.  In \cathoristic{}, by
 contrast, we do not need to introduce any non-logical machinery at all
 to capture these inferences because they all follow from the general
 rule that $\MAY{a} \MAY{b} \models \MAY{a}$.
@@ -215,10 +215,10 @@ compound propositions.
 
 \subsection{Summary}
 We have looked at various types of inference between atomic
-sentences. \ELFULL{} can handle them directly and naturally.  Traditional
+sentences. \Cathoristic{} can handle them directly and naturally.  Traditional
 \fol{} has a harder time: it
 \emph{can} express incompatibility, but only using complex machinery -
-universal quantification, a conditional, negation. \ELFULL{}, by
+universal quantification, a conditional, negation. \Cathoristic{}, by
 contrast, expresses the source of the incompatibility \emph{directly}
 using the $!$ operator.  Again, \fol{} \emph{can} express
 adverbial inferences, but at the cost of using quantification over
@@ -229,11 +229,11 @@ between noun-phrases (or predicates) \emph{at all}. In \fol{}, ``Jack is bruised
 ``Jack is bruised and Jack is humiliated''.  This might seem, to the uninitiated, to be the
 wrong way around.  
 
-However, eremic logic cannot handle all instances
+However, \cathoristic{} cannot handle all instances
 of sub-propositional inferences.  An example are inferences where the
 \emph{subjects} are conjoined such as
 \begin{quote}
 ``Jack loves Jill'' and ``Jim loves Jill'' together imply that ``Jack and Jim love Jill''
 \end{quote}
 
-\NI \ELFULL{} has no way to conjoin noun-phrases in subject-position.
+\NI \Cathoristic{} has no way to conjoin noun-phrases in subject-position.

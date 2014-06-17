@@ -1,6 +1,6 @@
 \section{Conclusion}\label{conclusion}
 
-Eremic Logic is a simple logic of atomic sentences.
+\Cathoristic{} is a simple logic of atomic sentences.
 It contains no ``complex'' logical connectives.  
 By ``complex'', we mean logical
 connectives that, like disjunction, generate sentences that can be
@@ -22,13 +22,13 @@ according to this criterion.
 
 As is well known, the existential quantifier of Predicate Logic can be translated into an infinitary disjunction of propositions in Propositional Logic.
 Analogously, given a set $\Sigma$ of symbols, a negated formula in proposition logic can be translated into a 
-disjunction of materially incompatible formulae in \ELFULL{}.
-Eremic Logic is an attempt to formalise Sellars' and Brandom's view that material incompatibility is conceptually prior to logical negation.
+disjunction of materially incompatible formulae in \cathoristic{}.
+\Cathoristic{} is an attempt to formalise Sellars' and Brandom's view that material incompatibility is conceptually prior to logical negation.
 
-In this paper, we have defined eremic logic as a multi-modal logic based on
+In this paper, we have defined \cathoristic{} as a multi-modal logic based on
 exclusion as a logical primitive. 
 We have investigated key
-meta-theoretic properties of the logic, related eremic logic to
+meta-theoretic properties of the logic, related \cathoristic{} to
 first-order logic and Hennessy-Milner logic, and we have explored
 applications in the philosophy of language, knowledge representation
 and the semantics of concurrent processes. 
@@ -37,7 +37,7 @@ discussion of related work and open problems.
 
 \subsection{Related work} 
 
-Eremic logic started as an attempt to formalise the Sellars/Brandom idea that material incompatibility is conceptually prior to logical negation.
+\Cathoristic{} started as an attempt to formalise the Sellars/Brandom idea that material incompatibility is conceptually prior to logical negation.
 Its formal presentation and development
 owes much to modal logic in general and Hennessy-Milner logic in
 particular.
@@ -73,7 +73,7 @@ That is, it is an essential individuating feature of the metaphysical categorica
 \end{quote}
 
 \NI Sellars and Brandom follow Hegel's \emph{Wissenschaft der Logic}
-\cite{HegelGWF:wisdlog} in seeing material implication \martin{incompatibility?} as a
+\cite{HegelGWF:wisdlog} in seeing material incompatibility as a
 foundational concept from which even the supposedly primitive ideas of
 object and agent can be explicated.  If incompatibility is to fill
 this fundamental load-bearing role, we should explore all possible
@@ -120,7 +120,7 @@ the laws of classical negation.  He also introduces a modal operator,
 again defined in terms of material incompatibility, and shows that
 this operator satisfies the laws of $S5$.
 
-\ELFULL{} was inspired by Brandom's vision that material
+\Cathoristic{} was inspired by Brandom's vision that material
 incompatibility is conceptually prior to logical negation: in other
 words, it is possible for a community of language users to deploy a
 language including a material incompatibility relation, even if that
@@ -152,7 +152,7 @@ linearity puts type-based resource handling on a sound logical basis.
 
 Linear logic splits conjunction into two: additive and multiplicative
 conjunction The former, additive conjunction $A \& B$, is especially
-interesting in the context of \ELFULL{}. It can be interpreted
+interesting in the context of \cathoristic{}. It can be interpreted
 \cite{AbramskyS:comintoll} as, in the terminology of process calculus,
 an external choice operation. External, because the choice is offered
 to the environment.  This interpretation has been influential in the
@@ -173,10 +173,10 @@ and likewise for choosing $B$. To be sure, the alternatives in $A \&
 B$ may themselves contain further additive conjunctions, and in this
 way express how exclusion changes 'over time'.
 
-In summary, \ELABR{} and linear logic offer  operators that restrict
+In summary, \cathoristic{} and linear logic offer  operators that restrict
 the available options. How are they related? Linear logic has an
 explicit linear negation $(\cdot)^{\bot}$ which, unlike classical
-negation, is constructive. In constrast, \ELABR{} defines a restricted
+negation, is constructive. In constrast, \cathoristic{} defines a restricted
 form negation from $!A$. Can these two perspectives be frutifully
 reconciled?
 
@@ -185,7 +185,7 @@ reconciled?
 Process calculi are models of concurrent computation.  They are based
 on the idea of message passing between actors running in parallel.
 Labelled transition systems are often used as models for process
-calculi, and many concepts used in the development of eremic logic,
+calculi, and many concepts used in the development of \cathoristic{},
 for example bisimulations and Hennessy-Milner logic, originated in
 process theory (although some, such as bisimulation, evolved
 independently in other contexts).
@@ -204,7 +204,7 @@ indicative of deeper common structure?
 
 \subsubsection{Failures/divergences in process calculi}
 
-Our eremic models are close to a form of the failures/divergences
+Our cathoristic models are close to a form of the failures/divergences
 models that has been used in the denotational semantics of process
 calculi, primarily Hoare's CSP \cite{HoareC:comseq,RoscoeAW:theapoc}
 and its descendants.  In this model, the denotation of a process $P$
@@ -224,28 +224,28 @@ $\sigma.a$ is the string extending $\sigma$ with the action $a$.  The
 start state is the empty string.  We can decorate all states as
 follows: $ \lambda (\sigma) = \Sigma \setminus R $ provided that
 $(\sigma, R) \in \SEMB{P}$.  Whenever the set $\Sigma$ of symbols is
-finite, we obtain an eremic model this way.
+finite, we obtain an cathoristic model this way.
 
 While the failures/divergences semantics of CSP are somewhat more
 complicated due to the possibility of diverging programs, the close
-connection between eremic models and the denotations of CSP processes,
+connection between cathoristic models and the denotations of CSP processes,
 as well as the syntatic similarity with Hennessy-Milner logic suggest
-that it might be fruitful to investigate how eremic logic can be used
+that it might be fruitful to investigate how \cathoristic{} can be used
 as a program logic for process calculi.
 
 \subsection{Open problems} 
 
-The present paper introduced eremic logic, and established key
+The present paper introduced \cathoristic{}, and established key
 meta-logical properties such as completeness and compactness. However,
 many questions are left open. 
 
-\subsubsection{Eremic logic as a fragment of first- and second-order logic }
+\subsubsection{\Cathoristic{} as a fragment of first- and second-order logic }
 
 A question that has been fruitful in modal logic has been which
 fragment of first-order logic corresponds to modal formulae?  Van
 Benthem established that modal logic is the fragment of first-order
 logic invariant under bisimulation \cite{BlackburnP:modlog}. What is
-the the fragment corresponding to eremic logic? Our Theorem
+the the fragment corresponding to \cathoristic{}? Our Theorem
 \ref{theorem:completeLattice} suggests to look at closure under mutual
 simulation.  
 
@@ -254,8 +254,8 @@ order by Janin and Walukiewicz \cite{JaninD:expcomotpmcwrtmsol} who
 showed that the bisimulation invariant fragment of monadic
 second-order logic is the modal $\mu$-calculus, an extension of modal
 logic with fixpoint operators \cite{KozenD:respromc}.  It would be
-interesting to study the \emph{eremic $\mu$-calculus}, which adds
-fixpoints to eremic logic:
+interesting to study the \emph{cathoristic $\mu$-calculus}, which adds
+fixpoints to \cathoristic{}:
 \begin{GRAMMAR}
   \phi
      &::=&
@@ -286,17 +286,17 @@ a traffic light can be described as follows.
 \]
 
  What properties does the
-eremic $\mu$-calculus have? In the absence of negation, a lot of proof
+cathoristic $\mu$-calculus have? In the absence of negation, a lot of proof
 techniques taken for granted in the meta-theory of the modal
 $\mu$-calculus, such as the relationship between least and greatest
 fixpoints, is no longer available.
 
 \subsubsection{Excluded middle}
 
-A better understanding of eremic logic's relationship with first-order
-logic might also lead to insight into excluded middle in eremic logic.
+A better understanding of \cathoristic{}'s relationship with first-order
+logic might also lead to insight into excluded middle in \cathoristic{}.
 The logical law of excluded middle states that either a proposition or
-its negation must be true. In eremic logic
+its negation must be true. In \cathoristic{}
 \[
 \models \phi \lor \neg_S(\phi)
 \]
@@ -320,18 +320,18 @@ enough. For example with $S = \{a\}$ we have
       \quad=\quad
    \MAY{a}{\TRUE}\ \lor\ !\emptyset \lor \MAY{a}{\FALSE}
 \]
-This formula cannot hold in any eremic model which contains a
+This formula cannot hold in any cathoristic model which contains a
 $b$-labelled transition, but no $a$-transition from the root.
 
 Is it possible to identify classes of models that nevertheless verify
 excluded middle? The answer to this question appears to depend 
 on the chosen notion of semantic model.
 
-\subsubsection{Understanding the expressive strength of eremic logic}
+\subsubsection{Understanding the expressive strength of \cathoristic{}}
 
 The expressive power of logics can be understood in several different
 ways. One gauge of expressivity is to consider embeddings.  We have
-already discussed how eremic logic can be embedded into first-order
+already discussed how \cathoristic{} can be embedded into first-order
 logic and Hennessy-Milner logic.  A more precise understanding of the
 relationship with first-order and second-order logic was already
 mentioned as an important open question. But the relationship with
@@ -346,17 +346,17 @@ Language & Description \\
 \hline
 PL[$\land$] & Propositional logic without negation \\
 Hennessy-Milner logic[$\land$] & Hennessy-Milner logic without negation \\
-EL[$\land, !$] & Eremic logic restricted to $\land$ and $\fBang$ \\
+EL[$\land, !$] & \Cathoristic{} restricted to $\land$ and $\fBang$ \\
 PL [$\land, \neg$] & Full propositional logic \\
 HML [$\land, \neg$] & Full Hennessy-Milner logic \\
-EL [$\land, !, \neg$] & Full eremic logic \\
+EL [$\land, !, \neg$] & Full \cathoristic{} \\
 \end{tabular}
 \end{center}
 
 
 \NI The top three languages are simple. In each case: there is no
 facility for expressing disjunction, every formula that is satisfiable
-has a simplest satisfying model, and there is a simple linear-time
+has a simplest satisfying model, and there is a simple quadratic-time
 decision procedure But there are two ways in which EL[$\land, !$] is
 more expressive.  Firstly, EL[$\land, !$], unlike either PL[$\land$]
 or HML[$\land$], is expressive enough to be able to distinguish
@@ -377,7 +377,7 @@ Brandom's property of incompatibility semantics, discussed in Section
 \]
 
 \NI EL[$\land, !$] is the only logic we are aware of with a
-linear-time decision procedure that is expressive enough to respect
+quadratic-time decision procedure that is expressive enough to respect
 incompatibility semantics. 
 
 The bottom three language can all be decided in exponential time.  We
@@ -413,9 +413,9 @@ A$ of EL can be translated into Hennessy-Milner logic as:
 \bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top
 \]
 But if $\Sigma$ is infinite, then this is an infinitary disjunction.
-Eremic logic can express the same thing in finitary ways.
+\Cathoristic{} can express the same thing in finitary ways.
 
-\subsubsection{Compactness, ultraproducts and eremic logic}
+\subsubsection{Compactness, ultraproducts and \cathoristic{}}
 
 Mathematicals knows three substantially different approaches for
 proving compactness: G\"odel's original approach, refined by Morley
@@ -430,20 +430,20 @@ chosen to ensure that the quotient is indeed an appropriate model with
 nice properties such as \L{}o\'{s}' theorem. In particular, for $U$ to
 be an ultra-filter over some set $S$, for each $A \subseteq S$, either
 $A$ or its complemnet $S\setminus A$ must be in $U$. This axiom
-clearly reflects the semantics of negation. But eremic logic doesn't
+clearly reflects the semantics of negation. But \cathoristic{} doesn't
 have negation. So what would an appropriate equivalent of
-ultra-filters for eremic logic look like that can be used to prove
+ultra-filters for \cathoristic{} look like that can be used to prove
 compactness directly on models?
 
-\subsubsection{Extending eremic logic with dualities}
+\subsubsection{Extending \cathoristic{} with dualities}
 
 Even if not explicitly defined, conventional modal logics have not
 just a may modality, but also its dual, the must modality. This is a
 direct consequence of the presence of negation: $\MUST{a}{\phi} = \neg
-\MAY{a}{\neg \phi}$. In eremic logic the situation is different: since
+\MAY{a}{\neg \phi}$. In \cathoristic{} the situation is different: since
 negation is not available, adding $\MUST{a}{\phi}$ is a substantial
 change to the logic: for example the processes in Figure
-\ref{figure:counterexample}, indistinguishable by eremic formulae, are
+\ref{figure:counterexample}, indistinguishable by cathoristic formulae, are
 separated by
   \[
      \MUST{a}{\MAY{b}{}},

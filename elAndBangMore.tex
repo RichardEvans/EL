@@ -2,7 +2,7 @@
 
 \input{figure:elAndBangRules}
 
-\NI We now present the inference rules for \ELFULL{}. There are no
+\NI We now present the inference rules for \cathoristic{}. There are no
 axioms.
 
 \begin{definition} Judgements are of the following form.
@@ -13,9 +13,9 @@ Figure \ref{figure:elAndBangRules} presents all proof rules.
 \end{definition}
 
 \NI Note that $\phi$ and $\psi$ are single formulae, not sequents.  By
-using single formulae, we can avoid structural inference rules.  \ELABR{}
+using single formulae, we can avoid structural inference rules.  \Cathoristic{}
 proof rules can be grouped in two parts: standard rules and rules
-unique to \ELABR{}.  Standard rules are [\RULENAME{Id}],
+unique to \cathoristic{}.  Standard rules are [\RULENAME{Id}],
 [\RULENAME{$\top$-Right}], [\RULENAME{$\bot$-Left}],
 [\RULENAME{Trans}], [\RULENAME{$\AND$-Left 1}],
 [\RULENAME{$\AND$-Left 2}] and [\RULENAME{$\AND$-Right}] hardly need
@@ -134,7 +134,7 @@ theory traditions.
 Here is the definition of $\CHAR{\cdot}$.
 
 \begin{definition}
-Let $\MMM$ be an eremic model that is a tree.
+Let $\MMM$ be an cathoristic model that is a tree.
 \begin{eqnarray*}
   \CHAR{\bot} &\ =\ & \langle a \rangle \top \AND ! \emptyset  \mbox{ for some fixed symbol }a \in \Sigma  \\
   \CHAR{\MMM, w} & = & \mathsf{bang}(\MMM,w) \AND \bigwedge_{w \xrightarrow{a} w'} \langle a \rangle \CHAR{\MMM, w'}  
@@ -329,7 +329,7 @@ in the next subsection.
 
 \begin{lemma}
 \label{final_completeness_lemma}
-For all eremic  models $\MMM$ and $\MMM_2$ that are trees, $ \CHAR{\MMM} \AND
+For all cathoristic  models $\MMM$ and $\MMM_2$ that are trees, $ \CHAR{\MMM} \AND
 \CHAR{\MMM_2} \judge \CHAR{\MMM \sqcap \MMM_2}$.
 \end{lemma}
 

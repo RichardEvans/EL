@@ -2,7 +2,7 @@
 
 \NI First-order logic has compactness: a set $S$ of sentences has a
 model exactly when every finite subset of $S$ does \cite[Chapter
-  4.3]{EndertonHB:matinttl}. What about eremic logic? 
+  4.3]{EndertonHB:matinttl}. What about \cathoristic{}? 
 
 We can prove compactness of modal logics using the standard
 translation from modal to first-order logic \cite{BlackburnP:modlog}:
@@ -14,10 +14,10 @@ obtain a first-order model of the translated modal formulae. Then we
 translate that first-order model back to modal logic, obtaining a
 model for the original modal formulae, as required.
 
-Unfortunately we cannot do the same with the translation from eremic
-to first-order logic presented in the previous section. The problem
+Unfortunately we cannot do the same with the translation from \cathoristic{}
+to \fol{} presented in the previous section. The problem
 are the first-order models termed 'junk' above: they do not correspond
-to eremic transistion systems.  For example the constraint $s
+to cathoristic transistion systems.  For example the constraint $s
 \TRANS{a} t$ implies $a \in \lambda(s)$ might be violated. After all,
 merely having signature $\SSS$ is not strong enough a constraint. The
 target language of the translation from the previous section is not
@@ -26,12 +26,12 @@ constraints.  As we have no reason to belive that the first-order
 model whose existence is guarnateed by compactness isn't 'junk', we
 cannot use this translation.
 
-We solve this problem with a second translation from eremic to
-first-order logic, this time into a more expressive fragment were we
+We solve this problem with a second translation from cathoristic to
+\fol{}, this time into a more expressive fragment were we
 can constrain first-order models enough to ensure that they always can
-be translated back to eremic logic.
+be translated back to \cathoristic{}.
 
-The second embedding translates eremic logic to two-sorted first-order
+The second embedding translates \cathoristic{} to two-sorted first-order
 logic. The many-sorted first-order signature $\SSS'$ is given as follows.
 \begin{itemize}
 
@@ -58,7 +58,7 @@ symbols.  The intended interpretation should should be
 clear.\martin{Phrase this better.}
 
 With the target logic in place, we can now present a second encoding
-$\SEMBTWO{\phi}_x$ of eremic formulae.
+$\SEMBTWO{\phi}_x$ of cathoristic formulae.
 
 \begin{eqnarray*}
   \SEMBTWO{\top}_x & \ = \ & \top
@@ -89,11 +89,11 @@ matter further.
 
 Before we can state and prove a correspondence theorem for
 $\SEMBTWO{\phi}_x$ along the lines of Theorem
-\ref{correspondence:theorem:1}, we must also translate eremic
+\ref{correspondence:theorem:1}, we must also translate cathoristic
   transition systems $\SEMBTWO{\LLL}$.
 
 \begin{definition}
-Let $\LLL = (S, \rightarrow, \lambda)$ be an eremic transition
+Let $\LLL = (S, \rightarrow, \lambda)$ be an cathoristic transition
 system. Clearly $\LLL$ gives rise to an $\SSS'$-model $\SEMBTWO{\LLL}$
 as follows.
 \begin{itemize}
@@ -120,7 +120,7 @@ as follows.
 
 
 \begin{theorem}[correspondence theorem]\label{correspondence:theorem:2}
-Let $\phi$ be an eremic formula and $\MMM = (\LLL, s)$ an eremic
+Let $\phi$ be an cathoristic formula and $\MMM = (\LLL, s)$ an cathoristic
 model.
 \[
    \MMM \models \phi \quad  \text{iff} \quad \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{\phi}_x.
@@ -160,15 +160,14 @@ Finally $!A$.
 \qed
 \end{proof}
 
-\NI We now use the translation $\SEMBTWO{\phi}_x$ to show that eremic
-logic must also have compactness. The key steps in the proof are
+\NI We now use the translation $\SEMBTWO{\phi}_x$ to show that \cathoristic{} must also have compactness. The key steps in the proof are
 simple, following standard techniques from modal logic
 \cite{BlackburnP:modlog}:
 
 \begin{enumerate}
 
-\item Choose a set $T$ of eremic formulae, such that each finite
-  subset $T'$ of $T$ has an eremic model $(\LLL, s)$.
+\item Choose a set $T$ of cathoristic formulae, such that each finite
+  subset $T'$ of $T$ has an cathoristic model $(\LLL, s)$.
 
 \item Using the translations gives a set $\SEMBTWO{T} =
   \{\SEMBTWO{\phi}\ |\ \phi \in T\}$ of first-order formulae such that
@@ -177,13 +176,13 @@ simple, following standard techniques from modal logic
 \item By compactness of first-order logic, we can find a first-order
   model $\CAL{M}$ of $\SEMBTWO{T}$.
 
-\item\label{compactness:step:4} Convert $\CAL{M}$ into an eremic transition system
+\item\label{compactness:step:4} Convert $\CAL{M}$ into an cathoristic transition system
   $\CAL{M}^{\sharp}$ such that $(\CAL{M}^{\sharp}, s) \models T$.
 
 \end{enumerate}
 
 \NI The problematic step is (\ref{compactness:step:4}), for how would
-we know that the model $\CAL{M}$ can be converted back to an eremic
+we know that the model $\CAL{M}$ can be converted back to an cathoristic
 transition system? Why should $\CAL{M}$ exhibit admissibility or
 well-sizedness?  The mere fact that $\CAL{M}$ is a first-order model
 of signature $\SSS'$ is not strong enough to guarantee these
@@ -197,7 +196,7 @@ are admissible.
 \end{eqnarray*}
 
 \begin{lemma}\label{compactness:lemma:23399}
-If $\LLL$ is an eremic transistion system then $\SEMBTWO{\LLL} \models
+If $\LLL$ is an cathoristic transistion system then $\SEMBTWO{\LLL} \models
 \phi_{admis}$.
 \end{lemma}
 
@@ -208,7 +207,7 @@ Straightforward from the definitions.
 
 \NI We can now add, without changing satisfiability, $\phi_{admis}$ to
 any set of first-order formulae that has a model that is the
-translation of an eremic model.
+translation of an cathoristic model.
 
 %% We deal with the absence of well-sizedness by 
 
@@ -220,7 +219,7 @@ translation of an eremic model.
 %% \end{eqnarray*}
 
 %% \begin{lemma}\label{compactness:lemma:666}
-%% If $\LLL$ is an eremic transistion system then $\SEMBTWO{\LLL} \models
+%% If $\LLL$ is an cathoristic transistion system then $\SEMBTWO{\LLL} \models
 %% \phi_{a}$ for all $a \in \Sigma$.
 %% \end{lemma}
 
@@ -230,9 +229,9 @@ translation of an eremic model.
 %% \end{proof}
 
 \begin{definition}
-Let $\LLL = (S, \rightarrow, \lambda)$ be an eremic transition system
+Let $\LLL = (S, \rightarrow, \lambda)$ be an cathoristic transition system
 and $X$ a set, condidered to contain actions. The \emph{restriction of
-  $\LLL$ to $X$}, written $\LLL \setminus X$ is the eremic model $(S,
+  $\LLL$ to $X$}, written $\LLL \setminus X$ is the cathoristic model $(S,
 \rightarrow', \lambda')$ where $\rightarrow' = \{(s, a, t) \in
 \rightarrow \ |\ a \notin X\}$, and for all states $s$ we set:
 \[
@@ -247,7 +246,7 @@ and $X$ a set, condidered to contain actions. The \emph{restriction of
 \end{definition}
 
 \begin{lemma}\label{compactness:lemma:1717}
-Let $\phi$ be an eremic formula and $X$ be a set such that no action
+Let $\phi$ be an cathoristic formula and $X$ be a set such that no action
 occuring in $\phi$ is in $X$. Then:
 \[
    (\LLL, s) \models \phi
@@ -263,7 +262,7 @@ $\phi$.  \qed
 
 \begin{definition}
 Let $\CAL{M}$ be a first-order model for the signature $\SSS'$.
-We construct an eremic transition system
+We construct an cathoristic transition system
 $\CAL{M}^{\sharp} = (S, \rightarrow, \lambda)$.
 \begin{itemize}
 
@@ -290,7 +289,7 @@ $\CAL{M}^{\sharp} = (S, \rightarrow, \lambda)$.
 
 \begin{lemma}
 If $\CAL{M}$ be a first-order model for $\SSS'$ such that $\CAL{M}
-\models \phi_{admis}$.  Then $\CAL{M}^{\sharp}$ is an eremic
+\models \phi_{admis}$.  Then $\CAL{M}^{\sharp}$ is an cathoristic
 transition system with actions $\Sigma$.
 \end{lemma}
 \begin{proof}
@@ -301,7 +300,7 @@ Immediate from the definitions.
 \begin{theorem}[correspondence theorem]\label{correspondence:theorem:223}
 Let $\CAL{M}$ be a first-order model for the signature $\SSS'$ such that
  $\CAL{M} \models \phi_{admis}$.
-Then we have for all eremic formulae $\phi$ with
+Then we have for all cathoristic formulae $\phi$ with
 actions from $\Sigma$:
 \[
    \CAL{M} \models_{x \mapsto s} \SEMBTWO{\phi}_x 
@@ -316,18 +315,18 @@ The proof proceeds by induction on the structure of $\phi$. \textbf{To do.}
 \end{proof}
 
 \begin{definition}
-Let $T$ be a set of eremic formulae, and $\MMM$ an eremic model.  We
+Let $T$ be a set of cathoristic formulae, and $\MMM$ an cathoristic model.  We
 write $\MMM \models T$ provided $\MMM \models \phi$ for all $\phi \in
 T$.  We say $T$ is \emph{satisfiable} provided $\MMM \models T$.
 \end{definition}
 
-\begin{theorem}[Compactness of eremic logic]
-A set $T$ of eremic formulae is satisfiable iff each finite subset of
+\begin{theorem}[Compactness of \cathoristic{}]
+A set $T$ of cathoristic formulae is satisfiable iff each finite subset of
 $T$ is satisfiable.
 \end{theorem}
 \begin{proof}
-For the non-trivial direction, let $T$ be a set of eremic formulae
-such that any finite subset has an eremic model. Define 
+For the non-trivial direction, let $T$ be a set of cathoristic formulae
+such that any finite subset has an cathoristic model. Define 
 \[
   \SEMBTWO{T} 
      \ =\ 
@@ -343,7 +342,7 @@ which is given as follows.
 \[
    T'_{EL} \ =\ \{ \phi \in T\ |\ \SEMBTWO{\phi} \in T' \}
 \]
-Since $T'_{EL}$ is finite, by assumption there is an eremic model 
+Since $T'_{EL}$ is finite, by assumption there is an cathoristic model 
 \[
    (\LLL, s) \models T'_{EL}
 \]
