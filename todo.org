@@ -1,3 +1,16 @@
+Work on narrative for later sections
+
+Complexity of decision. We could analyse Haskell. What did your friend say
+
+General completeness still unclear.
+
+Replace linear with quadratic
+
+Remove general completeness
+
+* Prove  Haskell decisoin proce compexity is quadratic
+* Prove general completenss
+* Explain the meaning of "Cathoristic".
 * Too many of our sentences start with "But ..." Is this elegant?
 * Make a clear point somewhere that tree models are
 all we need.
@@ -18,10 +31,12 @@ software.
 * Cases in proofs are inconsistent across the paper
 * Each chapter its own file
 * remove all files that are not used 
-* Maybe we should call "pure eremic" models just "pure" models?
+* Maybe we should call "pure cathoristic" models just "pure" models?
 * Have we discussed bisimulation invariance?
 * Be consistent. In particular
   - State vs node
+
+  - space in = in definitions e.g. A = B vs A \quad=\quad B
 
   - Fullstop at the end of short sentences, (e.g. in bullets)
 
@@ -53,14 +68,14 @@ software.
 
   - What symbols to we use for implication? \rightarrow vs horseshoe
 
-  - Make sure always to be precise about eremic model vs eremic
+  - Make sure always to be precise about cathoristic model vs cathoristic
     transition system
 
   - POV vs point of view vs point-of-view
 
   - LTS vs labelled transition system
 
-  - FOL vs first-order logic, EL vs eremic logic
+  - FOL vs first-order logic, EL vs cathoristic logic
 
   - Either all definitions are in an explicit \begin{definition}
     environment or none.
@@ -73,7 +88,7 @@ software.
 
   - Book titles always in \emph, e.g. \emph{Philosophical Remarks}?
 
-  - capitalisation, e.g. Eremic Logic vs Eremic logic vs eremic logic etc.
+  - capitalisation, e.g. Cathoristic Logic vs Cathoristic logic vs cathoristic logic etc.
 
 * Talk about binding and precedence in EL formulae, qunatifiers etc. Be consistent.
 * Find better names for fragments: e.g. EL[∧, !] isn't exactly snappy. What
@@ -81,7 +96,7 @@ about Core etc?
 * We have too many correspondence theorems, remove names.
 * If we remove [!-Left] from the rules, then prove it as a lemma
   or use it as an example of derivable rules.
-* Explain the terms "eremic" and "tantum" (if we stick with them)
+* Explain the terms "cathoristic" and "tantum" (if we stick with them)
 * Should we have a section about material incompatibility and how
   Gamma |- phi iff Gamma, not phi inconsistent does not hold in EL?
 * Factor out the stuff that I use in compactness by translation and Richard
@@ -111,8 +126,8 @@ that.) Discuss and investigate
 But are we capturing all intra-atomic inferences or is EL missing
 some? What is the expressivity of EL? This question might not have
 a clear answer but it might be worthwhile considering.
-* Finalise the name of the logic. I am going to check with my friend
-  Tim Whitmarsh one more time that "Eremic Logic" is the best name for
+* Finalise the name of the logic. I am going to check with my friendy
+  Tim Whitmarsh one more time that "Cathoristic Logic" is the best name for
   it.
 * Find a better name for !A than "bang A".
 About the question how to name !A I think the obvious names are
