@@ -1,10 +1,8 @@
 \section{Alternative semantics for \cathoristic{}}\label{pureModels}
 
-\martin{Integrate in appendix}
-
-In Section \ref{coreEL} we used node-labelled transition systems as
-models for \cathoristic{}. The purpose of the node labels was to express
-constrains, if any, on outgoing actions. This concern is reflected in
+\NI We use node-labelled transition systems as models for
+\cathoristic{}. The purpose of the node labels is to express
+constraints, if any, on outgoing actions. This concern is reflected in
 the semantics of $!A$.
 \[
 \begin{array}{lclcl}
@@ -13,18 +11,20 @@ the semantics of $!A$.
 \]
 
 \NI There is an alternative, and in some sense even simpler approach
-to giving semantics to $!A$ which does not require a node-labelling:
-we simply check if all actions of all outgoing transitions are in $A$.
-As no other formula requires the labelling function $\lambda$ in the
-definition of it's satisfaction condition, this approach means we can
-use plain labelled transition systems (together with a current state)
-as models. This gives rise to a subtly different theory that we now
+to giving semantics to $!A$ which does not require node-labelling: we
+simply check if all actions of all outgoing transitions at the current
+state are in $A$.  As the sematnics of other formula requires node
+labelling in its satisfaction condition, this means we can use plain
+labelled transition systems (together with a current state) as
+models. This gives rise to a subtly different theory that we now
 explore, albeit not in depth.
 
-\begin{definition}
-By a \emph{pure cathoristic model}, ranged over by $\PPP, \PPP', ...$, we
-mean a pair $(\LLL, s)$ where $\LLL = (S, \rightarrow)$ is a labelled
-transition system and $s \in S$ a state.
+\subsection{Pure cathoretic models}
+
+\begin{definition}\label{pureModelsDef}
+By a \emph{pure cathoristic model}, ranged over by $\PPP, \PPP', ...$,
+we mean a pair $(\LLL, s)$ where $\LLL = (S, \rightarrow)$ is a
+deterministic labelled transition system and $s \in S$ a state.
 \end{definition}
 
 \NI Adapting the satisfaction relation to pure cathoristic models is
@@ -51,27 +51,15 @@ inductively by the following clauses, where we assume that $\MMM =
 In this interpretation, $!A$ restricts the out-degree of the current
 state $s$, i.e.~it constraints the 'width' of the graph.  It is easy
 to see that all rules in Figure \ref{figure:elAndBangRules} are sound
-with respect to the new semantics too\martin{what about
-  completeness?}.  The key advantage pure cathoristic models have is their
-simplicity: they are unadorned labelled transition systems, the key
-model of concurrency theory \cite{SassoneV:modcontac}. The connection
-with concurrency theory is even stronger than that, because, as we
-show below (Theorem \ref{hennessymilnertheorem}), the elementary
-equivalence on (finitely branching) pure cathoristic models is
-bisimilarity, one of the more widely used notions of process
-equivalence.
-
-This then leads to the question why we most of our development is
-about cathoristic models. The reason is one of philosophy: on pure cathoristic
-models, \cathoristic{} can distinguish models based on branching
-structure, for example those in Figure
-\ref{figure:counterexample}. However, \cathoristic{} speaks about
-exclusion. Prima facie, branching structure has nothing to do with
-exclusion. Therefore \cathoristic{} should not distinguish models such
-as those just mentioned.
-
-Nevertheless, both kinds of models are compelling, and it is
-interesting to see if they can be related in a systematic way.
+with respect to the new semantics.  The key advantage pure cathoristic
+models have is their simplicity: they are unadorned labelled
+transition systems, the key model of concurrency theory
+\cite{SassoneV:modcontac}. The connection with concurrency theory is
+even stronger than that, because, as we show below (Theorem
+\ref{hennessymilnertheorem}), the elementary equivalence on (finitely
+branching) pure cathoristic models is bisimilarity, one of the more
+widely used notions of process equivalence. This characterisation even
+holds if we remove the determinacy restriction in Definition \ref{pureModelsDef}.
 
 \subsection{Relationship between pure and cathoristic models}
 
@@ -130,8 +118,83 @@ induction on $\phi$.
 
 \end{proof}
 
+\subsection{Non-determinism and cathoristic models}
 
-\subsection{A semantic characterisation of elementary equivalence for pure cathoristic models}
+Both, cathoristic models and pure cathoristic models must be deterministic. That
+is important for the incompatibility semantics. However, formally, the
+definition of satisfaction makes sense for non-deterministic models as
+well, pure or otherwise. Such models are important in the theory of
+concurrent processes. Many of the theorems of the precious section
+either hold directly, or with small modifications for
+non-deterministic models. The rules of inference in Figure
+\ref{figure:elAndBangRules} are sound except for
+    [\RULENAME{Determinism}] which cannot hold in properly
+    non-deterministic models. With this omission, they are also
+    complete.  Elementary equivalence on non-deterministic cathoristic
+    models also coincides with mutual simulation, while elementary
+    equivalence on non-deterministic pure cathoristic models is
+    bisimilarity. The proofs of both facts follow those of Theorems
+    \ref{theorem:completeLattice} and \ref{hennessymilnertheorem},
+    respectively. Compactness by translation can be shown following
+    the proof in Section \ref{compactness}, except that the constraint
+    $\phi_{det}$ is unnecessary.
+
+We have experimented with a version of EL in which the models are
+\emph{non-deterministic} labeled-transition systems.  Although
+non-determinism makes some of the constructions simpler,
+non-deterministic EL is unable to express incompatibility properly.
+Consider, for example, the claim that Jack is married to Jill\martin{Actually, the
+formalisation below says Jack is married to Jill, and Jill only.}. 
+In standard deterministic EL this would be rendered as:
+\begin{eqnarray*}
+  \MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\})
+\end{eqnarray*}
+There are three levels at which this claim can be denied.\martin{Jack could be a polygamist}
+First, we can claim that Jack is married to someone else - Joan, say:
+\begin{eqnarray*}
+   \MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
+\end{eqnarray*}
+Second, we can claim that Jack is unmarried (specifically, that being unmarried is Jack's only property):
+\begin{eqnarray*}
+  \MAY{jack} !\{unmarried\}
+\end{eqnarray*}
+Third, we can claim that Jack does not exist at all. Bob and Jill, for example, are the only people in our domain:
+\begin{eqnarray*}
+  \fBang \{bob, jill\}
+\end{eqnarray*}
+
+Now we can assert the same sentences in non-deterministic EL, but they
+are \emph{no longer incompatible with our original sentence}.  In
+non-deterministic EL, the following sentences are compatible (as long
+as there are two separate transitions labelled with $married$, or two
+separate transitions labelled with $jack$):
+\begin{eqnarray*}
+  \MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\}) 
+      \qquad
+  \MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
+\end{eqnarray*}
+
+\NI Similarly, the following sentences are fully compatible as long as
+there are two separate transitions labelled with $jack$:
+\begin{eqnarray*}
+  \MAY{jack} \MAY{married}
+     \qquad
+  \MAY{jack} \fBang \{unmarried\}
+\end{eqnarray*}
+
+\NI Relatedly, non-deterministic EL does not satisfy Brandom's
+Incompatibility Semantics property:
+\[
+   \phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
+\]
+
+\NI To take a simple counter-example, $\MAY{a}\MAY{b}$ implies $\MAY{a}$,
+but not conversely.  But in non-deterministic EL, the set of sentences
+incompatible with $\MAY{a}\MAY{b}$ is identical with the set of
+sentences incompatible with $\MAY{a}$.
+
+\subsection{A semantic characterisation of elementary equivalence for 
+pure cathoristic models}
 
 In Section \ref{elementaryEquivalence} we presented a semantic
 analysis of elementary equivalence, culminating in Theorem
@@ -140,9 +203,11 @@ coincides with $\MODELEQ$, the relation of mutual simulation of
 models. We shall now carry out a similar analysis for pure cathoristic
 models, and show that elementary equivalence coincides with
 bisimilarity, an important concept in process theory and modal logics
-\cite{SangiorgiD:intbisac}. Bisimilarity is strictly finer than
-$\MODELEQ$, and more sensitive to branching structure.  Before stating
-and proving the theorem, we need to make precise the used concepts.
+\cite{SangiorgiD:intbisac}. Bisimilarity is strictly finer on
+non-deterministic transition systems than $\MODELEQ$, and more
+sensitive to branching structure.  In the rest of this section, we
+allow non-deterministic pure models, because the characterisation is
+more interesting that in the deterministic case.
 
 \begin{definition}
 A pure cathoristic model $(\LLL, s)$ is finitely branching if its
@@ -163,7 +228,7 @@ The \emph{theory} of $\PPP$, written $\THEORY{\PPP}$, is the set
 $\{\phi\ |\ \PPP \models \phi\}$.
 \end{definition}
 
-\begin{theorem}[Hennessy, Milner \cite{HennessyM:alglawfndac}]
+\begin{theorem}
 \label{hennessymilnertheorem}
 Let $\PPP$ and $\PPP'$ be two finitely branching pure cathoristic
 models. Then: $\PPP \BISIM \PPP'$ if and only if $\THEORY{\PPP} =
@@ -331,77 +396,3 @@ $y \nvDash \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \ra
 \NI The resulting formula is true in $y$ but not in $y'_j$.
 
 
-\subsection{Non-determinism and cathoristic models}
-
-Both, cathoristic models and pure cathoristic models must be deterministic. That
-is important for the incompatibility semantics. However, formally, the
-definition of satisfaction makes sense for non-deterministic models as
-well, pure or otherwise. Such models are important in the theory of
-concurrent processes. Many of the theorems of the precious section
-either hold directly, or with small modifications for
-non-deterministic models. The rules of inference in Figure
-\ref{figure:elAndBangRules} are sound except for
-    [\RULENAME{Determinism}] which cannot hold in properly
-    non-deterministic models. With this omission, they are also
-    complete.  Elementary equivalence on non-deterministic cathoristic
-    models also coincides with mutual simulation, while elementary
-    equivalence on non-deterministic pure cathoristic models is
-    bisimilarity. The proofs of both facts follow those of Theorems
-    \ref{theorem:completeLattice} and \ref{hennessymilnertheorem},
-    respectively. Compactness by translation can be shown following
-    the proof in Section \ref{compactness}, except that the constraint
-    $\phi_{det}$ is unnecessary.
-
-We don't pursue the investigation of non-deterministic models in this
-text, and leave it as future work.
-
-\subsection{Non-deterministic \cathoristic{} cannot express incompatibility}
-\martin{Integrate with rest}
-
-We have experimented with a version of EL in which the models are
-\emph{non-deterministic} labeled-transition systems.  Although
-non-determinism makes some of the constructions simpler,
-non-deterministic EL is unable to express incompatibility properly.
-Consider, for example, the claim that Jack is married to Jill\martin{Actually, the
-formalisation below says Jack is married to Jill, and Jill only.}. 
-In standard deterministic EL this would be rendered as:
-\begin{eqnarray*}
-\MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\})
-\end{eqnarray*}
-There are three levels at which this claim can be denied.\martin{Jack could be a polygamist}
-First, we can claim that Jack is married to someone else - Joan, say:
-\begin{eqnarray*}
-\MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
-\end{eqnarray*}
-Second, we can claim that Jack is unmarried (specifically, that being unmarried is Jack's only property):
-\begin{eqnarray*}
-\MAY{jack} !\{unmarried\}
-\end{eqnarray*}
-Third, we can claim that Jack does not exist at all. Bob and Jill, for example, are the only people in our domain:
-\begin{eqnarray*}
-\fBang \{bob, jill\}
-\end{eqnarray*}
-
-Now we can assert the same sentences in non-deterministic EL, but they
-are \emph{no longer incompatible with our original sentence}.  In
-non-deterministic EL, the following sentences are compatible (as long
-as there are two separate transitions labelled with $married$, or two
-separate transitions labelled with $jack$):\martin{Maybe add a figure that shows
-the relevant non-deterministic LTS?}
-\begin{eqnarray*}
-\MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\}) \\
-\MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
-\end{eqnarray*}
-Similarly, the following sentences are fully compatible as long as there are two separate transitions labelled with $jack$:
-\begin{eqnarray*}
-\MAY{jack} \MAY{married}\\
-\MAY{jack} \fBang \{unmarried\}
-\end{eqnarray*}
-
-Relatedly, non-deterministic EL does not satisfy Brandom's Incompatibility Semantics property:\martin{I don't think we have formally defined it so far. This important
-concept should maybe not be introduced as a side remark.}
-\[
-\phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
-\]
-To take a simple counter-example, $\MAY{a}\MAY{b}$ implies $\MAY{a}$, but not conversely.
-But in non-deterministic EL, the set of sentences incompatible with $\MAY{a}\MAY{b}$ is identical with the set of sentences incompatible with  $\MAY{a}$.
