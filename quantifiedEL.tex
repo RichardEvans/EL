@@ -1,6 +1,12 @@
 \section{Quantified \cathoristic{}}\label{quantifiedEL}
 
-We can add variables and quantifiers to \cathoristic{} in the usual way.
+\NI \Cathoristic\ is a propositional logic because the tantum operator
+is propositinal in nature. Nevertheless quantifiation over action is
+natural. This section sketches quantified \cathoristic, to demonstrate
+that this extension works smoothly. We use quantified \cathoristic\ to
+formalise the translation of first-order formulae we mentioned
+in Section \ref{kr}.
+
 \begin{definition} 
 Let $\Sigma$ be a non-empty set of actions, ranged over by $a, a',
 ...$ as before.  Given a set $\mathcal{V}$ of \emph{variables}, with
@@ -72,37 +78,71 @@ following clauses, where we assume that $\MMM = (\LLL, s)$ and $\LLL =
 
 \end{definition}
 
-In quantified \cathoristic{}, we can say that there is exactly one king of France, and he is bald, as:
+\NI In quantified \cathoristic{}, we can say that there is exactly one
+king of France, and he is bald, as:
 \[
-\exists x . \MAY{king} \MAY{france} ! \{x\} \land \MAY{x} \MAY{bald}
-\]
-Expressing this in \fol{} is significantly more cumbersome:
-\[
-\exists x. king(france, x) \land bald(x) \land \forall y. king(france, y) \rightarrow y = x
-\]
-The \fol{} version uses an extra universal quantifier, and also requires the identity relation (which itself requires the schema of the Indiscernibility of Identicals ).
-
-To say that every person has exactly one sex, which is either male or female, we can write in quantified \cathoristic{}:
-\[
-\forall x . \MAY{x} \MAY{person} \rightarrow \MAY{x} \MAY{sex} ! \{male, female\} \land \exists y . \MAY{x} \MAY{sex} (\MAY{y} \land \fBang \{y\})
-\]
-This is significantly more elegant than the equivalent in \fol{}:
-\[
-\forall x. person(x) \rightarrow \exists y . sex(x,y) \land (y = male \; \lor \; y = female) \land \forall z . sex(x,z) \rightarrow y = z
+   \exists x . (\MAY{king} \MAY{france} ! \{x\} \land \MAY{x} \MAY{bald})
 \]
 
-To say that every traffic light is coloured either green, amber or red, we can write in quantified \cathoristic{}:
+\NI Expressing this in \fol{} is more cumbersome:
 \[
-\forall x. \MAY{x} \MAY{light} \rightarrow \MAY{x} \MAY{colour} !\{green, amber, red\} \land \exists y . \MAY{x} \MAY{colour} (\MAY{y} \land !\{y\})
+   \exists x. ( king(france, x) \land bald(x) \land \forall y. ( king(france, y) \rightarrow y = x ))
 \]
-Again, this is significantly less verbose than the equivalent in \fol{}:
+
+\NI The \fol{} version uses an extra universal quantifier, and also
+requires the identity relation with concomitant axioms.
+
+To say that every person has exactly one sex, which is either male or
+female, we can write in quantified \cathoristic{}:
 \[
-\forall x. light(x) \rightarrow \exists y . colour(x,y) \land (y = green \; \lor \; y = amber \; \lor \; y = red) \land \forall z . colour(x,z) \rightarrow y = z
+   \forall x . 
+      ( \MAY{x} \MAY{person} \rightarrow \MAY{x} \MAY{sex} !\{male, female\} 
+      \land 
+      \exists y . \MAY{x} \MAY{sex} (\MAY{y} \land
+   \fBang \{y\}) )
+\]
+
+\NI This is more elegant than the equivalent in \fol{}:
+\[
+   \forall x. ( person(x) \rightarrow \exists y .
+   \left(
+      \begin{array}{l}
+        sex(x,y) \\
+        \quad\land\\
+        (y = male \; \lor \; y = female)\\ 
+        \quad\land\\
+        \forall z . sex(x,z) \rightarrow    y = z 
+      \end{array}
+   \right))
+\]
+
+\NI To say that every traffic light is coloured either green, amber or
+red, we can write in quantified \cathoristic{}:
+\[
+   \forall x. (\MAY{x} \MAY{light} \rightarrow \MAY{x} \MAY{colour}
+   !\{green, amber, red\} \land \exists y . \MAY{x} \MAY{colour}
+   (\MAY{y} \land !\{y\}))
+\]
+
+\NI Again, this is less verbose than the equivalent in
+\fol{}:
+\[
+   \forall x. ( light(x) \rightarrow \exists y .
+   \left(
+      \begin{array}{l}
+        colour(x,y) \\
+        \quad\land\\
+        (y = green \; \lor \; y = amber \; \lor \; y = red) \\
+        \quad\land \\
+        \forall z . colour(x,z) \rightarrow y = z
+      \end{array}
+   \right)  )
 \]
 
 \subsection{A translation from first-order logic to first-order \cathoristic{}}\label{translationFOLtoFOEL}
 
-We now sketch how to translate from first-order logic to \cathoristic{}. Given that the latter is not nearly as expressive as the
+We now sketch how to translate from first-order logic to quantified
+\cathoristic{}. Given that the latter is not as expressive as the
 former, we have to restrict our attention to a fragment of first-order
 logic. For simplicity, we do not seek maximal generality. Instead we
 look at a simple example that presentes the key ideas behind the
@@ -208,15 +248,4 @@ first-order model and $\sigma$ an environment. Then:
 \end{theorem}
 
 \NI Note that the encoding can easily be generalised to $n$-ary
-relations for all $n$, and also to finite-width relations.  What does
-the latter mean? Let $r$ be an $n$-ary relation symbol in the ambient
-first-order signature. Let $\CAL{M}$ be a model. The interpretation
-$r^{\CAL{M}}$ of $r$ in $\CAL{M}$ is called an $(i, k)$-relation,
-where $0 < i \leq n$, and $k$ is arbitrary, provided for the
-cardinality of the set
-\[
-   \{ y | (x_1, ..., x_{i-1}, y, x_{i+1}, ..., x_{n}) \in r^{\CAL{M}} \}
-\]
-does not exceed $k$. We say $r^{\CAL{M}}$ is finite-width if for each
-$i$ there is $k$ such that $r^{\CAL{M}}$ is a $(i, k)$-relation.
-
+relations.
