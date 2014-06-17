@@ -192,18 +192,18 @@ consequences.
 \begin{enumerate}
 
 \item If $\phi$ has a model then it has a model who's underlying
-  transition system is a tree, i.e.~all states except for the root
-  have exactly one predecessor, and the root has no predecessors.
+  transition system is a tree, i.e.~all states except for the start state
+  have exactly one predecessor, and the start state has no predecessors.
 
 \item If $\phi$ has a model then it has a model where every state is
-  reachable from the root.
+  reachable from the start state.
 
 \end{enumerate}
 \end{corollary}
 \begin{proof}
 Both are straightforward because $\MODELEQ$ (and bisimilarity) is
 closed under tree-unfoldings as well as under removal of states not
-reachable from the root.
+reachable from the start state.
 \end{proof}
 
 
@@ -482,13 +482,13 @@ Given that $\mathcal{R}$ is a simulation from $\MMM$ to $\NNN$, we know that if 
 \lambda_{\MMM}(x) \supseteq \lambda_{\NNN}(y)
 \]
 Let $\MMM = ((S,\rightarrow,\lambda),w)$.
-If $x \neq w$ (i.e. $x$ is some node other than the root node), then, from the definition of $\mathsf{merge}$, $\lambda_{\MMM \sqcap \MMM'}(x) = \lambda_{\MMM}(x)$.
+If $x \neq w$ (i.e. $x$ is some node other than the start state), then, from the definition of $\mathsf{merge}$, $\lambda_{\MMM \sqcap \MMM'}(x) = \lambda_{\MMM}(x)$.
 So, given $\lambda_{\MMM} \supseteq \lambda_{\NNN}(y)$, $\lambda_{\MMM \sqcap \MMM'}(x) \supseteq \lambda_{\NNN}(y)$.
-If, on the other hand, $x = w$ (i.e. $x$ is the root node of our pointed model $\MMM$), then, from the definition of $\mathsf{merge}$:
+If, on the other hand, $x = w$ (i.e. $x$ is the start state  of our pointed model $\MMM$), then, from the definition of $\mathsf{merge}$:
 \[
 \lambda_{\MMM \sqcap \MMM'}(w) = \lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w')
 \]
-where $w'$ is the root node of $\MMM'$.
+where $w'$ is the start state  of $\MMM'$.
 In this case, given $\lambda_{\MMM}(w) \supseteq \lambda_{\NNN}(y)$ and $\lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$, it follows that $\lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$ and hence $\lambda_{\MMM \sqcap \MMM'}(w) \supseteq \lambda_{\NNN}(y)$.
 
 \end{proof}
