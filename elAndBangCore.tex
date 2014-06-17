@@ -9,21 +9,21 @@ We use the bounded lattice to provide a decision procedure.
 Elementary equivalence induces a notion of model equivalence: two
 models are elementarily equivalent exactly when they make the same
 formulae true. Elementary equivalent as a concept thus relies on
-eremic logic even for its definition. We now present an alternative
+\cathoristic{} even for its definition. We now present an alternative
 characterisation that is purely semantic, using the concept of
 (mutual) simulation from process theory. Apart from its intrinsic
 interest, this characterisation will also be crucial for proving
 completeness of the proof rules.
 
 We first define a pre-order $\MODELLEQ$ on models by extending the
-notion of simulation on labeled transition systems to eremic
+notion of simulation on labeled transition systems to cathoristic
 models. Then we prove an alternative characterisation of $\MODELLEQ$
 in terms of set-inclusion of the theories induced by models. We then
 show that two models are elementarily equivalent exactly when they are
 related by $\MODELLEQ$ and by $\MODELLEQ^{-1}$.
 
 \begin{definition}
-Let $\LLL_i = (S_i, \rightarrow_i, \lambda_i)$ be eremic transition
+Let $\LLL_i = (S_i, \rightarrow_i, \lambda_i)$ be cathoristic transition
 systems for $i = 1, 2$.  A relation $\RRR \subseteq S_1 \times S_2$ is
 a \emph{simulation from $\LLL_1$ to $\LLL_2$}, provided:
 \begin{itemize} 
@@ -40,7 +40,7 @@ a \emph{simulation from $\LLL_1$ to $\LLL_2$}, provided:
 
 \begin{itemize}
 
-\item $\RRR$ is a simulation from $\LLL_1$ to $\LLL_2$ as eremic transition systems.
+\item $\RRR$ is a simulation from $\LLL_1$ to $\LLL_2$ as cathoristic transition systems.
 
 \item  $(x_1, x_2) \in \RRR$. 
 
@@ -108,7 +108,7 @@ clause for $\MAY{}$, $(\LLL', w') \models \MAY{a}\psi$.  Assume now
 that $\phi = \; ! \; A$, for some finite $A \subseteq \Sigma$, and
 that $(\LLL, w) \models \; ! \; A$.  By the semantic clause for $!$,
 $\lambda(w) \subseteq A$.  Since $(\LLL', w') \MODELLEQ (\LLL, w)$, by
-the definition of simulation of eremic transition systems, $\lambda(w)
+the definition of simulation of cathoristic transition systems, $\lambda(w)
 \supseteq \lambda'(w')$.  Therefore, $\lambda'(w') \subseteq
 \lambda(w) \subseteq A$.  Therefore, by the semantic clause for $!$,
 $(\LLL', w') \models \; ! \; A$.
@@ -156,11 +156,11 @@ This establishes (\ref{theorem:completeLattice:1}), and
 \NI Theorem
 \ref{theorem:completeLattice}.\ref{theorem:completeLattice:1}
 illustrates from a model-theoretic point of view one dimension of how
-classical and eremic logic differ. In classical logic the theory of
+classical and \cathoristic{} differ. In classical logic the theory of
 each model is complete, and $\THEORY{\CAL{M}} \subseteq
 \THEORY{\CAL{N}}$ already implies that $\THEORY{\CAL{M}} =
 \THEORY{\CAL{N}}$, i.e.~$\CAL{M}$ and $\CAL{N}$ are elementarily
-equivalent. \ELFULL{}'s lack of negation changes this drastically, and
+equivalent. \Cathoristic{}'s lack of negation changes this drastically, and
 gives $\MODELLEQ$ the structure of a non-trivial bounded lattice as we
 shall demonstrate below.
 
@@ -180,7 +180,7 @@ coincide: the former is strictly more discriminating than the latter,
 i.e.~$\BISIM \subsetneq \MODELEQ$. Figure \ref{figure:counterexample}
 shows two models that are $\MODELEQ$-equal but not bisimilar. Note
 that this counterexample is \emph{non-deterministic}. That is not
-coincidence, because on deterministic eremic models, the two relations
+coincidence, because on deterministic cathoristic models, the two relations
 coincide.
 
 \input{figure:counterexample}
@@ -292,7 +292,7 @@ The bottom element is $\bot$.
 $\sqcap$ and $\sqcup$ are defined below.
 \end{proof}
 
-\ELABR{} has the unusual property that every formula has a unique (up to isomorphism) simplest  model satisfying a formula. 
+\Cathoristic{} has the unusual property that every formula has a unique (up to isomorphism) simplest  model satisfying a formula. 
 Any logic with disjunction, negation or implication does not have this property.
 For example, in propositional logic:
 \begin{itemize}
@@ -303,8 +303,8 @@ There are two equally-simple  models satisfying $\neg (\neg p \land \neg q)$
 \item
 There are two equally-simple models satisfying $p \Rightarrow q$
 \end{itemize}
-But as \ELABR{} does not have disjunction, negation or implication, it does satisfy this unusual property.
-In \ELABR{}, both the linear-time decision procedure and the completeness proof rely on computing the simplest model that satisfies a formula. 
+But as \cathoristic{} does not have disjunction, negation or implication, it does satisfy this unusual property.
+In \cathoristic{}, both the quadratic-time decision procedure and the completeness proof rely on computing the simplest model that satisfies a formula. 
 
 \subsection{Computing the simplest model satisfying a formula}
 \label{simpl}
@@ -471,7 +471,7 @@ Formally, define the least upper bound ($\sqcup$) of two models as:
 
 \NI where $\MMM_\top$ is the topmost model $(\mathcal{W}=\{z\},
 \rightarrow=\{\}, \lambda=\{z \mapsto \Sigma\})$ for some state $z$.
-$\mathsf{lub}$ takes four parameters: the two eremic transition
+$\mathsf{lub}$ takes four parameters: the two cathoristic transition
 systems $\CAL{L}$ and $\CAL{L}'$, an accumulator representing the
 constructed result so far, and a list of state triples (each triple
 contains one state from each of the two input models plus the state of
@@ -546,14 +546,14 @@ Now, from the construction of $\mathsf{lub}$, $\lambda_{\MMM \sqcup \MMM'}(y*) =
 So $\lambda_{\NNN}(x) \supseteq \lambda_{\MMM \sqcup \MMM'}(y)$, as required.
 \end{proof}
 
-\subsection{A decision procedure for eremic logic}\label{decisionprocedure}
+\subsection{A decision procedure for \cathoristic{}}\label{decisionprocedure}
 
-We use the semantic constructions above to provide a linear-time
+We use the semantic constructions above to provide a quadratic-time
 decision procedure.  The complexity of the decision procedure is an
-indication that \ELABR{} is useful as a query language in knowledge
+indication that \cathoristic{} is useful as a query language in knowledge
 representation.
 
-Eremic logic's lack of connectives for negation, disjunction or
+\Cathoristic{}'s lack of connectives for negation, disjunction or
 implication is the key reason for the efficiency of the decision
 procedure.  Although any satisfiable formula has an infinite number of
 models, we have shown that the satisfying models form a bounded
@@ -576,7 +576,7 @@ algorithm.
 \begin{theorem}\label{theorem:decision}
   The following are equivalent:
   \begin{enumerate}
-    \item\label{theorem:decision:1} For all eremic models $\MMM$,
+    \item\label{theorem:decision:1} For all cathoristic models $\MMM$,
       $\MMM \models \phi$ implies $\MMM \models \psi$.
     \item\label{theorem:decision:2} $\SIMPL{\phi} \models \psi$.
   \end{enumerate}
@@ -603,30 +603,22 @@ $\SIMPL{\phi}$ for $\MMM'$, it follows that $\MMM \models \psi$.
 
 Given this theorem, the decision procedure is straightforward: to
 test if $\phi \models \psi$, we construct $\SIMPL{\phi}$, and then inspect whether
-$\SIMPL{\phi} \models \psi$.  Construction of $\SIMPL{\phi}$ is linear in the size of
-$\phi$, and computing whether a model satisfies $\psi$ is linear in the size
-of $\psi$, so computing whether $\phi \models \psi$ is $O(|\phi|+|\psi|)$.
+$\SIMPL{\phi} \models \psi$.  Construction of $\SIMPL{\phi}$ is quadratic in the size of
+$\phi$, and computing whether a model satisfies $\psi$ is of order $|\psi| \times |\phi|$, so computing whether $\phi \models \psi$ is quadratic time.
 
 There is a Haskell implementation of the decision procedure
-\cite{HaskellImplementation}.  To see that the decision procedure is
-linear-time, observe that every function in the Haskell implementation
-is non-recursive and all iterative constructions use one of
-\texttt{map}, \texttt{filter}, \texttt{fold}, \texttt{any},
-\texttt{all} - each of which is linear in the size of its input, hence
-so is the overall program.\martin{There's probably some theorem to this effect. Probably needs careful formulation to be true.}
-
-
+\cite{HaskellImplementation}.  The reader is invited to inspect the Haskell code to verify that the algorithm runs in quadratic time.
 
 \subsection{Incompatibility semantics}\label{incompatibility}
 
-\NI One of eremic logic's key features is that it satisfies Brandom's
+\NI One of \cathoristic{}'s key features is that it satisfies Brandom's
 incompatibility semantics condition. In this section we formalise what
 this means and prove it.
 
 Define the set of formulae\footnote{Brandom \cite{brandom} defines
   incompatibility slightly differently: he defines the set of
   \emph{sets} of formulae which are incompatible with a \emph{set} of
-  formulae.  But in \ELABR{}, if a set of formulae is incompatible,
+  formulae.  But in \cathoristic{}, if a set of formulae is incompatible,
   then there is an incompatible subset of that set with exactly two
   members.  So we can work with the simpler definition in the text
   above.}  incompatible with $\phi$ as:
@@ -648,10 +640,10 @@ Not all logics satisfy this
 property.  Brandom has shown that First Order Logic and S5 satisfy the
 incompatibility semantics property, but it is an open question which
 other logics satisfy it.  HML satisfies it, but HML without negation
-does not.  \ELABR{} is the \emph{simplest logic we have found} that
+does not.  \cathoristic{} is the \emph{simplest logic we have found} that
 satisfies the property.
 
-To prove that \ELABR{} satisfies the incompatibility semantics condition, we need to first define a related incompatibility function on  models.
+To prove that \cathoristic{} satisfies the incompatibility semantics condition, we need to first define a related incompatibility function on  models.
 $\mathcal{J}(\MMM)$ is the set of models that are incompatible with $\MMM$:
 \[
 \mathcal{J}(\MMM) = \{ \MMM_2 \; | \; \MMM \sqcap \MMM_2 = \bot \}

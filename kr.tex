@@ -1,37 +1,37 @@
-\section{Using \ELFULL{} as a Knowledge Representation Language}\label{kr}
+\section{Using \Cathoristic{} as a Knowledge Representation Language}\label{kr}
 
 
-\ELFULL{} has been used as the representation language for a large,
+\Cathoristic{} has been used as the representation language for a large,
 complex, dynamic multi-agent simulation \cite{evans-and-short}.
 This
 is an industrial-sized application, involving tens
 of thousands of rules and facts. 
-In this program, the entire world state is stored as a set of eremic logic formulae -
+In this program, the entire world state is stored as a set of \cathoristic{} formulae -
 all other aspects of world state are transient and computed as needed.
 The current true sentences are represented in a deterministic labeled
 transition system.
 
 We shall first sketch how facts are represented, before describing some
-advantages of \ELABR{} over a more traditional \fol{}
+advantages of \cathoristic{} over a more traditional \fol{}
 representation.
 
-\subsection{Representing facts  in \ELABR{}}
+\subsection{Representing facts  in \cathoristic{}}
 
-We used the following strategy for representing facts in \ELABR{}.  
+We used the following strategy for representing facts in \cathoristic{}.  
 (The translation is detailed later in Section
 \ref{translationFOLtoFOEL}).  
 A sentence involving a one-place predicate of the form $p(a)$ is
-expressed in \ELABR{} as
+expressed in \cathoristic{} as
 \begin{eqnarray*}
    \MAY{a} \MAY{p}
 \end{eqnarray*}
 
 \NI A sentence involving a many-to-many two-place relation of the form
-$r(a,b)$ is expressed in \ELABR{} as
+$r(a,b)$ is expressed in \cathoristic{} as
 \begin{eqnarray*}
 \MAY{a} \MAY{r} \MAY{b}
 \end{eqnarray*}
-But a sentence involving a many-to-one two-place relation of the form $r(a,b)$ is expressed in \ELABR{}:
+But a sentence involving a many-to-one two-place relation of the form $r(a,b)$ is expressed in \cathoristic{}:
 \begin{eqnarray*}
 \MAY{a} \MAY{r} (\MAY{b} \land \fBang \{b\})
 \end{eqnarray*}
@@ -68,7 +68,7 @@ Consider the following facts about a gentleman named Brown:
 sub-tree of the entire database.  And all the facts which start with
 the prefix $\MAY{brown} \MAY{friends}$ form a sub-tree of that tree.
 A sub-tree can be treated as an individual via its prefix.  
-A sub-tree of formulae is the \ELABR{} equivalent of an
+A sub-tree of formulae is the \cathoristic{} equivalent of an
 \emph{object} in an object-oriented programming language.
 
 To model change over time, we assert and retract statements from the database, using a non-monotonic update mechanism.
@@ -92,7 +92,7 @@ So if, for example, Brown is married to Elizabeth, then the database would conta
 \begin{eqnarray*}
 \MAY{brown} \MAY{married} (\MAY{elizabeth} \land \fBang \{elizabeth\})
 \end{eqnarray*}
-In \ELFULL{}, if we want to find out whether Brown is married, we can query the sub-formula directly -  we just ask if 
+In \cathoristic{}, if we want to find out whether Brown is married, we can query the sub-formula directly -  we just ask if 
 \begin{eqnarray*}
 \MAY{brown} \MAY{married}
 \end{eqnarray*}
@@ -100,7 +100,7 @@ In \fol, if $married$ is a two-place predicate, then we need to fill in the extr
 
 \subsection{Simpler Postconditions}
 
-In this section, we contrast the representation in action languages based on \fol{}\footnote{E.g. STRIPS \cite{strips}}, with our \ELABR{}-based representation.
+In this section, we contrast the representation in action languages based on \fol{}\footnote{E.g. STRIPS \cite{strips}}, with our \cathoristic{}-based representation.
 Action definitions are rendered in typewriter font.
 
 When expressing the pre- and post-conditions of an action, planners
@@ -114,7 +114,7 @@ action move(A, X, Y)
         add: at(A, Y) 
         remove: at(A, X)
 \end{verbatim}
-Here, we need to explicitly state that when $A$ moves from $X$ to $Y$, $A$ is no longer at $X$. It might seem obvious to us that if $A$ is now at $Y$, he is no longer at $X$ - but we need to explicitly tell the system this. This is unnecessary, cumbersome and error-prone. In \ELFULL{}, by contrast, the exclusion operator means we do not need to specify the facts that are no longer true:
+Here, we need to explicitly state that when $A$ moves from $X$ to $Y$, $A$ is no longer at $X$. It might seem obvious to us that if $A$ is now at $Y$, he is no longer at $X$ - but we need to explicitly tell the system this. This is unnecessary, cumbersome and error-prone. In \cathoristic{}, by contrast, the exclusion operator means we do not need to specify the facts that are no longer true:
 \begin{verbatim}
 action move (A, X, Y)
     preconditions
@@ -138,8 +138,8 @@ married_couple_at_home(X, Y) :-
 \end{verbatim}	
 Rules like this create a large search-space because we need to find all instances of $welsh(X)$ and all instances of  $welsh(Y)$ and take the cross-product \cite{smith-and-genesereth}. If there are $n$ Welsh people, then we will be searching $n^2$ instances of $(X,Y)$ substitutions.
 
-If we express the rule in \ELFULL{}, the compiler is able to use the extra information expressed in the $!$ operator to reorder the literals to find the result significantly faster.
-Assuming someone can only have a single spouse at any moment, the rule is expressed in \ELFULL{} as:
+If we express the rule in \cathoristic{}, the compiler is able to use the extra information expressed in the $!$ operator to reorder the literals to find the result significantly faster.
+Assuming someone can only have a single spouse at any moment, the rule is expressed in \cathoristic{} as:
 \begin{verbatim}
 married_couple_at_home(X, Y) :-
     <welsh> <X>,

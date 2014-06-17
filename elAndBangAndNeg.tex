@@ -1,17 +1,17 @@
-\section{Eremic logic and negation}\label{ELAndNegation}
+\section{\Cathoristic{} and negation}\label{ELAndNegation}
 
-\subsection{The logic $EL[\land, !, \neg]$}
+\subsection{The logic $CL[\land, !, \neg]$}
 
-Our motivation for investigating eremic logic has been to give an
+Our motivation for investigating \cathoristic{} has been to give an
 alternative account of negation, based on the concept of exclusion.
-In this section we study how to recover negation in eremic logic. For
-this purpose, we enrich eremic logic with negation as well as
+In this section we study how to recover negation in \cathoristic{}. For
+this purpose, we enrich \cathoristic{} with negation as well as
 disjunction, and show how negation can be explained in terms of plain
-eremic logic with disjunction.
+\cathoristic{} with disjunction.
 
 \begin{definition}
-Given a set $\Sigma$ of symbols, the \emph{formulae of eremic logic
-  with negation}, collectively denoted EL$[\land, !, \neg]$, are given
+Given a set $\Sigma$ of symbols, the \emph{formulae of \cathoristic{}
+  with negation}, collectively denoted CL$[\land, !, \neg]$, are given
 by the following grammar.
 
 \begin{GRAMMAR}
@@ -26,7 +26,7 @@ for $\neg (\neg \phi \land \neg \psi )$, and $\phi \IMPLIES \psi$  abbreviates
 $\neg\phi \OR \psi$.
 \end{definition}
 
-The semantics of EL$[\land, !, \neg]$ is just as in EL$[\land, !]$
+The semantics of CL$[\land, !, \neg]$ is just as in CL$[\land, !]$
 above, except for the obvious clauses for negation and disjunction:
 \begin{eqnarray*}
 \MMM \models \neg \phi &\quad\mbox{ iff }\quad& \MMM \nvDash \phi  
@@ -34,15 +34,15 @@ above, except for the obvious clauses for negation and disjunction:
 \end{eqnarray*}
 
 Negation is a core operation of classical logic, and its absence makes
-eremic logic unusual. In order to understand eremic logic better, we
+\cathoristic{} unusual. In order to understand \cathoristic{} better, we
 now investigate how negation can be seen as a definable abbreviation
-in eremic logic with disjunction. The key idea is that 
+in \cathoristic{} with disjunction. The key idea is that 
 \[
    \neg \MAY{a}{\phi}
 \]
 can be false in two ways: there is no $a$-labelled action at the
 current state, or there is, but $\phi$ is false. Both arms of this
-disjunction can be expressed in eremic logic:
+disjunction can be expressed in \cathoristic{}:
 
 \begin{itemize}
 
@@ -98,7 +98,7 @@ generate infinitary formulae.
 \subsection{A decision procedure}
 
 \NI We can use the fact that the $[\land, \fBang]$ fragment of SNEL\martin{That term is now obsolete.}
-has a linear-time decision procedure to build an exponential-time
+has a quadratic-time decision procedure to build an exponential-time
 decision procedure for EL $[\land, \fBang, \neg]$:
 
 Given a claim $\phi \models \psi$, let $S = \mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{a\}$ (where $a$ is a new symbol which does not occur in $\phi$ or $\psi$).
@@ -116,7 +116,7 @@ Now
 \]
 \martin{What does $\forall \phi_{i=1}^n \phi_i$ mean?}
 Now, to check whether each $\phi_i \models \psi$, we will construct a
-model of $\psi_i$ (in linear time).  Now define the $S$ extensions of
+model of $\psi_i$ (in quadratic time).  Now define the $S$ extensions of
 an annotated model $\MMM$ as all models which extend the states of
 $\MMM$ with extra transitions taken from $S$ which respect the state
 labelling on $\MMM$.  Now $\phi_i \models \psi$ if and only if all
@@ -136,7 +136,7 @@ the extensions of an annotated model relative to a set $S$ of symbols.
 Recall that, to check whether $\phi_i \models \psi$, we enumerate the $S$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{\phi_i}$) and check for each one whether it satisfies $\psi$.
 
 \begin{definition}
-Given an eremic transition system $(\mathcal{W},\rightarrow,\lambda)$,  and a set $S$ of symbols, then $(\mathcal{W'},\rightarrow',\lambda')$ is a {\bf $S$-extension} of $(\mathcal{W},\rightarrow,\lambda)$ if it is a valid LTS (recall Definition 1) and for all $(x,a,y) \in \rightarrow'$, either:
+Given an cathoristic transition system $(\mathcal{W},\rightarrow,\lambda)$,  and a set $S$ of symbols, then $(\mathcal{W'},\rightarrow',\lambda')$ is a {\bf $S$-extension} of $(\mathcal{W},\rightarrow,\lambda)$ if it is a valid LTS (recall Definition 1) and for all $(x,a,y) \in \rightarrow'$, either:
 \begin{itemize} 
 \item
 $(x, a, y) \in \rightarrow$,  or;

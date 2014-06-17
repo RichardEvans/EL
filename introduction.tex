@@ -41,15 +41,15 @@ though incompatibility does not, prima facie, appear to have anything to do
 with the free/bound variable distinction, or require the full power of 
 the identity relation.
 
-This paper introduces an alternative, \ELFULL{}, where incompatibility is
+This paper introduces an alternative, \cathoristic{}, where incompatibility is
 expressed directly, as a first-class concept - rather than being relegated
-to second-class status as a defined concept. \ELFULL{} is the simplest
+to second-class status as a defined concept. \Cathoristic{} is the simplest
 logic we could find that expresses incompatibility directly.  There is no
 negation, disjunction or implication. To retain expressive power,
-eremic logic has may-modalites.  Because of this simplicity, it has a
-linear-time decision procedure.
+\cathoristic{} has may-modalities.  Because of this simplicity, it has a
+quadratic-time decision procedure.
 
-\ELFULL{} is a multi-modal logic, a variant of Hennessy-Milner Logic,
+\Cathoristic{} is a multi-modal logic, a variant of Hennessy-Milner Logic,
 that replaces negation with a different logical connective:
 \[
    !A
@@ -75,7 +75,7 @@ of France, we write:
 \[
 \MAY{king}\MAY{france}(\MAY{pierre} \land \fBang \{pierre\})
 \]
-Crucially \ELFULL{}'s representation involves no
+Crucially \cathoristic{}'s representation involves no
 universal quantifier and no identity relation.  It is a purely
 propositional representation.  To say that the traffic
 light is currently red, and red is its only colour, we write:
@@ -101,9 +101,9 @@ free.
 Having claimed that incompatibility is a natural logical concept, not
 easily expressed in first-order logic\footnote{We will precisify this
   claim in later sections; first order logic's representation of
-  incompatibility is longer in terms of formula length than \ELFULL{}'s (see
+  incompatibility is longer in terms of formula length than \cathoristic{}'s (see
   Section \ref{incompatiblepredicatesinfol}); and (ii) logic programs
-  in \ELFULL{} can be optimised to run significantly faster than their
+  in \cathoristic{} can be optimised to run significantly faster than their
   equivalent in \FOL{} (see Section \ref{optimizingpreconditions}).}, we
 will now argue the following:
 
@@ -248,7 +248,7 @@ We develop a simple
 So far, we have justified the claim that incompatibility is a fundamental logical concept by arguing (following Brandom) that incompatibility is conceptually prior to negation. 
 
 Now incompatibility is an inferential relation between \emph{atomic sentences}. 
-In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that \fol{} cannot articulate, but that \ELFULL{} handles naturally.
+In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that \fol{} cannot articulate, but that \cathoristic{} handles naturally.
 
 The \emph{atomic sentences} of a natural language can be
 characterised as the sentences which do not contain any other
@@ -351,38 +351,38 @@ are incompatibilities between atomic propositions. In \S 82:
 \end{quote}
 
 \NI Wittgenstein does not, unfortunately, show us what this
-language would look like.  EL is one way of formalising inferences
+language would look like.  \Cathoristic{} is one way of formalising inferences
 between atomic sentences.
 
 \subsection{Outline}
 
 \NI The rest of this paper is organised as follows: Section
-\ref{coreEL} introduces the syntax and semantics of eremic logic with
-examples. Section \ref{naturalLanguageInference} discusses how how
-eremic logic can be used to model adverbial inferences and inferences
+\ref{coreEL} introduces the syntax and semantics of \cathoristic{} with
+examples. Section \ref{naturalLanguageInference} discusses how
+\cathoristic{} can be used to model adverbial inferences and inferences
 from dyadic to monadic s.  Section \ref{kr} describes
-informally how eremic logic is useful as a knowledge representation
+informally how \cathoristic{} is useful as a knowledge representation
 language.  Section \ref{elAndBangCore} presents core results of the
 paper, in particular a semantic characterisation of elementary
-equivalence and a decision procedure with linear time-complexity. The
+equivalence and a decision procedure with quadratic time-complexity. The
 decision procedure has been implemented in Haskell and is available
 for public use \cite{HaskellImplementation} under a liberal
 open-source license.\martin{add a license blurb on Github}.  This
 section also shows that Brandom's incompatibility semantics condition
-holds for eremic logic.  Section \ref{elAndBangMore} presents the
-proof rules for eremic logic and proves completeness. Section
-\ref{compactness} provides two translations from eremic into
-first-order logic, and proves compactness using one of them.  Section
-\ref{ELAndNegation} investigates the role of negation in eremic logic
-in two ways: by introducing a variant of eremic logic with negation,
+holds for \cathoristic{}.  Section \ref{elAndBangMore} presents the
+proof rules for \cathoristic{} and proves completeness. Section
+\ref{compactness} provides two translations from \cathoristic{} into
+\fol{}, and proves compactness using one of them.  Section
+\ref{ELAndNegation} investigates the role of negation in \cathoristic{}
+in two ways: by introducing a variant of \cathoristic{} with negation,
 and with a decision procedure for this fragment that has an
 exponential time-complexity.  Section \ref{relatingELToOtherLogics}
-relates eremic logic and Hennessy-Milner Logic.  Section
-\ref{quantifiedEL} extends eremic logic with first-order quantifiers
+relates \cathoristic{} and Hennessy-Milner Logic.  Section
+\ref{quantifiedEL} extends \cathoristic{} with first-order quantifiers
 and sketches the translation of first-order formulae into first-order
-eremic logic. The conclusion surveys related work and lists open
+\cathoristic{}. The conclusion surveys related work and lists open
 problems.  Appendix \ref{pureModels} outlines a different approach to
-giving the semantics of eremic logics, including a characterisation of
+giving the semantics of \cathoristic{}, including a characterisation of
 the corresponding elementary equivalence. The appendix also discusses
 the question of non-deterministic models. The remaining appendices
 present routine proof of facts used in the main section.

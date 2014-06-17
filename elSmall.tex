@@ -1,17 +1,16 @@
-\section{\ELFULL}\label{coreEL}
+\section{\Cathoristic{}}\label{coreEL}
 
-In this section we introduce the syntax and semantics of \ELFULL{}
-(hereafter \ELABR{}).  
+In this section we introduce the syntax and semantics of \cathoristic{}.
 
 \subsection{Syntax}
 \label{elsyntax}
-\NI Syntactically, eremic logic is a multi-modal logic with one new
+\NI Syntactically, \cathoristic{} is a multi-modal logic with one new
 operator.
 
 \begin{definition} Let $\Sigma$ be a non-empty set of \emph{actions}.
 Actions are ranged over by $a, a', a_1, b, ...$, and $A$ ranges over
 finite subsets of $\Sigma$. The \emph{formulae}, ranged over by $\phi,
-\psi, \xi ...$, of \ELABR{} are given by the
+\psi, \xi ...$, of \cathoristic{} are given by the
 following grammar.
 
 \begin{GRAMMAR}
@@ -33,7 +32,7 @@ the meaning of formulae informally. $\TRUE$ is truth and $\phi \AND
 $\MAY{a}{\phi}$ is the may-modality which asserts that the current
 state may do action $a$, and in doing $a$ transitions evolves into a
 now state at which $\phi$ holds. Tantum $A$, from Latin ``tantum''
-meaning ``only'' and written $!A$, is the key novelty of eremic logic.
+meaning ``only'' and written $!A$, is the key novelty of \cathoristic{}.
 $!A$ means that if $!A$ holds at the current state, then the only
 modalities $\MAY{a}{}$ available at the corrent state are those with
 $a \in A$.
@@ -57,7 +56,7 @@ stated otherwise.
 
 \subsection{Semantics}
 
-\NI The semantics of eremic logic is close to Hennessy-Milner logic
+\NI The semantics of \cathoristic{} is close to Hennessy-Milner logic
 \cite{HennessyM:alglawfndac} but uses \emph{deterministic} transition systems, as
 described in Section \ref{preliminaries}, augmented with labels on
 states.
@@ -69,7 +68,7 @@ states.
 %% \end{definition}
 
 \begin{definition}
-An \emph{eremic transition system} is a triple $\LLL = (S,
+An \emph{cathoristic transition system} is a triple $\LLL = (S,
 \rightarrow, \lambda)$, where $(S, \rightarrow)$ is a deterministic
 labelled transition system over $\Sigma$, and $\lambda$ is a function
 from states to sets of actions (not necessarily finite), subject to
@@ -93,7 +92,7 @@ restriction is in place because transitions $s \TRANS{a} t$ where $a
 \notin \lambda(s)$ would be saying that an $a$ action is possible at
 $s$ but at the same time prohibit $a$ actions at that state.
 Well-sizedness is not a fundamental restriction but rather a
-convenient trick. Essentially eremic transition systems have two kinds
+convenient trick. Essentially cathoristic transition systems have two kinds
 of nodes:
 
 \begin{itemize}
@@ -110,21 +109,21 @@ of nodes:
 restrictions makes some definitions and proofs slightly easier.
 
 As with other modal logics, satisfaction of formulae is defined
-relative to a state in the ambient eremic transition system, giving
+relative to a state in the ambient cathoristic transition system, giving
 rise to the following definition.
 
 \begin{definition}
-A \emph{eremic model}, ranged over by $\MMM, \MMM', ...$, is a pair
-$(\LLL, s)$, where $\LLL$ is an eremic transition system $(S,
+A \emph{cathoristic model}, ranged over by $\MMM, \MMM', ...$, is a pair
+$(\LLL, s)$, where $\LLL$ is an cathoristic transition system $(S,
 \rightarrow, \lambda)$, and $s$ is a state from $S$. We call $s$ the
 \emph{root} of the model.
 
-An eremic model with root $r$ is a \emph{tree}, provided the
+An cathoristic model with root $r$ is a \emph{tree}, provided the
 underlying transition system is a tree with root $r$.
 \end{definition}
 
-\NI With eremic models at hand, we can finally formalise the
-satisfaction relation for eremic formulae.
+\NI With cathoristic models at hand, we can finally formalise the
+satisfaction relation for cathoristic formulae.
 
 \begin{definition}\label{ELsatisfaction}
 The \emph{satisfaction relation} $\MMM \models \phi$ is defined
@@ -187,14 +186,14 @@ and Figure \ref{more models} shows one model that does, and one that
 does not, satisfy the formula $\fBang \{a,b\}$.  Both models validate
 $!\{a, b, c\}$.
 
-\ELABR{} does not have the operators $\neg, \lor, $ or $\Rightarrow$.
+\Cathoristic{} does not have the operators $\neg, \lor, $ or $\Rightarrow$.
 This has the following two signification consequences.  First, every
 satisfiable formula has a unique (up to isomorphism) simplest model.
 In Figure \ref{threemodels}, the left model is the unique simplest
 model satisfying$\MAY{a} \MAY{b}$.  We will clarify below that model
 simplicity is closely related to the process theoretic concept of
 similarity, and use the existence of unique simplest models to
-construct a \emph{linear-time} decision procedure.
+construct a \emph{quadratic-time} decision procedure.
 
 \input{figure:elAndBang:models}
 
@@ -204,7 +203,7 @@ Secondly, EL is different from other logics in that there is an
 asymmetry between tautologies and contradictories: logics with
 conventional negation have an infinite number of non-trivial
 tautologies as well as an infinite number of contradictories.  In
-contrast, because eremic logic has no negation or disjunction
+contrast, because \cathoristic{} has no negation or disjunction
 operator, it is expressively limited in the tautologies it can
 express: top and conjunctions of top are its sole tautologies. On the
 other hand, the tantum operator, enables an infinite number of
@@ -219,7 +218,7 @@ contradictories to be expressed.  For example:
 
 %% \begin{definition} Let $\Gamma$ be an arbitrary set of formulae. We
 %% say \emph{$\Gamma$ semantically implies $\phi$}, written $\Gamma
-%% \models \phi$, provided for all eremic models $\MMM$ if it is the
+%% \models \phi$, provided for all cathoristic models $\MMM$ if it is the
 %% case that $\MMM \models \Gamma$ implies $\MMM \models \phi$.
 %% \richard{We do not define $\models \Gamma$ for a set $\Gamma$, only
 %% for individual formulae - do we want to change this definition to
@@ -234,24 +233,24 @@ contradictories to be expressed.  For example:
 
 \begin{definition} 
  We say the formula $\phi$ \emph{semantically implies} $\psi$, written $\phi
-   \models \psi$, provided for all eremic models $\MMM$ if it is the
+   \models \psi$, provided for all cathoristic models $\MMM$ if it is the
    case that $\MMM \models \phi$ then also $\MMM \models \phi$.
 \end{definition}
 
 \begin{example}
-\ELABR{} shares with other (multi)-modal logics the following
+\Cathoristic{} shares with other (multi)-modal logics the following
 implications:
 \begin{eqnarray*}
 \MAY{a} \MAY{b} \models \MAY{a} 
  \qquad\qquad
 \MAY{a} (\MAY{b} \land \MAY{c}) \models \MAY{a} \MAY{b}
 \end{eqnarray*}
-As \ELABR{} is restricted to deterministic models, it also
+As \cathoristic{} is restricted to deterministic models, it also
 validates the following formula:
 \begin{eqnarray*}
 \MAY{a} \MAY{b} \land \MAY{a} \MAY{b}  \models \MAY{a} (\MAY{b} \land \MAY{c})
 \end{eqnarray*}
-\ELABR{} also validates all implications in which the set of constraints is relaxed from left to right. For example:
+\Cathoristic{} also validates all implications in which the set of constraints is relaxed from left to right. For example:
 \begin{eqnarray*}
 \fBang \{\} \models \fBang \{a\} 
  \qquad\qquad
