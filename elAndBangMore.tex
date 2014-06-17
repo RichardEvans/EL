@@ -10,7 +10,7 @@ axioms.
   \phi \judge \psi.
 \]
 We also write $\judge \phi$ as a shorthand for $\top \judge
-\phi$.\martin{Do we use this?}  Figure \ref{figure:elAndBangRules}
+\phi$. Figure \ref{figure:elAndBangRules}
 presents all proof rules.
 \end{definition}
 
@@ -20,26 +20,24 @@ proof rules can be grouped in two parts: standard rules and rules
 unique to \cathoristic{}.  Standard rules are [\RULENAME{Id}],
 [\RULENAME{$\top$-Right}], [\RULENAME{$\bot$-Left}],
 [\RULENAME{Trans}], [\RULENAME{$\AND$-Left 1}],
-[\RULENAME{$\AND$-Left 2}] and [\RULENAME{$\AND$-Right}] hardly need
+[\RULENAME{$\AND$-Left 2}] and [\RULENAME{$\AND$-Right}]. They hardly need
 explanation as they are variants of familiar rules for propositional
 logic, see e.g.~\cite{TroelstraAS:basprot,vanDalenD:logstr}.  We now
-explain the rules that give EL's its distinctive properties: the
-relations betwen $\langle \rangle$, $!$ and $\bot$.
+explain the rules that give \cathoristic its distinctive properties.
 
-The rule [\RULENAME{$\bot$-Right 1}] axiom captures the core
-\emph{exclusion} property of !: for example if $A = \{male, female\}$
+The rule [\RULENAME{$\bot$-Right 1}]  captures the core
+exclusion property of the tantum !: for example if $A = \{male, female\}$
 then $\MAY{orange}{\phi}$ is incompatible with $!A$. Thus $!A \AND
 \MAY{orange}{\phi}$ must be false.
 
 The rule [\RULENAME{$\bot$-Right 2}] expresses that falsity is 'global'
-  and cannot be surpressed by prefixing. For example
+  and cannot be surpressed by the modalities. For example
   $\MAY{orange}{\bot}$ is false, simply because $\bot$ is already
   false.
 
-Relatedly, the rule [\RULENAME{Normal}] enables us to
-prefix an inference with a may-modality. 
-This rule can also be stated in the the following more general
-form:
+[\RULENAME{Normal}] enables us to prefix an inference with a
+may-modality.  This rule can also be stated in the the following more
+general form:
 \[
    \ONEPREMISERULENAMEDRIGHT
    {
@@ -50,7 +48,7 @@ form:
    }{Normal-Multi}
 \]
 
-\NI But it is not necessary, because [\RULENAME{Normal-Multi}] is
+\NI But it is not necessary because [\RULENAME{Normal-Multi}] is
 derivable from [\RULENAME{Normal}] as we show in the examples below.
 
 \subsection{Example inferences}
@@ -70,12 +68,10 @@ $\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$:
   \DisplayProof
 \end{center}
 
-\input{figure:elAndBangMore:bigDerivations}
 
-Figure \ref{figure:elAndBangMore:bigDerivations} demonstrates how
+\NI Figure \ref{figure:elAndBangMore:bigDerivations} demonstrates how
 to infer $\MAY{a}!\{b,c\} \land \MAY{a}!\{c,d\} \judge \MAY{a}!\{c\}$
 and $\MAY{a} !\{b\} \land \MAY{a} \MAY{c} \top \judge \MAY{d} \top$.
-
 
 \subsection{\RULENAME{!-Left} and \RULENAME{!-Right}}
 
@@ -115,25 +111,26 @@ rules embody the intuition that whenever $A \subseteq A'$ then
 asserting that $!A'$ is as strong as, or a stronger statement than
 $!A$. [\RULENAME{!-Left}] simply states that we can always strengthen
 our premise, while [\RULENAME{!-right 1}] allows us to weaken the
-premise.
-
+conclusion.
 
 \subsection{Characteristic formulae}
 
 In order to prove completeness, below, we need the notion of a
 \emph{characteristic formula} of a model: the simplest (in terms of
-entailment) formula that describes the model.
-The function $\SIMPL{\cdot}$ goes from formulae to (equivalence
-classes of) models. Now we go the other way: given a(n equivalence
-class of a) model $\MMM$, we compute its characteristic formula
-$\CHAR{m}$. The formula $\CHAR{\MMM}$ characterises fully the model
+entailment\martin{What does ``in terms of entailment'' mean?}) formula
+that describes the model.  The function $\SIMPL{\cdot}$ takes formulae
+as argument and returns models. Characteristic formulae go the other
+way: given a model $\MMM$, we compute its characteristic formula
+$\CHAR{\MMM}$. The formula $\CHAR{\MMM}$ characterises fully the model
 $\MMM$.  Characteristic formulae are investigated in the process
 calculi \cite{AcetoL:chaforfata} and Hoare logics
 \cite{HondaK:descriptive,ChargueraudA:provertcf}.  We leave it to
 further work to relate our use of characteristic formulae with these
-theory traditions. 
+theory traditions.
 
-Here is the definition of $\CHAR{\cdot}$.
+\clearpage
+\input{figure:elAndBangMore:bigDerivations}
+\clearpage
 
 \begin{definition}
 Let $\MMM$ be an cathoristic model that is a tree.
@@ -148,7 +145,7 @@ Let $\MMM$ be an cathoristic model that is a tree.
 is why we required, in Section \ref{elsyntax}, that $\Sigma$ is
 non-empty.
 
-\NI The functions $\mathsf{bang}(\cdot)$ on models are given by the
+The functions $\mathsf{bang}(\cdot)$ on models are given by the
 following clauses.
 
 \begin{eqnarray*}
@@ -187,8 +184,10 @@ The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
 \end{enumerate}
 \end{theorem}
 
-\NI Soundness is immediate from the definitions. Completeness is
-proved below. 
+\NI Soundness is immediate from the definitions. 
+ To prove complness  we will show that $\phi
+\models \psi$ implies there is a derivation of $\phi \judge \psi$.  Our proof
+will make use of two key facts (proved in Sections \ref{prooflemma4} and \ref{prooflemma5} below):
 
 %% \begin{definition}
 %% Let $\Gamma$ be an arbitrary set of eremic formulae. We write $\MMM
@@ -219,9 +218,6 @@ proved below.
 %% \psi$.  By soundness then also $\AND_i \phi \models \psi$, hence
 %% clearly $\Gamma \models \psi$.
 
-\NI To prove completeness,  we will show that $\phi
-\models \psi$ implies there is a derivation of $\phi \judge \psi$.  Our proof
-will make use of two key facts (proved in Sections \ref{prooflemma4} and \ref{prooflemma5} below):
 
 \begin{lemma}\label{lemma:completeness:4}
 If $\MMM \models \phi$ then $\CHAR{\MMM} \judge \phi$.
@@ -231,13 +227,14 @@ If $\MMM \models \phi$ then $\CHAR{\MMM} \judge \phi$.
 For all formulae $\phi$, we can derive $\phi \judge \CHAR{\SIMPL{\phi}}$.
 \end{lemma}
 
-Lemma \ref{lemma:completeness:4} states that, if $\phi$ is satisfied by a model, then there is a proof that the characteristic formula describing that model entails $\phi$.
-
-As to Lemma \ref{lemma:completeness:5}, $\SIMPL{\phi}$ is the simplest model
-satisfying $\phi$, and $\CHAR{\MMM}$ is the simplest formula describing
-$m$, so $\CHAR{\SIMPL{\phi}}$ is a simplified form of $\phi$. This lemma
-states that EL has the inferential capacity to transform any
-proposition into its simplified form.
+\NI Lemma \ref{lemma:completeness:4} states that, if $\phi$ is
+satisfied by a model, then there is a proof that the characteristic
+formula describing that model entails $\phi$.  Lemma
+\ref{lemma:completeness:5} says that $\SIMPL{\phi}$ is the simplest
+model satisfying $\phi$, and $\CHAR{\MMM}$ is the simplest formula
+describing $m$, so $\CHAR{\SIMPL{\phi}}$ is a simplified form of
+$\phi$. This lemma states that EL has the inferential capacity to
+transform any proposition into its simplified form.
 
 With these two lemmas in hand, the proof of completeness is
 straightforward.  Assume $\phi \models \psi$.  Then all models which satisfy

@@ -1,30 +1,13 @@
-* Prove  Haskell decisoin proce compexity is quadratic
-* Prove general completenss
-* Explain the meaning of "Cathoristic".
-* Too many of our sentences start with "But ..." Is this elegant?
-* Make a clear point somewhere that tree models are
-all we need.
-
-This is a general insight that holds for all modal logics, and
-is the case becasue bisimulation can't distinguish between LTS and their
-tree unflodings. 
-
-If we put this in, we can probably clean up some stuff.
-* Explain genesis of Brandom in
-\footnote{Itself a development of Sellars,
-  Hegel and Kant.}
-* Check preliminaries. Remove superfluous material.
-* Put the Haskell code into separate Github repo. Document how to use the
-software.
-* Add all missing biblographic references
-* remove doubly defined labels, add missing labels
-* Cases in proofs are inconsistent across the paper
-* Each chapter its own file
-* remove all files that are not used 
-* Maybe we should call "pure cathoristic" models just "pure" models?
-* Have we discussed bisimulation invariance?
 * Be consistent. In particular
   - State vs node
+
+  - \textbf vs \emph for emphasis
+
+  - sub-set vs subset and super-set vs superset
+
+  - I think we sometimes say pointed model. Replace by cathoristic model or whatever appropriate
+
+  - ultraproduce vs ultra-product and likewise for ultrafilter
 
   - space in = in definitions e.g. A = B vs A \quad=\quad B
 
@@ -80,6 +63,32 @@ software.
 
   - capitalisation, e.g. Cathoristic Logic vs Cathoristic logic vs cathoristic logic etc.
 
+* Remove all remains of EL, Eremic, eremic
+* Prove  Haskell decisoin proce compexity is quadratic
+* Prove general completenss
+* Explain the meaning of "Cathoristic".
+* Too many of our sentences start with "But ..." Is this elegant?
+* Make a clear point somewhere that tree models are
+all we need.
+
+This is a general insight that holds for all modal logics, and
+is the case becasue bisimulation can't distinguish between LTS and their
+tree unflodings. 
+
+If we put this in, we can probably clean up some stuff.
+* Explain genesis of Brandom in
+\footnote{Itself a development of Sellars,
+  Hegel and Kant.}
+* Check preliminaries. Remove superfluous material.
+* Put the Haskell code into separate Github repo. Document how to use the
+software.
+* Add all missing biblographic references
+* remove doubly defined labels, add missing labels
+* Cases in proofs are inconsistent across the paper
+* Each chapter its own file
+* remove all files that are not used 
+* Maybe we should call "pure cathoristic" models just "pure" models?
+* Have we discussed bisimulation invariance?
 * Talk about binding and precedence in EL formulae, qunatifiers etc. Be consistent.
 * Find better names for fragments: e.g. EL[∧, !] isn't exactly snappy. What
 about Core etc?
