@@ -1,19 +1,16 @@
 \section{\Cathoristic{} and negation}\label{ELAndNegation}
 
-\subsection{The logic $CL[\land, !, \neg]$}
-
-Our motivation for investigating \cathoristic{} has been to give an
+\NI Our motivation for investigating \cathoristic{} has been to give an
 alternative account of negation, based on the concept of exclusion.
-In this section we study how to recover negation in \cathoristic{}. For
-this purpose, we enrich \cathoristic{} with negation as well as
-disjunction, and show how negation can be explained in terms of plain
-\cathoristic{} with disjunction.
+In this section we study how (partially) to recover negation. For this
+purpose, we enrich \cathoristic{} with negation, and show how negation
+can be explained in terms of plain \cathoristic{} with disjunction.
+
+\subsection{Syntax and semantics}
 
 \begin{definition}
 Given a set $\Sigma$ of symbols, the \emph{formulae of \cathoristic{}
-  with negation}, collectively denoted CL$[\land, !, \neg]$, are given
-by the following grammar.
-
+  with negation} are given by the following grammar.
 \begin{GRAMMAR}
   \phi 
      &\quad ::= \quad & 
@@ -26,14 +23,14 @@ for $\neg (\neg \phi \land \neg \psi )$, and $\phi \IMPLIES \psi$  abbreviates
 $\neg\phi \OR \psi$.
 \end{definition}
 
-The semantics of CL$[\land, !, \neg]$ is just as in CL$[\land, !]$
-above, except for the obvious clauses for negation and disjunction:
+The semantics of \cathoristic\ with negation is just as that of
+\cathoristic\ without, except for the obvious clause for negation.
 \begin{eqnarray*}
 \MMM \models \neg \phi &\quad\mbox{ iff }\quad& \MMM \nvDash \phi  
 %\MMM \models \phi \lor \psi &\mbox{ iff }& \MMM \models \phi \text{ or }   \MMM \models \psi
 \end{eqnarray*}
 
-Negation is a core operation of classical logic, and its absence makes
+\NI Negation is a core operation of classical logic, and its absence makes
 \cathoristic{} unusual. In order to understand \cathoristic{} better, we
 now investigate how negation can be seen as a definable abbreviation
 in \cathoristic{} with disjunction. The key idea is that 
@@ -67,7 +64,9 @@ A$. In other words
    \BIGOR_{a \in \Sigma}\MAY{a}{\TRUE}
 \]
 
-\NI Note that both, the negation of the modality and the negation of
+\NI When $\Sigma$ is infinite, then so is the disjunction.
+
+Note that both, the negation of the modality and the negation of
 the tantum involve the set $\Sigma$ of actions. It is sometimes
 advantageous to translate away negation with respect to a subset $S
 \subseteq \Sigma$.  So far, we have defined negation with respect to
@@ -97,14 +96,14 @@ generate infinitary formulae.
 
 \subsection{A decision procedure}
 
-\NI We can use the fact that the $[\land, \fBang]$ fragment of SNEL\martin{That term is now obsolete.}
-has a quadratic-time decision procedure to build an exponential-time
-decision procedure for EL $[\land, \fBang, \neg]$:
-
-Given a claim $\phi \models \psi$, let $S = \mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{a\}$ (where $a$ is a new symbol which does not occur in $\phi$ or $\psi$).
-First, translate away all negations in $\phi$ using $\neg_S()$ as defined in Section 1.4.
-Let the result be $\phi'$.
-Second, reduce $\phi'$ to Disjunctive Normal Form by repeated application of the rewrite rules:
+\NI We can use the fact that the \cathoristic\ has a quadratic-time
+decision procedure to build an exponential-time decision procedure for
+\cathoristic\ with negation.  Given $\phi \models \psi$, let $S =
+\mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{a\}$ where
+$a$ is a new symbol which does not occur in $\phi$ or $\psi$.  First,
+translate away all negations in $\phi$ using $\neg_S()$ as defined in
+Section 1.4.  Let the result be $\phi'$.  Second, reduce $\phi'$ to
+Disjunctive Normal Form by repeated application of the rewrite rules:
 \begin{eqnarray*}
 \phi \land (\psi \lor \xi) & \quad \leadsto \quad& (\phi \land \psi) \lor (\phi \land \xi)  \\
 (\phi \lor \psi) \land \xi & \leadsto & (\phi \land \xi) \lor (\psi \land \xi) 
@@ -116,11 +115,11 @@ Now
 \]
 \martin{What does $\forall \phi_{i=1}^n \phi_i$ mean?}
 Now, to check whether each $\phi_i \models \psi$, we will construct a
-model of $\psi_i$ (in quadratic time).  Now define the $S$ extensions of
+model of $\psi_i$ (in quadratic time\martin{is that true, maybe we omit this claim.}).  Now define the $S$ extensions of
 an annotated model $\MMM$ as all models which extend the states of
 $\MMM$ with extra transitions taken from $S$ which respect the state
 labelling on $\MMM$.  Now $\phi_i \models \psi$ if and only if all
-$S$-extensions of $\SIMPL{\phi_i}$ satisfy $\psi$.  So, to check
+$S$-extensions\martin{What is that?} of $\SIMPL{\phi_i}$ satisfy $\psi$.  So, to check
 whether $\phi_i \models \psi$, we enumerate the $S$-extensions of
 $\SIMPL{\phi_i}$ (there are a finite number of such extensions - the
 exact number is exponential in the size of $\SIMPL{\phi_i}$) and check
@@ -133,7 +132,12 @@ the extensions of an annotated model relative to a set $S$ of symbols.
 
 \subsection{Computing the Extensions of a Model}
 
-Recall that, to check whether $\phi_i \models \psi$, we enumerate the $S$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of such extensions - the exact number is exponential in the size of $\SIMPL{\phi_i}$) and check for each one whether it satisfies $\psi$.
+\martin{Maybe merge this subsection with the previous.}
+
+Since to check whether $\phi_i \models \psi$, we enumerate the
+$S$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of such
+extensions - the exact number is exponential in the size of
+$\SIMPL{\phi_i}$) and check for each one whether it satisfies $\psi$.
 
 \begin{definition}
 Given an cathoristic transition system $(\mathcal{W},\rightarrow,\lambda)$,  and a set $S$ of symbols, then $(\mathcal{W'},\rightarrow',\lambda')$ is a {\bf $S$-extension} of $(\mathcal{W},\rightarrow,\lambda)$ if it is a valid LTS (recall Definition 1) and for all $(x,a,y) \in \rightarrow'$, either:
