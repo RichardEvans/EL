@@ -1,14 +1,15 @@
 \section{Semantics and Decision Procedure}\label{elAndBangCore}
 
-In this section we provide our key semantic results. 
-We define a partial ordering $\MODELLEQ$ on models, and show how the partial ordering can be extended into a bounded lattice.
-We use the bounded lattice to provide a decision procedure.
+In this section we provide our key semantic results.  We define a
+partial ordering $\MODELLEQ$ on models, and show how the partial
+ordering can be extended into a bounded lattice.  We use the bounded
+lattice in the  decision procedure for entailment in \cathoristic.
 
 \subsection{A semantic characterisation of elementary equivalence}\label{elementaryEquivalence}
 
 Elementary equivalence induces a notion of model equivalence: two
 models are elementarily equivalent exactly when they make the same
-formulae true. Elementary equivalent as a concept thus relies on
+formulae true. Elementary equivalence as a concept thus relies on
 \cathoristic{} even for its definition. We now present an alternative
 characterisation that is purely semantic, using the concept of
 (mutual) simulation from process theory. Apart from its intrinsic
@@ -16,7 +17,7 @@ interest, this characterisation will also be crucial for proving
 completeness of the proof rules.
 
 We first define a pre-order $\MODELLEQ$ on models by extending the
-notion of simulation on labeled transition systems to cathoristic
+notion of simulation on labelled transition systems to cathoristic
 models. Then we prove an alternative characterisation of $\MODELLEQ$
 in terms of set-inclusion of the theories induced by models. We then
 show that two models are elementarily equivalent exactly when they are
@@ -60,8 +61,28 @@ simulations.  If $\MMM_1 \SIM \MMM_2$ we say $\MMM_2$
 \emph{simulates} $\MMM_1$.
 
 We write $\MODELEQ$ for $\SIM \cap \SIM^{-1}$. We call $\MODELEQ$ the
-\emph{multual simulation} relation.
+\emph{mutual simulation} relation.
 \end{definition}
+
+\NI We briefly discuss the relationship of $\MODELEQ$ with
+bisimilarity, a notion of equality well-known from process theory and
+modal logic. For non-deterministic transition systems $\MODELEQ$ is a
+strictly coarser relation than bisimilarity.
+
+\begin{definition}
+We say $\RRR$ is a \emph{bisimulation} if $\RRR$ is a simulation from
+$\MMM_1$ to $\MMM_2$ and $\RRR^{-1}$ is a simulation from $\MMM_2$ to
+$\MMM_1$. By $\BISIM$ we denote the largest bisimulation, and we say
+that $\MMM_1$ and $\MMM_2$ are \emph{bisimilar} whenever $\MMM_1
+\BISIM \MMM_2$.
+\end{definition}
+
+\begin{lemma}
+On cathoristic models, $\BISIM$ and $\MODELEQ$ coincide.
+\end{lemma}
+\begin{proof}
+Straightforward from the definitions.
+\end{proof}
 
 \begin{definition}
 Let $\THEORY{\MMM}$ be the \emph{theory} of $\MMM$, i.e.~the formulae
@@ -69,8 +90,8 @@ made true by $\MMM$, i.e.~$\THEORY{\MMM} = \{\phi\ |\ \MMM \models
 \phi \}$.
 \end{definition}
 
-\NI We give an alternative characterisation on $\SIM^{-1}$ in terms of
-theories of models. In what follows, we will mostly be interested in
+\NI We give an alternative characterisation on $\SIM^{-1}$ using
+theories. In what follows, we will mostly be interested in
 $\SIM^{-1}$, so we give it its own symbol.
 
 \begin{definition}
@@ -164,27 +185,6 @@ equivalent. \Cathoristic{}'s lack of negation changes this drastically, and
 gives $\MODELLEQ$ the structure of a non-trivial bounded lattice as we
 shall demonstrate below.
 
-But first we show that $\MODELEQ$ is a strictly coarser relation than 
-bisimilarity.
-
-\begin{definition}
-We say $\RRR$ is a \emph{bisimulation} if $\RRR$ is a simulation from
-$\MMM_1$ to $\MMM_2$ and $\RRR^{-1}$ is a simulation from $\MMM_2$ to
-$\MMM_1$. By $\BISIM$ we denote the largest bisimulation, and we say
-that $\MMM_1$ and $\MMM_2$ are \emph{bisimilar} whenever $\MMM_1
-\BISIM \MMM_2$.
-\end{definition}
-
-Clearly $\BISIM \subseteq \MODELEQ$, but the two relations do not
-coincide: the former is strictly more discriminating than the latter,
-i.e.~$\BISIM \subsetneq \MODELEQ$. Figure \ref{figure:counterexample}
-shows two models that are $\MODELEQ$-equal but not bisimilar. Note
-that this counterexample is \emph{non-deterministic}. That is not
-coincidence, because on deterministic cathoristic models, the two relations
-coincide.
-
-\input{figure:counterexample}
-
 Theorem \ref{theorem:completeLattice} has various interesting
 consequences.
 
@@ -201,13 +201,13 @@ consequences.
 \end{enumerate}
 \end{corollary}
 \begin{proof}
-Both are straightforward because $\MODELEQ$ (and bisimilarity) is
-closed under tree-unfoldings as well as under removal of states not
-reachable from the start state.
+Both are straightforward because $\MODELEQ$ is closed under
+tree-unfoldings as well as under removal of states not reachable from
+the start state.
 \end{proof}
 
 
-\subsection{Quotienting Models}
+\subsection{Quotienting models}
 
 \NI The relation $\MODELLEQ$ is not a partial order, only a
 pre-order. For example with
@@ -220,8 +220,8 @@ pre-order. For example with
 
 \NI we have models where $\MMM_1 \MODELLEQ \MMM_2$ and $\MMM_2
 \MODELLEQ \MMM_1$, but the two models are not equal. The difference
-between the two models, the name of the unique state, is trival and
-not relevant for the formulae they make true. Indeed $\THEORY{\MMM_1}
+between the two models, the name of the unique state, is trivial and
+not relevant for the formulae they make true: $\THEORY{\MMM_1}
 = \THEORY{\MMM_2}$.  As briefly mentioned in the mathematical
 preliminaries (Section \ref{preliminaries}), we obtain a proper
 partial-order by simply quotienting models:
@@ -245,7 +245,7 @@ be computed on representatives:
 \[
    \BIGLUB \{[\MMM]_{\MODELEQ} \ |\ \MMM \in S\ \} = [\BIGLUB S]_{\MODELEQ}
 \]
-whenever $\BIGLUB S$ exists, and likewise for the greated lower bound.
+whenever $\BIGLUB S$ exists, and likewise for the greatest lower bound.
 We also define 
 \[
    [\MMM]_{\MODELEQ} \models \phi 
@@ -258,13 +258,12 @@ of representative is irrelevant.
 
 In the rest of this text, we will usually be sloppy and work with
 concrete models instead of $\MODELEQ$-equivalence classes of models
-because the quotienting process is straightfoward and not especially
+because the quotienting process is straightforward and not especially
 interesting. We can do this because all relevant constructions in this
 text are independent from the specific choice of representative.  Our
-Haskell implementation, described in Section \ref{hahahaskell} uses a
-slightly different approach: instead of equivalence classes, it uses
-canonical representatives.  \martin{add more explanation, and
-  integrate better with premiminaries}.
+Haskell implementation \cite{HaskellImplementation} uses a different
+approach: instead of equivalence classes, it uses canonical
+representatives. 
 
 \subsection{Extending $\MODELLEQ$ to a bounded lattice}
 \label{boundedlattice}
@@ -292,9 +291,12 @@ The bottom element is $\bot$.
 $\sqcap$ and $\sqcup$ are defined below.
 \end{proof}
 
-\Cathoristic{} has the unusual property that every formula has a unique (up to isomorphism) simplest  model satisfying a formula. 
-Any logic with disjunction, negation or implication does not have this property.
-For example, in propositional logic:
+\Cathoristic{} has the unusual property that every formula has a
+unique (up to isomorphism) simplest model satisfying a formula.\martin{We need to say that
+``simplest'' here means least w.r.t. $\MODELLEQ$. But if that's the case, isn't
+it better to call it ``least'' model, to avoid multiplying equivalent terminology?}  Any
+logic with disjunction, negation or implication does not have this
+property.  For example, in propositional logic:
 \begin{itemize}
 \item
 There are two equally-simple models satisfying $p \lor q$
@@ -331,7 +333,8 @@ $\MODELEQ$-equivalence class of models.
 
 The only complex case is the clause for $\SIMPL{\phi_1 \AND \phi_2}$,
 which uses the $\sqcap$ function, defined as follows, where we assume
-that the sets of states in the two models are disjoint.
+that the sets of states in the two models are disjoint and are trees.
+It is easy to see that $\SIMPL{\cdot}$ always returns tree models.
 
 \begin{eqnarray*}
   \bot \sqcap \MMM  &\ =\ &  \bot  \\
@@ -609,7 +612,7 @@ algorithm.
 
 \end{enumerate}
 
-\NI The correctness of this algorithm is given by the follow theorm.
+\NI The correctness of this algorithm is given by the follow theorem.
 
 \begin{theorem}\label{theorem:decision}
   The following are equivalent:
@@ -639,10 +642,10 @@ and $\MMM \MODELLEQ \MMM'$ then $\MMM \models \xi $ by Theorem
 $\SIMPL{\phi}$ for $\MMM'$, it follows that $\MMM \models \psi$.
 \end{proof}
 
-Given this theorem, the decision procedure is straightforward: to
-test if $\phi \models \psi$, we construct $\SIMPL{\phi}$, and then inspect whether
-$\SIMPL{\phi} \models \psi$.  Construction of $\SIMPL{\phi}$ is quadratic in the size of
-$\phi$, and computing whether a model satisfies $\psi$ is of order $|\psi| \times |\phi|$, so computing whether $\phi \models \psi$ is quadratic time.
+\NI Construction of $\SIMPL{\phi}$ is quadratic in the size of $\phi$,
+and computing whether a model satisfies $\psi$ is of order $|\psi|
+\times |\phi|$, so computing whether $\phi \models \psi$ is quadratic
+time.
 
 There is a Haskell implementation of the decision procedure
 \cite{HaskellImplementation}.  The reader is invited to inspect the Haskell code to verify that the algorithm runs in quadratic time.
@@ -653,47 +656,53 @@ There is a Haskell implementation of the decision procedure
 incompatibility semantics condition. In this section we formalise what
 this means and prove it.
 
-Define the set of formulae\footnote{Brandom \cite{brandom} defines
-  incompatibility slightly differently: he defines the set of
-  \emph{sets} of formulae which are incompatible with a \emph{set} of
-  formulae.  But in \cathoristic{}, if a set of formulae is incompatible,
-  then there is an incompatible subset of that set with exactly two
-  members.  So we can work with the simpler definition in the text
-  above.}  incompatible with $\phi$ as:
+Define the \emph{incompatibility set of $\phi$} as:
 \[
 \mathcal{I}(\phi) = \{
   \psi \; | \; \forall \MMM. \MMM \not \models \phi \AND \psi\}
 \]
-The reason why Brandom introduces the incompatibility set is that he wants to use it define \emph{semantic content}:
+
+\NI The reason why Brandom introduces the incompatibility set
+\footnote{Brandom \cite{brandom} defines incompatibility slightly
+  differently: he defines the set of \emph{sets} of formulae which are
+  incompatible with a \emph{set} of formulae.  But in \cathoristic{},
+  if a set of formulae is incompatible, then there is an incompatible
+  subset of that set with exactly two members.  So we can work with
+  the simpler definition in the text above.} is that he
+wants to use it define \emph{semantic content}:
 \begin{quote}
-Here is a semantic suggestion: represent the propositional content expressed by a sentence with the set of sentences that express propositions incompatible with it\footnote{\cite{brandom} p.123.}.
+  Here is a semantic suggestion: represent the propositional content
+  expressed by a sentence with the set of sentences that express
+  propositions incompatible with it\footnote{\cite{brandom} p.123.}.
 \end{quote}
 Now if the propositional content of a claim determines its logical consequences, and the propositional content is identified with the incompatibility set, then the incompatibility set must determine the logical consequences.
-A logic satisfies Brandom's \textbf{incompatibility semantics condition} if
+A logic satisfies Brandom's \emph{incompatibility semantics condition} if
 \[
-\phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
+\phi \models \psi \; \quad\mbox{ iff }\quad \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
 \]
 
-Not all logics satisfy this
-property.  Brandom has shown that First Order Logic and S5 satisfy the
-incompatibility semantics property, but it is an open question which
-other logics satisfy it.  HML satisfies it, but HML without negation
-does not.  \cathoristic{} is the \emph{simplest logic we have found} that
-satisfies the property.
-
-To prove that \cathoristic{} satisfies the incompatibility semantics condition, we need to first define a related incompatibility function on  models.
-$\mathcal{J}(\MMM)$ is the set of models that are incompatible with $\MMM$:
+\NI Not all logics satisfy this property.  Brandom has shown that
+first-order logic and the modal logic S5 satisfy the incompatibility
+semantics property, but it is not well-understood what other logics
+do.  Hennessy-Milner logic satisfies it, but Hennessy-Milner logic
+without negation does not.  \Cathoristic{} is the simplest logic we
+have found that satisfies the property.  To establish the
+incompatibility semantics condition for \cathoristic, we need to
+define a related incompatibility function on models.
+$\mathcal{J}(\MMM)$ is the set of models that are incompatible with
+$\MMM$:
 \[
 \mathcal{J}(\MMM) = \{ \MMM_2 \; | \; \MMM \sqcap \MMM_2 = \bot \}
 \]
-We shall make use of two lemmas (proved in the Appendix):
+We shall make use of two lemmas, proved in Appendix
+\ref{app:completeness:proofs}:
 \begin{lemma}
 \label{inc1}
-$\mbox{if }\phi \models \psi \mbox{ then } \SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$
+$\mbox{If }\phi \models \psi \mbox{ then } \SIMPL{\phi} \MODELLEQ \SIMPL{\psi}$
 \end{lemma}
 \begin{lemma}
 \label{inc3}
-$\mbox{if }\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi) \mbox{ then } \mathcal{J}(\SIMPL{\psi}) \subseteq \mathcal{J}(\SIMPL{\phi})$
+$\mathcal{I}(\psi) \subseteq \mathcal{I}(\phi) \mbox{ implies } \mathcal{J}(\SIMPL{\psi}) \subseteq \mathcal{J}(\SIMPL{\phi})$
 \end{lemma}
 
 \begin{theorem}
