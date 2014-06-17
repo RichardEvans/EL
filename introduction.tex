@@ -21,13 +21,11 @@ simple concept:
 
 \item Quantification is an expensive operation that comes with many
   rules governing its behaviour - such as the distinction between free
-  and bound variables\footnote{As of 2014\richard{Can we drop the ``As of 2014''?}  there is a substantial
-    amount of ongoing research regarding good formalisations of
-    handling free/bound variables, e.g.~the nominal approaches to
-    logic \cite{PittsAM:nomsetnasics}. The problem was
-    put in focus in recent years with the rising interest in the
-    computational cost of syntax manipulation in languages with
-    binders.}.
+  and bound variables\footnote{Efficient handling free/bound variables
+    is an active field of research, e.g.~nominal approaches to logic
+    \cite{PittsAM:nomsetnasics}. The problem was put in focus in
+    recent years with the rising interest in the computational cost of
+    syntax manipulation in languages with binders.}.
 
 \item The identity relation is also relatively expensive, as it
   requires an infinite collection of axioms to formalise the
@@ -41,15 +39,18 @@ though incompatibility does not, prima facie, appear to have anything to do
 with the free/bound variable distinction, or require the full power of 
 the identity relation.
 
-This paper introduces an alternative, \cathoristic{}, where incompatibility is
-expressed directly, as a first-class concept - rather than being relegated
-to second-class status as a defined concept. \Cathoristic{}\footnote{``Cathoristic'' comes from the Greek $\kappa \alpha \theta o \rho - \iota \zeta \omega$: to narrow the boundaries. We are grateful to Tim Whitmarsh for suggesting this word.} is the simplest
-logic we could find in which incompatible statements can be expressed.  
-To express facts, \cathoristic{}
-uses the has may-modalities of Hennessy-Milner logic.  But in \cathoristic{}, there is no
-negation, disjunction or implication. Because 
-of this simplicity, it has a
-quadratic-time decision procedure.
+This paper introduces an alternative, \cathoristic{}, where
+incompatibility is expressed directly, as a first-class concept -
+rather than being relegated to second-class status as a defined
+concept. \Cathoristic{}\footnote{``Cathoristic'' comes from the Greek
+  $\kappa \alpha \theta o \rho$ $\iota \zeta \omega$: to narrow the
+  boundaries. We are grateful to Tim Whitmarsh for suggesting this
+  word.} is the simplest logic we could find in which incompatible
+statements can be expressed.  To express facts, \cathoristic{} uses
+the has may-modalities of Hennessy-Milner logic.  But in
+\cathoristic{}, there is no negation, disjunction or
+implication. Because of this simplicity, it has a quadratic-time
+decision procedure.
 
 \Cathoristic{} is a multi-modal logic, a variant of Hennessy-Milner Logic,
 that replaces negation with a different logical connective:
@@ -105,7 +106,7 @@ easily expressed in first-order logic\footnote{We will precisify this
   incompatibility is longer in terms of formula length than \cathoristic{}'s (see
   Section \ref{incompatiblepredicatesinfol}); and (ii) logic programs
   in \cathoristic{} can be optimised to run significantly faster than their
-  equivalent in \FOL{} (see Section \ref{optimizingpreconditions}).}, we
+  equivalent in \fol{} (see Section \ref{optimizingpreconditions}).}, we
 will now argue the following:
 
 \begin{itemize}
