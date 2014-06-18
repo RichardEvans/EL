@@ -1,5 +1,5 @@
 
-\section{Capturing inferences between atomic sentences}\label{naturalLanguageInference}
+\section{Inferences between atomic sentences}\label{naturalLanguageInference}
 
 \NI \Cathoristic{} arose in parts as an attempt to answer the
 question: what is the simplest logic that can capture inferences
@@ -8,7 +8,7 @@ give examples of such inferences, and then show how \cathoristic{}
 handles them.  We also compare our approach with attempts at
 expressing the inferences in first-order logic.
 
-\subsection{Intra-atomic inferences in natural language}
+\subsection{Intra-atomic inferences}
 
 \NI Natural language admits many types of inference between atomic
 sentences.  First, exclusion:
@@ -35,8 +35,6 @@ Fifth, inferences from conjunctions of sentences to conjunction of predicates\fo
 \NI They all can be handled directly and naturally in \cathoristic{}, as we
 shall now show.
 
-
-\subsection{Intra-atomic inferences in \cathoristic{}}
 %% We shall show that each of the following inferences can be naturally expressed in \cathoristic{}:
 %% \begin{itemize}
 %% \item
@@ -131,7 +129,8 @@ together imply
 \MAY{jack} (\MAY{bruised} \land \MAY{humiliated})
 \end{eqnarray*}
  
-\subsection{Representing incompatible predicates in \fol}\label{incompatiblepredicatesinfol}
+\subsection{Incompatible predicates in \fol}\label{incompatiblepredicatesinfol}
+\martin{this section is a bit disconnected. It only talks about \fol.}
 
 \NI How are incompatible predicates represented in 
 \fol{}?  Brachman and Levesque \cite{brachman} introduce the
@@ -172,7 +171,9 @@ two-place $Supports$ relation between people and teams, we could have:
 others, this certainly captures the desired uniqueness condition.  But
 it does so by using relatively complex logical machinery.
 
-\subsection{Supporting inferences from dyadic to monadic predicates in \fol}
+
+
+\subsection{Inferences from dyadic to monadic predicates in \fol}
 If we want to capture the inference from ``Jack loves Jill`` to ``Jack
 loves'' in \fol{}, we can use a non-logical axiom:
 \[
@@ -185,7 +186,7 @@ contrast, we do not need to introduce any non-logical machinery
 to capture these inferences because they all follow from the general
 rule that $\MAY{a} \MAY{b} \models \MAY{a}$.
 
-\subsection{Supporting adverbial inferences in \fol{}}
+\subsection{Adverbial inferences in \fol{}}
 
 \NI How can we represent verbs in traditional \fol{} so as to
 support adverbial inference?  Davidson \cite{davidson2} proposed that
