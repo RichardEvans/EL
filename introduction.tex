@@ -5,30 +5,29 @@ If Pierre is the current king of France, then nobody else can simultaneously fil
 A traffic light can be green, amber or red - but it cannot be more than one colour at a time.
 Mutual exclusion is a natural and ubiquitous concept.
 
-Predicate logic \emph{can} represent mutually exclusive alternatives, of course.
-To say that Pierre is the \emph{only} king of France, we can write, following Russell:
+\FOL{} \emph{can} represent mutually exclusive alternatives, of course.
+To say that Pierre is the only king of France, we can write, following Russell:
 \[
 king(france, pierre) \land \forall x . king(france, x) \rightarrow x = pierre
 \]
-To say that a particular traffic light, $tl$, is red - and red is its \emph{only} colour - we could write:
+To say that a particular traffic light, $tl$, is red - and red is its only colour - we could write:
 \[
 colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red
 \]
-In \fol{}, incompatibility is a \emph{derived} concept, reduced to 
-a combination of universal quantification and identity.  \FOL{}, in other words, uses relatively complex machinery to express a
+In this approach, incompatibility is a \emph{derived} concept, reduced to 
+a combination of universal quantification and identity.  
+\FOL{}, in other words, uses relatively complex machinery to express a
 simple concept:
 \begin{itemize}
 
-\item Quantification is an expensive operation that comes with many
-  rules governing its behaviour - such as the distinction between free
-  and bound variables\footnote{Efficient handling free/bound variables
+\item Quantification's complexity comes from the
+  rules governing the distinction between free
+  and bound variables\footnote{Efficient handling of free/bound variables
     is an active field of research, e.g.~nominal approaches to logic
-    \cite{PittsAM:nomsetnasics}. The problem was put in focus in
-    recent years with the rising interest in the computational cost of
+    \cite{PittsAM:nomsetnasics}. The logic-programming community is increasingly focused on the computational cost of
     syntax manipulation in languages with binders.}.
 
-\item The identity relation is also relatively expensive, as it
-  requires an infinite collection of axioms to formalise the
+\item Identity's complexity comes from the infinite collection of axioms required to formalise the
   indiscernibility of identicals.
 
 \end{itemize}
@@ -39,20 +38,14 @@ though incompatibility does not, prima facie, appear to have anything to do
 with the free/bound variable distinction, or require the full power of 
 the identity relation.
 
-This paper introduces an alternative, \cathoristic{}, where
-incompatibility is expressed directly, as a first-class concept -
-rather than being relegated to second-class status as a defined
-concept. \Cathoristic{}\footnote{``Cathoristic'' comes from the Greek
-  $\kappa \alpha \theta o \rho$-$\iota \zeta \omega$: to narrow the
+This paper introduces an alternative approach, where
+exclusion is expressed directly, as a first-class concept.
+ \Cathoristic{}\footnote{``Cathoristic'' comes from the Greek
+  $\kappa \alpha \theta o \rho \acute{\i} \zeta \epsilon i \nu$: to impose narrow
   boundaries. We are grateful to Tim Whitmarsh for suggesting this
   word.} is the simplest logic we could find in which incompatible
-statements can be expressed.  To express facts, it uses
-the may-modalities of Hennessy-Milner logic.  But in
-\cathoristic{}, there is no negation, disjunction or
-implication. Because of this simplicity, it has a quadratic-time
-decision procedure.
-
-\Cathoristic{} is a multi-modal logic, a variant of Hennessy-Milner logic,
+statements can be expressed.  
+It is a multi-modal logic, a variant of Hennessy-Milner logic,
 that replaces negation with a new logical primitive:
 \[
    !A
@@ -80,7 +73,7 @@ of France, we write:
 \]
 Crucially, \cathoristic{}'s representation involves no
 universal quantifier and no identity relation.  It is a purely
-propositional representation.  To say that the traffic
+propositional formulation.  To say that the traffic
 light is currently red, and red is its only colour, we write:
 \[
 \MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\})
@@ -248,9 +241,8 @@ We develop a simple
 \subsection{Inferences between atomic sentences}
 \label{intrasentential}
 So far, we have justified the claim that incompatibility is a fundamental logical concept by arguing (following Brandom) that incompatibility is conceptually prior to negation. 
-
 Now incompatibility is an inferential relation between \emph{atomic sentences}. 
-In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that \fol{} cannot articulate, but that \cathoristic{} handles naturally.
+In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that \fol{} cannot articulate (or can only handle awkwardly), but that \cathoristic{} handles naturally.
 
 The \emph{atomic sentences} of a natural language can be
 characterised as the sentences which do not contain any other
@@ -297,12 +289,11 @@ sentences of a natural language.  For example:
 
 \end{itemize}
 
-\NI Some of these inferential relations are \emph{incompatibility}
-relations (two sentences cannot both be true) while others are
-\emph{entailment} relations (if one sentence is true, the other must
-also be true).  The main question this paper seeks to answer is:
+\NI The first of these examples involves an incompatibility
+relation, while the others involve
+entailment relations.  The main question this paper seeks to answer is:
 \emph{what is the simplest logic that can capture these inferential
-  relations?}
+  relations between atomic sentences?}
 
 \subsection{Wittgenstein's vision of a logic of elementary propositions}
 
