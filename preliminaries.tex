@@ -1,11 +1,11 @@
 \section{Mathematical preliminaries}\label{preliminaries}
 
 \NI This section briefly surveys the mathematical background of our
-paper.  Order-theory is explored in \cite{DaveyBA:intlatao}. For a
-fuller account on labelled transition systems, see
-e.g.~\cite{SassoneV:modcontac,HennessyM:Algtheop}. Bisimulations are
-discussed in \cite{SangiorgiD:intbisac}. \cite{EndertonHB:matinttl}
-is one of many books on first-order logic.
+paper.  A fuller account of order-theory can be found in
+\cite{DaveyBA:intlatao}.  Labelled transition systems are explored in
+\cite{SassoneV:modcontac,HennessyM:Algtheop} and bisimulations in
+\cite{SangiorgiD:intbisac}. Finally, \cite{EndertonHB:matinttl} is one
+of many books on first-order logic.
 
 \PARAGRAPH{Order-theory}
 A \emph{preorder} is a pair $(S, \sqsubseteq)$ where $S$ is a set, and
@@ -36,7 +36,7 @@ $E$ be the set of all $\simeq$-equivalence classes of $S$. We get a
 canonical partial order, denoted $\sqsubseteq_E$, on $E$ by setting:
 $[a]_{\simeq} \sqsubseteq_E [b]_{\simeq}$ whenever $a \sqsubseteq
 b$. If all relevant upper and lower bounds exist in $(S,
-\sqsubseteq)$, then $E, \sqsubseteq_E$ becomes a bounded lattice by
+\sqsubseteq)$, then $(E, \sqsubseteq_E)$ becomes a bounded lattice by
 setting
 \[
    [x]_{\simeq} \sqcap [y]_{\simeq} = [ x \sqcap y ]_{\simeq}
@@ -59,12 +59,11 @@ $\mathcal{S}$ is a set of \emph{states} and $\rightarrow \subseteq
 states, $a, a', b, ...$ range over actions and $\LLL, \LLL', ...$
 range over labelled transition systems. We usually speak of labelled
 transition systems (LTS) when the set of actions is clear from the
-context. If we want to emphasise that the set of actions is
-\emph{finite}, we use $A$ instead of $\Sigma$.  We say $\LLL$ is
-\emph{deterministic} if $x \TRANS{a} y$ and $x \TRANS{a} z$ imply that
-$y = z$. Otherwise $\LLL$ is \emph{non-deterministic}.  A labelled
-transition system is \emph{finitely branching} if for each state $s$,
-the set $\{t\ |\ s \TRANS{a} t\}$ is finite.
+context.  We say $\LLL$ is \emph{deterministic} if $x \TRANS{a} y$ and
+$x \TRANS{a} z$ imply that $y = z$. Otherwise $\LLL$ is
+\emph{non-deterministic}.  A labelled transition system is
+\emph{finitely branching} if for each state $s$, the set $\{t\ |\ s
+\TRANS{a} t\}$ is finite.
 
 \PARAGRAPH{Simulations and bisimulations}
 Given two labelled transition systems $\LLL_i = (S_i, \rightarrow_i)$
