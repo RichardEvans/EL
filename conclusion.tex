@@ -19,6 +19,7 @@ open problems.
 \martin{I think this whole subsection can be dropped. Instead we say something like:
 ``we have already discussed the importance of Brandom's work in the introduction'' ... ALso we don't
 need to introduce this new maths here. We have truely mentioned Brandom and incompatibility often enoguh!}
+\richard{I hear you, Martin, but the symbolism here is needed for the next two subsections where we discuss Peregrin and Turbanti. I have gone out of my way to get the formalism consistent between the three, and need to introduce the formalism somewhere. I hear your general complaint that we have talked about this enough - but this might be partly because we are getting near the end of editing the paper, and are starting to get sick of seeing the same stuff over and over. The \emph{reader} may not find the repetition so insufferable. I would much rather he felt a bit of repetition than was confronted with some formalism that he did not understand because it had not been defined properly.}
 
 
 \NI In \cite{brandom}, Chapter 5, Appendix I, Brandom developed a new
@@ -77,15 +78,10 @@ defined an unusual logic with a standard (truth-conditional) semantics, and then
 
 \subsubsection{Peregrin on negation in incompatibility semantics}\label{peregrin}
 
-In \cite{peregrin}, Peregrin provided a set of general structural
-rules that any logic must satisfy if it is to connect incompatibility
-($\mathsf{Inc}$) and entailment ($\models$) via the Brandomian
-constraint:
-\martin{I would use present tense and write something like this:
 Peregrin \cite{peregrin} investigates the  structural
 rules that any logic must satisfy if it is to connect incompatibility
 ($\mathsf{Inc}$) and entailment ($\models$) via the Brandomian
-constraint:''}
+incompatibility semantics constraint:
 \[
 X \models \phi \quad\text{ iff }\quad \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
 \]
@@ -99,15 +95,11 @@ X \models \phi \quad\text{ iff }\quad \mathcal{I}(\{\phi\}) \subseteq \mathcal{I
   (\models \bot 2) & & \text{if } \mathsf{Inc}(Y \cup \{\phi\}) \text{ implies } \mathsf{Inc}(Y \cup X) \text{ for all } Y, \text{ then } X \models \phi
 \end{eqnarray*}
 
-\NI Peregrin showed that if a logic satisfied the above laws, then
+\NI Peregrin shows that if a logic satisfied the above laws, then
 incompatibility and entailment are mutually interdefinable, and the
-logic satisfies the Brandomian constraint:
-\[
-X \models \phi \text{ iff } \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
-\]
-\martin{We just cited this constraint above, no need for repetition}
+logic satisfies the Brandomian incompatibility semantics constraint.
 
-\NI Next, Peregrin gave a pair of laws for defining negation in terms
+Next, Peregrin gives a pair of laws for defining negation in terms
 of $\mathsf{Inc}$ and $\models$\footnote{The converse of $(\neg 2)$
   follows from $(\neg 1)$ and the general structural laws above.}:
 \begin{eqnarray*}
@@ -118,13 +110,14 @@ of $\mathsf{Inc}$ and $\models$\footnote{The converse of $(\neg 2)$
 \NI These laws characterise intuitionistic negation as the
 \emph{minimal incompatible}\footnote{$\psi$ is the minimal
   incompatible of $\phi$ iff for all $\xi$, if $\mathsf{Inc}(\{\phi\}
-  \cup \{\xi\})$ then $\xi \models \psi$.}.  Now, in \cite{brandom},
-Brandom defined negation slightly differently. He used the rule:
+  \cup \{\xi\})$ then $\xi \models \psi$.}.  
+  Now, in \cite{brandom},
+Brandom defines negation slightly differently. He uses the rule:
 \begin{eqnarray*}
   (\neg B) & &\mathsf{Inc}(X, \neg \phi) \text{ iff } X \models \phi
 \end{eqnarray*}
 Using this stronger rule, we can infer the classical law of
-double-negation: $\neg \neg \phi \models \phi$.  Peregrin established
+double-negation: $\neg \neg \phi \models \phi$.  Peregrin establishes
 that Brandom's rule for negation entail $(\neg 1)$ and $(\neg 2)$
 above, but not conversely: Brandom's rule is stronger than Peregrin's
 minimal laws $(\neg 1)$ and $(\neg 2)$.\martin{Nothing in our paper is
@@ -147,13 +140,15 @@ Brandomian constraint.
   logics do this, including intuitionistic logic.  This paper
   supports Peregrin's conclusion since  \cathoristic{}
   also satisfies ...}
+  \richard{I feel these sections are important. They show that, pace Brandom, there are many different logics that satisfy the incompatibility semantics constraint. Another reason I don't want to prune them down too much is that these guys, Peregrin and Turbanti, are likely to be two of our early reviewers, and I want to pay them the respect of having read their papers carefully.}
 
 \subsubsection{Peregrin and Turbanti on defining necessity in incompatibility semantics}\label{peregrin}
 
-\martin{As with the previous section, I think this section is too long and connectes only looselyw
+\martin{As with the previous section, I think this section is too long and connects only loosely
 with our paper. I think some of it might fit better into the open question section.}
+\richard{Again, I don't want to cut these down just yet. If we are going to show this paper to Peregrin and Turbanti, I believe they will be more receptive if we are more respectful of their work. }
 
-In \cite{brandom}, Brandom gave a rule for defining necessity in terms of incompatibility and entailment:
+In \cite{brandom}, Brandom gives a rule for defining necessity in terms of incompatibility and entailment:
 \[
 X \in \mathcal{I}(\{\Box \phi\}) \text{ iff } \mathsf{Inc}(X) \lor \exists Y . \; Y \notin \mathcal{I}(X) \land Y \nvDash \phi
 \]
@@ -280,10 +275,11 @@ are expressed, often in the context of antonymy
 \cite{OKeeffeA:rouhanocl,AronoffM:hanlin,AllanK:conencos}, but, to the
 best of our knowledge have not proposed formal theories of linguistic
 exclusion.
+\richard{Is it worth having such a short subsection?}
 
 \subsection{Open problems} 
 
-The present paper introduced \cathoristic{}, and established key
+In this paper, we have introduced \cathoristic{}, and established key
 meta-logical properties such as completeness and compactness. However,
 many questions are left open. 
 
@@ -377,14 +373,7 @@ on the chosen notion of semantic model.
 
 \subsubsection{Understanding the expressive strength of \cathoristic{}}
 
-The expressive power of logics can be understood in several different
-ways. One gauge of expressivity is to consider embeddings.  We have
-already discussed how \cathoristic{} can be embedded into first-order
-logic and Hennessy-Milner logic.  A more precise understanding of the
-relationship with first-order and second-order logic was already
-mentioned as an important open question. But the relationship with
-other logics is also interesting, as are other ways of understanding
-logical expressivity.  Consider the following six languages:
+Consider the following six languages:
 
 \input{figure:relationships}
 
@@ -406,30 +395,23 @@ CL [$\land, !, \neg$] & \Cathoristic{} with negation\\
 facility for expressing disjunction, every formula that is satisfiable
 has a simplest satisfying model, and there is a simple quadratic-time
 decision procedure But there are two ways in which CL[$\land, !$] is
-more expressive.  Firstly, CL[$\land, !$], unlike either PL[$\land$]
-or HML[$\land$], is expressive enough to be able to distinguish
+more expressive.  Firstly, CL[$\land, !$], unlike HML[$\land$], is expressive enough to be able to distinguish
 between any two models that are not bisimilar, cf.~Theorem
-\ref{hennessymilnertheorem}\martin{What does it mean for PL to
-  distinguish things up to bisimilarity?}.  The second way in which
+\ref{hennessymilnertheorem}.  The second way in which
 CL[$\land, !$] is significantly more expressive than both PL[$\land$]
 and HML[$\land$] is in its ability to express incompatibility.  No two
 formulae of PL[$\land$] or HML[$\land$] are incompatible with each
-other\martin{Have we defined incompatibility of PL/HML?}.  But many
+other\martin{Have we defined incompatibility of PL/HML?}\richard{No, but it is just the same as before: a set of sentences is incompatible if there is no model that satisfies them all.}.  But many
 pairs of formulae of CL[$\land, !$] are incompatible.  (For example:
-$\langle a \rangle \top$ and $! []$).  Because CL[$\land, !$] is
+$\langle a \rangle \top$ and $! \{\}$).  Because CL[$\land, !$] is
 expressive enough to be able to make incompatible claims, it satisfies
-Brandom's property of incompatibility semantics, discussed in Section
-\ref{incompatibility}:
-\[
-   p \models q \mbox{ iff } \INC{q} \subseteq \INC{p}
-\]
-
-\NI CL[$\land, !$] is the only logic we are aware of with a
+Brandom's incompatibility semantics constraint.
+CL[$\land, !$] is the only logic we are aware of with a
 quadratic-time decision procedure that is expressive enough to respect
-incompatibility semantics. 
+this constraint. 
 
 The bottom three language can all be decided in exponential time.  We
-think that Hennessy-Milner logic is more expressive than PL, and CL
+claim that Hennessy-Milner logic is more expressive than PL, and CL
 [$\land, !, \neg$] is more expressive than full Hennessy-Milner logic.
 To see that full Hennessy-Milner logic is more expressive than full
 propositional logic, fix a propositional logic with the nullary
@@ -443,7 +425,7 @@ Hennessy-Milner logic via the rules:
   \SEMB{\langle a_i \rangle \phi_j} & =  P_{(i,j)} 
 \end{align*}
 
-\NI We think Hennessy-Milner logic is more expressive because there
+\NI We claim Hennessy-Milner logic is more expressive because there
 are formulae $\phi$ and $\psi$ of Hennessy-Milner logic such that
 \[
 \phi \models_{\text{{HML}}} \psi \mbox{ but } \SEMB{\phi} \nvDash_{\text{PL}} \SEMB{\psi}
@@ -454,14 +436,14 @@ $\psi = \langle a \rangle \top$.  Clearly, $\phi \models_{\text{HML}}
 for some $i,j,i',j'$, and there are no entailments in propositional
 logic between arbitrary propositional atoms.
 
-We close with a hint that may indicate how CL [$\land, !, \neg$] is
+We close with a hint that may indicate \richard{These are weasel words. Can we not be a bit bolder and say ``We claim that''} how CL [$\land, !, \neg$] is
 more expressive than full Hennessy-Milner logic: the formula $\fBang
 A$ of CL can be translated into Hennessy-Milner logic as:
 \[
 \bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top
 \]
 But if $\Sigma$ is infinite, then this is an infinitary disjunction.
-\Cathoristic{} can express the same thing in finitary ways.
+\Cathoristic{} can express the same proposition in a finite sentence.
 
 \subsubsection{Compactness, ultraproducts and \cathoristic{}}
 
@@ -482,6 +464,7 @@ clearly reflects the semantics of negation. But \cathoristic{} doesn't
 have negation. So what would an appropriate equivalent of
 ultra-filters for \cathoristic{} look like that can be used to prove
 compactness directly on models?
+\richard{Do we need this?}
 
 \subsubsection{Extending \cathoristic{} with dualities}
 In any modal logic with negation, the may modality and the must modality are interdefinable:
@@ -511,7 +494,7 @@ separated by
   \]
   separates the afromentioned examples. If we add implication instead,
   negation becomes definable: $\neg \phi = \phi \rightarrow \bot$.
-
+\richard{In one sense, adding the must modality is not further work. If we add negation, as in section 10, then we can define must modality in the obvious way. It is only further work if we add $\Box$ as a primitive without adding negation.}
 
 
 
