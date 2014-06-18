@@ -1,14 +1,14 @@
 
 \section{Inferences between atomic sentences}\label{naturalLanguageInference}
 
-\NI \Cathoristic{} arose in parts as an attempt to answer the
+\NI \Cathoristic{} arose in part as an attempt to answer the
 question: what is the simplest logic that can capture inferences
 between atomic sentences of natural language?  In this section, we
 give examples of such inferences, and then show how \cathoristic{}
 handles them.  We also compare our approach with attempts at
 expressing the inferences in first-order logic.
 
-\subsection{Intra-atomic inferences}
+\subsection{Intra-atomic inferences in \cathoristic{}}
 
 \NI Natural language admits many types of inference between atomic
 sentences.  First, exclusion:
@@ -129,8 +129,10 @@ together imply
 \MAY{jack} (\MAY{bruised} \land \MAY{humiliated})
 \end{eqnarray*}
  
-\subsection{Incompatible predicates in \fol}\label{incompatiblepredicatesinfol}
-\martin{this section is a bit disconnected. It only talks about \fol.}
+\subsection{Intra-atomic inferences in \fol{}}
+Next, we look at how these inferences are handled in \fol{}.
+
+\subsubsection{Incompatible predicates in \fol{}}\label{incompatiblepredicatesinfol}
 
 \NI How are incompatible predicates represented in 
 \fol{}?  Brachman and Levesque \cite{brachman} introduce the
@@ -173,7 +175,7 @@ it does so by using relatively complex logical machinery.
 
 
 
-\subsection{Inferences from dyadic to monadic predicates in \fol}
+\subsubsection{Inferences from dyadic to monadic predicates in \fol{}}
 If we want to capture the inference from ``Jack loves Jill`` to ``Jack
 loves'' in \fol{}, we can use a non-logical axiom:
 \[
@@ -186,7 +188,7 @@ contrast, we do not need to introduce any non-logical machinery
 to capture these inferences because they all follow from the general
 rule that $\MAY{a} \MAY{b} \models \MAY{a}$.
 
-\subsection{Adverbial inferences in \fol{}}
+\subsubsection{Adverbial inferences in \fol{}}
 
 \NI How can we represent verbs in traditional \fol{} so as to
 support adverbial inference?  Davidson \cite{davidson2} proposed that
@@ -227,7 +229,8 @@ predicates), \fol{} has nothing to say because it has no way of
 expressing conjunctions between noun-phrases (or predicates) \emph{at
   all}. In \fol{}, ``Jack is bruised and humiliated'' has to be
 regimented into ``Jack is bruised and Jack is humiliated''.  
-It is not entirely clear this is a step in the right direction.
+This regimentation takes a simple sentence and replaces it with a more complex one involving a duplication of elements. 
+It is not clear this is a step in the right direction.
 
 However, \cathoristic{} cannot handle \emph{all} instances of
 sub-propositional inferences.  
