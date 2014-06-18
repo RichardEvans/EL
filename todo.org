@@ -247,3 +247,4 @@ add later something about how this is reflected in EL queries.
    inference over universally quantified propositions. We can see
    directly from the node labelling of the current node which
    statements can no longer be true.
+* Make references and links clickable (This seems to cause a problem with the springer latex style)
