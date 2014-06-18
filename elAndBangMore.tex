@@ -15,7 +15,7 @@ presents all proof rules.
 \end{definition}
 
 \NI Note that $\phi$ and $\psi$ are single formulae, not sequents.  By
-using single formulae, we can avoid structural inference rules.  \Cathoristic{}
+using single formulae, we can avoid structural inference rules.  The
 proof rules can be grouped in two parts: standard rules and rules
 unique to \cathoristic{}.  Standard rules are [\RULENAME{Id}],
 [\RULENAME{$\top$-Right}], [\RULENAME{$\bot$-Left}],
@@ -23,14 +23,14 @@ unique to \cathoristic{}.  Standard rules are [\RULENAME{Id}],
 [\RULENAME{$\AND$-Left 2}] and [\RULENAME{$\AND$-Right}]. They hardly need
 explanation as they are variants of familiar rules for propositional
 logic, see e.g.~\cite{TroelstraAS:basprot,vanDalenD:logstr}.  We now
-explain the rules that give \cathoristic its distinctive properties.
+explain the rules that give \cathoristic{} its distinctive properties.
 
 The rule [\RULENAME{$\bot$-Right 1}]  captures the core
 exclusion property of the tantum !: for example if $A = \{male, female\}$
 then $\MAY{orange}{\phi}$ is incompatible with $!A$. Thus $!A \AND
 \MAY{orange}{\phi}$ must be false.
 
-The rule [\RULENAME{$\bot$-Right 2}] expresses that falsity is 'global'
+The rule [\RULENAME{$\bot$-Right 2}] expresses that falsity is `global'
   and cannot be surpressed by the modalities. For example
   $\MAY{orange}{\bot}$ is false, simply because $\bot$ is already
   false.
@@ -116,17 +116,17 @@ conclusion.
 \subsection{Characteristic formulae}
 
 In order to prove completeness, below, we need the notion of a
-\emph{characteristic formula} of a model: the simplest (in terms of
-entailment\martin{What does ``in terms of entailment'' mean?}) formula
-that describes the model.  The function $\SIMPL{\cdot}$ takes formulae
+\emph{characteristic formula} of a model.  
+The function $\SIMPL{\cdot}$ takes formulae
 as argument and returns models. Characteristic formulae go the other
 way: given a model $\MMM$, we compute its characteristic formula
-$\CHAR{\MMM}$. The formula $\CHAR{\MMM}$ characterises fully the model
-$\MMM$.  Characteristic formulae are investigated in the process
-calculi \cite{AcetoL:chaforfata} and Hoare logics
-\cite{HondaK:descriptive,ChargueraudA:provertcf}.  We leave it to
-further work to relate our use of characteristic formulae with these
-theory traditions.
+$\CHAR{\MMM}$. The formula $\CHAR{\MMM}$ must satisfy the following laws to characterise the model
+$\MMM$:
+\begin{eqnarray*}
+\MMM \models \CHAR{\MMM} \\
+\forall \phi . \text{ if } \MMM \models \phi \text{ then } \CHAR{\MMM} \models \phi \\
+\forall \psi . \text{ if } (\forall \phi . \text{ if } \MMM \models \phi \text{ then } \CHAR{\MMM} \models \phi) \text{ then } \psi \models \CHAR{\MMM}
+\end{eqnarray*}
 
 \clearpage
 \input{figure:elAndBangMore:bigDerivations}
@@ -185,7 +185,7 @@ The rules in Figure \ref{figure:elAndBangRules} are sound and complete:
 \end{theorem}
 
 \NI Soundness is immediate from the definitions. 
- To prove complness  we will show that $\phi
+ To prove completeness  we will show that $\phi
 \models \psi$ implies there is a derivation of $\phi \judge \psi$.  Our proof
 will make use of two key facts (proved in Sections \ref{prooflemma4} and \ref{prooflemma5} below):
 
