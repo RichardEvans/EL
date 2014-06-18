@@ -394,10 +394,10 @@ Language & Description \\
 \hline
 PL[$\land$] & Propositional logic without negation \\
 Hennessy-Milner logic[$\land$] & Hennessy-Milner logic without negation \\
-EL[$\land, !$] & \Cathoristic{} restricted to $\land$ and $\fBang$ \\
+CL[$\land, !$] & \Cathoristic{} \\
 PL [$\land, \neg$] & Full propositional logic \\
 HML [$\land, \neg$] & Full Hennessy-Milner logic \\
-EL [$\land, !, \neg$] & Full \cathoristic{} \\
+CL [$\land, !, \neg$] & \Cathoristic{} with negation\\
 \end{tabular}
 \end{center}
 
@@ -405,18 +405,18 @@ EL [$\land, !, \neg$] & Full \cathoristic{} \\
 \NI The top three languages are simple. In each case: there is no
 facility for expressing disjunction, every formula that is satisfiable
 has a simplest satisfying model, and there is a simple quadratic-time
-decision procedure But there are two ways in which EL[$\land, !$] is
-more expressive.  Firstly, EL[$\land, !$], unlike either PL[$\land$]
+decision procedure But there are two ways in which CL[$\land, !$] is
+more expressive.  Firstly, CL[$\land, !$], unlike either PL[$\land$]
 or HML[$\land$], is expressive enough to be able to distinguish
 between any two models that are not bisimilar, cf.~Theorem
 \ref{hennessymilnertheorem}\martin{What does it mean for PL to
   distinguish things up to bisimilarity?}.  The second way in which
-EL[$\land, !$] is significantly more expressive than both PL[$\land$]
+CL[$\land, !$] is significantly more expressive than both PL[$\land$]
 and HML[$\land$] is in its ability to express incompatibility.  No two
 formulae of PL[$\land$] or HML[$\land$] are incompatible with each
 other\martin{Have we defined incompatibility of PL/HML?}.  But many
-pairs of formulae of EL[$\land, !$] are incompatible.  (For example:
-$\langle a \rangle \top$ and $! []$).  Because EL[$\land, !$] is
+pairs of formulae of CL[$\land, !$] are incompatible.  (For example:
+$\langle a \rangle \top$ and $! []$).  Because CL[$\land, !$] is
 expressive enough to be able to make incompatible claims, it satisfies
 Brandom's property of incompatibility semantics, discussed in Section
 \ref{incompatibility}:
@@ -424,12 +424,12 @@ Brandom's property of incompatibility semantics, discussed in Section
    p \models q \mbox{ iff } \INC{q} \subseteq \INC{p}
 \]
 
-\NI EL[$\land, !$] is the only logic we are aware of with a
+\NI CL[$\land, !$] is the only logic we are aware of with a
 quadratic-time decision procedure that is expressive enough to respect
 incompatibility semantics. 
 
 The bottom three language can all be decided in exponential time.  We
-think that Hennessy-Milner logic is more expressive than PL, and EL
+think that Hennessy-Milner logic is more expressive than PL, and CL
 [$\land, !, \neg$] is more expressive than full Hennessy-Milner logic.
 To see that full Hennessy-Milner logic is more expressive than full
 propositional logic, fix a propositional logic with the nullary
@@ -454,9 +454,9 @@ $\psi = \langle a \rangle \top$.  Clearly, $\phi \models_{\text{HML}}
 for some $i,j,i',j'$, and there are no entailments in propositional
 logic between arbitrary propositional atoms.
 
-We close with a hint that may indicate how EL [$\land, !, \neg$] is
+We close with a hint that may indicate how CL [$\land, !, \neg$] is
 more expressive than full Hennessy-Milner logic: the formula $\fBang
-A$ of EL can be translated into Hennessy-Milner logic as:
+A$ of CL can be translated into Hennessy-Milner logic as:
 \[
 \bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top
 \]
