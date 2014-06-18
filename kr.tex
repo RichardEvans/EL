@@ -129,7 +129,7 @@ place at a time, and the non-monotonic update rule described above
 Suppose, for example, we want to find all married couples who are both Welsh.
 In Prolog, we might write something like:
 \begin{verbatim}
-   married_couple_at_home(X, Y) :-
+   welsh_married_couple(X, Y) :-
        welsh(X),
        welsh(Y),
        spouse(X,Y).
@@ -139,7 +139,7 @@ Rules like this create a large search-space because we need to find all instance
 If we express the rule in \cathoristic{}, the compiler is able to use the extra information expressed in the $!$ operator to reorder the literals to find the result significantly faster.
 Assuming someone can only have a single spouse at any moment, the rule is expressed in \cathoristic{} as:
 \begin{verbatim}
-   married_couple_at_home(X, Y) :-
+   welsh_married_couple(X, Y) :-
        <welsh> <X>,
        <welsh> <Y>,
        <spouse> <X> (<Y> /\ !{Y}).
@@ -152,7 +152,7 @@ It can see that, once $X$ is instantiated, the following literal can be instanti
 The \emph{tantum} operator can be used by the compiler to see that there is at most one $Y$ who is the spouse of $X$.
 So the compiler reorders the clauses to produce:
 \begin{verbatim}
-   married_couple_at_home (X, Y) :-
+   welsh_married_couple (X, Y) :-
        <welsh> <X>,
        <spouse> <X> (<Y> /\ !{Y}),
        <welsh> <Y>.
