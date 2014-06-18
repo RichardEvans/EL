@@ -3,7 +3,7 @@
 In this section we provide our key semantic results.  We define a
 partial ordering $\MODELLEQ$ on models, and show how the partial
 ordering can be extended into a bounded lattice.  We use the bounded
-lattice in the  decision procedure for entailment in \cathoristic.
+lattice to construct a quadratic-time decision procedure.
 
 \subsection{Semantic characterisation of elementary equivalence}\label{elementaryEquivalence}
 
@@ -176,7 +176,7 @@ This establishes (\ref{theorem:completeLattice:1}), and
 
 \NI Theorem
 \ref{theorem:completeLattice}.\ref{theorem:completeLattice:1}
-illustrates from a model-theoretic point of view one dimension of how
+captures one way in which the model theory of
 classical and \cathoristic{} differ. In classical logic the theory of
 each model is complete, and $\THEORY{\CAL{M}} \subseteq
 \THEORY{\CAL{N}}$ already implies that $\THEORY{\CAL{M}} =
@@ -185,7 +185,7 @@ equivalent. \Cathoristic{}'s lack of negation changes this drastically, and
 gives $\MODELLEQ$ the structure of a non-trivial bounded lattice as we
 shall demonstrate below.
 
-Theorem \ref{theorem:completeLattice} has various interesting
+Theorem \ref{theorem:completeLattice} has various
 consequences.
 
 \begin{corollary}
@@ -292,9 +292,7 @@ $\sqcap$ and $\sqcup$ are defined below.
 \end{proof}
 
 \Cathoristic{} has the unusual property that every formula has a
-unique (up to isomorphism) simplest model satisfying a formula.\martin{We need to say that
-``simplest'' here means least w.r.t. $\MODELLEQ$. But if that's the case, isn't
-it better to call it ``least'' model, to avoid multiplying equivalent terminology?}  Any
+unique (up to isomorphism) simplest\footnote{The ``simplest'' model is the least upper bound according to the $\MODELLEQ$ relation.} model satisfying a formula. Any
 logic with disjunction, negation or implication does not have this
 property.  For example, in propositional logic:
 \begin{itemize}
@@ -306,7 +304,7 @@ There are two equally-simple  models satisfying $\neg (\neg p \land \neg q)$
 There are two equally-simple models satisfying $p \Rightarrow q$
 \end{itemize}
 But as \cathoristic{} does not have disjunction, negation or implication, it does satisfy this unusual property.
-In \cathoristic{}, both the quadratic-time decision procedure and the completeness proof rely on computing the simplest model that satisfies a formula. 
+We shall rely on this property to provide a quadratic-time decision procedure and to prove the completeness of our inference rules.
 
 \subsection{The simplest model satisfying a formula}
 \label{simpl}
@@ -328,7 +326,7 @@ satisfies $\phi$.
 
 
 
-\NI Note that by our conventions, $\SIMPL{\phi}$ really returns a
+\NI Note that, by our conventions, $\SIMPL{\phi}$ really returns a
 $\MODELEQ$-equivalence class of models.
 
 The only complex case is the clause for $\SIMPL{\phi_1 \AND \phi_2}$,
@@ -347,7 +345,7 @@ It is easy to see that $\SIMPL{\cdot}$ always returns tree models.
      & & \text{where } \MMM = (\mathcal{L}, w) \text{ and } \MMM' = (\mathcal{L'}, w')
 \end{eqnarray*}
 
-\NI The $\mathsf{merge}$ function attempts to merge two LTSs together, given a set of state-identification pairs (a set of pairs of states from the two LTSs that need to be identified).
+\NI The $\mathsf{merge}$ function returns $\bot$ if either of its arguments are $\bot$. Otherwise, it merges the two LTSs together, given a set of state-identification pairs (a set of pairs of states from the two LTSs that need to be identified).
 The state-identification pairs are used to make sure that the resulting model is deterministic.
 
 \begin{eqnarray*}
@@ -426,14 +424,13 @@ determinism:
 \]
 
 \NI The function $\SIMPL{\cdot}$ has the expected properties, as the next
-lemma shows.  It has also been implemented in Haskell
-\cite{HaskellImplementation}.
+lemma shows.  
 
 \begin{lemma}
 $\SIMPL{\phi} \models \phi.$
 \end{lemma}
 \begin{proof}
-By straightforward, yet laborious induction on $\phi$.
+By induction on $\phi$.
 \end{proof}
 
 \subsubsection{Showing that $\sqcap$ as defined is the greatest lower bound}
@@ -642,46 +639,16 @@ and $\MMM \MODELLEQ \MMM'$ then $\MMM \models \xi $ by Theorem
 $\SIMPL{\phi}$ for $\MMM'$, it follows that $\MMM \models \psi$.
 \end{proof}
 
-\NI Construction of $\SIMPL{\phi}$ is quadratic in the size of $\phi$,
+Construction of $\SIMPL{\phi}$ is quadratic in the size of $\phi$,
 and computing whether a model satisfies $\psi$ is of order $|\psi|
 \times |\phi|$, so computing whether $\phi \models \psi$ is quadratic
 time.
 
-Before moving on to incompatibility semantics, we would like to point
-to the Haskell implementation of the decision procedure
-\cite{HaskellImplementation} and to sketch why \cathoristic{} has 
-an efficient decision procedure.  
-
-The reason is that it contains no ``complex'' logical connectives.
-``Complex'' in this context means logical connectives that, generate
-sentences that can be satisfied in different and substantially
-distinct ways.  Negation, disjunction, implication, existential
-quantification all give rise to formulae that are complex in this
-sense.  As an example, disjunction is complex because there are two
-equally \martin{equally simple, can we say that? What if $\phi = \top$
-  and $\psi$ is a complex formula?} simple models of $\phi \lor
-\psi$.\martin{We aslo need to distinbgusih this notion of simplicty
-  from others we use elsewhere, e.g. $\SIMPL{.}$ and $\MODELLEQ$}
-Negation is complex because there are two equally simple models of
-$\neg (\phi \land \psi)$.  Conjunction is the \emph{only} connective
-of propositional logic that is not complex, according to this
-definition.  Let us define a logic as ``simple'' if the set of
-satisfying models of every sentence has a unique least upper bound.
-We saw in Theorem \ref{theorem:decision} of Section
-\ref{boundedlattice} that \cathoristic{} is simple, according to this
-definition.  It is because of this simplicity that it has a
-quadratic-time decision procedure.  \martin{There are two separate,
-  unconnected arguments: one about connective complexity, and one
-  about logic simplicity. We should tie them together if poss,
-  otherwise say there are two differnt reasons for the quadriatic
-  compleixty.}
-
-
 \subsection{Incompatibility semantics}\label{incompatibility}
 
-\NI One of \cathoristic{}'s key features is that it satisfies Brandom's
-incompatibility semantics condition. In this section we formalise what
-this means and prove it.
+\NI One of \cathoristic{}'s unusual features is that it satisfies Brandom's incompatibility semantics constraint, \emph{even though it has no negation operator}.
+In this section, we formalise what
+this means, and prove it.
 
 Define the \emph{incompatibility set of $\phi$} as:
 \[
@@ -703,7 +670,7 @@ wants to use it define \emph{semantic content}:
   propositions incompatible with it\footnote{\cite{brandom} p.123.}.
 \end{quote}
 Now if the propositional content of a claim determines its logical consequences, and the propositional content is identified with the incompatibility set, then the incompatibility set must determine the logical consequences.
-A logic satisfies Brandom's \emph{incompatibility semantics condition} if
+A logic satisfies Brandom's \emph{incompatibility semantics constraint} if
 \[
 \phi \models \psi \; \quad\mbox{ iff }\quad \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
 \]
@@ -714,7 +681,7 @@ semantics property, but it is not well-understood what other logics
 do.  Hennessy-Milner logic satisfies it, but Hennessy-Milner logic
 without negation does not.  \Cathoristic{} is the simplest logic we
 have found that satisfies the property.  To establish the
-incompatibility semantics condition for \cathoristic, we need to
+incompatibility semantics constraint for \cathoristic, we need to
 define a related incompatibility function on models.
 $\mathcal{J}(\MMM)$ is the set of models that are incompatible with
 $\MMM$:
