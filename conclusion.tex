@@ -1,4 +1,5 @@
-\section{Conclusion}\label{conclusion}
+igure:elAndBang:models.tex
+figure:elSmall.tex1;2c\section{Conclusion}\label{conclusion}
 
 We have defined \cathoristic{}, a multi-modal logic based on
 exclusion as a logical primitive and investigated its key properties.
@@ -157,8 +158,8 @@ In other words, $X$ is incompatible with $\Box \phi$ if $X$ is compatible with s
 The trouble is, as Peregrin and Turbanti point out, if $\phi$ is not tautological, then \emph{every set} $X \subseteq \mathcal{L}$ is incompatible with $\Box \phi$.
 To show this, take any set $X \subseteq \mathcal{L}$. 
 If $\mathsf{Inc}(X)$, then $X \in \mathcal{I}(\Box \phi)$ by definition.
-If, on the other hand, $\neg \mathsf{Inc}(X)$, then let $Y = \{\}$.
-Now $\neg \mathsf{Inc}(X \cup Y)$ as $Y = \{\}$, and $Y \nvDash \phi$ as $\phi$ is not tautological.
+If, on the other hand, $\neg \mathsf{Inc}(X)$, then let $Y = \emptyset$.
+Now $\neg \mathsf{Inc}(X \cup Y)$ as $Y = \emptyset$, and $Y \nvDash \phi$ as $\phi$ is not tautological.
 Hence $X \in \mathcal{I}(\Box \phi)$ for all $X \subseteq \mathcal{L}$. 
 Brandom's rule, then, is only capable of specifying a very specific form of necessity: logical necessity.
 
@@ -403,7 +404,7 @@ and HML[$\land$] is in its ability to express incompatibility.  No two
 formulae of PL[$\land$] or HML[$\land$] are incompatible with each
 other\martin{Have we defined incompatibility of PL/HML?}\richard{No, but it is just the same as before: a set of sentences is incompatible if there is no model that satisfies them all.}.  But many
 pairs of formulae of CL[$\land, !$] are incompatible.  (For example:
-$\langle a \rangle \top$ and $! \{\}$).  Because CL[$\land, !$] is
+$\langle a \rangle \top$ and $! \emptyset$).  Because CL[$\land, !$] is
 expressive enough to be able to make incompatible claims, it satisfies
 Brandom's incompatibility semantics constraint.
 CL[$\land, !$] is the only logic we are aware of with a

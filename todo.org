@@ -1,7 +1,11 @@
 * Be consistent. In particular
   - State vs node
 
-  Symbol for multiplicaiton * vs \cdot
+  - non-deterministic vs nondeterministic
+
+  - {} vs \emptyset
+
+  -  Symbol for multiplicaiton * vs \cdot
 
   - \textbf vs \emph for emphasis
 

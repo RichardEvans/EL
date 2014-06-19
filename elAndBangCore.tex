@@ -210,38 +210,35 @@ the start state.
 \subsection{Quotienting models}
 
 \NI The relation $\MODELLEQ$ is not a partial order, only a
-pre-order. For example with
-\begin{itemize}
+pre-order. For example 
+\[
+   \MMM_1 = ( (\{w\}, \emptyset, \{w \mapsto \Sigma\}), w)
+      \qquad\qquad
+   \MMM_2 = ( (\{v\}, \emptyset, \{v \mapsto \Sigma\}), v)
+\]
 
-\item $\MMM_1 = ( (\{w\}, \{\}, \{w \mapsto \Sigma\}), w)$ and
-\item $\MMM_2 = ( (\{v\}, \{\}, \{v \mapsto \Sigma\}), v)$ 
-
-\end{itemize}
-
-\NI we have models where $\MMM_1 \MODELLEQ \MMM_2$ and $\MMM_2
-\MODELLEQ \MMM_1$, but the two models are not equal. The difference
-between the two models, the name of the unique state, is trivial and
-not relevant for the formulae they make true: $\THEORY{\MMM_1}
-= \THEORY{\MMM_2}$.  As briefly mentioned in the mathematical
-preliminaries (Section \ref{preliminaries}), we obtain a proper
-partial-order by simply quotienting models:
+\NI are two distinct models with $\MMM_1 \MODELLEQ \MMM_2$ and $\MMM_2
+\MODELLEQ \MMM_1$. The difference between the two models, the name of
+the unique state, is trivial and not relevant for the formulae they
+make true: $\THEORY{\MMM_1} = \THEORY{\MMM_2}$.  As briefly mentioned
+in the mathematical preliminaries (Section \ref{preliminaries}), we
+obtain a proper partial-order by simply quotienting models:
 
 \[
    \MMM \MODELEQ \MMM'
       \qquad\text{iff}\qquad
-   \MMM \MODELLEQ \MMM' \ \text{and}\ \MMM' \MODELLEQ \MMM.
+   \MMM \MODELLEQ \MMM' \ \text{and}\ \MMM' \MODELLEQ \MMM
 \]
 
-\NI and the ordering the $\MODELEQ$-equivalence classes as follows:
+\NI and then ordering the $\MODELEQ$-equivalence classes as follows:
 \[
     [\MMM]_{\MODELEQ} \MODELLEQ [\MMM']_{\MODELEQ}
       \qquad\text{iff}\qquad
     \MMM \MODELLEQ \MMM'.
 \]
 
-\NI Since this process is independent for the chosen representatives,
-we obtain a partial order. Greatest lower and least upper bounds can also
-be computed on representatives:
+\NI Greatest lower and least upper bounds can also be computed on
+representatives:
 \[
    \BIGLUB \{[\MMM]_{\MODELEQ} \ |\ \MMM \in S\ \} = [\BIGLUB S]_{\MODELEQ}
 \]
@@ -253,17 +250,17 @@ We also define
    \MMM \models \phi.
 \]
 
-\NI Theorem \ref{theorem:completeLattice} guarantees that the choice
-of representative is irrelevant.
+\NI It is easy to see that these definitions are independent of the
+chosen representatives.
 
-In the rest of this text, we will usually be sloppy and work with
+In the rest of this text we will usually be sloppy and work with
 concrete models instead of $\MODELEQ$-equivalence classes of models
 because the quotienting process is straightforward and not especially
-interesting. We can do this because all relevant constructions in this
-text are independent from the specific choice of representative.  Our
-Haskell implementation \cite{HaskellImplementation} uses a different
-approach: instead of equivalence classes, it uses canonical
-representatives. 
+interesting. We can do this because all relevant subsequent
+constructions are also representation independent.  Our Haskell
+implementation \cite{HaskellImplementation} uses a different approach:
+it works with canonical representatives instead of equivalence
+classes.
 
 \subsection{The bounded lattice of models}
 \label{boundedlattice}
@@ -283,38 +280,61 @@ The collection of (equivalence classes of) models together with
 $\bot$, and ordered by $\MODELLEQ$ is a bounded lattice.
 \end{theorem}
 \begin{proof}
-The topmost element in the
-lattice is the model $( (\{w\}, \{\}, \{w \mapsto \Sigma\}), w)$ (for
-some state $w$): this is the model with no transitions and no
-transition restrictions.
-The bottom element is $\bot$. 
-$\sqcap$ and $\sqcup$ are defined below.
+The topmost element in the lattice is the model $( (\{w\}, \emptyset,
+\{w \mapsto \Sigma\}), w)$ (for some state $w$): this is the model
+with no transitions and no transition restrictions.  The bottom
+element is $\bot$.  $\sqcap$ and $\sqcup$ are defined and shown to
+have the required properties below. \martin{Actually ... the
+  definitions of $\sqcap$ and $\sqcup$ below are explicit
+  constructions. Semantically $\sqcap$ and $\sqcup$ are given in
+  general from $\MODELLEQ$ and dont need an explicit definition, see
+  Preliminaries.  What we should prove is that the LUBs and GLBs exist
+  as required. And then later we can show that the algorithmic
+  constructions below are correct w.r.t. to the semantic definitions.}
 \end{proof}
 
-\Cathoristic{} has the unusual property that every formula has a
-unique (up to isomorphism) simplest\footnote{The ``simplest'' model is the least upper bound according to the $\MODELLEQ$ relation.} model satisfying a formula. Any
-logic with disjunction, negation or implication does not have this
-property.  For example, in propositional logic:
+\Cathoristic{} is unusual in that every formula has a unique (up to
+isomorphism) simplest\footnote{The ``simplest'' model is the least
+  upper bound according to the $\MODELLEQ$ relation.} model satisfying
+a formula. Logics with disjunction, negation or implication do
+not have this property.  For example, in propositional logic:
 \begin{itemize}
 \item
-There are two equally-simple models satisfying $p \lor q$
+There are two equally-simple models satisfying $\phi \lor \psi$
 \item
-There are two equally-simple  models satisfying $\neg (\neg p \land \neg q)$
+There are two equally-simple  models satisfying $\neg (\neg \phi \land \neg \psi)$
 \item
-There are two equally-simple models satisfying $p \Rightarrow q$
+There are two equally-simple models satisfying $\phi \Rightarrow \psi$
 \end{itemize}
-But as \cathoristic{} does not have disjunction, negation or implication, it does satisfy this unusual property.
-We shall rely on this property to provide a quadratic-time decision procedure and to prove the completeness of our inference rules.
+\martin{I suggest to change this. We have not defined the notion of
+  model simplicity in propostional logic. Also for e.g. $\phi \OR
+  \psi$ we have 3 different ways to make this true. Finally, ``There
+  are two equally-simple models satisfying'' sounds repetitive and can
+  be factored out.}
+The existence of unique simplest models is crucial for proving
+completeness of our inference rules, and in the quadratic-time
+decision procedure.
 
 \subsection{The simplest model satisfying a formula}
 \label{simpl}
 
-Given $\MODELLEQ $, we can define $\SIMPL{\phi}$, the simplest model w.r.t.~$\MODELLEQ $ that
-satisfies $\phi$.
+\martin{What we are in essence doing is give two names for the
+  simplest model satisfying $\phi$: (1) simplest model, and (2) lub of
+  all models. Do we need two names? Why not just stick with LUB? I
+  also suggest to use an explicit definition for defining what we
+  mean. And then we can say ``Definition ... above defined the
+  simplest model/lub semantically.  Now we given an explicit
+  construction. That would also make for a better subsection title,
+  e.g.  ``Constructing the simplest ...''  BTW, Modal logic has a name
+  for a related concept: the ``small model property''. Maybe we can
+  tie in our presentation with this?}
+
+Given $\MODELLEQ $, we can define $\SIMPL{\phi}$, the simplest model
+w.r.t.~$\MODELLEQ $ that satisfies $\phi$.
 
 \begin{eqnarray*}
-  \SIMPL{\top} &\ = \ & ( (\{v\}, \{\}, \{v \mapsto \Sigma\}), v)  \\
-  \SIMPL{\fBang A} & = & ( (\{v\}, \{\}, \{v \mapsto A\}), v)  \\
+  \SIMPL{\top} &\ = \ & ( (\{v\}, \emptyset, \{v \mapsto \Sigma\}), v)  \\
+  \SIMPL{\fBang A} & = & ( (\{v\}, \emptyset, \{v \mapsto A\}), v)  \\
   \SIMPL{\phi_1 \AND \phi_2} & = & \SIMPL{\phi_1} \sqcap \SIMPL{\phi_2}  \\
   \SIMPL{\langle a \rangle \phi} 
      & = & ( (S \cup \{w'\}, \rightarrow \cup (w' \xrightarrow{a} w), \lambda \cup \{w' \mapsto \Sigma\}]), w')  \\
@@ -433,7 +453,7 @@ $\SIMPL{\phi} \models \phi.$
 By induction on $\phi$.
 \end{proof}
 
-\subsubsection{Showing that $\sqcap$ as defined is the greatest lower bound}
+\subsubsection{$\sqcap$ is the greatest lower bound}
 We will show that:
 \begin{itemize}
 \item
@@ -494,6 +514,7 @@ In this case, given $\lambda_{\MMM}(w) \supseteq \lambda_{\NNN}(y)$ and $\lambda
 \end{proof}
 
 \subsection{Least upper bound ($\sqcup$) of models}
+\martin{WHy do we have a subsection fo lub but not for glb?}
 
 \NI Intuitively, the least upper bound of two models $\MMM$ and
 $\MMM'$ contains the intersection of the transitions of $\MMM$ and
@@ -508,14 +529,14 @@ Formally, define the least upper bound ($\sqcup$) of two models as:
 \end{eqnarray*}
 
 \NI where $\MMM_\top$ is the topmost model $(\mathcal{W}=\{z\},
-\rightarrow=\{\}, \lambda=\{z \mapsto \Sigma\})$ for some state $z$.
+\rightarrow=\emptyset, \lambda=\{z \mapsto \Sigma\})$ for some state $z$.
 $\mathsf{lub}$ takes four parameters: the two cathoristic transition
 systems $\CAL{L}$ and $\CAL{L}'$, an accumulator representing the
 constructed result so far, and a list of state triples (each triple
 contains one state from each of the two input models plus the state of
 the accumulated result) to consider next.  It is defined as:
 \begin{eqnarray*}
-  \mathsf{lub}(\CAL{L}, \CAL{L}', \MMM, \{\}) 
+  \mathsf{lub}(\CAL{L}, \CAL{L}', \MMM, \emptyset) 
      &\quad =\quad & 
   \MMM \\
   \mathsf{lub}(\CAL{L}, \CAL{L}', ((\mathcal{W}, \rightarrow, \lambda), y), \{(w,w',x)\} \cup R) 
@@ -540,7 +561,11 @@ where:
      & = & 
   \{(w_i, w'_i, x_i) \;|\; i = 1 ... n\}
 \end{eqnarray*}
-Here, $\mathsf{sharedT}$ returns the shared transitions between two models, and is defined as:
+
+\NI Here $\lambda[x \mapsto S]$ is the node labelling function that is
+exactly like $\lambda$, except that it maps $x$ to $S$.  Moreover,
+$\mathsf{sharedT}$ returns the shared transitions between two models,
+and is defined as:
 \[
 \mathsf{sharedT}(((\mathcal{W}, \rightarrow, \lambda),w) ((\mathcal{W}', \rightarrow', \lambda'),w')) =  \{(a, x, x') \;|\; w \xrightarrow{a} x \land w' \xrightarrow{a}' x'\}
 \]
@@ -549,7 +574,7 @@ the set $\mathsf{triples}_\mathsf{lub}$ as the set of triples $(x,x',x*) \; | \;
 
 \input{figure:lub}
 
-\subsubsection{Showing that $\sqcup$ as defined is the least upper bound}
+\subsubsection{$\sqcup$ is the least upper bound}
 We will show that:
 \begin{itemize}
 \item
@@ -678,13 +703,13 @@ A logic satisfies Brandom's \emph{incompatibility semantics constraint} if
 \NI Not all logics satisfy this property.  Brandom has shown that
 first-order logic and the modal logic S5 satisfy the incompatibility
 semantics property, but it is not well-understood what other logics
-do.  Hennessy-Milner logic satisfies it, but Hennessy-Milner logic
-without negation does not.  \Cathoristic{} is the simplest logic we
-have found that satisfies the property.  To establish the
-incompatibility semantics constraint for \cathoristic, we need to
-define a related incompatibility function on models.
-$\mathcal{J}(\MMM)$ is the set of models that are incompatible with
-$\MMM$:
+do.\martin{Can we still say this in the light of Peregrin's paper?}
+Hennessy-Milner logic satisfies it, but Hennessy-Milner logic without
+negation does not.  \Cathoristic{} is the simplest logic we have found
+that satisfies the property.  To establish the incompatibility
+semantics constraint for \cathoristic, we need to define a related
+incompatibility function on models.  $\mathcal{J}(\MMM)$ is the set of
+models that are incompatible with $\MMM$:
 \[
 \mathcal{J}(\MMM) = \{ \MMM_2 \; | \; \MMM \sqcap \MMM_2 = \bot \}
 \]

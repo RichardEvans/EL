@@ -1,23 +1,26 @@
-
-\section{Relating \cathoristic\ to Hennessy-Milner Logic}\label{relatingELToOtherLogics}
-\martin{we don't do much on propositional logic in this chapter, so title is misleading.
-What about merging this section with the next on quantified CL? Or maybe better with the previous
-sectino?}
-\richard{For now, I have just removed the reference to Propositional Logic in the section heading. I am not sure where we should place this section. We could place it in the conclusion (in the part where we compare CL to various other logics?)}
+\section{Relating \cathoristic\ to Hennessy-Milner logic}\label{relatingELToOtherLogics}
+\martin{we don't do much on propositional logic in this chapter, so
+  title is misleading.  What about merging this section with the next
+  on quantified CL? Or maybe better with the previous sectino?}
+\richard{For now, I have just removed the reference to propositional
+  logic in the section heading. I am not sure where we should place
+  this section. We could place it in the conclusion (in the part where
+  we compare CL to various other logics?)}\martin{Yes, that might not be a bad place.}
 
 \subsection{Comparing \cathoristic{} and Hennessy-Milner logic}
 
 Section \ref{standardTranslation} investigated the relationship
-between \cathoristic{} and first-order logic. Now we compare \cathoristic{} with a
-logic that is much closer in spirit: Hennessy-Milner logic
-\cite{HennessyM:alglawfndac}, a modal logic designed to reason about
-process calculi. Indeed the present shape of \cathoristic{} owes much to
-Hennessy-Milner logic. We now contrast \cathoristic{} and Hennessy-Milner
-logic by translation from the former into the latter.  This will
-reveal more clearly than the translation into first-order logic the
-novelty of \cathoristic{}.
+between \cathoristic{} and first-order logic. Now we compare
+\cathoristic{} with a logic that is much closer in spirit:
+Hennessy-Milner logic \cite{HennessyM:alglawfndac}, a modal logic
+designed to reason about process calculi. Indeed the present shape of
+\cathoristic{} owes much to Hennessy-Milner logic. We contrast both by
+translation from the former into the latter.  This will reveal more
+clearly than the translation into first-order logic the novelty of
+\cathoristic{}.
 
-Given a set $\Sigma$ of symbols, with $s$ ranging over
+\begin{definition}
+Assume a set $\Sigma$ of symbols, with $s$ ranging over
 $\Sigma$, the \emph{formulae} of Hennessy-Milner logic are given
 by the following grammar:
 \begin{GRAMMAR}
@@ -25,10 +28,12 @@ by the following grammar:
      &\quad ::= \quad & 
   \top \fOr \BIGAND_{i \in I} \phi_i  \fOr \langle s \rangle \phi \fOr \neg \phi 
 \end{GRAMMAR}
+\end{definition}
 
 \NI The index set $I$ in the conjunction can be infinite, and needs to
-be for applications in process theory.
+be so for applications in process theory.
 
+\begin{definition}
  \emph{Models} of Hennessy-Milner logic are simply pairs $(\LLL, s)$
  where $\LLL = (S, \rightarrow)$ is a labelled transition system over
  $\Sigma$, and $s \in S$.  The \emph{satisfaction relation} $(\LLL, s)
@@ -50,6 +55,7 @@ be for applications in process theory.
   \neg \phi & \mbox{ iff } & (\LLL, s)  \nvDash \phi 
 \end{array}
 \]
+\end{definition}
 
 \NI We can now see the two differences between \cathoristic{}, and
 Hennessy-Milner logic, one syntactic, the other semantic.
@@ -59,19 +65,17 @@ Hennessy-Milner logic, one syntactic, the other semantic.
 \item Syntactically, \cathoristic{} has the tantum operator ($!$) instead of
   logical negation ($\neg$).
 
-\item Semantically, an cathoristic model involves one restriction from
-  and one addition to a standard Hennessy-Milner logic labelled transition system. The
-  restriction is that all cathoristic model are \emph{deterministic},
+\item Semantically,  cathoristic models are deterministic,
   while typcially models of Hennessy-Milner logic are
   nondeterministic, although the semantics makes perfect sense for
-  deterministic transistion systems too. The addition is the
-  additional state-labelling on cathoristic models, a labelling that
-  restricts the allowable transitions emanating from each vertex.
+  deterministic transistion systems too. 
+  Moreover models of Hennessy-Milner logic lack state labels.
 
 \end{itemize}
 
-\NI We translate formulae of \cathoristic{} into Hennessy-Milner logic using the function
-$\SEMB{\cdot}$:
+\begin{definition}
+ We translate formulae of \cathoristic{} into Hennessy-Milner logic
+ using the function $\SEMB{\cdot}$:
 
 \begin{eqnarray*}
   \SEMB{\top} & \ = \ & \top  \\
@@ -79,6 +83,8 @@ $\SEMB{\cdot}$:
   \SEMB{\langle a \rangle \phi} & \ = \ & \langle a \rangle \SEMB{\phi}  \\
   \SEMB{! A} & \ = \ & \bigwedge_{a \in \Sigma \setminus A}\!\!\!\! \neg \langle a \rangle \top 
 \end{eqnarray*}
+
+\end{definition}
 
 \NI If $\Sigma$ is an infinite set, then the translation of a $!$
 formula will be an infinitary formula.  If $\Sigma$ is finite, then
@@ -93,12 +99,8 @@ We can also translate cathoristic models by forgetting node labelling:
       =
    ((S, \rightarrow), s)
 \]
-Pure cathoristic models are already models of Hennessy-Milner logic, so the
-translation is trivial $\SEMB{\PPP} = \PPP$. Note that both
-translations work for deterministic as well as non-deterministic
-models.
 
-We continue with an obvious consequence of the translation.
+\NI We continue with an obvious consequence of the translation.
 
 \begin{theorem}
 Let $\MMM$ be a (deterministic or non-deterministic) cathoristic
@@ -109,25 +111,21 @@ Let $\MMM$ be a (deterministic or non-deterministic) cathoristic
 Straightforward by induction on $\phi$.
 \end{proof}
 
-\NI The same theorem is also true if we replace cathoristic by pure cathoristic
-models.
-
-However, note that the following natural extension is \emph{not} true
+\NI However, note that the following natural extension is \emph{not} true
 under the translation above:
-\begin{align}
-\text{If } \phi \models \psi \text{ then } \SEMB{\phi} \models \SEMB{\psi}
-\label{invalidEntailment}
-\end{align}
+\[
+  \text{If } \phi \models \psi \text{ then } \SEMB{\phi} \models \SEMB{\psi}
+\]
 To see this, consider an entailment which relies on determinism, such as
 \[
 \MAY{a} \MAY{b} \land \MAY{a} \MAY{c} \models \MAY{a} (\MAY{b} \land \MAY{c})
 \]
 
-\NI The entailment (\ref{invalidEntailment}) is valid in \cathoristic\ because of
-the restriction to deterministic models, but is not valid in
-Hennessy-Milner logic, where it is invalidated by any model with two
-outgoing $a$ transitions, one of which satisfies $\MAY{b}$ and one of
-which satisfies $\MAY{c}$.
+\NI The first entailment is valid in \cathoristic\ because of the
+restriction to deterministic models, but not in Hennessy-Milner
+logic, where it is invalidated by any model with two outgoing $a$
+transitions, one of which satisfies $\MAY{b}$ and one of which
+satisfies $\MAY{c}$.
 
 We can restore the desired connection between cathoristic implication and
 Hennessy-Milner logic implication in two ways. First we can restrict

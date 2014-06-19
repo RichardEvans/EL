@@ -5,14 +5,14 @@ If Pierre is the current king of France, then nobody else can simultaneously fil
 A traffic light can be green, amber or red - but it cannot be more than one colour at a time.
 Mutual exclusion is a natural and ubiquitous concept.
 
-\FOL{} \emph{can} represent mutually exclusive alternatives, of course.
+\FOL{} can represent mutually exclusive alternatives, of course.
 To say that Pierre is the only king of France, we can write, following Russell:
 \[
-king(france, pierre) \land \forall x . king(france, x) \rightarrow x = pierre
+king(france, pierre) \land \forall x . (king(france, x) \rightarrow x = pierre).
 \]
 To say that a particular traffic light, $tl$, is red - and red is its only colour - we could write:
 \[
-colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red
+colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red.
 \]
 In this approach, incompatibility is a \emph{derived} concept, reduced to 
 a combination of universal quantification and identity.  
@@ -46,16 +46,20 @@ exclusion is expressed directly, as a first-class concept.
   word.} is the simplest logic we could find in which incompatible
 statements can be expressed.  
 It is a multi-modal logic, a variant of Hennessy-Milner logic,
-that replaces negation with a new logical primitive:
+that replaces negation with a new logical primitive
 \[
    !A
 \]
-called \emph{tantum}\footnote{``Tantum'' is Latin for ``only''.} $A$. Here, $A$ is a finite set of alternatives
-that exhaust all possibilities.  For example:
+called \emph{tantum}\footnote{``Tantum'' is Latin for ``only''.}
+$A$. Here $A$ is a finite set of alternatives, and $!A$ sayt that the
+alternatives in $A$ exhaust all possibilities.  For example:
 \begin{eqnarray*}
 \fBang \{green, amber, red\}
 \end{eqnarray*}
-We use modalities to state  facts, for example
+states that nothing but $green$, $amber$ or $red$ is possible.  Our
+logic uses modalities to state facts, for example $\MAY{amber}{}$
+expresses that $amber$ is currently the case.  The power of the logic
+comes from the conjunction of modalities and tantum. For example
 \[
    \MAY{amber}{}\ \AND\ !\{green, amber, red\} 
 \]
@@ -63,50 +67,52 @@ expresses that $amber$ is currently the case and $red$ as well as
 $green$ are the only two possible alternatives to $amber$.  Any
 statement that exceeds what tantum $A$ allows, like
 \[
-   !\{green, amber, red\}\ \AND\ \MAY{blue},
+   \MAY{blue} \ \AND\ !\{green, amber, red\},
 \]
 is necessarily false.  When the only options are green, amber, or red,
 then blue is not available.  Now to say that Pierre is the only king
 of France, we write:
 \[
-\MAY{king}\MAY{france}(\MAY{pierre} \land \fBang \{pierre\})
+\MAY{king}\MAY{france}(\MAY{pierre} \land \fBang \{pierre\}).
 \]
 Crucially, \cathoristic{}'s representation involves no
 universal quantifier and no identity relation.  It is a purely
 propositional formulation.  To say that the traffic
 light is currently red, and red is its only colour, we write:
 \[
-\MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\})
+\MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\}).
 \]
-This is simpler (both in terms of representation length and
-computational complexity) than the formulation in \fol{}:
+This is simpler, both in terms of representation length and
+computational complexity, than the formulation in \fol{} given on the
+previous page.
+%% \[
+%% colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red
+%% \]
+Properties changing over time can be expressed by adding extra
+modalities that can be understood as time-stamps.  To say that that
+the traffic light was red at time $t_1$ and amber at time $t_2$, we
+can write:
 \[
-colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red
-\]
-If we want to be able to describe properties changing over time, we
-can add an extra transition representing the time-stamp.  To say that
-that the traffic light was red at time $t_1$ and amber at time $t_2$,
-we can write:
-\[
-   \MAY{tl} \MAY{colour} (\MAY{t1} (\MAY{red} \land !\{red\}) \land \MAY{t2} (\MAY{amber} \land !\{amber\}))
+   \MAY{tl} \MAY{colour} (\MAY{t_1} (\MAY{red} \land !\{red\}) \land \MAY{t_2} (\MAY{amber} \land !\{amber\}))
 \]
 Change over time can be expressed in first-order logic with bounded
-quantification - but modalities do this more succinctly, without introducing bound variables.
+quantification - but modalities are succinct and avoid introducing
+bound variables.
 
 Having claimed that incompatibility is a natural logical concept, not
 easily expressed in first-order logic\footnote{We will precisify this
-  claim in later sections; first order logic's representation of
-  incompatibility is longer in terms of formula length than \cathoristic{}'s (see
-  Section \ref{incompatiblepredicatesinfol}); and (ii) logic programs
-  in \cathoristic{} can be optimised to run significantly faster than their
-  equivalent in \fol{} (see Section \ref{optimizingpreconditions}).}, we
-will now argue the following:
+  claim in later sections; (1) first-order logic's representation of
+  incompatibility is longer in terms of formula length than
+  \cathoristic{}'s (see Section \ref{incompatiblepredicatesinfol});
+  and (2) logic programs in \cathoristic{} can be optimised to run
+  significantly faster than their equivalent in \fol{} (see Section
+  \ref{optimizingpreconditions}).}, we will now argue the following:
 
 \begin{itemize}
 
 \item Incompatibility is conceptually prior to negation.
 
-\item In particular, negation arises as the weakest form of incompatibility.
+\item Negation arises as the weakest form of incompatibility.
 
 \end{itemize}
 
@@ -123,13 +129,15 @@ following general law:
 \begin{quote}
 If someone is male, then it is not the case that they are female
 \end{quote}
-Recast in first order logic:
+Recast in first-order logic:
 \[
-\forall x. male(x) \Rightarrow \neg female(x)
+\forall x. ( male(x) \IMPLIES \neg female(x) ).
 \]
-According to the orthodox position, the incompatibility between the
-two particular sentences depends on a general law involving universal
-quantification, implication and negation.
+
+\NI In other words, according to the orthodox position, the
+incompatibility between the two particular sentences depends on a
+general law involving universal quantification, implication and
+negation.
 
 Brandom \cite{brandom2} follows Sellars in proposing an alternative explanation.
 Brandom contrasts a formalist explanation (attempting to explain incompatibility in terms of negation) with a pragmatist explanation (explaining negation as a degenerate form of incompatibility):
@@ -153,8 +161,9 @@ they are incompatible.  They recognise when atomic sentences are
 incompatible, and see that one sentence entails another - but their
 behaviour outreaches their ability to articulate it.
 
-Over time, these people \emph{may} advance to a more
-sophisticated language where incompatibilities are made explicit', using some sort of negation operator - but this is a later (and optional) development:
+Over time, these people \emph{may} advance to a more sophisticated
+language where incompatibilities are made explicit, using a negation
+operator - but this is a later (and optional) development:
 \begin{quote}
 [If negation is added to the language], it lets one say that two
 claims are materially incompatible:``If a monochromatic patch is red,
@@ -197,7 +206,7 @@ incompatibility, their sounds are just \emph{barks}.
 \end{quote}
 
 \NI If this claim is also accepted, then material incompatibility is
-not just conceptually \emph{independent} of logical negation, but is
+not just conceptually \emph{independent} of logical negation, but
 conceptually \emph{prior}.  
 
 \subsection{Negation as the minimal incompatible}
@@ -216,8 +225,12 @@ instance ``$f$ is a triangle'', ``$f$ is an octagon'', and so on -
 entails ``$f$ is \emph{not} a circle''.
 \end{quote}
 
-\NI If someone asserts, say, that Jack does not support Manchester United, we have so far said very little.  
-There are so many different ways in which it could be true that Jack does not support Manchester United\footnote{We are assuming, in this example, that ``supports'' is a many-one relation - that a person can only authentically support a single football team.}:
+\NI If someone asserts that Jack does not support Manchester United,
+we have said very little.  There are so many different ways in which
+it could be true that Jack does not support Manchester
+United\footnote{We are assuming, in this example, that ``supports'' is
+  a many-one relation - that a person can only authentically support a
+  single football team.}:
 \begin{itemize}
 \item
 He might support Arsenal
@@ -240,9 +253,13 @@ We develop a simple
 
 \subsection{Inferences between atomic sentences}
 \label{intrasentential}
-So far, we have justified the claim that incompatibility is a fundamental logical concept by arguing (following Brandom) that incompatibility is conceptually prior to negation. 
-Now incompatibility is an inferential relation between \emph{atomic sentences}. 
-In this subsection, we shall describe \emph{other} inferential relations between atomic sentences - inferential relations that \fol{} cannot articulate (or can only handle awkwardly), but that \cathoristic{} handles naturally.
+So far, we have justified the claim that incompatibility is a
+fundamental logical concept by arguing that incompatibility is
+conceptually prior to negation.  Now incompatibility is an inferential
+relation between \emph{atomic sentences}.  In this subsection, we
+shall describe \emph{other} inferential relations between atomic
+sentences - inferential relations that \fol{} cannot articulate (or
+can only do so awkwardly), but that \cathoristic{} handles naturally.
 
 The \emph{atomic sentences} of a natural language can be
 characterised as the sentences which do not contain any other
@@ -289,11 +306,10 @@ sentences of a natural language.  For example:
 
 \end{itemize}
 
-\NI The first of these examples involves an incompatibility
-relation, while the others involve
-entailment relations.  The main question this paper seeks to answer is:
-\emph{what is the simplest logic that can capture these inferential
-  relations between atomic sentences?}
+\NI The first of these examples involves an incompatibility relation,
+while the others involve entailment relations.  A key question this
+paper seeks to answer is: what is the simplest logic that can capture
+these inferential relations between atomic sentences?
 
 \subsection{Wittgenstein's vision of a logic of elementary propositions}
 
@@ -304,7 +320,7 @@ logical language.  Each atomic sentence was supposed to be
 combined together in every possible permutation, without worrying
 about their mutual compatibility.
 But already there were doubts and problem cases.  He was aware that
-certain sorts of statements seemed atomic, but did not seem logically
+certain  statements seemed atomic, but did not seem logically
 independent:
 
 \begin{quote}
@@ -350,31 +366,34 @@ between atomic sentences.
 
 \subsection{Outline}
 
-\NI The rest of this paper is organised as follows: Section
-\ref{coreEL} introduces the syntax and semantics of \cathoristic{} with
-examples. Section \ref{naturalLanguageInference} discusses how
-\cathoristic{} can be used to model inferences between atomic sentences.  Section \ref{kr} describes
-informally how \cathoristic{} is useful as a knowledge representation
-language.  Section \ref{elAndBangCore} presents core results of the
-paper, in particular a semantic characterisation of elementary
-equivalence and a decision procedure with quadratic time-complexity. The
-decision procedure has been implemented in Haskell and is available
-for public use \cite{HaskellImplementation} under a liberal
-open-source license.\martin{add a license blurb on Github}.  This
-section also shows that Brandom's incompatibility semantics condition
-holds for \cathoristic{}.  Section \ref{elAndBangMore} presents the
-proof rules for \cathoristic{} and proves completeness. Section
-\ref{compactness} provides two translations from \cathoristic{} into
-\fol{}, and proves compactness using one of them.  Section
-\ref{ELAndNegation} investigates a variant of \cathoristic{} with an additional negation operator,
-and provides a decision procedure for this extension that has an
-exponential time-complexity.  Section \ref{relatingELToOtherLogics}
-relates \cathoristic{} and Hennessy-Milner logic.  Section
-\ref{quantifiedEL} extends \cathoristic{} with first-order quantifiers
-and sketches the translation of first-order formulae into first-order
+\NI The rest of this paper is organised as follows: The next section
+briefly recapitulates the mathematical background of our work.  Section
+\ref{coreEL} introduces the syntax and semantics of \cathoristic{}
+with examples. Section \ref{naturalLanguageInference} discusses how
+\cathoristic{} can be used to model inferences between atomic
+sentences.  Section \ref{kr} describes informally how our logic is
+useful as a knowledge representation language.  Section
+\ref{elAndBangCore} presents core results of the paper, in particular
+a semantic characterisation of elementary equivalence and a decision
+procedure with quadratic time-complexity. The decision procedure has
+been implemented in Haskell and is available for public use
+\cite{HaskellImplementation} under a liberal open-source
+license.\martin{add a license blurb on Github}.  This section also
+shows that Brandom's incompatibility semantics condition holds for
+\cathoristic{}.  Section \ref{elAndBangMore} presents the proof rules
+for \cathoristic{} and proves completeness. Section \ref{compactness}
+provides two translations from \cathoristic{} into \fol{}, and proves
+compactness using one of them.  Section \ref{ELAndNegation}
+investigates a variant of \cathoristic{} with an additional negation
+operator, and provides a decision procedure for this extension that
+has an exponential time-complexity.  Section
+\ref{relatingELToOtherLogics} relates \cathoristic{} and
+Hennessy-Milner logic.  Section \ref{quantifiedEL} extends
+\cathoristic{} with first-order quantifiers and sketches the
+translation of first-order formulae into first-order
 \cathoristic{}. The conclusion surveys related work and lists open
 problems.  Appendix \ref{pureModels} outlines a different approach to
-giving the semantics of \cathoristic{}, including a characterisation of
-the corresponding elementary equivalence. The appendix also discusses
-the question of non-deterministic models. The remaining appendices
-present routine proof of facts used in the main section.
+giving the semantics of \cathoristic{}, including a characterisation
+of the corresponding elementary equivalence. The appendix also
+discusses the question of non-deterministic models. The remaining
+appendices present routine proof of facts used in the main section.

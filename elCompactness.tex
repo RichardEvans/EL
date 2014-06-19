@@ -7,15 +7,15 @@ logic. The second embedding is used to prove that \cathoristic{} satisfies compa
 \subsection{Translating from  cathoristic to
             first-order logic}\label{standardTranslation}
 
-When we study how a logic embeds into other logics, it casts a new light
-on the logic that is the target of the embedding. 
-A good example is the standard translation of modal into first-order logic. 
-The translation
-produces various fragments: the finite variable
-fragments, the fragment closed under bisimulation, and guarded fragments.
-These fragments have been investigated heavily, as they have unusual properties not shared by the whole of \fol. 
-Translations also enable us to
-push techniques, constructions and results between logics.
+We study how a logic embeds into other logics in parts because it
+casts a new light on the logic that is the target of the embedding.  A
+good example is the standard translation of modal into first-order
+logic.  The translation produces various fragments: the finite
+variable fragments, the fragment closed under bisimulation, 
+guarded fragments.  These fragments have been investigated deeply, and
+found to have unusual properties not shared by the whole of \fol.
+Translations also enable us to push techniques, constructions and
+results between logics.
 
 %\input{figure:embedding}
 
@@ -207,24 +207,23 @@ obtain a first-order model of the translated modal formulae. Then we
 translate that first-order model back to modal logic, obtaining a
 model for the original modal formulae, as required. The last step
 proceeds without a hitch because the modal and the first-order notions
-of models are identical, save for details of presentation.
+of model are identical, save for details of presentation.
 
 Unfortunately we cannot do the same with the translation from
 \cathoristic{} to first-order logic presented in the previous
 section. The problem are the first-order models termed 'junk' above.
-The target language of the translation from the previous section is
-not expressive enough to have formulae that can guarantee such
-constraints.  As we have no reason to belive that the first-order
-model whose existence is guarnateed by compactness isn't 'junk', we
-cannot use this translation.  We solve this problem with a second
-translation, this time into a more expressive first-order fragment
-were we can constrain first-order models easily using formulae. The
-fragment we use now lives in two-sorted first-order logic (which can
-easily be reduced to first-order logic \cite{EndertonHB:matinttl}).
+The target language of the translation is not expressive enough to
+have formulae that can guarantee such constraints.  As we have no
+reason to belive that the first-order model whose existence is
+guarnateed by compactness isn't 'junk', we cannot prove compactness
+with the translation.  We solve this problem with a second translation, this time
+into a more expressive first-order fragment were we can constrain
+first-order models easily using formulae. The fragment we use now
+lives in two-sorted first-order logic (which can easily be reduced to
+first-order logic \cite{EndertonHB:matinttl}).
 
 \begin{definition}
-The two-sorted first-order signature $\SSS'$ is given as follows.\martin{We need to mention
-two-sorted signatures etc in the preliminaries}
+The two-sorted first-order signature $\SSS'$ is given as follows.
 \begin{itemize}
 
 \item $\SSS'$ has two sorts, states and actions. 
@@ -275,8 +274,9 @@ always a finite set, this is well-defined.  The translation could be
 restricted to a two-variable fragment. Moreover, the standard
 reduction from many-sorted to one-sorted first-order logic does not
 increase the number of variables used (although predicates are added,
-one per sort). We will not consider this matter further here.  We must
-also translate cathoristic transition systems $\SEMBTWO{\LLL}$.
+one per sort). We will not consider this matter further here.  
+
+We also translate cathoristic transition systems $\SEMBTWO{\LLL}$.
 
 \begin{definition}
 Let $\LLL = (S, \rightarrow, \lambda)$ be an cathoristic transition
@@ -393,7 +393,7 @@ If $\LLL$ is an cathoristic transistion system then $\SEMBTWO{\LLL} \models
 Straightforward from the definitions.
 \end{proof}
 
-\NI We can now add, without changing satisfiability, $\phi_{admis}
+We can now add, without changing satisfiability, $\phi_{admis}
 \AND \phi_{det}$ to any set of first-order formulae that has a model
 that is the translation of a cathoristic model.
 
@@ -426,7 +426,7 @@ change satisfiability of (translations of) cathoristic formulae.
 
 \begin{definition}
 Let $\LLL = (S, \rightarrow, \lambda)$ be an cathoristic transition system
-and $X$ a set, condidered to contain actions. The \emph{restriction of
+and $X$ a set, containing actions. The \emph{restriction of
   $\LLL$ to $X$}, written $\LLL \setminus X$ is the cathoristic model $(S,
 \rightarrow', \lambda')$ where $\rightarrow' = \{(s, a, t) \in
 \rightarrow \ |\ a \notin X\}$, and for all states $s$ we set:

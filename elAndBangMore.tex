@@ -104,11 +104,11 @@ The reason is that [\RULENAME{!-Left}] can be derived as follows.
 \end{center}
 
 \NI Readers familiar with object-oriented programming will recognise
-[\RULENAME{!-Left}] as contra-variant subtyping and [\RULENAME{!-Right
-    1}] as covariant subtyping. Honda \cite{HondaK:thetypftpc}
-develops a full theory of subtyping based on similar ideas.  All three
-rules embody the intuition that whenever $A \subseteq A'$ then
-asserting that $!A'$ is as strong as, or a stronger statement than
+[\RULENAME{!-Left}] as contra-variant and [\RULENAME{!-Right 1}]
+as covariant subtyping. Honda \cite{HondaK:thetypftpc} develops a full
+theory of subtyping based on similar ideas.  All three rules embody
+the intuition that whenever $A \subseteq A'$ then asserting that $!A'$
+is as strong as, or a stronger statement than
 $!A$. [\RULENAME{!-Left}] simply states that we can always strengthen
 our premise, while [\RULENAME{!-right 1}] allows us to weaken the
 conclusion.
@@ -116,17 +116,25 @@ conclusion.
 \subsection{Characteristic formulae}
 
 In order to prove completeness, below, we need the notion of a
-\emph{characteristic formula} of a model.  
-The function $\SIMPL{\cdot}$ takes formulae
-as argument and returns models. Characteristic formulae go the other
-way: given a model $\MMM$, we compute its characteristic formula
-$\CHAR{\MMM}$. The formula $\CHAR{\MMM}$ must satisfy the following laws to characterise the model
-$\MMM$:
-\begin{eqnarray*}
-\MMM \models \CHAR{\MMM} \\
-\forall \phi . \text{ if } \MMM \models \phi \text{ then } \CHAR{\MMM} \models \phi \\
-\forall \psi . \text{ if } (\forall \phi . \text{ if } \MMM \models \phi \text{ then } \CHAR{\MMM} \models \phi) \text{ then } \psi \models \CHAR{\MMM}
-\end{eqnarray*}
+\emph{characteristic formula} of a model.  The function
+$\SIMPL{\cdot}$ takes formulae as argument and returns
+models. Characteristic formulae go the other way: given a model
+$\MMM$, we compute its characteristic formula $\CHAR{\MMM}$. The
+formula $\CHAR{\MMM}$ must satisfy the following laws to characterise
+the model $\MMM$:\martin{Do we prove this? How do these axioms relate to
+\cite{AcetoL:chaforfata}}
+\begin{itemize}
+
+\item $\MMM \models \CHAR{\MMM}$.
+
+\item For all $\phi$: if $\MMM \models \phi$ then $\CHAR{\MMM} \models
+  \phi$.
+
+\item For all $\psi$: if $(\forall \phi . \text{ if } \MMM
+  \models \phi$ then $\CHAR{\MMM} \models \phi)$ then 
+  $\psi \models \CHAR{\MMM}$.\martin{I don't understand this clause.}
+
+\end{itemize}
 
 \clearpage
 \input{figure:elAndBangMore:bigDerivations}
@@ -267,7 +275,7 @@ If $\MMM \models \langle a \rangle \psi$, then either $\MMM = \bot$ or $\MMM$ is
 \SUBCASE{$\MMM = \bot$} In this case, $ \CHAR{\MMM} = \CHAR{\bot} =
 \bot$. (Recall, that we are overloading $\bot$ to mean both the model
 at the bottom of our lattice and a formula (such as $\langle s \rangle
-\top \AND !\{\}$) which is always false).  In this case, $ \CHAR{\bot}
+\top \AND !\emptyset$) which is always false).  In this case, $ \CHAR{\bot}
 \judge \langle a \rangle \psi$ using [\RULENAME{$\bot$ Left}.
 
 \SUBCASE{$m$ is a model of the form $(\CAL{L},w)$} Given $\MMM \models

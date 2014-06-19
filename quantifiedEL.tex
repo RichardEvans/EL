@@ -1,17 +1,17 @@
 \section{Quantified \cathoristic{}}\label{quantifiedEL}
 
-\NI So far, we have presented \cathoristic\ as a propositional modal logic.
-natural. This section sketches quantified \cathoristic, to demonstrate
-that this extension works smoothly. We use quantified \cathoristic\ to
-formalise the translation of first-order formulae we mentioned
-in Section \ref{kr}.
+\NI So far, we have presented \cathoristic\ as a propositional modal
+logic.  This section sketches quantified \cathoristic, primarily to
+demonstrate that this extension works smoothly. We use quantified
+\cathoristic\ to formalise the translation of first-order formulae
+mentioned in Section \ref{kr}.
 
 \begin{definition} 
 Let $\Sigma$ be a non-empty set of actions, ranged over by $a, a',
-...$ as before.  Given a set $\mathcal{V}$ of \emph{variables}, with
-$x, x', y, y', ...$ ranging over $\mathcal{V}$, the \emph{terms},
-ranged over by $t, t', ...$ and formulae of quantified \cathoristic{} are given by the
-following grammar:
+...$ as before.  Given a set $\VVV$ of \emph{variables}, with
+$x, x', y, y', ...$ ranging over $\VVV$, the \emph{terms},
+ranged over by $t, t', ...$ and formulae of quantified \cathoristic{}
+are given by the following grammar:
 
 \begin{GRAMMAR}
   t
@@ -44,7 +44,7 @@ e.g.~$\FV{\MAY{x}{\phi}} = \{x\} \cup \FV{\phi}$ and $\FV{!A} =
 
 \begin{definition}
 The semantics of quantified \cathoristic{} is constructed along
-conventional lines. An \emph{environment} is a map $\sigma : V
+conventional lines. An \emph{environment} is a map $\sigma : \VVV
 \rightarrow \Sigma$ with finite domain.  We write $\sigma, x : a$ for
 the environment that is just list $\sigma$, except it also maps $x$ to
 $a$, implicitly assuming that $x$ is not in $\sigma$'s domain.  The
@@ -139,10 +139,12 @@ red, we can write in quantified \cathoristic{}:
 \]
 
 \subsection{A translation from first-order logic to first-order \cathoristic{}}\label{translationFOLtoFOEL}
+\martin{I think we could drop this subsection as
+we explain the content informally in \texttt{kr.tex}. If we do, then the whole section is a bit short though.}
 
 We now sketch how to translate from first-order logic to quantified
 \cathoristic{}. Given that the latter is not as expressive as the
-former, we have to restrict our attention to a fragment of first-order
+former, we have to restrict our attention to a proper fragment of first-order
 logic. For simplicity, we do not seek maximal generality. Instead we
 look at a simple example that presentes the key ideas behind the
 translation \emph{in nuce}.

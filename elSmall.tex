@@ -26,13 +26,13 @@ following grammar.
 \end{GRAMMAR}
 \end{definition}
 
-\NI The first three forms of $\phi$ are standard from Hennessy-Milner logic : $\TRUE$ is logical truth, $\AND$ is  conjunction, 
-and $\MAY{a}{\phi}$ means that the current state
-can transition via action $a$ to a new state at which
-$\phi$ holds. Tantum $A$, 
-written $!A$, is the key novelty of \cathoristic{}.  Asserting $!A$
-means: in the current state at most the modalities $\MAY{a}{}$ are
-available that satisfy $a \in A$.  
+\NI The first three forms of $\phi$ are standard from Hennessy-Milner
+logic \cite{HennessyM:alglawfndac}: $\TRUE$ is logical truth, $\AND$
+is conjunction, and $\MAY{a}{\phi}$ means that the current state can
+transition via action $a$ to a new state at which $\phi$ holds. Tantum
+$A$, written $!A$, is the key novelty of \cathoristic{}.  Asserting
+$!A$ means: in the current state at most the modalities $\MAY{a}{}$
+that satisfy $a \in A$ are available.
 
 We assume that $\MAY{a}{\phi}$ binds more tightly than conjunction, so
 $\MAY{a}{\phi} \AND \psi$ is short for $(\MAY{a}{\phi}) \AND \psi$.
@@ -49,13 +49,15 @@ Morgan duality.
 From now on we assume a fixed set $\Sigma$ of actions, except where
 stated otherwise.
 \richard{Can we get rid of this? It doesn't seem super-necessary to me.}
+\martin{I think it's quite important, because we never mention $\Sigma$ explicitly in what follows.
+A mathematically inclined review is likely to complain about it. So the convention
+forestalls stupid complaints.}
 \end{convention}
 
 \subsection{Semantics}
 
 \NI The semantics of \cathoristic{} is close to Hennessy-Milner logic
-\cite{HennessyM:alglawfndac} but uses \emph{deterministic} transition
-systems (cf.~Section \ref{preliminaries}) augmented with labels on
+but uses deterministic transition systems augmented with labels on
 states.
 
 %% \begin{definition}
@@ -64,7 +66,7 @@ states.
 %% \emph{non-deterministic}.
 %% \end{definition}
 
-\begin{definition}
+\begin{definition}\label{cathoristicTS}
 A \emph{cathoristic transition system} is a triple $\LLL = (S,
 \rightarrow, \lambda)$, where $(S, \rightarrow)$ is a deterministic
 labelled transition system over $\Sigma$, and $\lambda$ is a function
@@ -111,11 +113,11 @@ rise to the following definition.
 
 \begin{definition}
 A \emph{cathoristic model}, ranged over by $\MMM, \MMM', ...$, is a
-pair $(\LLL, s)$, where $\LLL$ is a cathoristic transition system
-$(S, \rightarrow, \lambda)$, and $s$ is a state from $S$. We call $s$
-the \emph{start state} of the model.  An cathoristic model with start
-state $s$ is a \emph{tree} if the underlying transition system is a
-tree with start state $s$.
+pair $(\LLL, s)$, where $\LLL$ is a cathoristic transition system $(S,
+\rightarrow, \lambda)$, and $s$ is a state from $S$. We call $s$ the
+\emph{start state} of the model.  An cathoristic model with start
+state is a \emph{tree} if the underlying transition system is a tree
+whose root is the start state.
 \end{definition}
 
 \NI Satisfaction of a formula is defined relative to a cathoristic model.
@@ -139,7 +141,7 @@ intended meaning of $!A$: the available modalities in the model are
 \emph{at least as constrained} as required by $!A$. They may even be
 more constrained if the inclusion $\lambda(s) \subseteq A$ is
 proper. For infinite sets $\Sigma$ of actions, allowing $\lambda(s)$
-to return arbitrary inifinite sets in addition to $\sigma$ does not
+to return arbitrary infinite sets in addition to $\sigma$ does not
 make a difference because $A$ is finite by construction, so
 $\lambda(s) \subseteq A$ can never hold anyway for infinite
 $\lambda(s)$.
@@ -148,7 +150,7 @@ $\lambda(s)$.
 
 We continue with concrete examples.  The model in Figure
 \ref{figure:elSmall} satisfies all the following formulae, amongst
-others:
+others.
 \[
 \begin{array}{lclclclcl}
 \MAY{a} &\qquad&
@@ -156,7 +158,7 @@ others:
 \MAY{a} \fBang \{b,c\} &\qquad&
 \MAY{a} \fBang \{b,c,d\} &\qquad&
 \MAY{c} \\[1mm]
-\MAY{c} \fBang \{\} &&
+\MAY{c} \fBang \emptyset &&
 \MAY{c} \fBang \{a\} &&
 \MAY{c} \fBang \{a,b\} &&
 \MAY{a} \land \MAY{c} &&
@@ -164,9 +166,9 @@ others:
 \end{array}
 \]
 
-\NI Here we assume, as we do with all subsequent such figures, that
-the top node is the start state.  The same model does not satisfy any
-of the following formulae
+\NI Here we assume, as we do with all subsequent figures, that the top
+node is the start state.  The same model does not satisfy any of the
+following formulae.
 \[
 \MAY{b} \qquad
 \fBang \{a\} \qquad
@@ -182,13 +184,13 @@ does not, satisfy the formula $\fBang \{a,b\}$.  Both models validate
 $!\{a, b, c\}$.
 
 \Cathoristic{} does not have the operators $\neg, \lor, $ or
-$\Rightarrow$.  This has the following two significant consequences.
+$\IMPLIES$.  This has the following two significant consequences.
 First, every satisfiable formula has a unique (up to isomorphism)
 simplest model.  In Figure \ref{threemodels}, the left model is the
 unique simplest model satisfying$\MAY{a} \MAY{b}$.  We will clarify
 below that model simplicity is closely related to the process
 theoretic concept of similarity, and use the existence of unique
-simplest models to construct a quadratic-time decision procedure.
+simplest models in our quadratic-time decision procedure.
 
 \input{figure:elAndBang:models}
 
@@ -204,10 +206,10 @@ express: $\top$ and conjunctions of $\top$ are its sole tautologies. On the
 other hand, the tantum operator enables an infinite number of
 contradictories to be expressed.  For example:
 \[
-   \MAY{a} \land \fBang \{\} \qquad
+   \MAY{a} \land \fBang \emptyset \qquad
    \MAY{a} \land \fBang \{b\} \qquad
    \MAY{a} \land \fBang \{b, c\} \qquad
-   \MAY{b} \land \fBang \{\} \qquad
+   \MAY{b} \land \fBang \emptyset \qquad
 \]
 
 
@@ -227,8 +229,7 @@ contradictories to be expressed.  For example:
    We sometimes write $\models \phi$ as a shorthand for $\top \models \phi$.
 \end{definition}
 
-\begin{example}
-\Cathoristic{} shares with other (multi)-modal logics the following
+\NI \Cathoristic{} shares with other (multi)-modal logics the following
 implications:
 \begin{eqnarray*}
 \MAY{a} \MAY{b} \models \MAY{a} 
@@ -244,6 +245,6 @@ validates the following formula:
 \begin{eqnarray*}
 \fBang \{c\} \models \fBang \{a, b, c\} 
  \qquad\qquad
-\fBang \{\} \models \fBang \{a, b\} 
+\fBang \emptyset \models \fBang \{a, b\} 
 \end{eqnarray*}
-\end{example}
+

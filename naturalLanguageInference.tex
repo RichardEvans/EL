@@ -13,21 +13,24 @@ expressing the inferences in first-order logic.
 \NI Natural language admits many types of inference between atomic
 sentences.  First, exclusion:
 \begin{quote}
-``Jack is male'' is incompatible with ``Jack is female''
+``Jack is male'' is incompatible with ``Jack is female''.
 \end{quote}
 Second, entailment inferences from dyadic to monadic predicates:
 \begin{quote}
-``Jack loves Jill'' implies ``Jack loves''
+``Jack loves Jill'' implies ``Jack loves''.
 \end{quote}
 Third, adverbial inferences:
 \begin{quote}
-``Jack walks quickly'' implies ``Jack walks''
+``Jack walks quickly'' implies ``Jack walks''.
 \end{quote}
 Fourth, inferences from conjunctions of sentences to conjunctions of noun-phrases (and vice-versa):
 \begin{quote}
-``Jack loves Jill'' and ``Jack loves Joan'' together imply that ``Jack loves Jill and Joan''
+``Jack loves Jill'' and ``Jack loves Joan'' together imply that ``Jack loves Jill and Joan''.
 \end{quote}
-Fifth, inferences from conjunctions of sentences to conjunction of predicates\footnote{See \cite{sommers} p.282 for a spirited defence of predicate conjunction against Fregean regimentation.} (and vice-versa):
+Fifth, inferences from conjunctions of sentences to conjunction of
+predicates\footnote{See \cite{sommers} p.282 for a spirited defence of
+  predicate conjunction against Fregean regimentation.} (and
+vice-versa):
 \begin{quote}
 ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
 \end{quote}
@@ -63,10 +66,17 @@ sentences:
 \begin{eqnarray*}
 \MAY{jack} \MAY{sex} (\MAY{male} \land \fBang \{male\}) 
    \qquad\qquad
-\MAY{jack} \MAY{sex} (\MAY{female} \land \fBang \{female\})
+\MAY{jack} \MAY{sex} (\MAY{female} \land \fBang \{female\}).
 \end{eqnarray*}
 
-\NI Entailment from dyadic to monadic predicates\footnote{Although natural languages are full of examples of inferences from dyadic to monadic predicates, there are certain supposed counterexamples to the general rule that a dyadic predicate always implies a monadic one. For example, ``Jack explodes the device'' does not, on its most natural reading, imply that ``Jack explodes''. Our response to cases like this is to distinguish between two distinct monadic predicates $explodes_1$ and $explodes_2$:
+\NI Entailment from dyadic to monadic predicates\footnote{Although
+  natural languages are full of examples of inferences from dyadic to
+  monadic predicates, there are certain supposed counterexamples to
+  the general rule that a dyadic predicate always implies a monadic
+  one. For example, ``Jack explodes the device'' does not, on its most
+  natural reading, imply that ``Jack explodes''. Our response to cases
+  like this is to distinguish between two distinct monadic predicates
+  $explodes_1$ and $explodes_2$:
  \begin{itemize}
  \item
  $X explodes_1$ iff $X$ is an object that undergoes an explosion
@@ -77,31 +87,31 @@ sentences:
 There is no deep problem here - just another case where natural language overloads the same word in different situation to have different meanings.}:
 ``Jack loves Jill'' is translated into \cathoristic{} as:
 \begin{eqnarray*}
-   \MAY{jack} \MAY{loves} \MAY{jill}
+   \MAY{jack} \MAY{loves} \MAY{jill}.
 \end{eqnarray*}
 The semantics of modalities ensures that this directly entails:
 \begin{eqnarray*}
-   \MAY{jack} \MAY{loves}
+   \MAY{jack} \MAY{loves}.
 \end{eqnarray*}
 
 \NI Similarly, \cathoristic{} supports inferences from triadic to dyadic
 predicates:
 \begin{quote}
-  ``Jack passed the biscuit to Mary'' implies ``Jack passed the biscuit''
+  ``Jack passed the biscuit to Mary'' implies ``Jack passed the biscuit''.
 \end{quote}
 
 \NI This can be expressed directly in \cathoristic{} as:
 \[
-   \MAY{jack} \MAY{passed} \MAY{biscuit} \MAY{to} (\MAY{mary} \land !\{mary\}) \models \MAY{jack} \MAY{passed} \MAY{biscuit}
+   \MAY{jack} \MAY{passed} \MAY{biscuit} \MAY{to} (\MAY{mary} \land !\{mary\}) \models \MAY{jack} \MAY{passed} \MAY{biscuit}.
 \]
 
 \NI Adverbial inferences is captured in \cathoristic{} as follows.
 \begin{eqnarray*}
-\MAY{jack} \MAY{walks} \MAY{quickly}
+  \MAY{jack} \MAY{walks} \MAY{quickly}
 \end{eqnarray*}
 entails:
 \begin{eqnarray*}
-\MAY{jack} \MAY{walks}
+  \MAY{jack} \MAY{walks}.
 \end{eqnarray*}
 
 \NI \Cathoristic{} directly supports inferences from conjunctions of
@@ -116,7 +126,7 @@ it follows that
 \end{eqnarray*}
 together imply
 \begin{eqnarray*}
-\MAY{jack} \MAY{loves} (\MAY{jill} \land \MAY{joan})
+\MAY{jack} \MAY{loves} (\MAY{jill} \land \MAY{joan}).
 \end{eqnarray*}
 
 \NI Using the same rule, we can infer that
@@ -126,7 +136,7 @@ together imply
 
 \NI together imply
 \begin{eqnarray*}
-\MAY{jack} (\MAY{bruised} \land \MAY{humiliated})
+\MAY{jack} (\MAY{bruised} \land \MAY{humiliated}).
 \end{eqnarray*}
  
 \subsection{Intra-atomic inferences in \fol{}}
@@ -134,9 +144,8 @@ Next, we look at how these inferences are handled in \fol{}.
 
 \subsubsection{Incompatible predicates in \fol{}}\label{incompatiblepredicatesinfol}
 
-\NI How are incompatible predicates represented in 
-\fol{}?  Brachman and Levesque \cite{brachman} introduce the
-topic of incompatible predicates by remarking:
+\NI How are incompatible predicates represented in \fol{}?  Brachman
+and Levesque \cite{brachman} introduce the topic by remarking:
 \begin{quote}
    We would consider it quite ``obvious'' in this domain that if it
    were asserted that $John$ were a $Man$, then we should answer
@@ -145,7 +154,7 @@ topic of incompatible predicates by remarking:
 
 \NI They propose adding an extra axiom to express the incompatibility:
 \[
-   \forall x. ( Man(x) \Rightarrow \neg Woman(x) )
+   \forall x. ( Man(x) \IMPLIES \neg Woman(x) )
 \]  
  
 \NI This proposal imposes an burden on the knowledge-representer: an
@@ -166,10 +175,10 @@ support one team at a time.  We would need to add $C \cdot {50 \choose
 \NI Or, if we treat the football-teams as objects, and have a
 two-place $Supports$ relation between people and teams, we could have:
 \[
-   \forall x, y, z. (Supports(x,y) \land y \neq z \Rightarrow \neg Supports(x,z))
+   \forall x y z . (Supports(x,y) \land y \neq z \IMPLIES \neg Supports(x,z)).
 \]   
 
-\NI If we also assume that each football team is distinct from all the
+\NI If we also assume that each football team is distinct from all 
 others, this certainly captures the desired uniqueness condition.  But
 it does so by using relatively complex logical machinery.
 
@@ -179,7 +188,7 @@ it does so by using relatively complex logical machinery.
 If we want to capture the inference from ``Jack loves Jill`` to ``Jack
 loves'' in \fol{}, we can use a non-logical axiom:
 \[
-(\forall x, y) Loves(x,y) \Rightarrow Loves(x)
+   \forall x. y .( Loves(x,y) \IMPLIES Loves(x))
 \]
 
 \NI We would have to add an extra  axiom like this for every
@@ -191,10 +200,10 @@ rule that $\MAY{a} \MAY{b} \models \MAY{a}$.
 \subsubsection{Adverbial inferences in \fol{}}
 
 \NI How can we represent verbs in traditional \fol{} so as to
-support adverbial inference?  Davidson \cite{davidson2} proposed that
+support adverbial inference?  Davidson \cite{davidson2} proposes that
 every $n$-place action verb be analysed as an $n$+1-place predicate,
 with an additional slot representing an event.  For example, he
-analysed ``I flew my spaceship to the Morning Star'' as
+analyses ``I flew my spaceship to the Morning Star'' as
 \[
 \exists x. ( Flew(I, MySpaceship, x) \land To(x, TheMorningStar))
 \]
@@ -202,20 +211,28 @@ This implies
 \[
 \exists x.  Flew(I, MySpaceship, x)
 \]
-This captures the inference from ``I flew my spaceship to the Morning Star'' to ``I flew my spaceship''.
+This captures the inference from ``I flew my spaceship to the Morning
+Star'' to ``I flew my spaceship''.
 
-Predicate Logic cannot support logical inferences between atomic sentences. 
-If it is going to support inferences from adverbial sentences, it \emph{cannot} treat them as atomic and must instead \emph{reinterpret} them as logically complex propositions.
-The cost of Davidson's proposal is that a seemingly simple sentence - such as ``Jones walks'' - turns out, on closer inspection, not to be atomic at all -  but to involve existential quantification:
+First-order logic cannot support logical inferences between atomic
+sentences.  If it is going to support inferences from adverbial
+sentences, it \emph{cannot} treat them as atomic and must instead
+\emph{reinterpret} them as logically complex propositions.  The cost
+of Davidson's proposal is that a seemingly simple sentence - such as
+``Jones walks'' - turns out, on closer inspection, not to be atomic at
+all - but to involve existential quantification:
 \[
 \exists x.  Walks(Jones, x)
 \]
 
-\NI Although Predicate Logic can handle some of these inferences, it
-can only do so by reinterpreting the sentences as logically-complex
-compound propositions.
+\NI First-order logic can handle such inferences only by
+reinterpreting the sentences as logically complex compound
+propositions.
 
 \subsection{Summary}
+
+\martin{I suggest to drop the summary since it just repeats what we just said. Instead
+we should just talk about the inferences that CL cannot do.} 
 We have looked at inference between atomic sentences. \Cathoristic{}
 can handle them directly and naturally.  Traditional \fol{} has a
 harder time: it can express incompatibility, but only by using

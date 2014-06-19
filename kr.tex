@@ -3,52 +3,68 @@
 
 \Cathoristic{} has been used as the representation language for a
 large, complex, dynamic multi-agent simulation \cite{evans-and-short}.
-This is an industrial-sized application\footnote{This is a commercial application with thousands of paying users, available for download on the App Store for iPad.}, involving tens of thousands
-of rules and facts.  
-In this program, the entire world state
-is stored as a set of \cathoristic{} formulae - all other aspects of
-world state are transient and computed as needed.  The current true
-sentences are represented in a cathoristic model.
+This is an industrial-sized application, involving tens of thousands
+of rules and facts\footnote{The application has thousands of paying
+  users, and available for download on the App Store for the iPad
+  \cite{Versu}.}.  In this simulation, the entire world state is stored
+as a set of \cathoristic{} formulae - all other aspects of world state
+are transient and computed as needed.  The current true sentences are
+represented in a cathoristic model.\martin{THis is inconsistent: are the facts stored as CL formulae or a CL model?}
 
 We shall first sketch how facts are represented, before describing some
 advantages of \cathoristic{} over a more traditional \fol{}
-representation.
+representation of knowledge.
 
 \subsection{Representing facts  in \cathoristic{}}
 
-We used the following strategy for representing facts in \cathoristic{}.  
-(The translation is detailed later in Section
-\ref{translationFOLtoFOEL}).  
 A sentence involving a one-place predicate of the form $p(a)$ is
 expressed in \cathoristic{} as
 \begin{eqnarray*}
-   \MAY{a} \MAY{p}
+   \MAY{a} \MAY{p}.
 \end{eqnarray*}
 
 \NI A sentence involving a many-to-many two-place relation of the form
 $r(a,b)$ is expressed in \cathoristic{} as
 \begin{eqnarray*}
-\MAY{a} \MAY{r} \MAY{b}
-\end{eqnarray*}
-But a sentence involving a many-to-one two-place relation of the form $r(a,b)$ is expressed as:
-\begin{eqnarray*}
-\MAY{a} \MAY{r} (\MAY{b} \land \fBang \{b\})
-\end{eqnarray*}
-So, for example, to say that ``Jack likes Jill'' (where ``likes'' is, of course, a many-many relation), we would write:
-\begin{eqnarray*}
-\MAY{jack} \MAY{likes} \MAY{jill}
-\end{eqnarray*}
-But to say that ``Jack is married to Joan'' (where``is-married-to'' is a many-one relation), we would write:
-\begin{eqnarray*}
-\MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
+  \MAY{a} \MAY{r} \MAY{b}.
 \end{eqnarray*}
 
-\NI Colloquially, we might say that ``Jack is
-married to Joan - and only Joan''.  Note that the  relations are
-placed in infix position,  so that the facts about an object are
-``contained'' within the object.   
-One reason for this particular way of structuring the data will be explained below.
+\NI But a sentence involving a many-to-one two-place relation of the
+form $r(a,b)$ is expressed as:
+\begin{eqnarray*}
+  \MAY{a} \MAY{r} (\MAY{b} \land \fBang \{b\}).
+\end{eqnarray*}
+
+\NI The translation is detailed in Section \ref{translationFOLtoFOEL}.
+
+So, for example, to say that ``Jack likes Jill'' (where ``likes'' is,
+of course, a many-many relation), we would write:
+\begin{eqnarray*}
+  \MAY{jack} \MAY{likes} \MAY{jill}.
+\end{eqnarray*}
+
+\NI But to say that ``Jack is married to Joan''
+(where``is-married-to'' is a many-one relation), we would write:
+\begin{eqnarray*}
+  \MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\}).
+\end{eqnarray*}
+
+\NI Colloquially, we might say that ``Jack is married to Joan - and
+only Joan''.  Note that the relations are placed in infix position, so
+that the facts about an object are ``contained'' within the object.
+One reason for this particular way of structuring the data will be
+explained below.
  
+\martin{ I think the rest of this section could be structured more
+  clearly. I think we are saying CL is good for the following two
+  (very different) reasons.  (1) Convenience of representation for
+  humans. (2) Algorithmic properties, which are about (a) efficient
+  model update and (b) efficient queries. CL is good regarding (2)
+  because formulae have tree structure and trees can be efficiently
+  represented using pointers manipulated using lot's of well-known
+  algorithms. Maybe state the general picture first and then give
+  examples?}
+
 Consider the following facts about a gentleman named Brown:
 
 \[
@@ -62,8 +78,8 @@ Consider the following facts about a gentleman named Brown:
    \right)
 \]
 
-\NI All the facts which start with the prefix $\MAY{brown}$ form a
-sub-tree of the entire database.  And all the facts which start with
+\NI All facts  starting with the prefix $\MAY{brown}$ form a
+sub-tree of the entire database.  And all  facts which start with
 the prefix $\MAY{brown} \MAY{friends}$ form a sub-tree of that tree.
 A sub-tree can be treated as an individual via its prefix.  
 A sub-tree of formulae is the \cathoristic{} equivalent of an

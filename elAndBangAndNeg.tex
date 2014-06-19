@@ -1,17 +1,18 @@
 \section{\Cathoristic{} and negation}\label{ELAndNegation}
 
-\NI We have presented \cathoristic{} as a language, without negation, that can express incompatible claims .
-In this section, we study how \cathoristic{}  is enriched when we add the negation operator.
+\NI We have presented \cathoristic{} as a language that can express
+incompatible claims without negation.  In this section, we briefly
+consider \cathoristic{} enriched with negation.
 
 \subsection{Syntax and semantics}
 
 \begin{definition}
-Given a set $\Sigma$ of symbols, the \emph{formulae of \cathoristic{}
+Given a set $\Sigma$ of actions, the \emph{formulae of \cathoristic{}
   with negation} are given by the following grammar.
 \begin{GRAMMAR}
   \phi 
      &\quad ::= \quad & 
-   \top \fOr \neg \phi \fOr \phi \land \psi \fOr \langle a \rangle \phi \fOr \fBang A 
+   ... \fOr \neg \phi
 \end{GRAMMAR}
 
 \NI We can now define disjunction $\phi \lor \psi$ and implication
@@ -30,23 +31,15 @@ The semantics of \cathoristic\ with negation is just that of plain
 \NI Negation is a core operation of classical logic, and its absence makes
 \cathoristic{} unusual. In order to understand \cathoristic{} better, we
 now investigate how negation can be seen as a definable abbreviation
-in \cathoristic{} with disjunction. The key idea is that 
+in \cathoristic{} with disjunction. The key insight is to use the fact that
 \[
    \neg \MAY{a}{\phi}
 \]
-can be false in two ways: either there is no $a$-labelled action at the
-current state - or there is, but $\phi$ is false. Both arms of this
-disjunction can be expressed in \cathoristic{}:
-
-\begin{itemize}
-
-\item $!\Sigma \setminus \{a\}$.
-
-\item $\MAY{a}{\neg \phi}$.
-
-\end{itemize}
-
-\NI Hence, we can see $\neg \MAY{a}{\phi}$ as a shorthand for 
+can be false in two ways: either there is no $a$-labelled action at
+the current state - or there is, but $\phi$ is false. Both arms of
+this disjunction can be expressed in \cathoristic{}, the former as
+$!\Sigma \setminus \{a\}$, the latter as $\MAY{a}{\neg \phi}$.
+ Hence, we can see $\neg \MAY{a}{\phi}$ as a shorthand for 
 \[
    !(\Sigma \setminus \{a\}) \OR \MAY{a}{\neg \phi}
 \]
@@ -92,47 +85,85 @@ relative to a finite subset $S \subseteq \Sigma$:
 \NI We can use the fact that \cathoristic\ has a quadratic-time
 decision procedure to build an exponential-time decision procedure for
 \cathoristic\ with negation.  Given $\phi \models \psi$, let $S =
-\mathsf{symbols}(\phi) \cup \mathsf{symbols}(\psi) \cup \{a\}$ - where
-$a$ is a new symbol which does not occur in $\phi$ or $\psi$.  First,
-translate away all negations in $\phi$ using $\neg_S()$ as defined in
-Section 1.4.  Let the result be $\phi'$.  Second, reduce $\phi'$ to
-Disjunctive Normal Form by repeated application of the rewrite rules:
-\begin{eqnarray*}
-\phi \land (\psi \lor \xi) & \quad \leadsto \quad& (\phi \land \psi) \lor (\phi \land \xi)  \\
-(\phi \lor \psi) \land \xi & \leadsto & (\phi \land \xi) \lor (\psi \land \xi) 
-\end{eqnarray*}
-Let the resulting disjuncts be $\phi_1, ..., \phi_n$. 
-Now 
+\ACTIONS{\phi} \cup \ACTIONS{\psi} \cup \{a\}$.  - where $a$ is a
+fresh action.  The function $\ACTIONS{\cdot}$ returns all actions
+occurring in a formula, e.g. $\ACTIONS{\MAY{a}{\phi}} = \{a\} \cup
+\ACTIONS{\phi}$ and $\ACTIONS{!A} = A$.\martin{Is that what you have
+  in mind for $\ACTIONS{.}$?},
+
+\begin{enumerate}
+
+\item Inductively translate away all negations in $\phi$ using
+  $\neg_S(\phi)$ as defined above.  Let the result be $\phi'$.
+
+\item Reduce $\phi'$ to disjunctive normal form by repeated
+  application of the rewrite rules:
+  \[
+    \phi \land (\psi \lor \xi)  \ \leadsto \ (\phi \land \psi) \lor (\phi \land \xi)  
+       \qquad
+    (\phi \lor \psi) \land \xi  \ \leadsto \ (\phi \land \xi) \lor (\psi \land \xi) 
+  \]
+
+\item Let the resulting disjuncts be $\phi_1, ..., \phi_n$. 
+Now note that
 \[
-\phi \models \psi \quad\text{ iff }\quad \phi_i \models \psi \text{ for all } i = 1 .. n
+\phi \models \psi \quad\text{ iff }\quad \phi_i \models \psi \text{ for all } i = 1, ..., n,
 \]
-Now, to check whether each $\phi_i \models \psi$, 
-we will construct a series of $S$-extensions of $\phi_i$, and check whether each such $S$-extension satisfies $\psi$.
-We shall define the $S$ extensions of
-an annotated model $\MMM$ as all models which extend the states of
-$\MMM$ with extra transitions taken from $S$ which respect the state
-labelling on $\MMM$.  
+and for each disjunct $\phi_i$ do the following.
+\begin{itemize}
+
+\item Notice that $\phi_i \models \psi$ if and only if all
+  $S$-extensions (defined below) of $\SIMPL{\phi_i}$ satisfy $\psi$.
+  So, to check whether $\phi_i \models \psi$, we enumerate the
+  $S$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of
+  such extensions - the exact number is exponential in the size of
+  $\SIMPL{\phi_i}$) and check for each such $S$-extension $\MMM$
+  whether $\MMM\models \psi$, using the algorithm of Section
+  \ref{decisionprocedure}.
+
+\end{itemize}
+\end{enumerate}
+\martin{Is that a correct rephrasing of the algorithm?}
+\martin{I am not fully convinced that this algorithm is exponential:
+  the conversion to DNF has a worst-case exponential blow-up, and the
+  negation removal also increases formula size.  I *think* it's ok, it
+  is exponential, but it's not totally trivial to see that it is.}
+
+\NI  Here is the definition of $S$-extension.
+
 \begin{definition}
-Given an cathoristic transition system $(\mathcal{W},\rightarrow,\lambda)$,  and a set $S$ of symbols, then $(\mathcal{W'},\rightarrow',\lambda')$ is a {\bf $S$-extension} of $(\mathcal{W},\rightarrow,\lambda)$ if it is a valid LTS (recall Definition 1) and for all $(x,a,y) \in \rightarrow'$, either:
+Given an cathoristic transition system $\LLL =
+(\mathcal{W},\rightarrow,\lambda)$, and a set $S$ of actions, then
+$(\mathcal{W'},\rightarrow',\lambda')$ is a \emph{$S$-extension} of
+$\LLL$ if it is a valid cathoristic transition system (recall
+Definition \ref{cathoristicTS}) and for all $(x,a,y) \in
+\rightarrow'$, either:
 \begin{itemize} 
-\item
-$(x, a, y) \in \rightarrow$,  or;
-\item
- $x \in \mathcal{W}$ and $a \in S$ and $y$ is a new state not appearing elsewhere in $\mathcal{W}$ or $\mathcal{W'}$.
+
+\item $(x, a, y) \in \rightarrow$,  or;
+
+\item $x \in \mathcal{W}$ and $a \in S$ and $y$ is a new state not
+  appearing elsewhere in $\mathcal{W}$ or $\mathcal{W'}$.
+
 \end{itemize}
 \end{definition}
-In other words, $\MMM'$ is an extension of an annotated model $\MMM$, if all its transitions are either from $\MMM$ or involve states of $\MMM$ transitioning via elements of $S$ to new states not appearing in $\MMM$ or $\MMM'$.
-The number of extensions can quickly grow very large.
-If the model $\MMM$ has $n$ states, then the number of possible extensions is:
-\[
-({2^{|S|}})^n
-\] 
-But recall that we are computing these extensions in order to verify $\psi$. So we can make a significant optimisation by restricting the height of each tree to $|\psi|$.
+\martin{Can that definition be right? No relations between $\lambda$
+  and $\lambda'$?}
 
-Now $\phi_i \models \psi$ if and only if all $S$-extensions of $\SIMPL{\phi_i}$ satisfy $\psi$.  
-So, to check
-whether $\phi_i \models \psi$, we enumerate the $S$-extensions of
-$\SIMPL{\phi_i}$ (there are a finite number of such extensions - the
-exact number is exponential in the size of $\SIMPL{\phi_i}$) and check
-for each one whether it satisfies $\psi$.
-There is a Haskell implementation of this decision procedure available at \cite{HaskellImplementation}.
+\NI In other words, $\MMM'$ is an extension of an annotated model
+$\MMM$, if all its transitions are either from $\MMM$ or involve
+states of $\MMM$ transitioning via elements of $S$ to new states not
+appearing in $\MMM$ or $\MMM'$.  The number of extensions grows
+quickly.  If the model $\MMM$ has $n$ states, then the number of
+possible extensions is:
+\[
+   ({2^{|S|}})^n
+\] 
+
+\NI But recall that we are computing these extensions in order to
+verify $\psi$. So we can make a significant optimisation by
+restricting the height of each tree to $|\psi|$.\martin{While that is correct, we don't have
+a theorem to this effect.}
+
+A Haskell implementation of the decision procedure available
+\cite{HaskellImplementation}.
