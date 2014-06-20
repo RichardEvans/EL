@@ -50,7 +50,7 @@ a \emph{simulation from $\LLL_1$ to $\LLL_2$}, provided:
 \end{definition}
 
 \NI Note that the only difference from the usual definition of
-simulation is the additional requirement on the node labelling
+simulation is the additional requirement on the state labelling
 functions $\lambda_1$ and $\lambda_2$.
 
 \begin{definition}
@@ -164,8 +164,8 @@ $\THEORY{(\LLL, x)} \subseteq \THEORY{(\LLL', x')} $, so $(\LLL', x')
 $(\LLL', x') \models \; ! \; \lambda(x)$ iff $\lambda'(x') \subseteq
 \lambda(x)$.  Therefore $\lambda(x) \supseteq \lambda'(x')$.  If, on
 the other hand, $\lambda(x)$ is infinite, then $\lambda(x) = \Sigma$
-(because the only infinite node labelling that we allow is
-$\Sigma$). Every node labelling is a subset of $\Sigma$, so here too,
+(because the only infinite state labelling that we allow is
+$\Sigma$). Every state labelling is a subset of $\Sigma$, so here too,
 $\lambda(x) = \Sigma \supseteq \lambda'(x')$.  
 
 This establishes (\ref{theorem:completeLattice:1}), and
@@ -283,59 +283,48 @@ $\bot$, and ordered by $\MODELLEQ$ is a bounded lattice.
 The topmost element in the lattice is the model $( (\{w\}, \emptyset,
 \{w \mapsto \Sigma\}), w)$ (for some state $w$): this is the model
 with no transitions and no transition restrictions.  The bottom
-element is $\bot$.  $\sqcap$ and $\sqcup$ are defined and shown to
-have the required properties below. \martin{Actually ... the
-  definitions of $\sqcap$ and $\sqcup$ below are explicit
-  constructions. Semantically $\sqcap$ and $\sqcup$ are given in
-  general from $\MODELLEQ$ and dont need an explicit definition, see
-  Preliminaries.  What we should prove is that the LUBs and GLBs exist
-  as required. And then later we can show that the algorithmic
-  constructions below are correct w.r.t. to the semantic definitions.}
+element is $\bot$.  Below, we shall define two functions $\mathsf{glb}$ and $\mathsf{lub}$, and show that they satisfy the required properties of $\sqcap$ and $\sqcup$ respectively.
 \end{proof}
 
-\Cathoristic{} is unusual in that every formula has a unique (up to
-isomorphism) simplest\footnote{The ``simplest'' model is the least
-  upper bound according to the $\MODELLEQ$ relation.} model satisfying
-a formula. Logics with disjunction, negation or implication do
-not have this property.  For example, in propositional logic:
-\begin{itemize}
-\item
-There are two equally-simple models satisfying $\phi \lor \psi$
-\item
-There are two equally-simple  models satisfying $\neg (\neg \phi \land \neg \psi)$
-\item
-There are two equally-simple models satisfying $\phi \Rightarrow \psi$
-\end{itemize}
-\martin{I suggest to change this. We have not defined the notion of
-  model simplicity in propostional logic. Also for e.g. $\phi \OR
-  \psi$ we have 3 different ways to make this true. Finally, ``There
-  are two equally-simple models satisfying'' sounds repetitive and can
-  be factored out.}
-The existence of unique simplest models is crucial for proving
-completeness of our inference rules, and in the quadratic-time
+\Cathoristic{} is unusual in that every set of models has a unique (up to
+isomorphism) least upper bound. Logics with disjunction, negation or implication do
+not have this property.  
+
+Consider propositional logic, for example.
+Define a model of propositional logic as a set of atomic formulae that are set to true.
+Then we have a natural ordering  on propositional logic models:
+\[
+\MMM \leq \MMM' \text{ iff } \MMM \supseteq \MMM'
+\]
+Consider all the possible models that satisfy $\phi \lor \psi$:
+\begin{eqnarray*}
+\{\phi\} \\
+\{\psi\} \\
+\{\phi, \psi\} \\
+\{\phi, \psi, \xi\}\\
+...
+\end{eqnarray*}
+This set of satisfying models has no least upper bound, since $\{\phi\} \nleq \{\psi\}$ and $\{\psi\} \nleq \{\phi\}$.
+Similarly,  the set of models satisfying $\neg (\neg \phi \land \neg \psi)$ has no least upper bound.
+
+The existence of unique least upper bounds is used in proving
+completeness of our inference rules, and implementing the quadratic-time
 decision procedure.
 
-\subsection{The simplest model satisfying a formula}
+\subsection{Computing the least upper bound of the models that satisfy a formula}
 \label{simpl}
 
-\martin{What we are in essence doing is give two names for the
-  simplest model satisfying $\phi$: (1) simplest model, and (2) lub of
-  all models. Do we need two names? Why not just stick with LUB? I
-  also suggest to use an explicit definition for defining what we
-  mean. And then we can say ``Definition ... above defined the
-  simplest model/lub semantically.  Now we given an explicit
-  construction. That would also make for a better subsection title,
-  e.g.  ``Constructing the simplest ...''  BTW, Modal logic has a name
-  for a related concept: the ``small model property''. Maybe we can
-  tie in our presentation with this?}
+In our decision procedure, we will see if $\phi \models \psi$ by constructing the least upper bound of the models satisfying $\phi$, and checking whether it satisfies $\psi$.
 
-Given $\MODELLEQ $, we can define $\SIMPL{\phi}$, the simplest model
-w.r.t.~$\MODELLEQ $ that satisfies $\phi$.
-
+In this section, we define a function $\SIMPL{\phi}$ that satisfies the following condition:
+\[
+\SIMPL{\phi} = \bigsqcup \{ \MMM | \MMM \models \phi \}
+\]
+Define $\SIMPL{\phi}$ as:
 \begin{eqnarray*}
   \SIMPL{\top} &\ = \ & ( (\{v\}, \emptyset, \{v \mapsto \Sigma\}), v)  \\
   \SIMPL{\fBang A} & = & ( (\{v\}, \emptyset, \{v \mapsto A\}), v)  \\
-  \SIMPL{\phi_1 \AND \phi_2} & = & \SIMPL{\phi_1} \sqcap \SIMPL{\phi_2}  \\
+  \SIMPL{\phi_1 \AND \phi_2} & = & \mathsf{glb} (\SIMPL{\phi_1}, \SIMPL{\phi_2})  \\
   \SIMPL{\langle a \rangle \phi} 
      & = & ( (S \cup \{w'\}, \rightarrow \cup (w' \xrightarrow{a} w), \lambda \cup \{w' \mapsto \Sigma\}]), w')  \\
 		& & \mbox{where }\SIMPL{\phi} = ( (S, \rightarrow, \lambda), w) \mbox{and } w' \mbox{ is a new state} \\
@@ -344,21 +333,19 @@ w.r.t.~$\MODELLEQ $ that satisfies $\phi$.
 
 \input{figure:glb}
 
-
-
 \NI Note that, by our conventions, $\SIMPL{\phi}$ really returns a
 $\MODELEQ$-equivalence class of models.
 
 The only complex case is the clause for $\SIMPL{\phi_1 \AND \phi_2}$,
-which uses the $\sqcap$ function, defined as follows, where we assume
+which uses the $\mathsf{glb}$ function, defined as follows, where we assume
 that the sets of states in the two models are disjoint and are trees.
 It is easy to see that $\SIMPL{\cdot}$ always returns tree models.
 
 \begin{eqnarray*}
-  \bot \sqcap \MMM  &\ =\ &  \bot  \\
-  \MMM \sqcap \bot      & = &  \bot  
+  \mathsf{glb}(\bot, \MMM)  &\ =\ &  \bot  \\
+  \mathsf{glb}(\MMM, \bot)      & = &  \bot  
      \\
-  \MMM \sqcap \MMM'
+  \mathsf{glb}(\MMM, \MMM')
      & = & 
      \mathsf{merge}(\mathcal{L}, \mathcal{L}', \{(w,w')\}) 
      \\
@@ -382,7 +369,7 @@ The state-identification pairs are used to make sure that the resulting model is
 
 \NI The $\mathsf{inconsistent}$ predicate is true if there is pair of
 states in the state-identification set such that the out-transitions
-of one state is incompatible with the node-labelling on the other
+of one state is incompatible with the state-labelling on the other
 state:
 \begin{eqnarray*}
   \lefteqn{\mathsf{inconsistent}(\mathcal{L}, \mathcal{L}', ids)}\qquad
@@ -453,47 +440,49 @@ $\SIMPL{\phi} \models \phi.$
 By induction on $\phi$.
 \end{proof}
 
-\subsubsection{$\sqcap$ is the greatest lower bound}
+\begin{lemma}
+$\mathsf{glb}$ as defined is the greatest lower bound
+\end{lemma}
 We will show that:
 \begin{itemize}
 \item
-$\MMM \sqcap \MMM' \MODELLEQ \MMM$ and $\MMM \sqcap \MMM' \MODELLEQ \MMM'$
+$\mathsf{glb}(\MMM, \MMM') \MODELLEQ \MMM$ and $\mathsf{glb}(\MMM, \MMM') \MODELLEQ \MMM'$
 \item
-If $\NNN \MODELLEQ \MMM$ and $\NNN \MODELLEQ \MMM'$, then $\NNN \MODELLEQ \MMM \sqcap \MMM'$
+If $\NNN \MODELLEQ \MMM$ and $\NNN \MODELLEQ \MMM'$, then $\NNN \MODELLEQ \mathsf{glb}(\MMM, \MMM')$
 \end{itemize}
-If $\MMM$, $ \MMM'$ or $\MMM \sqcap \MMM'$ are equal to $\bot$, then we just apply the rule that $\bot \MODELLEQ m$ for all models $m$. 
-So let us assume that $\mathsf{consistent}(\MMM, \MMM')$ and that $\MMM \sqcap \MMM'  \neq \bot$.
+If $\MMM$, $ \MMM'$ or $\mathsf{glb}(\MMM, \MMM')$ are equal to $\bot$, then we just apply the rule that $\bot \MODELLEQ m$ for all models $m$. 
+So let us assume that $\mathsf{consistent}(\MMM, \MMM')$ and that $\mathsf{glb}(\MMM, \MMM')  \neq \bot$.
 
 \begin{proof}
-To show $\MMM \sqcap \MMM' \MODELLEQ \MMM$, we need to provide a simulation $\mathcal{R}$ from $\MMM$ to  $\MMM \sqcap \MMM'$.
+To show $\mathsf{glb}(\MMM, \MMM') \MODELLEQ \MMM$, we need to provide a simulation $\mathcal{R}$ from $\MMM$ to  $\mathsf{glb}(\MMM, \MMM')$.
 If $\MMM = ((S,\rightarrow,\lambda),w)$, then define $\mathcal{R}$ as the identity relation on the states of $S$:
 \[
 \mathcal{R} = \{(x,x) \; | \; x \in S\}
 \]
-It is straightforward to show that $\mathcal{R}$ as defined is a simulation from $\MMM$ to  $\MMM \sqcap \MMM'$.
-If there is a transition $x \xrightarrow{a} y$ in $\MMM$, then by the construction of $\mathsf{merge}$, there is also a transition $x \xrightarrow{a} y$ in $\MMM \sqcap \MMM'$.
-We also need to show that $\lambda_{\MMM}(x) \supseteq \lambda_{\MMM \sqcap \MMM'}(x)$ for all states $x$ in $\MMM$. This is immediate from the construction of $\mathsf{merge}$.
+It is straightforward to show that $\mathcal{R}$ as defined is a simulation from $\MMM$ to  $\mathsf{glb}(\MMM, \MMM')$.
+If there is a transition $x \xrightarrow{a} y$ in $\MMM$, then by the construction of $\mathsf{merge}$, there is also a transition $x \xrightarrow{a} y$ in $\mathsf{glb}(\MMM, \MMM')$.
+We also need to show that $\lambda_{\MMM}(x) \supseteq \lambda_{\mathsf{glb}(\MMM, \MMM')}(x)$ for all states $x$ in $\MMM$. This is immediate from the construction of $\mathsf{merge}$.
 
 \end{proof}
 
 \begin{proof}
-To show that $\NNN \MODELLEQ \MMM$ and $\NNN \MODELLEQ \MMM'$ imply $\NNN \MODELLEQ \MMM \sqcap \MMM'$, assume there is a simulation $\mathcal{R}$ from $\MMM$ to $\NNN$ and there is a simulation $\mathcal{R}'$ from $\MMM'$ to $\NNN$.
-We need to provide a simulation $\mathcal{R}*$ from $\MMM \sqcap \MMM'$ to $\NNN$.
+To show that $\NNN \MODELLEQ \MMM$ and $\NNN \MODELLEQ \MMM'$ imply $\NNN \MODELLEQ \mathsf{glb}(\MMM, \MMM')$, assume there is a simulation $\mathcal{R}$ from $\MMM$ to $\NNN$ and there is a simulation $\mathcal{R}'$ from $\MMM'$ to $\NNN$.
+We need to provide a simulation $\mathcal{R}*$ from $\mathsf{glb}(\MMM, \MMM')$ to $\NNN$.
 
 Assume the states of $\MMM$ and $\MMM'$ are disjoint.
 Define:
 \[
 \mathcal{R}* = \mathcal{R} \cup \mathcal{R}'
 \]
-We need to show that $\mathcal{R}*$ as defined is a simulation from $\MMM \sqcap \MMM'$ to $\NNN$.
+We need to show that $\mathcal{R}*$ as defined is a simulation from $\mathsf{glb}(\MMM, \MMM')$ to $\NNN$.
 
-Suppose $x \xrightarrow{a} y$ in $\MMM \sqcap \MMM'$ and that $(x,x_2) \in \mathcal{R} \cup \mathcal{R}'$.
+Suppose $x \xrightarrow{a} y$ in $\mathsf{glb}(\MMM, \MMM')$ and that $(x,x_2) \in \mathcal{R} \cup \mathcal{R}'$.
 We need to provide a $y_2$ such that $x_2 \xrightarrow{a} y_2$ in  $\NNN$ and $(y,y_2) \in \mathcal{R} \cup \mathcal{R}'$.
-If  $x \xrightarrow{a} y$ in $\MMM \sqcap \MMM'$, then, from the definition of $\mathsf{merge}$, either $x \xrightarrow{a} y$ in $\MMM$ or $x \xrightarrow{a} y$ in $\MMM'$. If the former, and given that $\mathcal{R}$ is a simulation from $\MMM$ to $\NNN$, then there is a $y_2$ such that $(y,y_2) \in \mathcal{R}$ and $x_2 \xrightarrow{a} y_2$ in $\NNN$. But, if $(y,y_2) \in \mathcal{R}$, then also $(y,y_2) \in \mathcal{R} \cup \mathcal{R}'$.
+If  $x \xrightarrow{a} y$ in $\mathsf{glb}(\MMM, \MMM')$, then, from the definition of $\mathsf{merge}$, either $x \xrightarrow{a} y$ in $\MMM$ or $x \xrightarrow{a} y$ in $\MMM'$. If the former, and given that $\mathcal{R}$ is a simulation from $\MMM$ to $\NNN$, then there is a $y_2$ such that $(y,y_2) \in \mathcal{R}$ and $x_2 \xrightarrow{a} y_2$ in $\NNN$. But, if $(y,y_2) \in \mathcal{R}$, then also $(y,y_2) \in \mathcal{R} \cup \mathcal{R}'$.
 
 Finally, we need to show that if $(x,y) \in \mathcal{R} \cup \mathcal{R}'$ then
 \[
-\lambda_{\MMM \sqcap \MMM'}(x) \supseteq \lambda_{\NNN}(y)
+\lambda_{\mathsf{glb}(\MMM, \MMM')}(x) \supseteq \lambda_{\NNN}(y)
 \]
 If $(x,y) \in \mathcal{R} \cup \mathcal{R}'$ then either $(x,y) \in \mathcal{R}$ or $(x,y) \in \mathcal{R}'$.
 Assume the former.
@@ -502,46 +491,38 @@ Given that $\mathcal{R}$ is a simulation from $\MMM$ to $\NNN$, we know that if 
 \lambda_{\MMM}(x) \supseteq \lambda_{\NNN}(y)
 \]
 Let $\MMM = ((S,\rightarrow,\lambda),w)$.
-If $x \neq w$ (i.e. $x$ is some node other than the start state), then, from the definition of $\mathsf{merge}$, $\lambda_{\MMM \sqcap \MMM'}(x) = \lambda_{\MMM}(x)$.
-So, given $\lambda_{\MMM} \supseteq \lambda_{\NNN}(y)$, $\lambda_{\MMM \sqcap \MMM'}(x) \supseteq \lambda_{\NNN}(y)$.
-If, on the other hand, $x = w$ (i.e. $x$ is the start state  of our pointed model $\MMM$), then, from the definition of $\mathsf{merge}$:
+If $x \neq w$ (i.e. $x$ is some state other than the start state), then, from the definition of $\mathsf{merge}$, $\lambda_{\mathsf{glb}(\MMM, \MMM')}(x) = \lambda_{\MMM}(x)$.
+So, given $\lambda_{\MMM} \supseteq \lambda_{\NNN}(y)$, $\lambda_{\mathsf{glb}(\MMM, \MMM')}(x) \supseteq \lambda_{\NNN}(y)$.
+If, on the other hand, $x = w$ (i.e. $x$ is the start state  of our cathoristic model $\MMM$), then, from the definition of $\mathsf{merge}$:
 \[
-\lambda_{\MMM \sqcap \MMM'}(w) = \lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w')
+\lambda_{\mathsf{glb}(\MMM, \MMM')}(w) = \lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w')
 \]
 where $w'$ is the start state  of $\MMM'$.
-In this case, given $\lambda_{\MMM}(w) \supseteq \lambda_{\NNN}(y)$ and $\lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$, it follows that $\lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$ and hence $\lambda_{\MMM \sqcap \MMM'}(w) \supseteq \lambda_{\NNN}(y)$.
+In this case, given $\lambda_{\MMM}(w) \supseteq \lambda_{\NNN}(y)$ and $\lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$, it follows that $\lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$ and hence $\lambda_{\mathsf{glb}(\MMM, \MMM')}(w) \supseteq \lambda_{\NNN}(y)$.
 
 \end{proof}
 
-\subsection{Least upper bound ($\sqcup$) of models}
-\martin{WHy do we have a subsection fo lub but not for glb?}
-
-\NI Intuitively, the least upper bound of two models $\MMM$ and
-$\MMM'$ contains the intersection of the transitions of $\MMM$ and
-$\MMM'$ for every associated pair of states in $\MMM$ and $\MMM'$, and
-the union of the node-labellings.
-
-Formally, define the least upper bound ($\sqcup$) of two models as:
+\NI Next, define the least upper bound ($\mathsf{lub}$) of two models as:
 \begin{eqnarray*}
-\MMM \sqcup \bot & = & \MMM \\
-\bot \sqcup \MMM & = & \MMM \\
-(\CAL{L},w) \sqcup (\CAL{L}',w') & = & \mathsf{lub}(\CAL{L}, \CAL{L}', (\MMM_\top, z), \{(w, w', z)\})
+\mathsf{lub}(\MMM, \bot) & = & \MMM \\
+\mathsf{lub}(\bot, \MMM) & = & \MMM \\
+\mathsf{lub}((\CAL{L},w), (\CAL{L}',w')) & = & \mathsf{lub}_2(\CAL{L}, \CAL{L}', (\MMM_\top, z), \{(w, w', z)\})
 \end{eqnarray*}
 
 \NI where $\MMM_\top$ is the topmost model $(\mathcal{W}=\{z\},
 \rightarrow=\emptyset, \lambda=\{z \mapsto \Sigma\})$ for some state $z$.
-$\mathsf{lub}$ takes four parameters: the two cathoristic transition
+$\mathsf{lub}_2$ takes four parameters: the two cathoristic transition
 systems $\CAL{L}$ and $\CAL{L}'$, an accumulator representing the
 constructed result so far, and a list of state triples (each triple
 contains one state from each of the two input models plus the state of
 the accumulated result) to consider next.  It is defined as:
 \begin{eqnarray*}
-  \mathsf{lub}(\CAL{L}, \CAL{L}', \MMM, \emptyset) 
+  \mathsf{lub}_2(\CAL{L}, \CAL{L}', \MMM, \emptyset) 
      &\quad =\quad & 
   \MMM \\
-  \mathsf{lub}(\CAL{L}, \CAL{L}', ((\mathcal{W}, \rightarrow, \lambda), y), \{(w,w',x)\} \cup R) 
+  \mathsf{lub}_2(\CAL{L}, \CAL{L}', ((\mathcal{W}, \rightarrow, \lambda), y), \{(w,w',x)\} \cup R) 
      & = & 
-  \mathsf{lub}(\CAL{L}, \CAL{L}', ((\mathcal{W} \cup \mathcal{W}', \rightarrow \cup \rightarrow', \lambda'), y), R' \cup R\}
+  \mathsf{lub}_2(\CAL{L}, \CAL{L}', ((\mathcal{W} \cup \mathcal{W}', \rightarrow \cup \rightarrow', \lambda'), y), R' \cup R\}
 \end{eqnarray*}
 where:
 \begin{eqnarray*}
@@ -562,7 +543,7 @@ where:
   \{(w_i, w'_i, x_i) \;|\; i = 1 ... n\}
 \end{eqnarray*}
 
-\NI Here $\lambda[x \mapsto S]$ is the node labelling function that is
+\NI Here $\lambda[x \mapsto S]$ is the state labelling function that is
 exactly like $\lambda$, except that it maps $x$ to $S$.  Moreover,
 $\mathsf{sharedT}$ returns the shared transitions between two models,
 and is defined as:
@@ -574,39 +555,41 @@ the set $\mathsf{triples}_\mathsf{lub}$ as the set of triples $(x,x',x*) \; | \;
 
 \input{figure:lub}
 
-\subsubsection{$\sqcup$ is the least upper bound}
+\begin{lemma}
+$\mathsf{lub}$ as defined is the least upper bound
+\end{lemma}
 We will show that:
 \begin{itemize}
 \item
-$\MMM \MODELLEQ \MMM \sqcup \MMM'$ and $\MMM' \MODELLEQ \MMM \sqcup \MMM'$
+$\MMM \MODELLEQ \mathsf{lub}(\MMM, \MMM')$ and $\MMM' \MODELLEQ \mathsf{lub}(\MMM, \MMM')$
 \item
-If $\MMM \MODELLEQ \NNN $ and $\MMM' \MODELLEQ \NNN $, then $\MMM \sqcup \MMM' \MODELLEQ \NNN$
+If $\MMM \MODELLEQ \NNN $ and $\MMM' \MODELLEQ \NNN $, then $\mathsf{lub}(\MMM, \MMM') \MODELLEQ \NNN$
 \end{itemize}
 If $\MMM$ or $ \MMM'$ are equal to $\bot$, then we just apply the rule that $\bot \MODELLEQ m$ for all models $m$. 
 So let us assume that neither $\MMM$ not $\MMM'$ are $bot$.
 
 \begin{proof}
-To see that $\MMM \MODELLEQ \MMM \sqcup \MMM'$, observe that, by construction of $\sqcup$ above, every transition in $\MMM \sqcup \MMM'$ has a matching transition in $\MMM$, and every node label in  $\MMM \sqcup \MMM'$ is a superset of the corresponding node label in $\MMM$.
+To see that $\MMM \MODELLEQ \mathsf{lub}(\MMM, \MMM')$, observe that, by construction of $\mathsf{lub}$ above, every transition in $\mathsf{lub}(\MMM, \MMM')$ has a matching transition in $\MMM$, and every state label in  $\mathsf{lub}(\MMM, \MMM')$ is a superset of the corresponding state label in $\MMM$.
 
-To show that $\MMM \MODELLEQ \NNN $ and $\MMM' \MODELLEQ \NNN $ together imply $\MMM \sqcup \MMM' \MODELLEQ \NNN$, assume a simulation $\mathcal{R}$ from $\NNN$ to $\MMM$ and a simulation $\mathcal{R}'$ from $\NNN$ to $\MMM'$.
-We need to produce a simulation relation $\mathcal{R}*$ from $\NNN$ to $\MMM \sqcup \MMM' $.
+To show that $\MMM \MODELLEQ \NNN $ and $\MMM' \MODELLEQ \NNN $ together imply $\mathsf{lub}(\MMM, \MMM') \MODELLEQ \NNN$, assume a simulation $\mathcal{R}$ from $\NNN$ to $\MMM$ and a simulation $\mathcal{R}'$ from $\NNN$ to $\MMM'$.
+We need to produce a simulation relation $\mathcal{R}*$ from $\NNN$ to $\mathsf{lub}(\MMM, \MMM')$.
 Define
 \[
 \mathcal{R}* =   \{(x, y*) \; | \; \exists y_1 . \exists y_2 . (x,y_1) \in \mathcal{R}, (x,y_2) \in \mathcal{R}', (y_1,y_2,y*) \in \mathsf{triples}_\mathsf{lub} \}
 \]
 In other words, $\mathsf{R}*$ contains the pairs corresponding to the pairs in both $\mathsf{R}$ and $\mathsf{R}'$.
-We just need to show that $\mathsf{R}*$ as defined is a simulation from $\NNN$ to $\MMM \sqcup \MMM' $.
+We just need to show that $\mathsf{R}*$ as defined is a simulation from $\NNN$ to $\mathsf{lub}(\MMM, \MMM')$.
 Assume $(x,x*) \in \mathsf{R}*$ and $x \xrightarrow{a} y$ in $\NNN$. 
-We need to produce a $y*$ such that $(x*,y*) \in \mathsf{R}*$ and $x* \xrightarrow{a} y*$ in $\MMM \sqcup \MMM' $.
+We need to produce a $y*$ such that $(x*,y*) \in \mathsf{R}*$ and $x* \xrightarrow{a} y*$ in $\mathsf{lub}(\MMM, \MMM')$.
 Given that $\mathcal{R}$ is a simulation from $\NNN$ to $\MMM$, and that  $\mathcal{R}'$ is a simulation from $\NNN$ to $\MMM'$, we know that there is a pair of states $x_1, y_1$ in $\MMM$ and a pair of states $x_2, y_2$ in $\MMM'$ such that $(x,x_1) \in \mathsf{R}$ and $(x,x_2) \in \mathsf{R}'$ and $x_1 \xrightarrow{a} y_1$ in $\MMM$ and $x_2 \xrightarrow{a} y_2$ in $\MMM'$.
 Now, from the construction of $\mathsf{lub}$ above, there is a triple $(y_1, y_2, y*) \in \mathsf{triples}_\mathsf{lub}$.
 Now, from the construction of $\mathsf{R}*$ above, $(x*,y*) \in \mathsf{R}*$.
 
-Finally, we need to show that for all states $x$ and $y$, if $(x,y) \in \mathsf{R}*, \lambda_{\NNN}(x) \supseteq \lambda_{\MMM \sqcup \MMM'}(y)$.
+Finally, we need to show that for all states $x$ and $y$, if $(x,y) \in \mathsf{R}*, \lambda_{\NNN}(x) \supseteq \lambda_{\mathsf{lub}(\MMM, \MMM')}(y)$.
 Given that $\mathcal{R}$ is a simulation from $\NNN$ to $\MMM$, and that  $\mathcal{R}'$ is a simulation from $\NNN$ to $\MMM'$, we know that if $(x,y_1) \in \mathsf{R}$, then $\lambda_\NNN(x) \supseteq \lambda_\MMM(y_1)$.
 Similarly, if  $(x,y_2) \in \mathsf{R}$, then $\lambda_\NNN(x) \supseteq \lambda_\MMM'(y_2)$.
-Now, from the construction of $\mathsf{lub}$, $\lambda_{\MMM \sqcup \MMM'}(y*) = \lambda_{\MMM}(y_1) \cup \lambda_{\MMM}(y_2)$ for all triples $(y_1, y_2, y*) \in \mathsf{triples}_\mathsf{lub}$. 
-So $\lambda_{\NNN}(x) \supseteq \lambda_{\MMM \sqcup \MMM'}(y)$, as required.
+Now, from the construction of $\mathsf{lub}$, $\lambda_{\mathsf{lub}(\MMM, \MMM')}(y*) = \lambda_{\MMM}(y_1) \cup \lambda_{\MMM}(y_2)$ for all triples $(y_1, y_2, y*) \in \mathsf{triples}_\mathsf{lub}$. 
+So $\lambda_{\NNN}(x) \supseteq \lambda_{\mathsf{lub}(\MMM, \MMM')}(y)$, as required.
 \end{proof}
 
 \subsection{A decision procedure for \cathoristic{}}\label{decisionprocedure}
@@ -621,7 +604,7 @@ implication is the key reason for the efficiency of the decision
 procedure.  Although any satisfiable formula has an infinite number of
 models, we have shown that the satisfying models form a bounded
 lattice with a least upper bound.  The $\SIMPL$ function defined above
-gives us the minimal model satisfying an expression.  Using this least
+gives us the least upper bound of all models satisfying an expression.  Using this least
 upper bound, we can calculate entailment by checking a \emph{single
   model}.  To decide whether $\phi \models \psi$, we use the following
 algorithm.
@@ -702,8 +685,7 @@ A logic satisfies Brandom's \emph{incompatibility semantics constraint} if
 
 \NI Not all logics satisfy this property.  Brandom has shown that
 first-order logic and the modal logic S5 satisfy the incompatibility
-semantics property, but it is not well-understood what other logics
-do.\martin{Can we still say this in the light of Peregrin's paper?}
+semantics property.
 Hennessy-Milner logic satisfies it, but Hennessy-Milner logic without
 negation does not.  \Cathoristic{} is the simplest logic we have found
 that satisfies the property.  To establish the incompatibility
