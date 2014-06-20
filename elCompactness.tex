@@ -105,7 +105,7 @@ switching $x$ and $y$. Here is an example translation.
 
 \NI We now establish the correctness of the encoding. The key issue is
 that not every first-order model of our first-order signature
-corresponds to an cathoristic model because determinism, well-sizedness and
+corresponds to a cathoristic model because determinism, well-sizedness and
 admissibility are not enforced by our signature alone. In other words,
 models may contain `junk'.  We deal with this problem following ideas
 from modal logic \cite{BlackburnP:modlog}: we add a translation
@@ -113,7 +113,7 @@ $\SEMB{\LLL}$ for cathoristic transition systems, and then prove the
 following theorem.
 
 \begin{theorem}[correspondence theorem]\label{correspondence:theorem:1}
-Let $\phi$ be an \cathoristic{} formula and $\MMM = (\LLL, s)$ an cathoristic
+Let $\phi$ be a \cathoristic{} formula and $\MMM = (\LLL, s)$ a cathoristic
 model.
 \[
    \MMM \models \phi \quad  \text{iff} \quad \SEMB{\LLL} \models_{x \mapsto s} \SEMB{\phi}_x.
@@ -124,7 +124,7 @@ And likewise for $\SEMB{\phi}_y$.
 \NI The definition of $\SEMB{\LLL}$ is simple.
 
 \begin{definition}
-Let $\LLL = (S, \rightarrow, \lambda)$ be an cathoristic transition
+Let $\LLL = (S, \rightarrow, \lambda)$ be a cathoristic transition
 system. Clearly $\LLL$ gives rise to an $\SSS$-model $\SEMB{\LLL}$ as
 follows.
 \begin{itemize}
@@ -263,7 +263,7 @@ The encoding $\SEMBTWO{\phi}_x$ of \cathoristic{} formulae is given by the follo
 \end{definition}
 
 \NI Here we use $\exists^{st}$ to indicate that this existential
-quantifier ranges of the sort of states, and $\forall^{act}$ for the
+quantifier ranges over the sort of states, and $\forall^{act}$ for the
 universal quantifier ranging over actions. The expression $a \in A$ is
 a shorthand for the first-order formula
 \[
@@ -279,8 +279,8 @@ one per sort). We will not consider this matter further here.
 We also translate cathoristic transition systems $\SEMBTWO{\LLL}$.
 
 \begin{definition}
-Let $\LLL = (S, \rightarrow, \lambda)$ be an cathoristic transition
-system. Clearly $\LLL$ gives rise to an $\SSS'$-model $\SEMBTWO{\LLL}$
+Let $\LLL = (S, \rightarrow, \lambda)$ be a cathoristic transition
+system. $\LLL$ gives rise to an $\SSS'$-model $\SEMBTWO{\LLL}$
 as follows.
 \begin{itemize}
 
@@ -306,7 +306,7 @@ as follows.
 
 
 \begin{theorem}[correspondence theorem]\label{correspondence:theorem:2}
-Let $\phi$ be an \cathoristic{} formula and $\MMM = (\LLL, s)$ an cathoristic
+Let $\phi$ be a \cathoristic{} formula and $\MMM = (\LLL, s)$ a cathoristic
 model.
 \[
    \MMM \models \phi \quad  \text{iff} \quad \SEMBTWO{\LLL} \models_{x \mapsto s} \SEMBTWO{\phi}_x.
@@ -348,7 +348,7 @@ Finally $!A$.
 \begin{enumerate}
 
 \item Choose a set $\Gamma$ of \cathoristic{} formulae such that each finite
-  subset $\Gamma'$ of $\Gamma$ has an cathoristic model $(\LLL, s)$.
+  subset $\Gamma'$ of $\Gamma$ has a cathoristic model $(\LLL, s)$.
 
 \item The translation gives a set $\SEMBTWO{\Gamma} =
   \{\SEMBTWO{\phi}\ |\ \phi \in \Gamma\}$ of first-order formulae such that
@@ -357,7 +357,7 @@ Finally $!A$.
 \item By compactness of (two-sorted) first-order logic, we can find a
   first-order model $\CAL{M}$ of $\SEMBTWO{\Gamma}$.
 
-\item\label{compactness:step:4} Convert $\CAL{M}$ into an cathoristic transition system
+\item\label{compactness:step:4} Convert $\CAL{M}$ into a cathoristic transition system
   $\CAL{M}^{\sharp}$ such that $(\CAL{M}^{\sharp}, s) \models \Gamma$.
 
 \end{enumerate}
@@ -385,7 +385,7 @@ first-order models to be convertible to cathoristic models.
 \end{eqnarray*}
 
 \begin{lemma}\label{compactness:lemma:23399}
-If $\LLL$ is an cathoristic transition system then $\SEMBTWO{\LLL} \models
+If $\LLL$ is a cathoristic transition system then $\SEMBTWO{\LLL} \models
 \phi_{admis} \AND \phi_{det}$.
 \end{lemma}
 
@@ -403,7 +403,7 @@ infinite sets without being $\Sigma$.  Moreover, a model may interpret
 the set of actions with a proper superset of $\Sigma$.  This also
 prevents conversion to cathoristic models. We solve these problems by
 simply removing all actions that are not in $\Sigma$ and all
-transitions involving such actions.  Moreover, we simply map all
+transitions involving such actions.  We map all
 infinite state labels to $\Sigma$. It is easy to see that this does not
 change satisfiability of (translations of) cathoristic formulae.
 
@@ -415,7 +415,7 @@ change satisfiability of (translations of) cathoristic formulae.
 %% \end{eqnarray*}
 
 %% \begin{lemma}\label{compactness:lemma:666}
-%% If $\LLL$ is an cathoristic transistion system then $\SEMBTWO{\LLL} \models
+%% If $\LLL$ is a cathoristic transistion system then $\SEMBTWO{\LLL} \models
 %% \phi_{a}$ for all $a \in \Sigma$.
 %% \end{lemma}
 
@@ -425,7 +425,7 @@ change satisfiability of (translations of) cathoristic formulae.
 %% \end{proof}
 
 \begin{definition}
-Let $\LLL = (S, \rightarrow, \lambda)$ be an cathoristic transition system
+Let $\LLL = (S, \rightarrow, \lambda)$ be a cathoristic transition system
 and $X$ a set, containing actions. The \emph{restriction of
   $\LLL$ to $X$}, written $\LLL \setminus X$ is the cathoristic model $(S,
 \rightarrow', \lambda')$ where $\rightarrow' = \{(s, a, t) \in
@@ -442,7 +442,7 @@ and $X$ a set, containing actions. The \emph{restriction of
 \end{definition}
 
 \begin{lemma}\label{compactness:lemma:1717}
-Let $\phi$ be an \cathoristic{} formula and $X$ be a set such that no action
+Let $\phi$ be a \cathoristic{} formula and $X$ be a set such that no action
 occurring in $\phi$ is in $X$. Then:
 \[
    (\LLL, s) \models \phi
@@ -458,7 +458,7 @@ $\phi$.
 
 \begin{definition}
 Let $\CAL{M}$ be a first-order model for the signature $\SSS'$.
-We construct an cathoristic transition system
+We construct a cathoristic transition system
 $\CAL{M}^{\sharp} = (S, \rightarrow, \lambda)$.
 \begin{itemize}
 
@@ -509,7 +509,7 @@ The proof proceeds by induction on the structure of $\phi$.
 \end{proof}
 
 \begin{definition}
-Let $\Gamma$ be a set of cathoristic formulae, and $\MMM$ an cathoristic model.  We
+Let $\Gamma$ be a set of cathoristic formulae, and $\MMM$ a cathoristic model.  We
 write $\MMM \models T$ provided $\MMM \models \phi$ for all $\phi \in
 T$.  We say $\Gamma$ is \emph{satisfiable} provided $\MMM \models T$.
 \end{definition}
@@ -520,7 +520,7 @@ $\Gamma$ is satisfiable.
 \end{theorem}
 \begin{proof}
 For the non-trivial direction, let $\Gamma$ be a set of \cathoristic{} formulae
-such that any finite subset has an cathoristic model. Define 
+such that any finite subset has a cathoristic model. Define 
 \[
   \SEMBTWO{\Gamma} 
      \ =\ 
@@ -536,7 +536,7 @@ which is given as follows.
 \[
    \Gamma'_{CL} \ =\ \{ \phi \in \Gamma\ |\ \SEMBTWO{\phi} \in \Gamma' \}
 \]
-Since $\Gamma'_{CL}$ is finite, by assumption there is an cathoristic model 
+Since $\Gamma'_{CL}$ is finite, by assumption there is a cathoristic model 
 \[
    (\LLL, s) \models \Gamma'_{CL}
 \]
