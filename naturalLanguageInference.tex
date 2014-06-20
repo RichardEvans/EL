@@ -225,36 +225,6 @@ all - but to involve existential quantification:
 \exists x.  Walks(Jones, x)
 \]
 
-\NI First-order logic can handle such inferences only by
-reinterpreting the sentences as logically complex compound
+\NI First-order logic \emph{can} handle such inferences - but only by
+reinterpreting the sentences as logically-complex compound
 propositions.
-
-\subsection{Summary}
-
-\martin{I suggest to drop the summary since it just repeats what we just said. Instead
-we should just talk about the inferences that CL cannot do.} 
-We have looked at inference between atomic sentences. \Cathoristic{}
-can handle them directly and naturally.  Traditional \fol{} has a
-harder time: it can express incompatibility, but only by using
-complex machinery - universal quantification, a conditional,
-negation. \Cathoristic{}, by contrast, expresses the source of the
-incompatibility \emph{directly} using the $!$ operator.  Again, \fol{}
-\emph{can} express adverbial inferences, but at the cost of using
-quantification over events.  When it comes to inferences from
-conjunctions of sentences to conjunctions of noun-phrases (or
-predicates), \fol{} has nothing to say because it has no way of
-expressing conjunctions between noun-phrases (or predicates) \emph{at
-  all}. In \fol{}, ``Jack is bruised and humiliated'' has to be
-regimented into ``Jack is bruised and Jack is humiliated''.  
-This regimentation takes a simple sentence and replaces it with a more complex one involving a duplication of elements. 
-It is not clear this is a step in the right direction.
-
-However, \cathoristic{} cannot handle \emph{all} instances of
-sub-propositional inferences.  
-One example that \cathoristic\ cannot handle is where the
-\emph{subjects} are conjoined, such as
-\begin{quote}
-``Jack loves Jill'' and ``Jim loves Jill'' together imply that ``Jack and Jim love Jill''
-\end{quote}
-
-\NI \Cathoristic{} has no way to conjoin noun-phrases in subject-position.

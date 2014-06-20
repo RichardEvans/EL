@@ -142,13 +142,12 @@ We have experimented with a version of \cathoristic{} in which the models are
 \emph{non-deterministic} labeled-transition systems.  Although
 non-determinism makes some of the constructions simpler,
 non-deterministic \cathoristic{} is unable to express incompatibility properly.
-Consider, for example, the claim that Jack is married to Jill\martin{Actually, the
-formalisation below says Jack is married to Jill, and Jill only.}. 
+Consider, for example, the claim that Jack is married\footnote{We assume, in this discussion, that $married$ is a many-to-one predicate. We assume that polygamy is one person \emph{attempting} to marry two people (but failing to marry the second).} to Jill
 In standard deterministic \cathoristic{} this would be rendered as:
 \begin{eqnarray*}
   \MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\})
 \end{eqnarray*}
-There are three levels at which this claim can be denied.\martin{Jack could be a polygamist}
+There are three levels at which this claim can be denied.
 First, we can claim that Jack is married to someone else - Joan, say:
 \begin{eqnarray*}
    \MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
