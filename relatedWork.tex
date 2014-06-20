@@ -176,28 +176,26 @@ Incompatibility semantics can shed light on possible-world semantics \cite{turba
 \subsection{Linear logic}
 
 Linear logic \cite{GirardJY:linlog,GirardJY:protyp} is a refinement of
-first-order logic and was introduced by J.-Y.~Girard with the aim of
-bringing the symmetries of classical logic to constructive
-logic. Linear logic has been fruitful in a variety of fields, in
-particular in the study of typing systems, where the concept of
-linearity puts type-based resource handling on a sound logical basis.
+first-order logic and was introduced by J.-Y.~Girard and
+brings the symmetries of classical logic to constructive
+logic. 
 
-Linear logic splits conjunction into two: additive and multiplicative
-conjunction The former, additive conjunction $A \& B$, is especially
-interesting in the context of \cathoristic{}. It can be interpreted
-\cite{AbramskyS:comintoll} as, in the terminology of process calculus,
-an external choice operation. External, because the choice is offered
-to the environment.  This interpretation has been influential in the
+Linear logic splits conjunction into additive and multiplicative
+conjunction. The former, additive conjunction $A \& B$, is especially
+interesting in the context of \cathoristic{}. In the terminology of
+process calculus it can be interpreted as an external choice operation
+\cite{AbramskyS:comintoll}. External because the choice is offered to
+the environment.  This interpretation has been influential in the
 study of types for process calculus,
 e.g.~\cite{HondaK:unitypsfsifLONG,TakeuchiK:intbaslaits,HondaK:lanpriatdfscbp}.
 Implicitly, additive conjunction gives an explicit upper bound on how
-many different options the environment can choose from. For example in
-$A \& B \& C$ we have three options (assuming that none of $A, B, C$
+many different options the environment can choose from. For example 
+$A \& B \& C$ has  three options (assuming that none of $A, B, C$
 can be decomposed into further additive conjunctions).  With this in
 mind, and simplifying a great deal, a key difference between $!A$ and
 additive conjunction $A \& B$ is that the individual actions in $!A$
-have no continuation, while they do with $A \& B$: $!\{l, r\}$ says
-that at this point the only available actions are $l$ and $r$. What
+have no continuation, while they do with $A \& B$: the tantum $!\{l, r\}$ says
+that the only permitted  actions are $l$ and $r$. What
 happens at later states is not constraind by $!A$.  In contrast, $A \&
 B$ says not only that at this point the only available options are $A$
 and $B$, but also that if we choose $A$, then $A$ holds 'for ever',
@@ -227,11 +225,11 @@ explicit description of mutually exclusive option:
 \[
      \sum_{i \in I} P_i
 \]
-That is a process that can internally choose, or be chosen to evolve
-into the process $P_i$ for each $i$. Once the choice is made, all
-other options disappear.  Sums also relate closely to linear logic's
-additive conjunction. Is this conceptual proximity a coincidence or
-indicative of deeper common structure?
+That is a process that can internally choose, or be chosen externally
+by the environment to evolve into the process $P_i$ for each $i$. Once
+the choice is made, all other options disappear.  Sums also relate
+closely to linear logic's additive conjunction. Is this conceptual
+proximity a coincidence or indicative of deeper common structure?
 
 
 \subsection{Failures/divergences in process calculi}
@@ -241,28 +239,29 @@ models that has been used in the denotational semantics of process
 calculi, primarily Hoare's CSP \cite{HoareC:comseq,RoscoeAW:theapoc}
 and its descendants.  In this model, the denotation of a process $P$
 is given as a pair $(traces(P), fail(P))$ where $traces(P) = \{
-\sigma\ |\ (\sigma, X) \in \SEMB{P} \}$ are $P$'s traces, and
-$fail(P)$ it's failures.  A \emph{failure} is a pair $(\sigma, R)$
-where $\sigma \in \Sigma^*$ and $R \subseteq \Sigma$. The intended
-interpretation is that a process $P$ has failure $(\sigma, R)$
-provided that $\sigma$ is a trace of $P$ and after $P$ executes all
-the actions in $\sigma$ it refuses to do any action given in $R$. The
-denotation $\SEMB{P}$ of $P$ in a failures/divergences model is the
-the set of all of $P$'s failures. The set $ traces(P)$ is
-prefix-closed, hence gives rise of a deterministic labelled transition
-system: States are given by the set $traces(P)$ of all traces.
-Transitions are of the form $\sigma \TRANS{a} \sigma.a$, where
-$\sigma.a$ is the string extending $\sigma$ with the action $a$.  The
-start state is the empty string.  We can decorate all states as
-follows: $ \lambda (\sigma) = \Sigma \setminus R $ provided that
-$(\sigma, R) \in \SEMB{P}$.  Whenever the set $\Sigma$ of symbols is
-finite, we obtain an cathoristic model this way.
+\sigma\ |\ (\sigma, X) \in \SEMB{P} \}$ are $P$'s traces, in other
+words the sequences of actions $P$ can engage in; $fail(P)$ are called
+failures.  A \emph{failure} is a pair $(\sigma, R)$ where $\sigma \in
+\Sigma^*$ and $R \subseteq \Sigma$. The intended interpretation is
+that a process $P$ has failure $(\sigma, R)$ provided that $\sigma$ is
+a trace of $P$ and after $P$ executes all the actions in $\sigma$ that  $P$
+refuses to do any action given in $R$. The denotation $\SEMB{P}$ of
+$P$ in a failures/divergences model is the the set of all of $P$'s
+failures. The set $ traces(P)$ is prefix-closed, hence gives rise of a
+deterministic labelled transition system: states are given by the set
+$traces(P)$ of all traces.  Transitions are of the form $\sigma
+\TRANS{a} \sigma.a$, where $\sigma.a$ is the string extending $\sigma$
+with the action $a$.  The start state is the empty string.  We can
+decorate all states as follows: $ \lambda (\sigma) = \Sigma \setminus
+R $ provided that $(\sigma, R) \in \SEMB{P}$.  Whenever the set
+$\Sigma$ of symbols is finite, we obtain an cathoristic model this
+way.
 
 While the failures/divergences semantics of CSP are somewhat more
 complicated due to the possibility of diverging programs, the close
 connection between cathoristic models and the denotations of CSP processes,
 as well as the syntatic similarity with Hennessy-Milner logic suggest
-that it might be fruitful to investigate how \cathoristic{} can be used
+that it is fruitful to investigate how \cathoristic{} can be used
 as a program logic for process calculi.
 
 \subsection{Linguistics}

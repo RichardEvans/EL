@@ -1,3 +1,8 @@
+* TODO spell-check everything, first MB then RPE
+* TODO  Be clear about tantum and available vs permitted:
+
+Now we are describing the tantrum !A as giving the *available* actions.
+But that's wrong. It gives the *permitted* actions.
 * TODO Send do friends and  possible reviewers (please add more):
 
   - Michael Wooldridge http://www.cs.ox.ac.uk/people/michael.wooldridge/
