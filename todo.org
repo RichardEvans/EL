@@ -1,5 +1,28 @@
+* TODO Send do friends and  possible reviewers (please add more):
+
+  - Michael Wooldridge http://www.cs.ox.ac.uk/people/michael.wooldridge/
+  - Robert Brandom http://www.pitt.edu/~rbrandom/
+  - Marek Sergot http://www.doc.ic.ac.uk/~mjs/
+  - Marcus Kracht http://wwwhomes.uni-bielefeld.de/mkracht/index-en.html
+  - Graham White and Paulo Oliva at QMUL
+  - Database people like Moshe Vardi (who else?)
+  - Bernhard Reus at Sussex
+  - Billiejoe Charlton
+  - Aram Lintzel
+  - Jaroslav Peregrin
+  - TY
+  - Giacomo Turbanti <turbanti.giacomo@gmail.com> 
+  - Bat
+  - http://rasmuskrendsvig.dk/ 
+  - Coalgebraic modal guys (like Alexander Kurz) but not sure
+
+Ask all these people: who else could be interested,
+were they recommend it could be published, if they have
+suggestions for related work we forgot to mention.
+
 * TODO Be consistent. In particular
-** TODO State vs node (remains to be done on elAndBangCore.tex)
+** DONE CL[...] vs CL [...] etc, see space. Doesn't matter since math mode
+** DONE State vs node (remains to be done on elAndBangCore.tex)
 
 ** DONE non-deterministic vs nondeterministic
 ** DONE {} vs \emptyset
@@ -10,7 +33,7 @@
 ** DONE I think we sometimes say pointed model. Replace by cathoristic model or whatever appropriate
 ** DONE ultraproduce vs ultra-product and likewise for ultrafilter
 
-** TODO space in = in definitions e.g. A = B vs A \quad=\quad B
+** DONE space in = in definitions e.g. A = B vs A \quad=\quad B
 ** TODO Fullstop at the end of short sentences, (e.g. in bullets)
 
 ** DONE capitalisation of "Brandom's incompatibility ..."
@@ -23,7 +46,7 @@
 ** DONE variables X vs x
 ** DONE I vs we 
 ** DONE always use strong bisimilarity instead of bisimilarity?
-** TODO Action vs symbol
+** DONE Action vs symbol
 ** TODO HOw rule names are written (used typefaces)
 ** DONE Names: R Brandom vs Brandom etc Drop all references to first names, except in bibliogra.
 ** DONE as we shall demonstrate vs as we demonstrate. Richard prefers shall
@@ -54,25 +77,29 @@ Would
 Be an adequate rendition too? 
 We decided to drop term and not do anything about formula/sentence for the time being.
 
-** Book titles always in \emph, e.g. \emph{Philosophical Remarks}?
-** capitalisation, e.g. Cathoristic Logic vs Cathoristic logic vs cathoristic logic etc.
+** TODO Book titles always in \emph, e.g. \emph{Philosophical Remarks}?
+** DONE capitalisation, e.g. Cathoristic Logic vs Cathoristic logic vs cathoristic logic etc.
 
-* Don't display \subsubsections in table of content
-* Weird size issue in appendix: figure captions are not shrunk.
-* [17/06/2014 17:11:26] Martin Berger: BTW, which sentence structure do you prefer:
+* DONE Don't display \subsubsections in table of content
+* TODO Make references to versu in biblio OK
+* TODO Set up own github repo for Haskell code, put in proper references.
+Put in license and documentation (sparse)
+* DONE Weird size issue in appendix: figure captions are not shrunk.
+* DONE Ignore for the time being [17/06/2014 17:11:26] Martin Berger: BTW, which sentence structure do you prefer:
 [17/06/2014 17:11:28] Martin Berger: Translating from cathoristic logic to first-order logic
 [17/06/2014 17:11:34] Martin Berger: or Translating from cathoristic  to first-order logic
 [17/06/2014 17:11:43] Richard Evans: I think I marginally prefer the second
 [17/06/2014 17:11:53] Martin Berger: I massively prefer the second
-* Remove all remains of EL, Eremic, eremic
-* Remove stupidities like
+* DONE Remove stupidities like
   - the the, an an ...
+* DONE Remove stupidities like
   - e.g. Bla, cf. bla ...
-* Prove  Haskell decisoin proce compexity is quadratic
-* Prove general completenss
-* Explain the meaning of "Cathoristic".
-* Too many of our sentences start with "But ..." Is this elegant?
-* Make a clear point somewhere that tree models are
+  still one in bib.bib
+* DONE Prove  Haskell decisoin proce compexity is quadratic
+* DONE Prove general completenss
+* DONE Explain the meaning of "Cathoristic".
+* DONE Too many of our sentences start with "But ..." Is this elegant?
+* TODO Make a clear point somewhere that tree models are
 all we need.
 
 This is a general insight that holds for all modal logics, and
@@ -80,59 +107,55 @@ is the case becasue bisimulation can't distinguish between LTS and their
 tree unflodings. 
 
 If we put this in, we can probably clean up some stuff.
-* Explain genesis of Brandom in
+* DONE Explain genesis of Brandom in
 \footnote{Itself a development of Sellars,
   Hegel and Kant.}
-* Check preliminaries. Remove superfluous material.
-* Put the Haskell code into separate Github repo. Document how to use the
-software.
-* Add all missing biblographic references
-* remove doubly defined labels, add missing labels
-* Cases in proofs are inconsistent across the paper
-* Each chapter its own file
-* remove all files that are not used 
-* Maybe we should call "pure cathoristic" models just "pure" models?
-* Have we discussed bisimulation invariance?
-* Talk about binding and precedence in EL formulae, qunatifiers etc. Be consistent.
-* Find better names for fragments: e.g. EL[∧, !] isn't exactly snappy. What
+* TODO Add all missing biblographic references
+* DONE remove doubly defined labels, add missing labels
+* DONE Ignore: Cases in proofs are inconsistent across the paper
+* DONE Each chapter its own file
+* DONE Ignore remove all files that are not used 
+* DONE IGNORE Maybe we should call "pure cathoristic" models just "pure" models?
+* DONE Ignore Have we discussed bisimulation invariance?
+* DONE Talk about binding and precedence in EL formulae, qunatifiers etc. Be consistent.
+* DONE Find better names for fragments: e.g. EL[∧, !] isn't exactly snappy. What
 about Core etc?
-* We have too many correspondence theorems, remove names.
-* If we remove [!-Left] from the rules, then prove it as a lemma
+* DONE If we remove [!-Left] from the rules, then prove it as a lemma
   or use it as an example of derivable rules.
-* Explain the terms "cathoristic" and "tantum" (if we stick with them)
-* Should we have a section about material incompatibility and how
+* DONE Explain the terms "cathoristic" and "tantum" (if we stick with them)
+* DONE Should we have a section about material incompatibility and how
   Gamma |- phi iff Gamma, not phi inconsistent does not hold in EL?
-* Factor out the stuff that I use in compactness by translation and Richard
+* DONE Factor out the stuff that I use in compactness by translation and Richard
   in the theorem that states "If a formula φ is satisfiable, then
   there is a finite tree-like model of height |φ| and branching factor
   σ(φ) that satisfies φ."
   I mean the stuff about erasing superfluous labels.
-* Make sure we have \qed at the end of every proof. Better:
+* DONE Make sure we have \qed at the end of every proof. Better:
   put it into the latex macro.
 
 * Make sure figures look coherent, and live in suitable places.
-* Remove macros that are not used.
-* Put a full stop after \proof
-* Since most (all) examples don't use the change over time
+* DONE IGNORE for now Remove macros that are not used.
+* DONE Put a full stop after \proof
+* DONE Since most (all) examples don't use the change over time
 of the structure of exclusion, we have an even more basic 
 fragment where all !A is not under a may. (Or something like
 that.) Discuss and investigate
-* Ask philosophers about historical precursors for using exlusion
+* DONE Ask philosophers about historical precursors for using exlusion
   to approach human language
-* Say what ranges over what, e.g. \frac{M} over models, X, Y over
+* DONE Say what ranges over what, e.g. \frac{M} over models, X, Y over
   formulae, etc.  Be consistent about this.
 
-* Use descriptive names, why \mu(X) for the simplest model satisfying
+* DONE Use descriptive names, why \mu(X) for the simplest model satisfying
   $X$?  would not simp(X) or something like that more readable?
 
-* EL allows us to do  intra-atomic inferences that are not possible in FOL.
+* DONE EL allows us to do  intra-atomic inferences that are not possible in FOL.
 But are we capturing all intra-atomic inferences or is EL missing
 some? What is the expressivity of EL? This question might not have
 a clear answer but it might be worthwhile considering.
-* Finalise the name of the logic. I am going to check with my friendy
+* DONE Finalise the name of the logic. I am going to check with my friendy
   Tim Whitmarsh one more time that "Cathoristic Logic" is the best name for
   it.
-* Find a better name for !A than "bang A".
+* DONE Find a better name for !A than "bang A".
 About the question how to name !A I think the obvious names are
 something like this:
 
@@ -148,13 +171,13 @@ to \/.  In Latin we can choose tantum, nisi, solo, solus and in Greek:
 mono (μόνο). If we go creative we could simply say
 
    Erem A
-* What about the dual "at least A" operator? We should have a discussion.
-* Given the size of the paper, maybe we can have a table of content and/or
+* DONE Ignore for nodw What about the dual "at least A" operator? We should have a discussion.
+* DONE Given the size of the paper, maybe we can have a table of content and/or
   an index?
-* Add generous acknowledgements (in particular if we get feedback from others)
-* What about quantification over actions? Section 11 just quantifies over individuals.
-* Should we have proof in the appendix at all?
-* I recommend to use the following order of presentation in Chapters 2 and 3.
+* DONE Do when we get feedback Add generous acknowledgements (in particular if we get feedback from others)
+* DONE What about quantification over actions? Section 11 just quantifies over individuals.
+* DONE Should we have proof in the appendix at all?
+* DONE I recommend to use the following order of presentation in Chapters 2 and 3.
 
   - Formulae
   - Models and the satisfaction relation.
@@ -173,47 +196,23 @@ mono (μόνο). If we go creative we could simply say
 
   - Easy proof go in the appendix
 
-* Give more examples.
+* DONE Give more examples.
+OD
+* DONE be consistent on capitalisation.
 
-* be consistent on capitalisation.
+* DONE Timetable :13.May to 16.May, can we finish it?
 
-* Timetable: 13.May to 16.May, can we finish it?
+* TODO Here is something we can do (not now but soon): 
+create a set of slides and a little video presentation (using
+  Screenflow), maybe 15 minutes, to introduce the material to
+  non-experts, and put it on our webpages? This makes the material
+  more accessible and is help to disseminate the paper. People much
+  rather watch a video than read a paper.  Also the 15 minute time
+  limit and choice of medium severely constraints us in what we can
+  say, so we must focus on the essentials. )
 
-* Find possible reviewers (please add more):
-
-  - Michael Wooldridge http://www.cs.ox.ac.uk/people/michael.wooldridge/
-  - Robert Brandom http://www.pitt.edu/~rbrandom/
-  - Marek Sergot http://www.doc.ic.ac.uk/~mjs/
-  - Marcus Kracht http://wwwhomes.uni-bielefeld.de/mkracht/index-en.html
-  - Graham White and Paulo Oliva at QMUL
-  - Database people like Moshe Vardi (who else?)
-  - Bernhard Reus at Sussex
-  - Billiejoe Charlton
-  - Aram Lintzel
-  - Jaroslav Peregrin
-  - TY
-  - Giacomo Turbanti <turbanti.giacomo@gmail.com> 
-  - Bat
-  - http://rasmuskrendsvig.dk/ 
-  - Coalgebraic modal guys (like Alexander Kurz) but not sure
-
-Ask all these people: who else could be interested,
-were they recommend it could be published, if they have
-suggestions for related work we forgot to mention.
-
-* Could it make sense to prepare a little video presentation (using
-  Screenflow, or recording professionally), maybe 15 minutes, to
-  introduce the material? This could make it more accessible to
-  non-technical audiences.)
-
-* Prepare Haskell decision procedure. Put on Github. Write
-  instructions on how to use.
-* THink about how to interface the paper with Versu.  Versu—A
-  Simulationist Storytelling System
-
-* Think about seminars (Sussex, Imperial, Oxford, QMUL which others?)
-
-* Related work: 
+* TODO Think about seminars (Sussex, Imperial, Oxford, QMUL which others?)
+* DONE Related work: 
 
   - Investgations into negation
   - Philosophical stuff
@@ -222,10 +221,10 @@ suggestions for related work we forgot to mention.
   - HM Logic
   - Linear logic (additive conjunction)
 
-* The rule (! left) is not used in the completeness proof. Why not?
-* go through old emails and list ideas and issues that we discussed
-* Remove all commented out LaTeX including macros.
-* Put the footnote on complexity of binders in main intro body.
+* DONE The rule (! left) is not used in the completeness proof. Why not?
+* DONE go through old emails and list ideas and issues that we discussed
+* DONE Later Remove all commented out LaTeX including macros.
+* DONE Put the footnote on complexity of binders in main intro body.
 add later something about how this is reflected in EL queries.
 
    Yes. (We currently use one-way pattern matching rather than
@@ -239,4 +238,4 @@ add later something about how this is reflected in EL queries.
    inference over universally quantified propositions. We can see
    directly from the node labelling of the current node which
    statements can no longer be true.
-* Make references and links clickable (This seems to cause a problem with the springer latex style)
+* DONE Make references and links clickable (This seems to cause a problem with the springer latex style)
