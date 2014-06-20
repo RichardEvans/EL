@@ -7,13 +7,11 @@ This is an industrial-sized application, involving tens of thousands
 of rules and facts\footnote{The application has thousands of paying
   users, and available for download on the App Store for the iPad
   \cite{Versu}.}.  In this simulation, the entire world state is stored
-as a set of \cathoristic{} formulae - all other aspects of world state
-are transient and computed as needed.  The current true sentences are
-represented in a cathoristic model.\martin{THis is inconsistent: are the facts stored as CL formulae or a CL model?}
-
-We shall first sketch how facts are represented, before describing some
-advantages of \cathoristic{} over a more traditional \fol{}
-representation of knowledge.
+as a cathoristic model.
+	
+We found that \cathoristic\ has two distinct advantages as a language for knowledge representation. First, it is ergonomic: ubiquitous concepts (such as uniqueness) can be expressed directly.
+Second, it is efficient: the \emph{tantum} operator allows certain sorts of optimisation that would not otherwise be available.
+We shall consider these in turn.
 
 \subsection{Representing facts  in \cathoristic{}}
 
@@ -55,16 +53,6 @@ that the facts about an object are ``contained'' within the object.
 One reason for this particular way of structuring the data will be
 explained below.
  
-\martin{ I think the rest of this section could be structured more
-  clearly. I think we are saying CL is good for the following two
-  (very different) reasons.  (1) Convenience of representation for
-  humans. (2) Algorithmic properties, which are about (a) efficient
-  model update and (b) efficient queries. CL is good regarding (2)
-  because formulae have tree structure and trees can be efficiently
-  represented using pointers manipulated using lot's of well-known
-  algorithms. Maybe state the general picture first and then give
-  examples?}
-
 Consider the following facts about a gentleman named Brown:
 
 \[
