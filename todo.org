@@ -25,6 +25,12 @@ Ask all these people: who else could be interested,
 were they recommend it could be published, if they have
 suggestions for related work we forgot to mention.
 
+- where to submit
+- where to give a seminar (are they interested)?
+- Can they think of related work?
+- Can they think of others who would be interested in this work
+- Technically recommendations? or recommendations regarding the presentation?
+
 * TODO Be consistent. In particular
 ** DONE CL[...] vs CL [...] etc, see space. Doesn't matter since math mode
 ** DONE State vs node (remains to be done on elAndBangCore.tex)
@@ -99,6 +105,7 @@ create a set of slides and a little video presentation (using
   say, so we must focus on the essentials. )
 
 * TODO Think about seminars (Sussex, Imperial, Oxford, QMUL which others?)
+* TODO Remove inlined figures, e.g. in elAndBangMore.tex
 * DONE Weird size issue in appendix: figure captions are not shrunk.
 * DONE Ignore for the time being [17/06/2014 17:11:26] Martin Berger: BTW, which sentence structure do you prefer:
 [17/06/2014 17:11:28] Martin Berger: Translating from cathoristic logic to first-order logic

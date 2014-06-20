@@ -33,9 +33,9 @@ form $r(a,b)$ is expressed as:
   \MAY{a} \MAY{r} (\MAY{b} \land \fBang \{b\}).
 \end{eqnarray*}
 
-\NI The translation is detailed in Section \ref{translationFOLtoFOEL}.
+% \NI The translation is detailed in Section \ref{translationFOLtoFOEL}.
 
-So, for example, to say that ``Jack likes Jill'' (where ``likes'' is,
+\NI So, for example, to say that ``Jack likes Jill'' (where ``likes'' is,
 of course, a many-many relation), we would write:
 \begin{eqnarray*}
   \MAY{jack} \MAY{likes} \MAY{jill}.
@@ -105,7 +105,7 @@ In \cathoristic{}, if we want to find out whether Brown is married, we can query
 \begin{eqnarray*}
 \MAY{brown} \MAY{married}
 \end{eqnarray*}
-In \fol, if $married$ is a two-place predicate, then we need to fill in the extra argument place with a free variable - we would need to find out if there exists an $X$ such that $married(brown, X)$ - this is slower to compute and more cumbersome to type. 
+In \fol, if $married$ is a two-place predicate, then we need to fill in the extra argument place with a free variable - we would need to find out if there exists an $x$ such that $married(brown, x)$ - this is slower to compute and more cumbersome to type. 
 
 \subsection{Simpler postconditions}
 

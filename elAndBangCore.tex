@@ -240,7 +240,7 @@ obtain a proper partial-order by simply quotienting models:
 \NI Greatest lower and least upper bounds can also be computed on
 representatives:
 \[
-   \BIGLUB \{[\MMM]_{\MODELEQ} \ |\ \MMM \in S\ \} = [\BIGLUB S]_{\MODELEQ}
+   \BIGLUB \{[\MMM]_{\MODELEQ} \ |\ \MMM \in S\ \} \quad=\quad [\BIGLUB S]_{\MODELEQ}
 \]
 whenever $\BIGLUB S$ exists, and likewise for the greatest lower bound.
 We also define 
@@ -294,16 +294,16 @@ Consider propositional logic, for example.
 Define a model of propositional logic as a set of atomic formulae that are set to true.
 Then we have a natural ordering  on propositional logic models:
 \[
-\MMM \leq \MMM' \text{ iff } \MMM \supseteq \MMM'
+\MMM \leq \MMM' \quad\text{ iff }\quad \MMM \supseteq \MMM'
 \]
 Consider all the possible models that satisfy $\phi \lor \psi$:
-\begin{eqnarray*}
-\{\phi\} \\
-\{\psi\} \\
-\{\phi, \psi\} \\
-\{\phi, \psi, \xi\}\\
-...
-\end{eqnarray*}
+\[
+\{\phi\} \qquad
+\{\psi\} \qquad
+\{\phi, \psi\} \qquad
+\{\phi, \psi, \xi\}\qquad
+\cdots
+\]
 This set of satisfying models has no least upper bound, since $\{\phi\} \nleq \{\psi\}$ and $\{\psi\} \nleq \{\phi\}$.
 Similarly,  the set of models satisfying $\neg (\neg \phi \land \neg \psi)$ has no least upper bound.
 
