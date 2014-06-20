@@ -352,8 +352,12 @@ It is easy to see that $\SIMPL{\cdot}$ always returns tree models.
      & & \text{where } \MMM = (\mathcal{L}, w) \text{ and } \MMM' = (\mathcal{L'}, w')
 \end{eqnarray*}
 
-\NI The $\mathsf{merge}$ function returns $\bot$ if either of its arguments are $\bot$. Otherwise, it merges the two LTSs together, given a set of state-identification pairs (a set of pairs of states from the two LTSs that need to be identified).
-The state-identification pairs are used to make sure that the resulting model is deterministic.
+\NI The $\mathsf{merge}$ function returns $\bot$ if either of its
+arguments are $\bot$. Otherwise, it merges the two transition systems
+together, given a set of state-identification pairs (a set of pairs of
+states from the two transition systems that need to be identified).  The
+state-identification pairs are used to make sure that the resulting
+model is deterministic.
 
 \begin{eqnarray*}
   \mathsf{merge}(\mathcal{L}, \mathcal{L}', ids) 
@@ -384,7 +388,7 @@ immediately available from the given state $w$.
      \ =\  \{ a \fOr \exists w' . w \xrightarrow{a} w'\} 
 \]
 
-\NI The $\mathsf{join}$ function takes the union of the two LTSs.
+\NI The $\mathsf{join}$ function takes the union of the two transition systems.
 \[
    \mathsf{join}((S, \rightarrow,\lambda), (S', \rightarrow', \lambda')) 
       \quad=\quad
@@ -782,7 +786,7 @@ $\MMM \models \langle a_1 \rangle ... \langle a_n \rangle \top$, there is
 a sequence of states $w, w_1, ..., w_n$ such that $w \xrightarrow{a_1}
 w_1 \rightarrow ... \xrightarrow{a_i} w_n$. Let $\MMM_2$ be the model just
 like $\MMM$ except it has an additional transition from each such $w_n$
-with a symbol $a \notin A$. 
+with an action $a \notin A$. 
 Clearly, $\MMM_2 \sqcap \SIMPL{\psi'} = \bot$
 because of the additional $a$-transition, and given that $\psi \models
 \psi'$, it follows that $\MMM_2 \sqcap \SIMPL{\psi} = \bot$. Also, $\MMM_2 \sqcap

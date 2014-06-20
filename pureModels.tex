@@ -357,14 +357,14 @@ $y \models \phi_1$ and $y \nvDash \phi_2$. In this case, $\mathsf{neg}(y, \phi_1
 $y \nvDash \phi_1$ and $y \nvDash \phi_2$. In this case, $\mathsf{neg}(y, \phi_1 \AND \phi_2) =  \mathsf{neg}(y, \phi_1) \AND \mathsf{neg}(y, \phi_2)$.
 \end{enumerate}
 \item
-$!A$: if $y \nvDash !A \mbox{ and } y'_j \models !A$, then there is a symbol $a \in \Sigma-A$ such that $y \xrightarrow{a} z$ for some $z$ but there is no such $z$ such that $y'_j \xrightarrow{a} z$. In this case, let $\mathsf{neg}(y, \phi_j) = \langle a \rangle \top$.
+$!A$: if $y \nvDash !A \mbox{ and } y'_j \models !A$, then there is an action $a \in \Sigma-A$ such that $y \xrightarrow{a} z$ for some $z$ but there is no such $z$ such that $y'_j \xrightarrow{a} z$. In this case, let $\mathsf{neg}(y, \phi_j) = \langle a \rangle \top$.
 \item
 $\langle a \rangle \phi$. There are two possibilities:
 \begin{enumerate}
 \item
 $y \models \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \rangle \phi) =  \bigwedge\limits_{y \xrightarrow{a} z}  \langle a \rangle \mathsf{neg}(z, \phi)$.
 \item
-$y \nvDash \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \rangle \phi) = \fBang \{ b \fOr \exists z. y \xrightarrow{b} z\}$. This set of $b$s is finite since we are assuming the LTS is finitely-branching.
+$y \nvDash \langle a \rangle \top$. In this case, $\mathsf{neg}(y, \langle a \rangle \phi) = \fBang \{ b \fOr \exists z. y \xrightarrow{b} z\}$. This set of $b$s is finite since we are assuming the transition system  is finitely-branching.
 \end{enumerate}
 \end{itemize}
 

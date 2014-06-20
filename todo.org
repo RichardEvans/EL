@@ -13,41 +13,25 @@
 ** TODO space in = in definitions e.g. A = B vs A \quad=\quad B
 ** TODO Fullstop at the end of short sentences, (e.g. in bullets)
 
-** capitalisation of "Brandom's incompatibility ..."
+** DONE capitalisation of "Brandom's incompatibility ..."
 
-** time complexity vs time-complexity
-
-** Implication: \rightarrow vs horseshoe
-
-** first-order vs first order, Remove predicate -> first
-
-** Why do we use the term predicate logic at all?
-
-** in hand vs at hand
-
-** variables X vs x
-
-** I vs we 
-
-** always use strong bisimilarity instead of bisimilarity?
-
-** Action vs symbol
-
-** HOw rule names are written (used typefaces)
-
-** Names: R Brandom vs Brandom etc
-
-** as we shall demonstrate vs as we demonstrate ...
-
-** What symbols to we use for implication? \rightarrow vs horseshoe
-
-** Make sure always to be precise about cathoristic model vs cathoristic
+** DONE time complexity vs time-complexity
+** DONE Implication: \rightarrow vs horseshoe
+** DONE first-order vs first order, Remove predicate -> first
+** DONE Why do we use the term predicate logic at all?
+** DONE "in hand" vs "at hand" vs "to hand"?
+** DONE variables X vs x
+** DONE I vs we 
+** DONE always use strong bisimilarity instead of bisimilarity?
+** TODO Action vs symbol
+** TODO HOw rule names are written (used typefaces)
+** DONE Names: R Brandom vs Brandom etc Drop all references to first names, except in bibliogra.
+** DONE as we shall demonstrate vs as we demonstrate. Richard prefers shall
+** TODO Make sure always to be precise about cathoristic model vs cathoristic
     transition system
-
-** POV vs point of view vs point-of-view
+** DONE POV vs point of view vs point-of-view
 
 ** LTS vs labelled transition system
-
 ** FOL vs first-order logic, EL vs cathoristic logic
 
 ** Either all definitions are in an explicit \begin{definition}
