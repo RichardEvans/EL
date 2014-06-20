@@ -76,7 +76,7 @@ and $\MAY{a} !\{b\} \land \MAY{a} \MAY{c} \top \judge \MAY{d} \top$.
 \subsection{\RULENAME{!-Left} and \RULENAME{!-Right}}
 
 The rules [\RULENAME{!-Right 1}, \RULENAME{!-Right 2}] jointly express
-how the subset relation $\subseteq$ on sets of symbols relates to
+how the subset relation $\subseteq$ on sets of actions relates to
 provability. Why  don't we need a corresponding rule \RULENAME{!-Left} for
 strengthening $!$ on the left hand side?
 \[
@@ -117,25 +117,9 @@ conclusion.
 
 In order to prove completeness, below, we need the notion of a
 \emph{characteristic formula} of a model.  The function
-$\SIMPL{\cdot}$ takes formulae as argument and returns
-models. Characteristic formulae go the other way: given a model
-$\MMM$, we compute its characteristic formula $\CHAR{\MMM}$. The
-formula $\CHAR{\MMM}$ must satisfy the following laws to characterise
-the model $\MMM$:\martin{Do we prove this? How do these axioms relate to
-\cite{AcetoL:chaforfata}}
-\begin{itemize}
-
-\item $\MMM \models \CHAR{\MMM}$.
-
-\item For all $\phi$: if $\MMM \models \phi$ then $\CHAR{\MMM} \models
-  \phi$.
-
-\item For all $\psi$: if $(\forall \phi . \text{ if } \MMM
-  \models \phi$ then $\CHAR{\MMM} \models \phi)$ then 
-  $\psi \models \CHAR{\MMM}$.\martin{I don't understand this clause.}
-
-\end{itemize}
-
+$\SIMPL{\cdot}$ takes a formula as argument and returns
+the least upper bound of the satisfying models. Characteristic formulae go the other way: given a model
+$\MMM$, $\CHAR{\MMM}$ is the logically weakest formula that describes that model. 
 \clearpage
 \input{figure:elAndBangMore:bigDerivations}
 \clearpage
@@ -143,13 +127,13 @@ the model $\MMM$:\martin{Do we prove this? How do these axioms relate to
 \begin{definition}
 Let $\MMM$ be an cathoristic model that is a tree.
 \begin{eqnarray*}
-  \CHAR{\bot} &\ =\ & \langle a \rangle \top \AND ! \emptyset  \mbox{ for some fixed symbol }a \in \Sigma  \\
+  \CHAR{\bot} &\ =\ & \langle a \rangle \top \AND ! \emptyset  \mbox{ for some fixed action }a \in \Sigma  \\
   \CHAR{\MMM, w} & = & \mathsf{bang}(\MMM,w) \AND \bigwedge_{w \xrightarrow{a} w'} \langle a \rangle \CHAR{\MMM, w'}  
 \end{eqnarray*}
 
 \end{definition}
 
-\NI Note that $\bot$ requires a particular symbol $a \in \Sigma$. This
+\NI Note that $\bot$ requires a particular action $a \in \Sigma$. This
 is why we required, in Section \ref{elsyntax}, that $\Sigma$ is
 non-empty.
 
