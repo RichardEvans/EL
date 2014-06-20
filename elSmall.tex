@@ -32,7 +32,7 @@ is conjunction, and $\MAY{a}{\phi}$ means that the current state can
 transition via action $a$ to a new state at which $\phi$ holds. Tantum
 $A$, written $!A$, is the key novelty of \cathoristic{}.  Asserting
 $!A$ means: in the current state at most the modalities $\MAY{a}{}$
-that satisfy $a \in A$ are available.
+that satisfy $a \in A$ are permissible.
 
 We assume that $\MAY{a}{\phi}$ binds more tightly than conjunction, so
 $\MAY{a}{\phi} \AND \psi$ is short for $(\MAY{a}{\phi}) \AND \psi$.
@@ -137,7 +137,7 @@ inductively by the following clauses, where we assume that $\MMM =
 \end{definition}
 
 \NI The first three clauses are standard. The last clause enforces the
-intended meaning of $!A$: the available modalities in the model are
+intended meaning of $!A$: the permissible modalities in the model are
 \emph{at least as constrained} as required by $!A$. They may even be
 more constrained if the inclusion $\lambda(s) \subseteq A$ is
 proper. For infinite sets $\Sigma$ of actions, allowing $\lambda(s)$
