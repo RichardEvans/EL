@@ -1,7 +1,7 @@
 \section{Alternative semantics for \cathoristic{}}\label{pureModels}
 
-\NI We use node-labelled transition systems as models for
-\cathoristic{}. The purpose of the node labels is to express
+\NI We use state-labelled transition systems as models for
+\cathoristic{}. The purpose of the labels on states is to express
 constraints, if any, on outgoing actions. This concern is reflected in
 the semantics of $!A$.
 \[
@@ -11,10 +11,9 @@ the semantics of $!A$.
 \]
 
 \NI There is an alternative, and in some sense even simpler approach
-to giving semantics to $!A$ which does not require node-labelling: we
+to giving semantics to $!A$ which does not require state-labelling: we
 simply check if all actions of all outgoing transitions at the current
-state are in $A$.  As the sematnics of other formula requires node
-labelling in its satisfaction condition, this means we can use plain
+state are in $A$.  As the sematnics of other formula requires state-labelling in its satisfaction condition, this means we can use plain
 labelled transition systems (together with a current state) as
 models. This gives rise to a subtly different theory that we now
 explore, albeit not in depth.
@@ -64,7 +63,7 @@ holds if we remove the determinacy restriction in Definition \ref{pureModelsDef}
 \subsection{Relationship between pure and cathoristic models}
 
 The obvious way of converting an cathoristic model into a pure cathoristic model
-is by forgetting about the node-labelling:
+is by forgetting about the state-labelling:
 \[
    ((S, \rightarrow, \lambda), s ) \qquad\mapsto\qquad ((S, \rightarrow), s ) 
 \]
@@ -183,7 +182,7 @@ there are two separate transitions labelled with $jack$:
 \end{eqnarray*}
 
 \NI Relatedly, non-deterministic EL does not satisfy Brandom's
-Incompatibility Semantics property:
+incompatibility semantics property:
 \[
    \phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
 \]

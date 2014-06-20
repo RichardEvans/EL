@@ -1,73 +1,67 @@
-* Be consistent. In particular
-  - State vs node
+* TODO Be consistent. In particular
+** TODO State vs node (remains to be done on elAndBangCore.tex)
 
-  - non-deterministic vs nondeterministic
+** DONE non-deterministic vs nondeterministic
+** DONE {} vs \emptyset
 
-  - {} vs \emptyset
+** DONE Symbol for multiplicaiton * vs \cdot
+** DONE \textbf vs \emph for emphasis
+** DONE sub-set vs subset and super-set vs superset
+** DONE I think we sometimes say pointed model. Replace by cathoristic model or whatever appropriate
+** DONE ultraproduce vs ultra-product and likewise for ultrafilter
 
-  -  Symbol for multiplicaiton * vs \cdot
+** TODO space in = in definitions e.g. A = B vs A \quad=\quad B
+** TODO Fullstop at the end of short sentences, (e.g. in bullets)
 
-  - \textbf vs \emph for emphasis
+** capitalisation of "Brandom's incompatibility ..."
 
-  - sub-set vs subset and super-set vs superset
+** time complexity vs time-complexity
 
-  - I think we sometimes say pointed model. Replace by cathoristic model or whatever appropriate
+** Implication: \rightarrow vs horseshoe
 
-  - ultraproduce vs ultra-product and likewise for ultrafilter
+** first-order vs first order, Remove predicate -> first
 
-  - space in = in definitions e.g. A = B vs A \quad=\quad B
+** Why do we use the term predicate logic at all?
 
-  - Fullstop at the end of short sentences, (e.g. in bullets)
+** in hand vs at hand
 
-  - capitalisation of "Brandom's incompatibility ..."
+** variables X vs x
 
-  - time complexity vs time-complexity
+** I vs we 
 
-  - Implication: \rightarrow vs horseshoe
+** always use strong bisimilarity instead of bisimilarity?
 
-  - first-order vs first order, Remove predicate -> first
+** Action vs symbol
 
-  - Why do we use the term predicate logic at all?
+** HOw rule names are written (used typefaces)
 
-  - in hand vs at hand
+** Names: R Brandom vs Brandom etc
 
-  - variables X vs x
+** as we shall demonstrate vs as we demonstrate ...
 
-  - I vs we 
+** What symbols to we use for implication? \rightarrow vs horseshoe
 
-  - always use strong bisimilarity instead of bisimilarity?
-
-  - Action vs symbol
-
-  - HOw rule names are written (used typefaces)
-
-  - Names: R Brandom vs Brandom etc
-
-  - as we shall demonstrate vs as we demonstrate ...
-
-  - What symbols to we use for implication? \rightarrow vs horseshoe
-
-  - Make sure always to be precise about cathoristic model vs cathoristic
+** Make sure always to be precise about cathoristic model vs cathoristic
     transition system
 
-  - POV vs point of view vs point-of-view
+** POV vs point of view vs point-of-view
 
-  - LTS vs labelled transition system
+** LTS vs labelled transition system
 
-  - FOL vs first-order logic, EL vs cathoristic logic
+** FOL vs first-order logic, EL vs cathoristic logic
 
-  - Either all definitions are in an explicit \begin{definition}
+** Either all definitions are in an explicit \begin{definition}
     environment or none.
 
-  - Term defined should always be \textbf{...} or \textsc{...} etc.
+** Term defined should always be \textbf{...} or \textsc{...} etc.
 
-  - FOrmulae vs terms vs sentences
+** FOrmulae vs terms vs sentences
 
-  - What kind of space ! puts between itself and its set. and also before !
+** What kind of space ! puts between itself and its set. and also before !
 
-  - Book titles always in \emph, e.g. \emph{Philosophical Remarks}?
+** Book titles always in \emph, e.g. \emph{Philosophical Remarks}?
 
-  - capitalisation, e.g. Cathoristic Logic vs Cathoristic logic vs cathoristic logic etc.
+** capitalisation, e.g. Cathoristic Logic vs Cathoristic logic vs cathoristic logic etc.
 
 * Don't display \subsubsections in table of content
 * Weird size issue in appendix: figure captions are not shrunk.

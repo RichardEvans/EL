@@ -92,19 +92,19 @@ restriction is in place because transitions $s \TRANS{a} t$ where $a
 $s$ but at the same time prohibit $a$ actions at that state.
 Well-sizedness is not a fundamental restriction but rather a
 convenient trick. Essentially cathoristic transition systems have two kinds
-of nodes:
+of states:
 
 \begin{itemize}
 
-\item Nodes $s$ without restrictions on outgoing transitions. Those are
+\item States $s$ without restrictions on outgoing transitions. Those are
   labelled with $\lambda ( s) = \Sigma$.
 
-\item Nodes $s$ with restriction on outgoing transitions. Those are
+\item States $s$ with restriction on outgoing transitions. Those are
   labelled by a finite set $\lambda ( s)$ of actions.
 
 \end{itemize}
 
-\NI Defining $\lambda$ on all nodes and not just on those with
+\NI Defining $\lambda$ on all states and not just on those with
 restrictions makes some definitions and proofs slightly easier.
 
 As with other modal logics, satisfaction of formulae is defined
@@ -167,7 +167,7 @@ others.
 \]
 
 \NI Here we assume, as we do with all subsequent figures, that the top
-node is the start state.  The same model does not satisfy any of the
+state is the start state.  The same model does not satisfy any of the
 following formulae.
 \[
 \MAY{b} \qquad
