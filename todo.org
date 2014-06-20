@@ -31,20 +31,30 @@
     transition system
 ** DONE POV vs point of view vs point-of-view
 
-** LTS vs labelled transition system
-** FOL vs first-order logic, EL vs cathoristic logic
+** DONE LTS vs labelled transition system
+** DONE FOL vs first-order logic, EL vs cathoristic logic
 
-** Either all definitions are in an explicit \begin{definition}
+** TODO Either all definitions are in an explicit \begin{definition}
     environment or none.
 
-** Term defined should always be \textbf{...} or \textsc{...} etc.
+** DONE Term defined should always be \textbf{...} or \textsc{...} etc.
+** DONE We mix the terms "formula",  "term" and "sentence". My preference would be
+to use "formula" when we speak about anything formal, and sentence
+when we talk about natural language. No use of term. But I'm not 100%
+sure about it. For example in the abstract we write 
 
-** FOrmulae vs terms vs sentences
+   \Cathoristic{} is a multi-modal logic where negation is replaced by
+   a novel operator allowing the expression of incompatible sentences.
 
-** What kind of space ! puts between itself and its set. and also before !
+Would 
+
+   \Cathoristic{} is a multi-modal logic where negation is replaced by
+   a novel operator allowing the expression of incompatible formualae.
+
+Be an adequate rendition too? 
+We decided to drop term and not do anything about formula/sentence for the time being.
 
 ** Book titles always in \emph, e.g. \emph{Philosophical Remarks}?
-
 ** capitalisation, e.g. Cathoristic Logic vs Cathoristic logic vs cathoristic logic etc.
 
 * Don't display \subsubsections in table of content

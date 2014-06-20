@@ -138,13 +138,13 @@ non-deterministic models. The rules of inference in Figure
     the proof in Section \ref{compactness}, except that the constraint
     $\phi_{det}$ is unnecessary.
 
-We have experimented with a version of EL in which the models are
+We have experimented with a version of \cathoristic{} in which the models are
 \emph{non-deterministic} labeled-transition systems.  Although
 non-determinism makes some of the constructions simpler,
-non-deterministic EL is unable to express incompatibility properly.
+non-deterministic \cathoristic{} is unable to express incompatibility properly.
 Consider, for example, the claim that Jack is married to Jill\martin{Actually, the
 formalisation below says Jack is married to Jill, and Jill only.}. 
-In standard deterministic EL this would be rendered as:
+In standard deterministic \cathoristic{} this would be rendered as:
 \begin{eqnarray*}
   \MAY{jack} \MAY{married} (\MAY{jill} \land \fBang \{jill\})
 \end{eqnarray*}
@@ -162,9 +162,9 @@ Third, we can claim that Jack does not exist at all. Bob and Jill, for example, 
   \fBang \{bob, jill\}
 \end{eqnarray*}
 
-Now we can assert the same sentences in non-deterministic EL, but they
+Now we can assert the same sentences in non-deterministic \cathoristic{}, but they
 are \emph{no longer incompatible with our original sentence}.  In
-non-deterministic EL, the following sentences are compatible (as long
+non-deterministic \cathoristic{}, the following sentences are compatible (as long
 as there are two separate transitions labelled with $married$, or two
 separate transitions labelled with $jack$):
 \begin{eqnarray*}
@@ -181,14 +181,14 @@ there are two separate transitions labelled with $jack$:
   \MAY{jack} \fBang \{unmarried\}
 \end{eqnarray*}
 
-\NI Relatedly, non-deterministic EL does not satisfy Brandom's
+\NI Relatedly, non-deterministic \cathoristic{} does not satisfy Brandom's
 incompatibility semantics property:
 \[
    \phi \models \psi \; \mbox{ iff } \; \mathcal{I}(\psi) \subseteq \mathcal{I}(\phi)
 \]
 
 \NI To take a simple counter-example, $\MAY{a}\MAY{b}$ implies $\MAY{a}$,
-but not conversely.  But in non-deterministic EL, the set of sentences
+but not conversely.  But in non-deterministic \cathoristic{}, the set of sentences
 incompatible with $\MAY{a}\MAY{b}$ is identical with the set of
 sentences incompatible with $\MAY{a}$.
 
