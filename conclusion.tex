@@ -1,13 +1,12 @@
 \section{Conclusion}\label{conclusion}
 
-In this paper, we have introduced \cathoristic{}, and established key
-meta-logical properties such as completeness and compactness. However,
+In this paper, we have introduced \cathoristic{} and established key
+meta-logical properties. However,
 many questions are left open. 
 
 \subsection{Excluded middle}
 
-A better understanding of \cathoristic{}'s relationship with first-order
-logic might also lead to insight into excluded middle in \cathoristic{}.
+One area we would like to investigate further is what happens to the law of excluded middle in \cathoristic{}.
 The logical law of excluded middle states that either a proposition or
 its negation must be true. In \cathoristic{}
 \[
@@ -48,10 +47,10 @@ Section \ref{standardTranslation} investigated the relationship
 between \cathoristic{} and first-order logic. Now we compare
 \cathoristic{} with a logic that is much closer in spirit:
 Hennessy-Milner logic \cite{HennessyM:alglawfndac}, a modal logic
-designed to reason about process calculi. Indeed the present shape of
+designed to reason about process calculi. Indeed, the present shape of
 \cathoristic{} owes much to Hennessy-Milner logic. We contrast both by
-translation from the former into the latter.  This will reveal more
-clearly than the translation into first-order logic the novelty of
+translation from the former into the latter.  This will reveal, more
+clearly than the translation into first-order logic, the novelty of
 \cathoristic{}.
 
 \begin{definition}
@@ -92,8 +91,8 @@ be so for applications in process theory.
 \]
 \end{definition}
 
-\NI We can now see the two differences between \cathoristic{}, and
-Hennessy-Milner logic, one syntactic, the other semantic.
+There are two differences between \cathoristic{} and
+Hennessy-Milner logic - one syntactic, the other semantic.
 
 \begin{itemize}
 
@@ -101,10 +100,10 @@ Hennessy-Milner logic, one syntactic, the other semantic.
   logical negation ($\neg$).
 
 \item Semantically,  cathoristic models are deterministic,
-  while typically models of Hennessy-Milner logic are
-  non-deterministic, although the semantics makes perfect sense for
-  deterministic transition systems too. 
-  Moreover models of Hennessy-Milner logic lack state labels.
+  while (typically) models of Hennessy-Milner logic are
+  non-deterministic (although the semantics makes perfect sense for
+  deterministic transition systems, too). 
+  Moreover, models of Hennessy-Milner logic lack state labels.
 
 \end{itemize}
 
@@ -214,11 +213,11 @@ pairs of formulae of CL[$\land, !$] are incompatible.  (For example:
 $\langle a \rangle \top$ and $! \emptyset$).  Because CL[$\land, !$] is
 expressive enough to be able to make incompatible claims, it satisfies
 Brandom's incompatibility semantics constraint.
-CL[$\land, !$] is the only logic we are aware of with a
+CL[$\land, !$] is the only logic (we are aware of) with a
 quadratic-time decision procedure that is expressive enough to respect
 this constraint. 
 
-The bottom three language can all be decided in exponential time.  We
+The bottom three language can all be decided in super polynomial time.  We
 claim that Hennessy-Milner logic is more expressive than PL, and CL[$\land, !, \neg$] is more expressive than full Hennessy-Milner logic.
 To see that full Hennessy-Milner logic is more expressive than full
 propositional logic, fix a propositional logic with the nullary
@@ -244,7 +243,7 @@ for some $i,j,i',j'$, and there are no entailments in propositional
 logic between arbitrary propositional atoms.
 
 We close by stating that CL[$\land, !, \neg$] is more expressive than
-full Hennessy-Milner logic: the formula $\fBang A$ of
+full Hennessy-Milner logic. The formula $\fBang A$ of
 \cathoristic\ can be translated into Hennessy-Milner logic as:
 \[
 \bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top
