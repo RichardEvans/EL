@@ -221,8 +221,7 @@ quadratic-time decision procedure that is expressive enough to respect
 this constraint. 
 
 The bottom three language can all be decided in exponential time.  We
-claim that Hennessy-Milner logic is more expressive than PL, and CL
-[$\land, !, \neg$] is more expressive than full Hennessy-Milner logic.
+claim that Hennessy-Milner logic is more expressive than PL, and CL[$\land, !, \neg$] is more expressive than full Hennessy-Milner logic.
 To see that full Hennessy-Milner logic is more expressive than full
 propositional logic, fix a propositional logic with the nullary
 operator $\top$ plus an infinite number of propositional atoms
@@ -246,9 +245,9 @@ $\psi = \langle a \rangle \top$.  Clearly, $\phi \models_{\text{HML}}
 for some $i,j,i',j'$, and there are no entailments in propositional
 logic between arbitrary propositional atoms.
 
-We close with a hint that may indicate \richard{These are weasel words. Can we not be a bit bolder and say ``We claim that''} how CL [$\land, !, \neg$] is
-more expressive than full Hennessy-Milner logic: the formula $\fBang
-A$ of CL can be translated into Hennessy-Milner logic as:
+We close by stating that CL[$\land, !, \neg$] is more expressive than
+full Hennessy-Milner logic: the formula $\fBang A$ of
+\cathoristic\ can be translated into Hennessy-Milner logic as:
 \[
 \bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top
 \]
