@@ -1,7 +1,6 @@
 \section{Related Work}\label{relatedWork}
 
-We have defined \cathoristic{}, a multi-modal logic based on
-exclusion as a logical primitive and investigated its key properties.
+We have defined \cathoristic{}, and investigated its key properties.
 We close with an overview of related work and a discussion of 
 open problems.
 
@@ -139,7 +138,7 @@ Brandom's rule, then, is only capable of specifying a very specific form of nece
 
 In \cite{PeregrinJ:logbasoi} and \cite{turbanti}, Peregrin and Turbanti describe alternative ways of defining necessity.
 These alternative rule sets can be used to characterise modal logics other than S5.
-For example, Peregrin defines the accessibility relation between worlds in terms of a \emph{compossibility relation}, and then argues that the S4 axiom of transitivity fails because compossibility is not transitive.
+For example, Turbanti defines the accessibility relation between worlds in terms of a \emph{compossibility relation}, and then argues that the S4 axiom of transitivity fails because compossibility is not transitive.
 
 We draw two conclusions from this work.
 The first is, once again, that a commitment to connecting incompatibility and entailment via the Brandomian constraint:
@@ -162,8 +161,8 @@ Linear logic splits conjunction into additive and multiplicative
 parts. The former, additive conjunction $A \& B$, is especially
 interesting in the context of \cathoristic{}. In the terminology of
 process calculus it can be interpreted as an external choice operation
-\cite{AbramskyS:comintoll}. External because the choice is offered to
-the environment.  This interpretation has been influential in the
+\cite{AbramskyS:comintoll}. (`External', because the choice is offered to
+the environment).  This interpretation has been influential in the
 study of types for process calculus,
 e.g.~\cite{HondaK:unitypsfsifLONG,TakeuchiK:intbaslaits,HondaK:lanpriatdfscbp}.
 Implicitly, additive conjunction gives an explicit upper bound on how
@@ -176,7 +175,7 @@ have no continuation, while they do with $A \& B$: the tantum $!\{l, r\}$ says
 that the only permitted  actions are $l$ and $r$. What
 happens at later states is not constrained by $!A$.  In contrast, $A \&
 B$ says not only that at this point the only permissible options are $A$
-and $B$, but also that if we choose $A$, then $A$ holds 'for ever',
+and $B$, but also that if we choose $A$, then $A$ holds `for ever',
 and likewise for choosing $B$. To be sure, the alternatives in $A \&
 B$ may themselves contain further additive conjunctions, and in this
 way express how exclusion changes 'over time'.
@@ -185,7 +184,7 @@ In summary, \cathoristic{} and linear logic offer  operators that restrict
 the permissible options. How are they related? Linear logic has an
 explicit linear negation $(\cdot)^{\bot}$ which, unlike classical
 negation, is constructive. In contrast, \cathoristic{} defines a restricted
-form negation from $!A$. Can these two perspectives be fruitfully
+form of negation using $!A$. Can these two perspectives be fruitfully
 reconciled?
 
 \subsection{Process calculus}
@@ -193,8 +192,8 @@ reconciled?
 Process calculi are models of concurrent computation.  They are based
 on the idea of message passing between actors running in parallel.
 Labelled transition systems are often used as models for process
-calculi, and many concepts used in the development of \cathoristic{},
-for example bisimulations and Hennessy-Milner logic, originated in
+calculi, and many concepts used in the development of \cathoristic{} -
+for example, bisimulations and Hennessy-Milner logic - originated in
 process theory (although some, such as bisimulation, evolved
 independently in other contexts).
 
@@ -216,23 +215,24 @@ Our cathoristic models are close to a form of the failures/divergences
 models that has been used in the denotational semantics of process
 calculi, primarily Hoare's CSP \cite{HoareC:comseq,RoscoeAW:theapoc}
 and its descendants.  In this model, the denotation of a process $P$
-is given as a pair $(traces(P), fail(P))$ where $traces(P) = \{
-\sigma\ |\ (\sigma, X) \in \SEMB{P} \}$ are $P$'s traces, in other
-words the sequences of actions $P$ can engage in; $fail(P)$ are called
-failures.  A \emph{failure} is a pair $(\sigma, R)$ where $\sigma \in
+is given as a pair $(traces(P), fail(P))$.
+Here, $traces(P) = \{
+\sigma\ |\ (\sigma, X) \in \SEMB{P} \}$ are $P$'s traces: the sequences of actions $P$ can engage in.
+The $fail(P)$ is the set of failures.  
+A \emph{failure} is a pair $(\sigma, R)$ where $\sigma \in
 \Sigma^*$ and $R \subseteq \Sigma$. The intended interpretation is
 that a process $P$ has failure $(\sigma, R)$ provided that $\sigma$ is
 a trace of $P$ and after $P$ executes all the actions in $\sigma$ that  $P$
 refuses to do any action given in $R$. The denotation $\SEMB{P}$ of
 $P$ in a failures/divergences model is the the set of all of $P$'s
-failures. The set $ traces(P)$ is prefix-closed, hence gives rise of a
+failures. The set $ traces(P)$ is prefix-closed, hence gives rise to a
 deterministic labelled transition system: states are given by the set
 $traces(P)$ of all traces.  Transitions are of the form $\sigma
 \TRANS{a} \sigma.a$, where $\sigma.a$ is the string extending $\sigma$
 with the action $a$.  The start state is the empty string.  We can
 decorate all states as follows: $ \lambda (\sigma) = \Sigma \setminus
 R $ provided that $(\sigma, R) \in \SEMB{P}$.  Whenever the set
-$\Sigma$ of symbols is finite, we obtain an cathoristic model this
+$\Sigma$ of symbols is finite, we obtain a cathoristic model this
 way.
 
 While the failures/divergences semantics of CSP are somewhat more
