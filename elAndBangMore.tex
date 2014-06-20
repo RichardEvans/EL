@@ -417,7 +417,7 @@ If either $\MMM$ or $\MMM_2$ is $\bot$, then the proof is a simple application o
 
 Next, let us consider the case where neither $\MMM$ nor $\MMM_2$ are $\bot$, but together they are incompatible.
 Let $\MMM = (\mathcal{L}, w_1)$ and $\MMM' = (\mathcal{L}', w'_1)$.
-If $\MMM \sqcap \MMM_2 = \bot$, then there is a finite sequence of actions $a_1, ..., a_{n-1}$ such that both $\MMM$ and $\MMM'$ satisfy $\MAY{a_1} ... \MAY{a_{n-1}}\top$, but they disagree about the node labelling on the final node of this chain. In other words, there is a $b$-transition from the final node in $\MMM$ which is ruled-out by the $\lambda'$ node labelling in $\MMM'$. So there is a set of states $w_1, ..., w'_1, ...$ and a finite set $X$ of actions such that:
+If $\MMM \sqcap \MMM_2 = \bot$, then there is a finite sequence of actions $a_1, ..., a_{n-1}$ such that both $\MMM$ and $\MMM'$ satisfy $\MAY{a_1} ... \MAY{a_{n-1}}\top$, but they disagree about the state-labelling on the final state of this chain. In other words, there is a $b$-transition from the final state in $\MMM$ which is ruled-out by the $\lambda'$ state-labelling in $\MMM'$. So there is a set of states $w_1, ..., w'_1, ...$ and a finite set $X$ of actions such that:
 \begin{eqnarray*}
 w_1 \xrightarrow{a_1} w_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w_n \\
 w_1' \xrightarrow{a_1} w'_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w'_n \\

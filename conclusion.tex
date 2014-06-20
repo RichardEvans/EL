@@ -446,56 +446,6 @@ A$ of CL can be translated into Hennessy-Milner logic as:
 But if $\Sigma$ is infinite, then this is an infinitary disjunction.
 \Cathoristic{} can express the same proposition in a finite sentence.
 
-\subsubsection{Compactness, ultraproducts and \cathoristic{}}
-
-Mathematicals knows three substantially different approaches for
-proving compactness: G\"odel's original approach, refined by Morley
-and many others, uses proof rules and the completeness theorem.  Our
-proof in Section \ref{compactnessProof} works by translation and
-piggy-backs on the compactness of first-order logic. Finally, the
-model-theoretic approach uses ultra-products as a tool for 'gluing'
-together the models that guarantee finite
-satisfiability. Ultra-products are quotients of reduced products by an
-ultra-filter. The conditions defining ultra-filters are carefully
-chosen to ensure that the quotient is indeed an appropriate model with
-nice properties such as \L{}o\'{s}' theorem. In particular, for $U$ to
-be an ultra-filter over some set $S$, for each $A \subseteq S$, either
-$A$ or its complemnet $S\setminus A$ must be in $U$. This axiom
-clearly reflects the semantics of negation. But \cathoristic{} doesn't
-have negation. So what would an appropriate equivalent of
-ultra-filters for \cathoristic{} look like that can be used to prove
-compactness directly on models?
-\richard{Do we need this?}
-
-\subsubsection{Extending \cathoristic{} with dualities}
-In any modal logic with negation, the may modality and the must modality are interdefinable:
-\[
-\MUST{a}{\phi} = \neg
-\MAY{a}{\neg \phi}
-\]
-In \cathoristic{}, the situation is different: since
-negation is not available, adding $\MUST{a}{\phi}$ is a substantial
-change to the logic.
-For example, the processes in Figure
-\ref{figure:counterexample}\richard{Which figure is this?}, indistinguishable by cathoristic formulae, are
-separated by
-  \[
-     \MUST{a}{\MAY{b}{}},
-  \]
-  assuming the usual semantics: $(\LLL, s) \models \MUST{a}{\phi}$ if
-  $s \TRANS{a} t$ implies that $(\LLL, t) \models \phi$. This means
-  Theorem \ref{theorem:completeLattice} fails. What notion of model
-  equivalence does elementary equivalence become in this scenario?
-  What do complete proof rules look like?
-
-  Similar questions can be asked for other additional primitives. If negation is 
-  available, the formula
-  \[
-     \MAY{a}{\neg \MAY{b}{} }
-  \]
-  separates the afromentioned examples. If we add implication instead,
-  negation becomes definable: $\neg \phi = \phi \rightarrow \bot$.
-\richard{In one sense, adding the must modality is not further work. If we add negation, as in section 10, then we can define must modality in the obvious way. It is only further work if we add $\Box$ as a primitive without adding negation.}
 
 
 
