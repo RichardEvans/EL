@@ -112,7 +112,7 @@ In \fol, if $married$ is a two-place predicate, then we need to fill in the extr
 In this section, we contrast the representation in action languages based on \fol{}\footnote{E.g. STRIPS \cite{strips}}, with our \cathoristic{}-based representation.
 Action definitions are rendered in typewriter font.
 
-When expressing the pre- and post-conditions of an action, planners
+When expressing the pre- and postconditions of an action, planners
 based on \fol{} have to explicitly describe the propositions that
 are removed when an action is performed:
 \begin{verbatim}
@@ -155,7 +155,7 @@ Assuming someone can only have a single spouse at any moment, the rule is expres
        <welsh> <Y>,
        <spouse> <X> (<Y> /\ !{Y}).
 \end{verbatim}	
-Now the compiler is able to reorder these literals to minimize the search-space. 
+Now the compiler is able to reorder these literals to minimise the search-space. 
 It can see that, once $X$ is instantiated, the following literal can be instantiated without increasing the search-space:
 \begin{verbatim}
    <spouse> <X> (<Y> /\ !{Y})
@@ -168,7 +168,7 @@ So the compiler reorders the clauses to produce:
        <spouse> <X> (<Y> /\ !{Y}),
        <welsh> <Y>.
 \end{verbatim}	
-Now it is able to find all results by just searching $n$ instances - a significant optimization.
+Now it is able to find all results by just searching $n$ instances - a significant optimisation.
 In our application, this optimisation has made a significant difference to the run-time cost of query evaluation.
 
 

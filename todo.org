@@ -1,5 +1,5 @@
 * TODO spell-check everything, first MB then RPE
-* TODO  Be clear about tantum and available vs permitted:
+* DONE Be clear about tantum and available vs permitted:
 
 Now we are describing the tantrum !A as giving the *available* actions.
 But that's wrong. It gives the *permitted* actions.
@@ -86,9 +86,19 @@ We decided to drop term and not do anything about formula/sentence for the time 
 ** DONE capitalisation, e.g. Cathoristic Logic vs Cathoristic logic vs cathoristic logic etc.
 
 * DONE Don't display \subsubsections in table of content
-* TODO Make references to versu in biblio OK
-* TODO Set up own github repo for Haskell code, put in proper references.
-Put in license and documentation (sparse)
+* DONE Make references to versu in biblio OK
+* DONE Set up own github repo for Haskell code, put in proper references.
+* TODO Put in license and documentation (sparse) for Haskell code in repo
+* TODO Here is something we can do (not now but soon): 
+create a set of slides and a little video presentation (using
+  Screenflow), maybe 15 minutes, to introduce the material to
+  non-experts, and put it on our webpages? This makes the material
+  more accessible and is help to disseminate the paper. People much
+  rather watch a video than read a paper.  Also the 15 minute time
+  limit and choice of medium severely constraints us in what we can
+  say, so we must focus on the essentials. )
+
+* TODO Think about seminars (Sussex, Imperial, Oxford, QMUL which others?)
 * DONE Weird size issue in appendix: figure captions are not shrunk.
 * DONE Ignore for the time being [17/06/2014 17:11:26] Martin Berger: BTW, which sentence structure do you prefer:
 [17/06/2014 17:11:28] Martin Berger: Translating from cathoristic logic to first-order logic
@@ -104,7 +114,7 @@ Put in license and documentation (sparse)
 * DONE Prove general completenss
 * DONE Explain the meaning of "Cathoristic".
 * DONE Too many of our sentences start with "But ..." Is this elegant?
-* TODO Make a clear point somewhere that tree models are
+* DONE IGNORE for now Make a clear point somewhere that tree models are
 all we need.
 
 This is a general insight that holds for all modal logics, and
@@ -115,7 +125,7 @@ If we put this in, we can probably clean up some stuff.
 * DONE Explain genesis of Brandom in
 \footnote{Itself a development of Sellars,
   Hegel and Kant.}
-* TODO Add all missing biblographic references
+* DONE Add all missing biblographic references
 * DONE remove doubly defined labels, add missing labels
 * DONE Ignore: Cases in proofs are inconsistent across the paper
 * DONE Each chapter its own file
@@ -207,16 +217,6 @@ mono (μόνο). If we go creative we could simply say
 
 * DONE Timetable :13.May to 16.May, can we finish it?
 
-* TODO Here is something we can do (not now but soon): 
-create a set of slides and a little video presentation (using
-  Screenflow), maybe 15 minutes, to introduce the material to
-  non-experts, and put it on our webpages? This makes the material
-  more accessible and is help to disseminate the paper. People much
-  rather watch a video than read a paper.  Also the 15 minute time
-  limit and choice of medium severely constraints us in what we can
-  say, so we must focus on the essentials. )
-
-* TODO Think about seminars (Sussex, Imperial, Oxford, QMUL which others?)
 * DONE Related work: 
 
   - Investgations into negation

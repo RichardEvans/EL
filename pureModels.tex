@@ -13,7 +13,7 @@ the semantics of $!A$.
 \NI There is an alternative, and in some sense even simpler approach
 to giving semantics to $!A$ which does not require state-labelling: we
 simply check if all actions of all outgoing transitions at the current
-state are in $A$.  As the sematnics of other formula requires state-labelling in its satisfaction condition, this means we can use plain
+state are in $A$.  As the semantics of other formula requires state-labelling in its satisfaction condition, this means we can use plain
 labelled transition systems (together with a current state) as
 models. This gives rise to a subtly different theory that we now
 explore, albeit not in depth.
@@ -27,7 +27,7 @@ deterministic labelled transition system and $s \in S$ a state.
 \end{definition}
 
 \NI Adapting the satisfaction relation to pure cathoristic models is
-straightfoward.
+straightforward.
 
 \begin{definition}
 Using pure cathoristic models, the  \emph{satisfaction relation} is defined 
@@ -109,7 +109,7 @@ The implication in (\ref{modelRelationships:2}) is immediate by
 induction on $\phi$. To construct a counterexample for the reverse
 implication, assume that $\Sigma$ is a strict superset of $\{a\}$
 $a$. The formula $\phi = !\{a\}$ and the pure cathoristic model $\PPP = (
-\{s, t\}, s \TRANS{a} t ), s)$ satisfy $\PPP \models \phi$, but clealy
+\{s, t\}, s \TRANS{a} t ), s)$ satisfy $\PPP \models \phi$, but clearly
 $\MAX{\PPP} \not\models \phi$.
 
 Finally, (\ref{modelRelationships:3}) is also straightforward by
@@ -139,7 +139,7 @@ non-deterministic models. The rules of inference in Figure
     $\phi_{det}$ is unnecessary.
 
 We have experimented with a version of \cathoristic{} in which the models are
-\emph{non-deterministic} labeled-transition systems.  Although
+\emph{non-deterministic} labelled-transition systems.  Although
 non-determinism makes some of the constructions simpler,
 non-deterministic \cathoristic{} is unable to express incompatibility properly.
 Consider, for example, the claim that Jack is married\footnote{We assume, in this discussion, that $married$ is a many-to-one predicate. We assume that polygamy is one person \emph{attempting} to marry two people (but failing to marry the second).} to Jill
@@ -212,7 +212,7 @@ underlying transition system $\LLL$ is finitely branching.
 \end{definition}
 
 \begin{definition}
-A binay relation $\RRR$ is a \emph{bisimulation} between pure cathoristic
+A binary relation $\RRR$ is a \emph{bisimulation} between pure cathoristic
 models $\PPP_i = (\LLL_i), s_i)$ for $i = 1, 2$ provided (1) $\RRR$ is
 a bisimulation between $\LLL_1$ and $\LLL_2$, and (2) $(s_1, s_2) \in
 \RRR$. We say $\PPP_1$ and $\PPP_2$ are \emph{bisimilar}, written
@@ -297,7 +297,7 @@ is non-empty.  Further, since $(\mathcal{W}', \rightarrow')$ is
 finitely-branching, there is only a finite set of such $y'_i$, so we
 can list them $y'_1, ..., y'_n$, where $n >= 1$.
 
-Now, in the Hennessy-Milner theorem for HML, the proof proceeds as
+Now, in the Hennessy-Milner theorem for Hennessy-Milner logic, the proof proceeds as
 follows: assume, for reductio, that of the $y'_1, ..., y'_n$, there is
 no $y'_i$ such that $y \equiv y'_i$.  Then, by the definition of
 $\equiv$, there must be formulae $\phi_1, ..., \phi_n$ such that for

@@ -148,7 +148,7 @@ follows.
 \NI We are now ready to prove Theorem \ref{correspondence:theorem:1}.
 \begin{proof}
 By induction on the structure of $\phi$. The cases $\top$ and $\phi_1
-\AND \phi_2$ are straightfoward.  The case $\MAY{a}\psi$ is handeled
+\AND \phi_2$ are straightforward.  The case $\MAY{a}\psi$ is handled
 as follows.
 \begin{eqnarray*}
   \lefteqn{
@@ -214,8 +214,8 @@ Unfortunately we cannot do the same with the translation from
 section. The problem are the first-order models termed 'junk' above.
 The target language of the translation is not expressive enough to
 have formulae that can guarantee such constraints.  As we have no
-reason to belive that the first-order model whose existence is
-guarnateed by compactness isn't 'junk', we cannot prove compactness
+reason to believe that the first-order model whose existence is
+guaranteed by compactness isn't 'junk', we cannot prove compactness
 with the translation.  We solve this problem with a second translation, this time
 into a more expressive first-order fragment were we can constrain
 first-order models easily using formulae. The fragment we use now
@@ -298,7 +298,7 @@ as follows.
 
     \item $\ALLOWED{\SEMBTWO{\LLL}}{s}{a}$ holds whenever $a \in \lambda(s)$.
 
-    \item $\ARROWTWO{\SEMBTWO{\LLL}}{s}{a}{t}$ holds whenver $s \TRANS{a} t$.
+    \item $\ARROWTWO{\SEMBTWO{\LLL}}{s}{a}{t}$ holds whenever $s \TRANS{a} t$.
 
   \end{itemize}
 \end{itemize}
@@ -385,7 +385,7 @@ first-order models to be convertible to cathoristic models.
 \end{eqnarray*}
 
 \begin{lemma}\label{compactness:lemma:23399}
-If $\LLL$ is an cathoristic transistion system then $\SEMBTWO{\LLL} \models
+If $\LLL$ is an cathoristic transition system then $\SEMBTWO{\LLL} \models
 \phi_{admis} \AND \phi_{det}$.
 \end{lemma}
 
@@ -443,7 +443,7 @@ and $X$ a set, containing actions. The \emph{restriction of
 
 \begin{lemma}\label{compactness:lemma:1717}
 Let $\phi$ be an \cathoristic{} formula and $X$ be a set such that no action
-occuring in $\phi$ is in $X$. Then:
+occurring in $\phi$ is in $X$. Then:
 \[
    (\LLL, s) \models \phi
       \quad\text{iff}\quad
@@ -452,7 +452,7 @@ occuring in $\phi$ is in $X$. Then:
 \end{lemma}
 \begin{proof}
 By straightforward induction on the structure of $\phi$, using the
-fact that by assumption $X$ only contains actions not occuring in
+fact that by assumption $X$ only contains actions not occurring in
 $\phi$.  
 \end{proof}
 
@@ -554,7 +554,7 @@ but that is a direct consequence of Lemma
 \ref{compactness:lemma:23399}.  That
 means each finite subset of $\Gamma^*$ has a model and by appealing to
 compactness of first-order many-sorted logic (which is an immediate
-consequence of compactenss of one-sorted first-order logic
+consequence of compactness of one-sorted first-order logic
 \cite{EndertonHB:matinttl}), we know there must be a first-order model
 $\CAL{M}$ of $\Gamma^*$, i.e.
 \[
