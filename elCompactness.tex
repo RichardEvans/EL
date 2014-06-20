@@ -95,7 +95,7 @@ $\phi$ are given relative to a state, denoted by either $x$ or $y$.
 
 \end{definition}
 
-\NI The translations on the left and right are identical except for
+\NI The translations on the left and right are identical, except for
 switching $x$ and $y$. Here is an example translation.
 \[
    \SEMB{\langle a \rangle \top \AND \fBang \{a\}}_x 
@@ -107,7 +107,7 @@ switching $x$ and $y$. Here is an example translation.
 that not every first-order model of our first-order signature
 corresponds to an cathoristic model because determinism, well-sizedness and
 admissibility are not enforced by our signature alone. In other words,
-models may contain 'junk'.  We deal with this problem following ideas
+models may contain `junk'.  We deal with this problem following ideas
 from modal logic \cite{BlackburnP:modlog}: we add a translation
 $\SEMB{\LLL}$ for cathoristic transition systems, and then prove the
 following theorem.
@@ -193,7 +193,7 @@ definitions.
 
 \subsection{Compactness by translation}\label{compactnessProof}
 
-\NI First-order logic has compactness: a set $S$ of sentences has a
+\NI First-order logic satisfies \emph{compactness}: a set $S$ of sentences has a
 model exactly when every finite subset of $S$ does. What about
 \cathoristic{}?
 
@@ -202,7 +202,7 @@ translation from modal to first-order logic \cite{BlackburnP:modlog}:
 we start from a set of modal formula such that each finite subset has
 a model. We translate the modal formulae and models to first-order
 logic, getting a set of first-order formulae such that each finite
-subset has a first-order model. By compactness of first-order logic we
+subset has a first-order model. By compactness of first-order logic, we
 obtain a first-order model of the translated modal formulae. Then we
 translate that first-order model back to modal logic, obtaining a
 model for the original modal formulae, as required. The last step
@@ -211,13 +211,13 @@ of model are identical, save for details of presentation.
 
 Unfortunately we cannot do the same with the translation from
 \cathoristic{} to first-order logic presented in the previous
-section. The problem are the first-order models termed 'junk' above.
+section. The problem are the first-order models termed `junk' above.
 The target language of the translation is not expressive enough to
 have formulae that can guarantee such constraints.  As we have no
 reason to believe that the first-order model whose existence is
-guaranteed by compactness isn't 'junk', we cannot prove compactness
+guaranteed by compactness isn't `junk', we cannot prove compactness
 with the translation.  We solve this problem with a second translation, this time
-into a more expressive first-order fragment were we can constrain
+into a more expressive first-order fragment where we can constrain
 first-order models easily using formulae. The fragment we use now
 lives in two-sorted first-order logic (which can easily be reduced to
 first-order logic \cite{EndertonHB:matinttl}).
@@ -245,7 +245,7 @@ are no state constants.
 \end{itemize}
 \end{definition}
 
-\NI So $\SSS'$ is a relational signature, i.e.~has no function
+\NI So $\SSS'$ is a relational signature, i.e. it has no function
 symbols. 
 
 \begin{definition}
