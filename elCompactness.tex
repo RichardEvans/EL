@@ -19,8 +19,8 @@ results between logics.
 
 %\input{figure:embedding}
 
-In this section, we translate \cathoristic{} into a restricted fragment of
-first-order logic.
+%In this section, we translate \cathoristic{} into a restricted fragment of
+%first-order logic.
 
 \begin{definition}
 The first-order signature $\SSS$ has a nullary predicate $\top$, a
@@ -36,7 +36,7 @@ $\ARROW{a}{x}{y}$, one for each action $a \in \Sigma$.
 
 \item The universe is composed of states.
 
-\item The predicate $\top$, which is true everywhere.
+\item The predicate $\top$ is true everywhere.
 
 \item For each finite $A \subseteq \Sigma$ and each state $s$,  $\RESTRICT{A}{s}$
 is true if 
@@ -245,7 +245,7 @@ are no state constants.
 \end{itemize}
 \end{definition}
 
-\NI So $\SSS'$ is a relational signature, i.e. it has no function
+\NI So $\SSS'$ is a relational signature, i.e.~has no function
 symbols. 
 
 \begin{definition}
@@ -284,11 +284,11 @@ system. $\LLL$ gives rise to an $\SSS'$-model $\SEMBTWO{\LLL}$
 as follows.
 \begin{itemize}
 
-\item For each constant $a \in \Sigma$, $a^{\SEMBTWO{\LLL}}$ is $a$ itself.
-
 \item The sort of states is interpreted by the set $S$.
 
 \item The sort of actions is interpreted by the set $\Sigma$.
+
+\item For each constant $a \in \Sigma$, $a^{\SEMBTWO{\LLL}}$ is $a$ itself.
 
 \item The relation symbols are interpreted as follows.
 
@@ -514,7 +514,7 @@ write $\MMM \models T$ provided $\MMM \models \phi$ for all $\phi \in
 T$.  We say $\Gamma$ is \emph{satisfiable} provided $\MMM \models T$.
 \end{definition}
 
-\begin{theorem}[Compactness of \Cathoristic{}]
+\begin{theorem}[Compactness of \cathoristic{}]
 A set $\Gamma$ of \cathoristic{} formulae is satisfiable iff each finite subset of
 $\Gamma$ is satisfiable.
 \end{theorem}
