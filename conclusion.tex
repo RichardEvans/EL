@@ -1,4 +1,4 @@
-\section{Conclusion}\label{conclusion}
+\section{Open problems}\label{conclusion}
 
 In this paper, we have introduced \cathoristic{} and established key
 meta-logical properties. However,
@@ -14,7 +14,7 @@ its negation must be true. In \cathoristic{}
 \]
 
 \NI does not hold in general. (The negation operator $\neg_{S}(\cdot)$
-was defined in Section \ref{ELAndNegation}) For example, let $\phi$ be
+was defined in Section \ref{ELAndNegation}.) For example, let $\phi$ be
 $\langle a \rangle \top$ and $S = \Sigma = \{a, b\}$.  Then
 \[
    \phi \lor \neg_{S} \phi 
@@ -46,7 +46,7 @@ on the chosen notion of semantic model.
 Section \ref{standardTranslation} investigated the relationship
 between \cathoristic{} and first-order logic. Now we compare
 \cathoristic{} with a logic that is much closer in spirit:
-Hennessy-Milner logic \cite{HennessyM:alglawfndac}, a modal logic
+Hennessy-Milner logic \cite{HennessyM:alglawfndac}, a multi-modal logic
 designed to reason about process calculi. Indeed, the present shape of
 \cathoristic{} owes much to Hennessy-Milner logic. We contrast both by
 translation from the former into the latter.  This will reveal, more
@@ -91,7 +91,7 @@ be so for applications in process theory.
 \]
 \end{definition}
 
-There are two differences between \cathoristic{} and
+\NI There are two differences between \cathoristic{} and
 Hennessy-Milner logic - one syntactic, the other semantic.
 
 \begin{itemize}
@@ -120,11 +120,11 @@ Hennessy-Milner logic - one syntactic, the other semantic.
 
 \end{definition}
 
-\NI If $\Sigma$ is an infinite set, then the translation of a $!$
-formula will be an infinitary formula.  If $\Sigma$ is finite, then
+\NI If $\Sigma$ is an infinite set, then the translation of a $!$-formula 
+will be an infinitary conjunction.  If $\Sigma$ is finite, then
 the size of the Hennessy-Milner logic formula will be of the order of $n \cdot | \Sigma |$
 larger than the original cathoristic formula, where $n$ is the number of
-$!$ operators occurring in the cathoristic formula). In both logics we
+tantum operators occurring in the cathoristic formula). In both logics we
 use the number of logical operators as a measure of size.
 
 We can also translate cathoristic models by forgetting state-labelling:
@@ -217,7 +217,7 @@ CL[$\land, !$] is the only logic (we are aware of) with a
 quadratic-time decision procedure that is expressive enough to respect
 this constraint. 
 
-The bottom three language can all be decided in super polynomial time.  We
+The bottom three language can all be decided in super-polynomial time.  We
 claim that Hennessy-Milner logic is more expressive than PL, and CL[$\land, !, \neg$] is more expressive than full Hennessy-Milner logic.
 To see that full Hennessy-Milner logic is more expressive than full
 propositional logic, fix a propositional logic with the nullary
@@ -243,7 +243,7 @@ for some $i,j,i',j'$, and there are no entailments in propositional
 logic between arbitrary propositional atoms.
 
 We close by stating that CL[$\land, !, \neg$] is more expressive than
-full Hennessy-Milner logic. The formula $\fBang A$ of
+full Hennessy-Milner logic. As mentioned above, the formula $\fBang A$ of
 \cathoristic\ can be translated into Hennessy-Milner logic as:
 \[
 \bigwedge_{a \in \Sigma - A} \neg \langle a \rangle \top
