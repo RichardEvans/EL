@@ -83,12 +83,12 @@ relative to a finite subset $S \subseteq \Sigma$:
 \subsection{Decision procedure}
 
 \NI We can use the fact that \cathoristic\ has a quadratic-time
-decision procedure to build an super-polynomial time decision procedure for
+decision procedure to build a super-polynomial time decision procedure for
 \cathoristic\ with negation.  Given $\phi \models \psi$, let $S =
-\ACTIONS{\phi} \cup \ACTIONS{\psi} \cup \{a\}$.  - where $a$ is a
+\ACTIONS{\phi} \cup \ACTIONS{\psi} \cup \{a\}$,   where $a$ is a
 fresh action.  The function $\ACTIONS{\cdot}$ returns all actions
 occurring in a formula, e.g. $\ACTIONS{\MAY{a}{\phi}} = \{a\} \cup
-\ACTIONS{\phi}$ and $\ACTIONS{!A} = A$.,
+\ACTIONS{\phi}$ and $\ACTIONS{!A} = A$. The decision procedure executes the following steps.
 
 \begin{enumerate}
 
@@ -100,15 +100,15 @@ occurring in a formula, e.g. $\ACTIONS{\MAY{a}{\phi}} = \{a\} \cup
   \[
     \phi \land (\psi \lor \xi)  \ \leadsto \ (\phi \land \psi) \lor (\phi \land \xi)  
        \qquad
-    (\phi \lor \psi) \land \xi  \ \leadsto \ (\phi \land \xi) \lor (\psi \land \xi) 
+    (\phi \lor \psi) \land \xi  \ \leadsto \ (\phi \land \xi) \lor (\psi \land \xi). 
   \]
 
 \item Let the resulting disjuncts be $\phi_1, ..., \phi_n$. 
-Now note that
+Note that
 \[
-\phi \models \psi \quad\text{ iff }\quad \phi_i \models \psi \text{ for all } i = 1, ..., n,
+\phi \models \psi \quad\text{ iff }\quad \phi_i \models \psi \text{ for all } i = 1, ..., n.
 \]
-and for each disjunct $\phi_i$ do the following.
+For each disjunct $\phi_i$ do the following.
 \begin{itemize}
 
 \item Notice that $\phi_i \models \psi$ if and only if all
@@ -134,7 +134,7 @@ Definition \ref{cathoristicTS}) and for all $(x,a,y) \in
 \rightarrow'$, either:
 \begin{itemize} 
 
-\item $(x, a, y) \in \rightarrow$,  or;
+\item $(x, a, y) \in\ \rightarrow$,  or;
 
 \item $x \in \mathcal{W}$, $a \in S$, $a \in \lambda(x)$, and $y$ is a new state not
   appearing elsewhere in $\mathcal{W}$ or $\mathcal{W'}$.
