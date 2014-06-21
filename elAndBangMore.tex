@@ -125,7 +125,7 @@ $\MMM$, $\CHAR{\MMM}$ is the logically weakest formula that describes that model
 \clearpage
 
 \begin{definition}
-Let $\MMM$ be an cathoristic model that is a tree.
+Let $\MMM$ be a cathoristic model that is a tree.
 \begin{eqnarray*}
   \CHAR{\bot} &\ =\ & \langle a \rangle \top \AND ! \emptyset  \mbox{ for some fixed action }a \in \Sigma  \\
   \CHAR{\MMM, w} & = & \mathsf{bang}(\MMM,w) \AND \bigwedge_{w \xrightarrow{a} w'} \langle a \rangle \CHAR{\MMM, w'}  
@@ -221,8 +221,8 @@ For all formulae $\phi$, we can derive $\phi \judge \CHAR{\SIMPL{\phi}}$.
 
 \NI Lemma \ref{lemma:completeness:4} states that, if $\phi$ is
 satisfied by a model, then there is a proof that the characteristic
-formula describing that model entails $\phi$.  Lemma
-\ref{lemma:completeness:5} says that $\SIMPL{\phi}$ is the simplest
+formula describing that model entails $\phi$.  In Lemma
+\ref{lemma:completeness:5}, $\SIMPL{\phi}$ is the simplest
 model satisfying $\phi$, and $\CHAR{\MMM}$ is the simplest formula
 describing $m$, so $\CHAR{\SIMPL{\phi}}$ is a simplified form of
 $\phi$. This lemma states that \cathoristic\ has the inferential capacity to
@@ -258,7 +258,7 @@ If $\MMM \models \langle a \rangle \psi$, then either $\MMM = \bot$ or $\MMM$ is
 
 \SUBCASE{$\MMM = \bot$} In this case, $ \CHAR{\MMM} = \CHAR{\bot} =
 \bot$. (Recall, that we are overloading $\bot$ to mean both the model
-at the bottom of our lattice and a formula (such as $\langle s \rangle
+at the bottom of our lattice and a formula (such as $\langle a \rangle
 \top \AND !\emptyset$) which is always false).  In this case, $ \CHAR{\bot}
 \judge \langle a \rangle \psi$ using [\RULENAME{$\bot$ Left}.
 
@@ -299,7 +299,7 @@ then $\lambda(w) \subseteq A$.  Then $ \CHAR{(\CAL{L},w)} = ! \;
 \label{prooflemma5}
 
 Now we prove Lemma \ref{lemma:completeness:5}: 
-For all formulae $\phi$, we can derive $\phi \judge \CHAR{\SIMPL{\phi}}$.
+for all formulae $\phi$, we can derive $\phi \judge \CHAR{\SIMPL{\phi}}$.
 
 \begin{proof}
 Induction on $\phi$.

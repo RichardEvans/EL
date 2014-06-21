@@ -191,7 +191,7 @@ consequences.
 \begin{corollary}
 \begin{enumerate}
 
-\item If $\phi$ has a model then it has a model who's underlying
+\item If $\phi$ has a model then it has a model whose underlying
   transition system is a tree, i.e.~all states except for the start state
   have exactly one predecessor, and the start state has no predecessors.
 
@@ -257,10 +257,7 @@ In the rest of this text we will usually be sloppy and work with
 concrete models instead of $\MODELEQ$-equivalence classes of models
 because the quotienting process is straightforward and not especially
 interesting. We can do this because all relevant subsequent
-constructions are also representation independent.  Our Haskell
-implementation \cite{HaskellImplementation} uses a different approach:
-it works with canonical representatives instead of equivalence
-classes.
+constructions are also representation independent.  
 
 \subsection{The bounded lattice of models}
 \label{boundedlattice}
@@ -307,7 +304,7 @@ Consider all the possible models that satisfy $\phi \lor \psi$:
 This set of satisfying models has no least upper bound, since $\{\phi\} \nleq \{\psi\}$ and $\{\psi\} \nleq \{\phi\}$.
 Similarly,  the set of models satisfying $\neg (\neg \phi \land \neg \psi)$ has no least upper bound.
 
-The existence of unique least upper bounds is used in proving
+The fact that \cathoristic{} models have unique least upper bounds is used in proving
 completeness of our inference rules, and implementing the quadratic-time
 decision procedure.
 
@@ -395,7 +392,7 @@ immediately available from the given state $w$.
    (S \cup S', \rightarrow \cup \rightarrow', \lambda'')
 \]
 
-\NI Here $\lambda''$ takes the constrains arising from both, $\lambda$ and
+\NI Here $\lambda''$ takes the constraints arising from both, $\lambda$ and
 $\lambda'$ into account: 
 \[
    \lambda''(s) 
@@ -502,8 +499,10 @@ If, on the other hand, $x = w$ (i.e. $x$ is the start state  of our cathoristic 
 \lambda_{\mathsf{glb}(\MMM, \MMM')}(w) = \lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w')
 \]
 where $w'$ is the start state  of $\MMM'$.
-In this case, given $\lambda_{\MMM}(w) \supseteq \lambda_{\NNN}(y)$ and $\lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$, it follows that $\lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$ and hence $\lambda_{\mathsf{glb}(\MMM, \MMM')}(w) \supseteq \lambda_{\NNN}(y)$.
-
+In this case, given $\lambda_{\MMM}(w) \supseteq \lambda_{\NNN}(y)$ and $\lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$, it follows that $\lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$ and hence 
+\[
+\lambda_{\mathsf{glb}(\MMM, \MMM')}(w) \supseteq \lambda_{\NNN}(y)
+\]
 \end{proof}
 
 \NI Next, define the least upper bound ($\mathsf{lub}$) of two models as:
@@ -570,7 +569,7 @@ $\MMM \MODELLEQ \mathsf{lub}(\MMM, \MMM')$ and $\MMM' \MODELLEQ \mathsf{lub}(\MM
 If $\MMM \MODELLEQ \NNN $ and $\MMM' \MODELLEQ \NNN $, then $\mathsf{lub}(\MMM, \MMM') \MODELLEQ \NNN$
 \end{itemize}
 If $\MMM$ or $ \MMM'$ are equal to $\bot$, then we just apply the rule that $\bot \MODELLEQ m$ for all models $m$. 
-So let us assume that neither $\MMM$ not $\MMM'$ are $bot$.
+So let us assume that neither $\MMM$ not $\MMM'$ are $\bot$.
 
 \begin{proof}
 To see that $\MMM \MODELLEQ \mathsf{lub}(\MMM, \MMM')$, observe that, by construction of $\mathsf{lub}$ above, every transition in $\mathsf{lub}(\MMM, \MMM')$ has a matching transition in $\MMM$, and every state label in  $\mathsf{lub}(\MMM, \MMM')$ is a superset of the corresponding state label in $\MMM$.
