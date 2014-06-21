@@ -30,6 +30,28 @@ suggestions for related work we forgot to mention.
 - Can they think of related work?
 - Can they think of others who would be interested in this work
 - Technically recommendations? or recommendations regarding the presentation?
+- keep confidential
+
+Dear XYZ, I hope you are well [... personalisatinon ...]
+
+Together with my friend Richard Evans, I have just finished a new
+paper.  It introduces a new form of logic whose distinguishing
+character is that it does not have negation. Instead, it has a
+primitive expressing exclusion or incompatibility. The intuitions
+behind this go back to classical philosophy, but the logic has already
+been used in computer games! 
+
+Maybe you find it interesting. 
+
+We are considering to submit it to the JPL (Journal of Philosophical
+Logic), do you think that's a suitable publication venue, or would you
+recommend some place else?
+
+If you have any feedback, for example on related work that we missed,
+on the presentation, or if you know somebody else who would be
+interested in this work, we would be very grateful.
+
+Martin
 
 * TODO Be consistent. In particular
 ** DONE CL[...] vs CL [...] etc, see space. Doesn't matter since math mode
