@@ -2,9 +2,7 @@
 
 \NI So far, we have presented \cathoristic\ as a propositional modal
 logic.  This section sketches quantified \cathoristic, primarily to
-demonstrate that this extension works smoothly. We use quantified
-\cathoristic\ to formalise the translation of first-order formulae
-mentioned in Section \ref{kr}.
+demonstrate that this extension works smoothly. 
 
 \begin{definition} 
 Let $\Sigma$ be a non-empty set of actions, ranged over by $a, a',
@@ -37,7 +35,7 @@ are given by the following grammar:
 
 \NI Now $A$ ranges over finite subsets of terms. The \emph{free
   variables} of a $\phi$, denoted $\FV{\phi}$ is given as expected,
-e.g.~$\FV{\MAY{x}{\phi}} = \{x\} \cup \FV{\phi}$ and $\FV{!A} =
+e.g.~$\FV{\MAY{t}{\phi}} = \FV{t} \cup \FV{\phi}$ and $\FV{!A} =
 \bigcup_{t \in A}\FV{t}$ where $\FV{a} = \emptyset$ and $\FV{x} =
 \{x\}$.
 \end{definition}
