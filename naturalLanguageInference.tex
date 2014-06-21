@@ -60,8 +60,8 @@ shall now show.
 %% ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
 %% \end{itemize}
 
-Incompatibility such as that between ``Jack is male'' and ``Jack is
-female'' is translated into \cathoristic{} as the pair of incompatible
+Incompatibility, such as that between ``Jack is male'' and ``Jack is
+female'', is translated into \cathoristic{} as the pair of incompatible
 sentences:
 \begin{eqnarray*}
 \MAY{jack} \MAY{sex} (\MAY{male} \land \fBang \{male\}) 
@@ -69,7 +69,7 @@ sentences:
 \MAY{jack} \MAY{sex} (\MAY{female} \land \fBang \{female\}).
 \end{eqnarray*}
 
-\NI Entailment from dyadic to monadic predicates\footnote{Although
+\NI \Cathoristic{} handles entailments from dyadic to monadic predicates\footnote{Although
   natural languages are full of examples of inferences from dyadic to
   monadic predicates, there are certain supposed counterexamples to
   the general rule that a dyadic predicate always implies a monadic
@@ -84,7 +84,7 @@ sentences:
  $X explodes_2$ iff $X$ is an agent that initiates an explosion
  \end{itemize}
  Now ``Jack explodes the device'' does imply that ``Jack $explodes_2$'' but does not imply that ``Jack $explodes_1$''. 
-There is no deep problem here - just another case where natural language overloads the same word in different situation to have different meanings.}:
+There is no deep problem here - just another case where natural language overloads the same word in different situation to have different meanings.}.
 ``Jack loves Jill'' is translated into \cathoristic{} as:
 \begin{eqnarray*}
    \MAY{jack} \MAY{loves} \MAY{jill}.
@@ -157,7 +157,7 @@ and Levesque \cite{brachman} introduce the topic by remarking:
    \forall x. ( Man(x) \IMPLIES \neg Woman(x) )
 \]  
  
-\NI This proposal imposes an burden on the knowledge-representer: an
+\NI This proposal imposes a burden on the knowledge-representer: an
 extra axiom must be added for every pair of incompatible predicates.
 This is burdensome for large sets of incompatible predicates.  For
 example, suppose there are 50 football teams, and a person can only
@@ -188,7 +188,7 @@ it does so by using relatively complex logical machinery.
 If we want to capture the inference from ``Jack loves Jill`` to ``Jack
 loves'' in \fol{}, we can use a non-logical axiom:
 \[
-   \forall x. y .( Loves(x,y) \IMPLIES Loves(x))
+   \forall x. y .( Loves_2(x,y) \IMPLIES Loves_1(x))
 \]
 
 \NI We would have to add an extra  axiom like this for every

@@ -18,19 +18,19 @@ We shall consider these in turn.
 A sentence involving a one-place predicate of the form $p(a)$ is
 expressed in \cathoristic{} as
 \begin{eqnarray*}
-   \MAY{a} \MAY{p}.
+   \MAY{a} \MAY{p}
 \end{eqnarray*}
 
 \NI A sentence involving a many-to-many two-place relation of the form
 $r(a,b)$ is expressed in \cathoristic{} as
 \begin{eqnarray*}
-  \MAY{a} \MAY{r} \MAY{b}.
+  \MAY{a} \MAY{r} \MAY{b}
 \end{eqnarray*}
 
 \NI But a sentence involving a many-to-one two-place relation of the
 form $r(a,b)$ is expressed as:
 \begin{eqnarray*}
-  \MAY{a} \MAY{r} (\MAY{b} \land \fBang \{b\}).
+  \MAY{a} \MAY{r} (\MAY{b} \land \fBang \{b\})
 \end{eqnarray*}
 
 % \NI The translation is detailed in Section \ref{translationFOLtoFOEL}.
@@ -38,13 +38,13 @@ form $r(a,b)$ is expressed as:
 \NI So, for example, to say that ``Jack likes Jill'' (where ``likes'' is,
 of course, a many-many relation), we would write:
 \begin{eqnarray*}
-  \MAY{jack} \MAY{likes} \MAY{jill}.
+  \MAY{jack} \MAY{likes} \MAY{jill}
 \end{eqnarray*}
 
 \NI But to say that ``Jack is married to Joan''
 (where``is-married-to'' is a many-one relation), we would write:
 \begin{eqnarray*}
-  \MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\}).
+  \MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
 \end{eqnarray*}
 
 \NI Colloquially, we might say that ``Jack is married to Joan - and
@@ -105,7 +105,7 @@ In \cathoristic{}, if we want to find out whether Brown is married, we can query
 \begin{eqnarray*}
 \MAY{brown} \MAY{married}
 \end{eqnarray*}
-In \fol, if $married$ is a two-place predicate, then we need to fill in the extra argument place with a free variable - we would need to find out if there exists an $x$ such that $married(brown, x)$ - this is slower to compute and more cumbersome to type. 
+In \fol, if $married$ is a two-place predicate, then we need to fill in the extra argument place with a free variable - we would need to find out if there exists an $x$ such that $married(brown, x)$ - this is more cumbersome to type and slower to compute. 
 
 \subsection{Simpler postconditions}
 

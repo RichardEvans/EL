@@ -9,8 +9,8 @@ operator.
 
 \begin{definition} Let $\Sigma$ be a non-empty set of \emph{actions}.
 Actions are ranged over by $a, a', a_1, b, ...$, and $A$ ranges over
-finite subsets of $\Sigma$. The \emph{formulae}, ranged over by $\phi,
-\psi, \xi ...$, of \cathoristic{} are given by the
+finite subsets of $\Sigma$. The \emph{formulae} of \cathoristic{}, ranged over by $\phi,
+\psi, \xi ...$, are given by the
 following grammar.
 
 \begin{GRAMMAR}
@@ -52,7 +52,7 @@ stated otherwise.
 
 \subsection{Semantics}
 
-\NI The semantics of \cathoristic{} is close to Hennessy-Milner logic
+\NI The semantics of \cathoristic{} is close to Hennessy-Milner logic,
 but uses deterministic transition systems augmented with labels on
 states.
 
@@ -85,9 +85,9 @@ allowed actions emanating from $w$.  The $\lambda$ function
 is the semantic counterpart of the $!$ operator.  The admissibility
 restriction is in place because transitions $s \TRANS{a} t$ where $a
 \notin \lambda(s)$ would be saying that an $a$ action is possible at
-$s$ but at the same time prohibit $a$ actions at that state.
+$s$ but at the same time prohibited at $s$.
 Well-sizedness is not a fundamental restriction but rather a
-convenient trick. Essentially cathoristic transition systems have two kinds
+convenient trick. Cathoristic transition systems have two kinds
 of states:
 
 \begin{itemize}
@@ -195,7 +195,7 @@ simplest models in our quadratic-time decision procedure.
 Secondly, \cathoristic\  is different from other logics in that there is an
 asymmetry between tautologies and contradictories: logics with
 conventional negation have an infinite number of non-trivial
-tautologies as well as an infinite number of contradictories.  In
+tautologies, as well as an infinite number of contradictories.  In
 contrast, because \cathoristic{} has no negation or disjunction
 operator, it is expressively limited in the tautologies it can
 express: $\top$ and conjunctions of $\top$ are its sole tautologies. On the
