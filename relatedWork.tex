@@ -1,8 +1,11 @@
-\section{Related Work}\label{relatedWork}
+\section{Related work}\label{relatedWork}
 
-We have defined \cathoristic{}, and investigated its key properties.
-We close with an overview of related work and a discussion of 
-open problems.
+%% We have defined \cathoristic{}, and investigated its key properties.
+%% We close with an overview of related work and a discussion of 
+%% open problems.
+
+This section surveys  \cathoristic's intellectual background, and related
+approaches.
 
 
 %% The work described here was inspired by Sellars' and Brandom's claim
@@ -22,12 +25,12 @@ which is true of sets $X \subseteq \mathcal{L}$ that are incompatible,
 he defines an incompatibility function $\mathcal{I}$ from subsets of
 $\mathcal{L}$ to sets of subsets of $\mathcal{L}$:
 \[
-X \in \mathcal{I}(Y) \text{ iff } \mathsf{Inc}(X \cup Y)
+X \in \mathcal{I}(Y) \quad\text{ iff }\quad \mathsf{Inc}(X \cup Y).
 \]
 We assume that $\mathcal{I}$ satisfies the
 monotonicity requirement (Brandom calls it ``Persistence''):
 \[
-   \text{If } X \in \mathcal{I}(Y) \text{ and } X \subseteq X' \text{ then } X' \in \mathcal{I}(Y)
+   \text{If } X \in \mathcal{I}(Y) \text{ and } X \subseteq X' \text{ then } X' \in \mathcal{I}(Y).
 \]
 
 \NI Now Brandom defines entailment in terms of the incompatibility
@@ -35,7 +38,7 @@ function. Given a set $X \subseteq \mathcal{L}$ and an individual
 sentence $\phi \in \mathcal{L}$:
 
 \[
-   X \models \phi\quad \text{ iff }\quad \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
+   X \models \phi\quad \text{ iff }\quad \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X).
 \]
 
 \NI Now, given material incompatibility (as captured by the
@@ -43,7 +46,7 @@ $\mathcal{I}$ function) and entailment, he introduces logical negation
 as a \emph{derived} concept via the rule:
 
 \[
-   \{\neg \phi\} \in \mathcal{I}(X)\quad \text{ iff }\quad X \models \phi
+   \{\neg \phi\} \in \mathcal{I}(X)\quad \text{ iff }\quad X \models \phi.
 \]
 
 \NI Brandom goes on to show that the $\neg$ operator, as defined, satisfies
@@ -72,16 +75,16 @@ rules that any logic must satisfy if it is to connect incompatibility
 ($\mathsf{Inc}$) and entailment ($\models$) via the Brandomian
 incompatibility semantics constraint:
 \[
-X \models \phi \quad\text{ iff }\quad \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
+X \models \phi \quad\text{ iff }\quad \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X).
 \]
 
 \NI The general structural rules are:
 \begin{eqnarray*}
-  (\bot) & & \text{if } \mathsf{Inc}(X) \text{ and } X \subseteq Y \text{ then } \mathsf{Inc}(Y) \\
-  (\models 1) & & \phi, X \models \phi \\
-  (\models 2) & & \text{if }X, \phi \models \psi \text{ and } Y \models \phi \text{ then } X, Y \models \psi \\
-  (\bot \models 2) & & \text{if } X \models \phi \text{ for all } \phi, \text{ then } \mathsf{Inc}(X) \\
-  (\models \bot 2) & & \text{if } \mathsf{Inc}(Y \cup \{\phi\}) \text{ implies } \mathsf{Inc}(Y \cup X) \text{ for all } Y, \text{ then } X \models \phi
+  (\bot) & & \text{If } \mathsf{Inc}(X) \text{ and } X \subseteq Y \text{ then } \mathsf{Inc}(Y). \\
+  (\models 1) & & \phi, X \models \phi. \\
+  (\models 2) & & \text{If }X, \phi \models \psi \text{ and } Y \models \phi \text{ then } X, Y \models \psi. \\
+  (\bot \models 2) & & \text{If } X \models \phi \text{ for all } \phi, \text{ then } \mathsf{Inc}(X). \\
+  (\models \bot 2) & & \text{If } \mathsf{Inc}(Y \cup \{\phi\}) \text{ implies } \mathsf{Inc}(Y \cup X) \text{ for all } Y, \text{ then } X \models \phi.
 \end{eqnarray*}
 
 \NI Peregrin shows that if a logic satisfied the above laws, then
@@ -92,8 +95,8 @@ Next, Peregrin gives a pair of laws for defining negation in terms
 of $\mathsf{Inc}$ and $\models$\footnote{The converse of $(\neg 2)$
   follows from $(\neg 1)$ and the general structural laws above.}:
 \begin{eqnarray*}
-  (\neg 1) & & \mathsf{Inc}(\{\phi, \neg \phi\}) \\
-  (\neg 2) & & \text{if } \mathsf{Inc}(X, \phi) \text{ then } X \models \neg \phi
+  (\neg 1) & & \mathsf{Inc}(\{\phi, \neg \phi\}). \\
+  (\neg 2) & & \text{If } \mathsf{Inc}(X, \phi) \text{ then } X \models \neg \phi.
 \end{eqnarray*}
 
 \NI These laws characterise intuitionistic negation as the
@@ -103,7 +106,7 @@ of $\mathsf{Inc}$ and $\models$\footnote{The converse of $(\neg 2)$
   Now, in \cite{brandom},
 Brandom defines negation slightly differently. He uses the rule:
 \begin{eqnarray*}
-  (\neg B) & &\mathsf{Inc}(X, \neg \phi) \text{ iff } X \models \phi
+  (\neg B) & &\mathsf{Inc}(X, \neg \phi) \text{ iff } X \models \phi.
 \end{eqnarray*}
 Using this stronger rule, we can infer the classical law of
 double-negation: $\neg \neg \phi \models \phi$.  Peregrin establishes
@@ -124,7 +127,7 @@ Brandomian constraint.
 
 In \cite{brandom}, Brandom gives a rule for defining necessity in terms of incompatibility and entailment:
 \[
-X \in \mathcal{I}(\{\Box \phi\}) \text{ iff } \mathsf{Inc}(X) \lor \exists Y . \; Y \notin \mathcal{I}(X) \land Y \nvDash \phi
+X \in \mathcal{I}(\{\Box \phi\}) \quad\text{ iff }\quad \mathsf{Inc}(X) \lor \exists Y . \; Y \notin \mathcal{I}(X) \land Y \nvDash \phi.
 \]
 In other words, $X$ is incompatible with $\Box \phi$ if $X$ is compatible with something that does not entail $\phi$.
 
@@ -217,8 +220,8 @@ calculi, primarily Hoare's CSP \cite{HoareC:comseq,RoscoeAW:theapoc}
 and its descendants.  In this model, the denotation of a process $P$
 is given as a pair $(traces(P), fail(P))$.
 Here, $traces(P) = \{
-\sigma\ |\ (\sigma, X) \in \SEMB{P} \}$ are $P$'s traces: the sequences of actions $P$ can engage in.
-The $fail(P)$ is the set of failures.  
+\sigma\ |\ (\sigma, X) \in \SEMB{P} \}$ are $P$'s traces, the sequences of actions $P$ can engage in;
+ $fail(P)$ is the set of failures.  
 A \emph{failure} is a pair $(\sigma, R)$ where $\sigma \in
 \Sigma^*$ and $R \subseteq \Sigma$. The intended interpretation is
 that a process $P$ has failure $(\sigma, R)$ provided that $\sigma$ is
