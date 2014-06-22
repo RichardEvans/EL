@@ -1,8 +1,4 @@
 * TODO spell-check everything, first MB then RPE
-* DONE Be clear about tantum and available vs permitted:
-
-Now we are describing the tantrum !A as giving the *available* actions.
-But that's wrong. It gives the *permitted* actions.
 * TODO Send do friends and  possible reviewers (please add more):
 
   - Michael Wooldridge http://www.cs.ox.ac.uk/people/michael.wooldridge/
@@ -113,9 +109,6 @@ We decided to drop term and not do anything about formula/sentence for the time 
 ** TODO Book titles always in \emph, e.g. \emph{Philosophical Remarks}?
 ** DONE capitalisation, e.g. Cathoristic Logic vs Cathoristic logic vs cathoristic logic etc.
 
-* DONE Don't display \subsubsections in table of content
-* DONE Make references to versu in biblio OK
-* DONE Set up own github repo for Haskell code, put in proper references.
 * TODO Put in license and documentation (sparse) for Haskell code in repo
 * TODO Here is something we can do (not now but soon): 
 create a set of slides and a little video presentation (using
@@ -128,6 +121,29 @@ create a set of slides and a little video presentation (using
 
 * TODO Think about seminars (Sussex, Imperial, Oxford, QMUL which others?)
 * TODO Remove inlined figures, e.g. in elAndBangMore.tex
+* TODO Make sure figures look coherent, and live in suitable places.
+* TODO At the end of introduction.tex: 
+
+   The decision procedure has been implemented in Haskell and is
+   available for public use [11] under a liberal open- source license.
+
+I think that text need not be in a summary. Make it 
+
+   The decision procedure has been implemented in Haskell [11]
+* TODO But do add license to hasell code
+* TODO In introduction.tex:
+
+   The logic-programming community is increasingly focused on the
+   computational cost of syntax manipulation in languages with
+   binders.
+* DONE Don't display \subsubsections in table of content
+* DONE Make references to versu in biblio OK
+* DONE Set up own github repo for Haskell code, put in proper references.
+* DONE Be clear about tantum and available vs permitted:
+
+Now we are describing the tantrum !A as giving the *available* actions.
+But that's wrong. It gives the *permitted* actions.
+
 * DONE Weird size issue in appendix: figure captions are not shrunk.
 * DONE Ignore for the time being [17/06/2014 17:11:26] Martin Berger: BTW, which sentence structure do you prefer:
 [17/06/2014 17:11:28] Martin Berger: Translating from cathoristic logic to first-order logic
@@ -177,7 +193,6 @@ about Core etc?
 * DONE Make sure we have \qed at the end of every proof. Better:
   put it into the latex macro.
 
-* Make sure figures look coherent, and live in suitable places.
 * DONE IGNORE for now Remove macros that are not used.
 * DONE Put a full stop after \proof
 * DONE Since most (all) examples don't use the change over time
