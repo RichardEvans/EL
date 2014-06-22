@@ -402,16 +402,21 @@ If either $\MMM$ or $\MMM_2$ is $\bot$, then the proof is a simple application o
 Next, let us consider the case where neither $\MMM$ nor $\MMM_2$ are $\bot$, but together they are incompatible.
 Let $\MMM = (\mathcal{L}, w_1)$ and $\MMM' = (\mathcal{L}', w'_1)$.
 If $\MMM \sqcap \MMM_2 = \bot$, then there is a finite sequence of actions $a_1, ..., a_{n-1}$ such that both $\MMM$ and $\MMM'$ satisfy $\MAY{a_1} ... \MAY{a_{n-1}}\top$, but they disagree about the state-labelling on the final state of this chain. In other words, there is a $b$-transition from the final state in $\MMM$ which is ruled-out by the $\lambda'$ state-labelling in $\MMM'$. So there is a set of states $w_1, ..., w'_1, ...$ and a finite set $X$ of actions such that:
-\begin{eqnarray*}
-w_1 \xrightarrow{a_1} w_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w_n \\
-w_1' \xrightarrow{a_1} w'_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w'_n \\
-w_n \xrightarrow{b} w_{n+1} \\
-\lambda'(w'_n) = X \text{ with } b \notin X
-\end{eqnarray*}
+\begin{itemize}
+
+\item $w_1 \xrightarrow{a_1} w_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w_n$.
+
+\item $w_1' \xrightarrow{a_1} w'_2 \xrightarrow{a_2} ... \xrightarrow{a_{n-1}} w'_n$.
+
+\item $w_n \xrightarrow{b} w_{n+1}$.
+
+\item $\lambda'(w'_n) = X \text{ with } b \notin X$.
+
+\end{itemize}
 Now it is easy to show, using [\RULENAME{$\AND$ Left}], that
 \begin{eqnarray*}
-\CHAR{\mathsf{\MMM}} \judge \MAY{a_1} ... \MAY{a_{n-1}} \MAY{b} \top \\
-\CHAR{\mathsf{\MMM'}} \judge \MAY{a_1} ... \MAY{a_{n-1}} \fBang X
+\CHAR{\mathsf{\MMM}} &\judge& \MAY{a_1} ... \MAY{a_{n-1}} \MAY{b} \top \\
+\CHAR{\mathsf{\MMM'}} &\judge& \MAY{a_1} ... \MAY{a_{n-1}} \fBang X
 \end{eqnarray*}
 Now using [\RULENAME{$\AND$ Left}] and [\RULENAME{$\AND$ Right}]:
 \[
@@ -438,10 +443,11 @@ $\mathsf{merge}$, if $\MMM$ and $\MMM'$ are acyclic, then $\MMM \sqcap
 \MMM'$ is also acyclic.  If $\MMM \sqcap \MMM'$ is acyclic, then
 $\CHAR{\MMM \sqcap \MMM'}$ is equivalent to a set $\Gamma$ of
 sentences of one of two forms:
-\begin{eqnarray*}
-\MAY{a_1} ... \MAY{a_n} \top \\
-\MAY{a_1} ... \MAY{a_n} ! X
-\end{eqnarray*}
+\[
+   \MAY{a_1} ... \MAY{a_n} \top 
+      \qquad\qquad
+   \MAY{a_1} ... \MAY{a_n} ! X
+\]
 
 \begin{figure}[H]
 \centering
@@ -471,11 +477,11 @@ For example, if $\MMM \sqcap \MMM'$ is as in Figure \ref{setofpaths}, then
 \CHAR{\MMM \sqcap \MMM'} = \MAY{a}(\fBang \{c,d\} \land \MAY{c} \top) \land \MAY{b} \top
 \]
 This is equivalent to the set $\Gamma$ of sentences:
-\begin{eqnarray*}
-\MAY{a}\MAY{c} \top \\
-\MAY{b} \top \\
+\[
+\MAY{a}\MAY{c} \top \qquad\qquad
+\MAY{b} \top \qquad\qquad
 \MAY{a}\fBang\{c,d\}
-\end{eqnarray*}
+\]
 Now using [\RULENAME{$\AND$ Right}] and [\RULENAME{Det}] we can show that
 \[
 \bigwedge_{\phi \in \Gamma} \phi \judge \CHAR{\MMM \sqcap \MMM'}
@@ -501,17 +507,24 @@ $\MMM \models \MAY{a_1} ... \MAY{a_n} ! X_1$ and $\MMM' \models \MAY{a_1} ... \M
 In the first two cases, showing $\CHAR{\MMM} \land \CHAR{\MMM'} \judge \phi$ is just a matter of repeated application of   [\RULENAME{$\AND$ Left}] and [\RULENAME{$\AND$ Right}].
 In the third case, let $\MMM = (\mathcal{L}, w_1)$ and $\MMM' = (\mathcal{L}', w'_1)$.
 If $\MMM \models \MAY{a_1} ... \MAY{a_n} ! X_1$ and $\MMM' \models \MAY{a_1} ... \MAY{a_n} ! X_2$ then there exists sequences $w_1, ..., w_{n+1}$ and $w'_1, ..., w'_{n+1}$ of states such that
-\begin{eqnarray*}
-w_1 \xrightarrow{a_1} ... \xrightarrow{a_n} w_{n+1} \\
-w'_1 \xrightarrow{a_1} ... \xrightarrow{a_n} w'_{n+1} \\
-\lambda(w_{n+1}) \subseteq X_1 \\
-\lambda'(w'_{n+1}) \subseteq X_2 \\
-\end{eqnarray*}
-Now from the definition of $\CHAR{}$:
-\begin{eqnarray*}
-\CHAR{(\mathcal{L}, w_{n_1})} \judge \fBang X_1 \\
-\CHAR{(\mathcal{L}', w'_{n_1})} \judge \fBang X_2
-\end{eqnarray*}
+\begin{itemize}
+
+\item $w_1 \xrightarrow{a_1} ... \xrightarrow{a_n} w_{n+1}$.
+
+\item $w'_1 \xrightarrow{a_1} ... \xrightarrow{a_n} w'_{n+1}$.
+
+\item $\lambda(w_{n+1}) \subseteq X_1$.
+
+\item $\lambda'(w'_{n+1}) \subseteq X_2$.
+
+\end{itemize}
+
+\NI Now from the definition of $\CHAR{}$:
+\[
+   \CHAR{(\mathcal{L}, w_{n_1})} \judge \fBang X_1 
+      \qquad\qquad
+   \CHAR{(\mathcal{L}', w'_{n_1})} \judge \fBang X_2
+\]
 Now using [\RULENAME{\fBang Right 2}]:
 \[
 \CHAR{(\mathcal{L}, w_{n_1})} \land \CHAR{(\mathcal{L}', w'_{n_1})} \judge \fBang (X_1 \cap X_2)
