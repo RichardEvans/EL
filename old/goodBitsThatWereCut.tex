@@ -1,3 +1,38 @@
+\subsection{Failures/divergences in process calculi}
+
+Our cathoristic models are close to a form of the failures/divergences
+models that has been used in the denotational semantics of process
+calculi, primarily Hoare's CSP \cite{HoareC:comseq,RoscoeAW:theapoc}
+and its descendants.  In this model, the denotation of a process $P$
+is given as a pair $(traces(P), fail(P))$.
+Here, $traces(P) = \{
+\sigma\ |\ (\sigma, X) \in \SEMB{P} \}$ are $P$'s traces, the sequences of actions $P$ can engage in;
+ $fail(P)$ is the set of failures.  
+A \emph{failure} is a pair $(\sigma, R)$ where $\sigma \in
+\Sigma^*$ and $R \subseteq \Sigma$. The intended interpretation is
+that a process $P$ has failure $(\sigma, R)$ provided that $\sigma$ is
+a trace of $P$ and after $P$ executes all the actions in $\sigma$ that  $P$
+refuses to do any action given in $R$. The denotation $\SEMB{P}$ of
+$P$ in a failures/divergences model is the the set of all of $P$'s
+failures. The set $ traces(P)$ is prefix-closed, hence gives rise to a
+deterministic labelled transition system: states are given by the set
+$traces(P)$ of all traces.  Transitions are of the form $\sigma
+\TRANS{a} \sigma.a$, where $\sigma.a$ is the string extending $\sigma$
+with the action $a$.  The start state is the empty string.  We can
+decorate all states as follows: $ \lambda (\sigma) = \Sigma \setminus
+R $ provided that $(\sigma, R) \in \SEMB{P}$.  Whenever the set
+$\Sigma$ of symbols is finite, we obtain a cathoristic model this
+way.
+
+While the failures/divergences semantics of CSP are somewhat more
+complicated due to the possibility of diverging programs, the close
+connection between cathoristic models and the denotations of CSP processes,
+as well as the syntactic similarity with Hennessy-Milner logic suggest
+that it is fruitful to investigate how \cathoristic{} can be used
+as a program logic for process calculi.
+
+
+
 \subsection{WHy not pure models -- works best with non-determinism}
 
 This then leads to the question why we most of our development is
