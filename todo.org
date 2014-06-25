@@ -1,3 +1,4 @@
+* TODO Get citesort to work with hyperref
 * TODO spell-check everything, first MB then RPE
 * TODO Send do friends and  possible reviewers (please add more):
 
