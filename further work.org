@@ -109,3 +109,4 @@ i.e. study unification, resolution, machine-usable proofs
 * What kind of operator is Incomp(.)?
 * Study CL as a database query language, query complexity?
 * WHat exactly is the fragment of FOL corresponding to CL?
+* What is the relationship between \bot in cut-elimination proofs, and Incomp(.)?
