@@ -1,4 +1,17 @@
 * Compactness, ultraproducts, Los's theorem and CL
+
+I tried to make this work, but didn't succeed. The obvious definitions
+have two problems.
+
+- Prove that \Pi_i \MMM_i / U is well-sized
+- Prove that \Pi_i \MMM_i / U \models !A iff {i | \MMM_i \models !A } \in U
+
+Both don't appear to follow from the ultrafilter axioms, which is not
+a surprise, but there doesn't seem to be a neat alternative definition
+of cathoristic ultra-filter that solves this problem.
+
+Anyway, here are some things I wrote about it in the past.
+
 \subsubsection{Compactness, ultraproducts and \cathoristic{}}
 
 Mathematicals knows three substantially different approaches for
@@ -18,7 +31,79 @@ clearly reflects the semantics of negation. But \cathoristic{} doesn't
 have negation. So what would an appropriate equivalent of
 ultra-filters for \cathoristic{} look like that can be used to prove
 compactness directly on models?
-\richard{Do we need this?}
+
+\subsection{Cathoristic ultra-filters}
+
+\begin{definition}
+Let $S$ be a set. A \emph{filter} on $S$ is a subset $F$ of the
+powerset of $S$ with the following properties
+\begin{itemize}
+
+\item $S \in F$.
+
+\item If $A, B \in F$ then also $A \cap B \in F$.
+
+\item If $A \subseteq B \subseteq I$ and $A \in F$ then $B \in F$. 
+
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+Let $I$ be a set and $(S_i)_{i \in I}$ a collection of sets. The
+\emph{product}  is given by:
+\[
+  \Pi_{i \in I}S_i
+     =
+  \{f : I \rightarrow \bigcup_{i} S_i\ |\ \text{for all $i$}: f(i) \in S_i\}
+\]
+
+\NI Let $F$ be a filter on $I$. We define the relation $\cong$ on
+$\Pi_{i \in I}S_i$ as follows.
+\[
+   f \cong g
+      \quad\text{iff}\quad
+   \{i \in I\ |\ f(i) = g(i)\} \in F.
+\]
+
+\end{definition}
+
+\NI It is easy to see that $\cong$ is an equivalence relation on
+$\Pi_{i \in I}S_i$.
+
+
+\begin{definition}
+Let $I$ be a set, $F$ a filter on $I$, and $(\LLL_i)_{i \in I}$ a
+collection of cathoristic transition systems, where $\LLL_i = (S_i,
+\rightarrow_i, \lambda_i)$.  We define $\Pi_{i \in I}\LLL_i / F$ as
+follows.
+\begin{itemize}
+
+\item $S = [\Pi_{i \in I} S_i ]_{\cong}$.
+
+\item $[f]_{\cong} \TRANS{a} [g]_{\cong}$ iff $\{i\in I\ |\ f(i) \TRANS{a}_i g(i)\} \in F$.
+
+\item $a \in \lambda([f]_{\cong})$ iff $\{i\in I\ |\ a \in \lambda_i(f(i)) \} \in F$.
+
+\end{itemize}
+
+\end{definition}
+
+\begin{lemma}
+$\Pi_{i \in I}\LLL_i / F$ is a cathoristic transition system.
+\end{lemma}
+
+\begin{proof}
+Why is this even true? How can we establish well-sizedness?
+\end{proof}
+
+\begin{definition}
+Let $I$ be a set, $F$ a filter on $I$, and $(\MMM_I)_{i \in I})$ a
+collection of cathoristic models where $\MMM_i = (\LLL_i, s_i)$.  We
+define $\Pi_{i \in I} \MMM_i / F$ to be $(\Pi_{i \in I}\LLL_i,
+[f]_{\cong})$, where $f$ is the function $i \mapsto s_i$. This is
+clearly a cathoristic model.
+\end{definition}
+
 * Dualities 
 \subsubsection{Extending \cathoristic{} with dualities}
 In any modal logic with negation, the may modality and the must modality are interdefinable:
