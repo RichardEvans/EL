@@ -1,3 +1,14 @@
+* TODO Respond to Feedback:
+
+Marek Sergot: 
+    Add related work section on object-oriented logics
+        F-logic, C-logic, terminological logic
+        Also look at Kesin's phd on this.
+    
+Giacomo Turbanti:
+    1) "Negation is the logically weakest form of incompatibility" (p. 8).  I think Brandom has something different in mind. Incompatible sentences are, for Brandom, like aristotelian contraries. Negations are like  contradictories. So for Brandom "minimal" doesn't mean "weakest", but lowest in the sense of the deducibility order: ¬p is the minimal incompatible of p in the sense that it is implied by all other sentences that are incompatible with p. This is why classical negation can be introduced by definition. Actually other weaker (w.r.t. the classical one) forms of negation could be introduced in this way. From a brandomian point of view it would be interesting to see whether different sorts of negation operators could be defined in Cathoristic Logic.
+    2) "without material incompatibility their sounds are just barks" (p. 7). In Brandom (and, roughly, in Sellars) what distinguishes the linguistic moves of concept users from mere "languagings" is the capacity to put the former in "the space of reasons", that is to say (roughly again) to embed them in  a web of inferential relations. Now, Brandom considers material incompatibility as the basis of a certain sort of inferences: modally-robust ones. But there are other sorts of inferences that might be considered. What really makes the difference in this picture is the inferential articulation of conceptual content rather than incompatibility relations.
+    3) There's another work on Incompatibility Semantics which might be worth considering for the sake of completeness besides mine and Peregrin's: Gocke et al. (2008), How to kripke Bradom's notion of necessity, in Prien and Schweikard (eds.), Robert Brandom Analytic Pragmatist, Ontos.
 * TODO Get citesort to work with hyperref
 * TODO spell-check everything, first MB then RPE
 * TODO Send to friends and  possible reviewers (please add more):
@@ -292,17 +303,3 @@ add later something about how this is reflected in EL queries.
 
 
 
---------------------------
-TODO Respond to Feedback:
-
-Marek Sergot: 
-    Add related work section on object-oriented logics
-        F-logic, C-logic, terminological logic
-        Also look at Kesin's phd on this.
-    
-Giacomo Turbanti:
-    1) "Negation is the logically weakest form of incompatibility" (p. 8).  I think Brandom has something different in mind. Incompatible sentences are, for Brandom, like aristotelian contraries. Negations are like  contradictories. So for Brandom "minimal" doesn't mean "weakest", but lowest in the sense of the deducibility order: ¬p is the minimal incompatible of p in the sense that it is implied by all other sentences that are incompatible with p. This is why classical negation can be introduced by definition. Actually other weaker (w.r.t. the classical one) forms of negation could be introduced in this way. From a brandomian point of view it would be interesting to see whether different sorts of negation operators could be defined in Cathoristic Logic.
-    2) "without material incompatibility their sounds are just barks" (p. 7). In Brandom (and, roughly, in Sellars) what distinguishes the linguistic moves of concept users from mere "languagings" is the capacity to put the former in "the space of reasons", that is to say (roughly again) to embed them in  a web of inferential relations. Now, Brandom considers material incompatibility as the basis of a certain sort of inferences: modally-robust ones. But there are other sorts of inferences that might be considered. What really makes the difference in this picture is the inferential articulation of conceptual content rather than incompatibility relations.
-    3) There's another work on Incompatibility Semantics which might be worth considering for the sake of completeness besides mine and Peregrin's: Gocke et al. (2008), How to kripke Bradom's notion of necessity, in Prien and Schweikard (eds.), Robert Brandom Analytic Pragmatist, Ontos.
-    
-    
