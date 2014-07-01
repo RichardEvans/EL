@@ -86,7 +86,9 @@ sorts $\#(f)$ for each function symbol $f$; a set of \emph{relation
   symbols} with associated \emph{arities}, i.e.~a list of sorts
 $\#(R)$ for each relation symbol $R$; a set of \emph{constant symbols}
 with associated \emph{arity}, i.e.~a sort $\#(c)$ for each constant
-symbol $c$.
+symbol $c$. We say a function symbol $f$ is \emph{$n$-ary} if $\#(f)$
+has length $n+1$. Likewise, a relation symbol is \emph{$n$-ary} if
+$\#(R)$ has length $n$.
 
 Let $\SSS$ be a signature. An \emph{$\SSS$-model} $\CAL{M}$ is an
 object with the following components.  For each sort $\sigma$ a set
@@ -117,7 +119,7 @@ sort, we speak of \emph{single-sorted first-order logic} or just
 
 Given an $\SSS$-model $\CAL{M}$, an \emph{environment}, ranged over by
 $\sigma$, is a partial function from variables to $\CAL{M}$'s
-universe.  We write $x \mapsto u$ for the environment that maps $x$ to
+universes.  We write $x \mapsto u$ for the environment that maps $x$ to
 $u$ and is undefined for all other variables. Moreover, if $\sigma, x
 \mapsto u$ is the environment that is exactly like $\sigma$, except
 that it also maps $x$ to $u$, assuming that $x$ is not in the domain
