@@ -2,37 +2,37 @@
 
 \begin{center}
   \AxiomC{$!\{b,c\} \judge !\{b,c\}$}
-  \RightLabel{\RULENAME{$\land$ Left 1}}
+  \RightLabel{\small \RULENAME{ $\land$ Left 1}}
   \UnaryInfC{$!\{b,c\} \land !\{c,d\} \judge !\{b,c\}$}
   \AxiomC{$!\{c,d\} \judge !\{c,d\}$}
-  \RightLabel{\RULENAME{$\land$ Left 2}}
+  \RightLabel{\small \RULENAME{ $\land$ Left 2}}
   \UnaryInfC{$!\{b,c\} \land !\{c,d\} \judge !\{c,d\}$}
-  \RightLabel{\RULENAME{! Right 2}}
+  \RightLabel{\small \RULENAME{ ! Right 2}}
   \BinaryInfC{$!\{b,c\} \land !\{c,d\} \judge !\{c\}$}
-  \RightLabel{\RULENAME{Normal}}
+  \RightLabel{\small \RULENAME{ Normal}}
   \UnaryInfC{$\MAY{a} (!\{b,c\} \land !\{c,d\}) \judge \MAY{a} !\{c\}$}
   \AxiomC{$\MAY{a} !\{b,c\} \land \MAY{a} !\{c,d\} \judge \MAY{a} !\{b,c\} \land \MAY{a} !\{c,d\}$}
-  \RightLabel{\RULENAME{Det}}
+  \RightLabel{\small \RULENAME{ Det}}
   \UnaryInfC{$\MAY{a} !\{b,c\} \land \MAY{a} !\{c,d\} \judge \MAY{a} (!\{b,c\} \land !\{c,d\})$}
-  \RightLabel{\RULENAME{Trans}}
+  \RightLabel{\small \RULENAME{ Trans}}
   \BinaryInfC{$\MAY{a} !\{b,c\} \land \MAY{a} !\{c,d\} \judge \MAY{a}!\{c\}$}
   \DisplayProof
 \end{center}
 \vspace{7mm}
 \begin{center}
   \AxiomC{$!\{b\} \land \MAY{c}\top \judge \bot$}
-  \RightLabel{\RULENAME{Normal}}
+  \RightLabel{\small \RULENAME{ Normal}}
   \UnaryInfC{$\MAY{a}(!\{b\} \land \MAY{c}\top) \judge \MAY{a} \bot$}
   \AxiomC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top \judge \MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top$}
-  \RightLabel{\RULENAME{Det}}
+  \RightLabel{\small \RULENAME{ Det}}
   \UnaryInfC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top \judge \MAY{a}(!\{b\} \land \MAY{c}\top)$}
-  \RightLabel{\RULENAME{Trans}}
+  \RightLabel{\small \RULENAME{ Trans}}
   \BinaryInfC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top  \judge \MAY{a} \bot$}  
   \AxiomC{$\MAY{a}\bot \judge \bot$}
-  \RightLabel{\RULENAME{Trans}}
+  \RightLabel{\small \RULENAME{ Trans}}
   \BinaryInfC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top  \judge \bot$}  
   \AxiomC{$\bot \judge \MAY{d} \top$}
-  \RightLabel{\RULENAME{Trans}}
+  \RightLabel{\small \RULENAME{ Trans}}
   \BinaryInfC{$\MAY{a}!\{b\} \land \MAY{a} \MAY{c}\top  \judge  \MAY{d} \top$}    
   \DisplayProof
 \end{center}
