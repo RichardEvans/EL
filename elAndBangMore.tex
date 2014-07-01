@@ -57,13 +57,13 @@ derivable from [\RULENAME{Normal}] as we show in the examples below.
 $\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$:
 
 \begin{center}
-  \AxiomC{$\phi \AND \psi  \judge  \xi$}
-  \LeftLabel{\RULENAME{Normal}}
-  \UnaryInfC{$\MAY{a} (\phi \AND \psi)  \judge  \MAY{a} \xi$}
   \AxiomC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \phi \land \MAY{a} \psi$}
-  \LeftLabel{\RULENAME{Det}}
+  \RightLabel{\RULENAME{Det}}
   \UnaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} (\phi \land \psi)$}
-  \LeftLabel{\RULENAME{Trans}}
+  \AxiomC{$\phi \AND \psi  \judge  \xi$}
+  \RightLabel{\RULENAME{Normal}}
+  \UnaryInfC{$\MAY{a} (\phi \AND \psi)  \judge  \MAY{a} \xi$}
+  \RightLabel{\RULENAME{Trans}}
   \BinaryInfC{$\MAY{a} \phi \land \MAY{a} \psi \judge \MAY{a} \xi$}
   \DisplayProof
 \end{center}
@@ -95,10 +95,10 @@ The reason is that [\RULENAME{!-Left}] can be derived as follows.
 \begin{center}
   \AxiomC{$\phi \AND\, !A'  \judge  \phi \AND\, !A'$}
   \AxiomC{$A' \subseteq A$}
-  \LeftLabel{\small\RULENAME{!-Right 1}}
+  \RightLabel{\small\RULENAME{!-Right 1}}
   \BinaryInfC{$\phi \AND\, !A'  \judge  \phi \AND\, !A$}
   \AxiomC{$\phi \AND\, !A  \judge  \psi$}
-  \LeftLabel{\small\RULENAME{Trans}}
+  \RightLabel{\small\RULENAME{Trans}}
   \BinaryInfC{$\phi \AND\, !A'  \judge  \psi$}
   \DisplayProof
 \end{center}
