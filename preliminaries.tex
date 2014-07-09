@@ -69,8 +69,8 @@ $x \TRANS{a} z$ imply that $y = z$. Otherwise $\LLL$ is
 Given two labelled transition systems $\LLL_i = (S_i, \rightarrow_i)$
 over $\Sigma$ for $i = 1, 2$, a \emph{simulation from $\LLL_1$ to
   $\LLL_2$} is a relation $\RRR \subseteq S_1 \times S_2$ such that
-whenever $(s, s') \in \RRR$: if $s \TRANS{a} s'$ then there exists a
-transition $t \TRANS{a} t'$ with $(t, t') \in \RRR$.  We write $s \SIM
+whenever $(s, s') \in \RRR$: if $s \TRANS{a}_1 s'$ then there exists a
+transition $t \TRANS{a}_2 t'$ with $(t, t') \in \RRR$.  We write $s \SIM
 t$ whenever $(s, t) \in \RRR$ for some simulation $\RRR$.  We say
 $\RRR$ is a \emph{bisimulation between $\LLL_1$ and $\LLL_2$} if both,
 $\RRR$ and $\RRR^{-1}$ are simulations. Here $\RRR^{-1} = \{(y,
