@@ -1,0 +1,140 @@
+From: em.logi.2f.3ec621.a9d1749b@editorialmanager.com [em.logi.2f.3ec621.a9d1749b@editorialmanager.com] on behalf of Frank Veltman [em@editorialmanager.com]
+Sent: Tuesday, October 28, 2014 11:22 AM
+To: Evans, Richard
+Subject: Your Submission to the JPL (LOGI-D-14-00058)
+
+Dear Professor Richard Prideaux Evans,
+
+I am writing concerning the manuscript
+
+"Cathoristic Logic,"
+
+which you submitted to the JPL.
+
+The editors have considered this paper carefully and, I'm sorry to
+say, have decided not to accept it for publication.
+
+This decision was based on one or more referee reports, which you can
+find either below, or by following the links that appear below, or in
+your manuscript's file at the JPL website. As you will see the
+referee's advise is a "revise and resubmit", but the revisions (s)he
+wants you to make amount to writing a entirely new paper, so I think a
+"reject" is more appropriate.
+
+Thank you for giving us the opportunity to consider your work, and we
+are sorry to have this bad news to you. We would be happy to consider
+other work of yours in the future.
+
+Best regards,
+
+Frank Veltman
+
+Editor,
+Journal of Philosophical Logic
+http://www.springer.com/philosophy/logic/journal/10992
+
+
+
+Comments for the Author:
+
+Reviewer #1: I recommend the paper be revised and resubmitted.
+
+The main motivation for cathoristic logic seems to be that natural
+language can be represented in it while the complexity of solving
+certain computational problems is relatively simple, such as checking
+validity is in quadratic time. This is contrasted with first-order
+logic, where formulas that trepresent the same information are less
+succinct and computational problems are obviously much more complex.
+
+The paper is much too long. The length of the paper is 77 pages,
+which is much longer than usual for the journal of philosophical
+logic. It will probably mean that few people will actually read the
+paper if it were published. I do believe the core of the paper could
+be reworked to a paper of more pallatable length. This would be much
+better in order to reach a larger audience.
+
+A rewritten paper should have a clear goal, which should always be
+referred back to. Now, the paper contains very many and diverse
+results and it is not entirely clear why these results are
+interesting. What goal do they serve? Is the standard translation
+interesting because it shows what fragment of first-order logic can be
+expressed? If so, how does it compare to other fragments of
+first-order logic? Why are the open problems interesting? I would also
+recommend that the paper is concluded by a section "Conclusion", which
+returns to the goal set out in the introduction and evaluates to what
+extent the goal has been reached and what open issues still remain.
+
+The author should also think about why this paper is suitable for the
+journal of philosophical logic and set the goal of the paper with that in
+mind. It seems a large part of the intended audience is those
+researchers working on representing natural language and those
+involved in knowledge representation. Perhaps there is another journal
+which would make it easier to reach that audience.
+
+Below I list some other concerns.
+
+The author seems to ignore that first-order logic can also have
+functions, and then the first example on page 5 could be represented
+as king(france)=pierre, where it is clear that there can only be one
+king, or colour(tl)=red, where it is clear that the traffic light can
+only have one colour.
+
+On page 1 a reference to Hennesy Milner Logic should be added.
+
+I do not think the author argues convincingly that incompatibility is
+prior to negation. It is even unclear to me what this means. Does the
+author mean we cannot understand negation without first understanding
+incompatibility? Does the author mean we cannot define negation
+without incompatibility? Does the author mean that in our cognitive
+development we grasp incompatibility before negation? All these
+interpretations of priority seem problematic, and the author does not
+argue for any of these convincingly. I think this entire issue is not
+relevant for the paper. The author states at the bottom of page 8 that
+it will be assumed -without further argument -that incompatibility is
+prior to negation. This assumption plays no role in the paper. Nothing
+in the rest of the paper has to change if negation is prior to incompatibiliy.
+
+The syntax of first-order logic given on page 13 is not used on page
+5. The predicate "king" is not capitalized, nor is "colour". The case
+for conjunction is given as "phi \wedge \psi". This should be "(\phi
+\wedge \phi)". The same holds for definition 1 on page 14.
+
+On page 17 "contradictories" should be replaced by "contradictions"
+
+On page 17
+\langle a \rangle \langle b \rangle \wedge \langle a \rangle \langle b
+\rangle \models \langle a \rangle ( \langle b \rangle \wedge \rangle c
+\langle)
+
+should be
+
+\langle a \rangle \langle b \rangle \wedge \langle a \rangle \langle c
+\rangle \models \langle a \rangle ( \langle b \rangle \wedge \rangle c
+\langle)
+
+(The second occurence of "b" should be "c".
+
+I did not find the section on entailment between atomic sentences very
+convincing. The inference of <jack><loves><jill> very much depends on
+word order in English. There are other languages in which it would be
+<jack><jill><loves>. But then it does not follow that <jack><loves>.
+Adverbial inference have the same problem, also in English. From
+<jack><quickly><went><home> it does not follow that
+<jack><went><home>. Even if this could be solved, the language would
+also contain many expressions that do have semantics in the formal
+system, but would actually not express anything in natural language,
+such as <jack>, or <jack><passed><biscuit><to>. So even though there
+are some inferences that actually work for atomic sentences, there is
+no separate grammar for what even counts as an atomic sentence.
+
+The comparison to first-order logic is made, but this does not seem
+fair. As mentioned above, functions in first-order logic are not used,
+and there are also hidden assumptions in cathoristic logic, for
+instance that modalities are functional (diamond implies box). This is
+also why bisimulations and two-way similations coincide.
+
+The general impression that I get is that there are nice results on
+natural language, that have actually been implemented as well, but
+that it seems the modal setting does not really fit the purposes.
+
+
