@@ -1,0 +1,230 @@
+
+\section{Inferences between atomic sentences}\label{naturalLanguageInference}
+
+\NI \Cathoristic{} arose in part as an attempt to answer the
+question: what is the simplest logic that can capture inferences
+between atomic sentences of natural language?  In this section, we
+give examples of such inferences, and then show how \cathoristic{}
+handles them.  We also compare our approach with attempts at
+expressing the inferences in first-order logic.
+
+\subsection{Intra-atomic inferences in \cathoristic{}}
+
+\NI Natural language admits many types of inference between atomic
+sentences.  First, exclusion:
+\begin{quote}
+``Jack is male'' is incompatible with ``Jack is female''.
+\end{quote}
+Second, entailment inferences from dyadic to monadic predicates:
+\begin{quote}
+``Jack loves Jill'' implies ``Jack loves''.
+\end{quote}
+Third, adverbial inferences:
+\begin{quote}
+``Jack walks quickly'' implies ``Jack walks''.
+\end{quote}
+Fourth, inferences from conjunctions of sentences to conjunctions of noun-phrases (and vice-versa):
+\begin{quote}
+``Jack loves Jill'' and ``Jack loves Joan'' together imply that ``Jack loves Jill and Joan''.
+\end{quote}
+Fifth, inferences from conjunctions of sentences to conjunction of
+predicates\footnote{See \cite{sommers} p.282 for a spirited defence of
+  predicate conjunction against Fregean regimentation.} (and
+vice-versa):
+\begin{quote}
+``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
+\end{quote}
+
+\NI They all can be handled directly and naturally in \cathoristic{}, as we
+shall now show.
+
+%% We shall show that each of the following inferences can be naturally expressed in \cathoristic{}:
+%% \begin{itemize}
+%% \item
+%% ``Jack is male'' is incompatible with ``Jack is female''
+%% \item
+%% ``Jack loves Jill'' implies ``Jack loves''\footnote{Although natural languages are full of examples of inferences from dyadic to monadic predicates, there are certain supposed counterexamples to the general rule that a dyadic predicate always implies a monadic one. For example, ``Jack explodes the device'' does not, on its most natural reading, imply that ``Jack explodes''. Our response to cases like this is to distinguish between two distinct monadic predicates $explodes_1$ and $explodes_2$:
+%% \begin{itemize}
+%% \item
+%% $X explodes_1$ iff $X$ is an object that undergoes an explosion
+%% \item
+%% $X explodes_2$ iff $X$ is an agent that initiates an explosion
+%% \end{itemize}
+%% Now ``Jack explodes the device'' does imply that ``Jack $explodes_2$'' but does not imply that ``Jack $explodes_1$''. 
+%% There is no deep problem here - just another case where natural language overloads the same word in different situation to have different meanings.}
+%% \item
+%% ``Jack walks quickly'' implies ``Jack walks''
+%% \item
+%% ``Jack loves Jill'' and ``Jack loves Joan'' together imply that ``Jack loves Jill and Joan''
+%% \item
+%% ``Jack is bruised'' and ``Jack is humiliated'' together imply that ``Jack is bruised and humiliated''.
+%% \end{itemize}
+
+Incompatibility, such as that between ``Jack is male'' and ``Jack is
+female'', is translated into \cathoristic{} as the pair of incompatible
+sentences:
+\begin{eqnarray*}
+\MAY{jack} \MAY{sex} (\MAY{male} \land \fBang \{male\}) 
+   \qquad\qquad
+\MAY{jack} \MAY{sex} (\MAY{female} \land \fBang \{female\}).
+\end{eqnarray*}
+
+\NI \Cathoristic{} handles entailments from dyadic to monadic predicates\footnote{Although
+  natural languages are full of examples of inferences from dyadic to
+  monadic predicates, there are certain supposed counterexamples to
+  the general rule that a dyadic predicate always implies a monadic
+  one. For example, ``Jack explodes the device'' does not, on its most
+  natural reading, imply that ``Jack explodes''. Our response to cases
+  like this is to distinguish between two distinct monadic predicates
+  $explodes_1$ and $explodes_2$:
+ \begin{itemize}
+ \item
+ $X explodes_1$ iff $X$ is an object that undergoes an explosion
+ \item
+ $X explodes_2$ iff $X$ is an agent that initiates an explosion
+ \end{itemize}
+ Now ``Jack explodes the device'' does imply that ``Jack $explodes_2$'' but does not imply that ``Jack $explodes_1$''. 
+There is no deep problem here - just another case where natural language overloads the same word in different situation to have different meanings.}.
+``Jack loves Jill'' is translated into \cathoristic{} as:
+\begin{eqnarray*}
+   \MAY{jack} \MAY{loves} \MAY{jill}.
+\end{eqnarray*}
+The semantics of modalities ensures that this directly entails:
+\begin{eqnarray*}
+   \MAY{jack} \MAY{loves}.
+\end{eqnarray*}
+
+\NI Similarly, \cathoristic{} supports inferences from triadic to dyadic
+predicates:
+\begin{quote}
+  ``Jack passed the biscuit to Mary'' implies ``Jack passed the biscuit''.
+\end{quote}
+
+\NI This can be expressed directly in \cathoristic{} as:
+\[
+   \MAY{jack} \MAY{passed} \MAY{biscuit} \MAY{to} (\MAY{mary} \land !\{mary\}) \models \MAY{jack} \MAY{passed} \MAY{biscuit}.
+\]
+
+\NI Adverbial inferences is captured in \cathoristic{} as follows.
+\begin{eqnarray*}
+  \MAY{jack} \MAY{walks} \MAY{quickly}
+\end{eqnarray*}
+entails:
+\begin{eqnarray*}
+  \MAY{jack} \MAY{walks}.
+\end{eqnarray*}
+
+\NI \Cathoristic{} directly supports inferences from conjunctions of
+sentences to conjunctions of noun-phrases.  As our models are
+deterministic, we have the general rule that $ \MAY{a} \MAY{b} \land
+\MAY{a} \MAY{c} \models \MAY{a} (\MAY{b} \land \MAY{c})$ from which
+it follows that
+\begin{eqnarray*}
+   \MAY{jack} \MAY{loves} \MAY{jill}
+      \qquad\text{and}\qquad
+   \MAY{jack} \MAY{loves} \MAY{joan}
+\end{eqnarray*}
+together imply
+\begin{eqnarray*}
+\MAY{jack} \MAY{loves} (\MAY{jill} \land \MAY{joan}).
+\end{eqnarray*}
+
+\NI Using the same rule, we can infer that
+\begin{eqnarray*}
+   \MAY{jack} \MAY{bruised} \land \MAY{jack} \MAY{humiliated}
+\end{eqnarray*}
+
+\NI together imply
+\begin{eqnarray*}
+\MAY{jack} (\MAY{bruised} \land \MAY{humiliated}).
+\end{eqnarray*}
+ 
+\subsection{Intra-atomic inferences in \fol{}}
+Next, we look at how these inferences are handled in \fol{}.
+
+\subsubsection{Incompatible predicates in \fol{}}\label{incompatiblepredicatesinfol}
+
+\NI How are incompatible predicates represented in \fol{}?  Brachman
+and Levesque \cite{brachman} introduce the topic by remarking:
+\begin{quote}
+   We would consider it quite ``obvious'' in this domain that if it
+   were asserted that $John$ were a $Man$, then we should answer
+   ``no'' to the query $Woman(John)$.
+\end{quote}
+
+\NI They propose adding an extra axiom to express the incompatibility:
+\[
+   \forall x. ( Man(x) \IMPLIES \neg Woman(x) )
+\]  
+ 
+\NI This proposal imposes a burden on the knowledge-representer: an
+extra axiom must be added for every pair of incompatible predicates.
+This is burdensome for large sets of incompatible predicates.  For
+example, suppose there are 50 football teams, and a person can only
+support one team at a time.  We would need to add ${50 \choose
+  2}$ axioms, which is unwieldy.
+\[
+\begin{array}{l}
+  \forall x.  \neg (SupportsArsenal(x) \land SupportsLiverpool(x))  \\
+  \forall x.  \neg (SupportsArsenal(x) \land SupportsManUtd(x))  \\
+  \forall x.  \neg (SupportsLiverpool(x) \land SupportsManUtd(x))  \\
+  \qquad \qquad \qquad \vdots
+\end{array}
+\]
+
+\NI Or, if we treat the football-teams as objects, and have a
+two-place $Supports$ relation between people and teams, we could have:
+\[
+   \forall x y z . (Supports(x,y) \land y \neq z \IMPLIES \neg Supports(x,z)).
+\]   
+
+\NI If we also assume that each football team is distinct from all 
+others, this certainly captures the desired uniqueness condition.  But
+it does so by using relatively complex logical machinery.
+
+
+
+\subsubsection{Inferences from dyadic to monadic predicates in \fol{}}
+If we want to capture the inference from ``Jack loves Jill`` to ``Jack
+loves'' in \fol{}, we can use a non-logical axiom:
+\[
+   \forall x. y .( Loves_2(x,y) \IMPLIES Loves_1(x))
+\]
+
+\NI We would have to add an extra  axiom like this for every
+$n$-place predicate.  This is cumbersome at best.  In \cathoristic{}, by
+contrast, we do not need to introduce any non-logical machinery 
+to capture these inferences because they all follow from the general
+rule that $\MAY{a} \MAY{b} \models \MAY{a}$.
+
+\subsubsection{Adverbial inferences in \fol{}}
+
+\NI How can we represent verbs in traditional \fol{} so as to
+support adverbial inference?  Davidson \cite{davidson2} proposes that
+every $n$-place action verb be analysed as an $n$+1-place predicate,
+with an additional slot representing an event.  For example, he
+analyses ``I flew my spaceship to the Morning Star'' as
+\[
+\exists x. ( Flew(I, MySpaceship, x) \land To(x, TheMorningStar))
+\]
+This implies 
+\[
+\exists x.  Flew(I, MySpaceship, x)
+\]
+This captures the inference from ``I flew my spaceship to the Morning
+Star'' to ``I flew my spaceship''.
+
+First-order logic cannot support logical inferences between atomic
+sentences.  If it is going to support inferences from adverbial
+sentences, it \emph{cannot} treat them as atomic and must instead
+\emph{reinterpret} them as logically complex propositions.  The cost
+of Davidson's proposal is that a seemingly simple sentence - such as
+``Jones walks'' - turns out, on closer inspection, not to be atomic at
+all - but to involve existential quantification:
+\[
+\exists x.  Walks(Jones, x)
+\]
+
+\NI First-order logic \emph{can} handle such inferences - but only by
+reinterpreting the sentences as logically-complex compound
+propositions.

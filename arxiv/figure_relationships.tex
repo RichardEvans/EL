@@ -1,0 +1,32 @@
+\begin{FIGURE}
+\begin{tikzpicture}[node distance=3.3cm,>=stealth',bend angle=45,auto]
+  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
+  \tikzstyle{red place}=[place,draw=red!75,fill=red!20]
+  \tikzstyle{transition}=[rectangle,thick,draw=black!75,
+  			  fill=black!20,minimum size=4mm]
+  \tikzstyle{every label}=[red]
+  \begin{scope}  
+    \node [place] (w1) {PL[$\land$]};
+    \node [place] (e1) [below of=w1] {PL [$\land, \neg$] };
+  \end{scope}
+  \begin{scope}[xshift=4cm]
+    \node [place] (w1) {HML[$\land$]};
+    \node [place] (e1) [below of=w1] {HML [$\land, \neg$] };
+  \end{scope} 
+  \begin{scope}[xshift=8cm]
+    \node [place] (w1) {CL[$\land, !$]};
+    \node [place] (e1) [below of=w1] {CL [$\land, !, \neg$] };
+  \end{scope}
+  \draw (2,0) node {$\subseteq $};
+  \draw (6,0) node {$\subseteq$};
+  \draw (2,-3) node {$\subseteq $};
+  \draw (6,-3) node {$\subseteq$};
+  \draw (0,-1.5) node {$\subseteq $};
+  \draw (4,-1.5) node {$\subseteq $};
+  \draw (8,-1.5) node {$\subseteq $};
+\end{tikzpicture}
+\caption{Conjectured relationships of expressivity between
+  logics. Here $L_1 \subseteq L_2$ means that the logic $L_2$ is more
+  expressive than $L_1$. We leave the precise meaning of logical
+  expressivity open.}\label{figure:relationships}
+\end{FIGURE}

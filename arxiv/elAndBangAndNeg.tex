@@ -1,0 +1,164 @@
+\section{\Cathoristic{} and negation}\label{ELAndNegation}
+
+\NI We have presented \cathoristic{} as a language that can express
+incompatible claims without negation.  In this section, we briefly
+consider \cathoristic{} enriched with negation.
+
+\subsection{Syntax and semantics}
+
+\begin{definition}
+Given a set $\Sigma$ of actions, the \emph{formulae of \cathoristic{}
+  with negation} are given by the following grammar.
+\begin{GRAMMAR}
+  \phi 
+     &\quad ::= \quad & 
+   ... \fOr \neg \phi
+\end{GRAMMAR}
+
+\NI We can now define disjunction $\phi \lor \psi$ and implication
+$\phi \IMPLIES \psi$ by de Morgan duality: $\phi \OR \psi$ is short
+for $\neg (\neg \phi \land \neg \psi )$, and $\phi \IMPLIES \psi$  abbreviates
+$\neg\phi \OR \psi$.
+\end{definition}
+
+The semantics of \cathoristic\ with negation is just that of plain
+\cathoristic\, except for the obvious clause for negation.
+\begin{eqnarray*}
+\MMM \models \neg \phi &\quad\mbox{ iff }\quad& \MMM \nvDash \phi  
+%\MMM \models \phi \lor \psi &\mbox{ iff }& \MMM \models \phi \text{ or }   \MMM \models \psi
+\end{eqnarray*}
+
+\NI Negation is a core operation of classical logic, and its absence makes
+\cathoristic{} unusual. In order to understand \cathoristic{} better, we
+now investigate how negation can be seen as a definable abbreviation
+in \cathoristic{} with disjunction. The key idea is to use the fact that
+\[
+   \neg \MAY{a}{\phi}
+\]
+can be false in two ways: either there is no $a$-labelled action at
+the current state - or there is, but $\phi$ is false. Both arms of
+this disjunction can be expressed in \cathoristic{}, the former as
+$!\Sigma \setminus \{a\}$, the latter as $\MAY{a}{\neg \phi}$.
+ Hence, we can see $\neg \MAY{a}{\phi}$ as a shorthand for 
+\[
+   !(\Sigma \setminus \{a\}) \OR \MAY{a}{\neg \phi}
+\]
+
+\NI Negation still occurs in this term, but prefixing a formula of
+lower complexity.
+
+This leaves the question of negating the tantum. That's easy: when
+$\neg !A$, then clearly the current state can do an action $a \notin
+A$. In other words
+\[
+   \BIGOR_{a \in \Sigma}\MAY{a}{\TRUE}
+\]
+
+\NI When $\Sigma$ is infinite, then so is the disjunction.
+
+Note that both the negation of the modality and the negation of
+the tantum involve the set $\Sigma$ of actions. 
+So far, we have defined negation with respect to
+the whole (possibly infinite) set $\Sigma$. For technical reasons, we
+generalise negation and define it with respect to a \emph{finite}
+subset $S \subseteq \Sigma$. We use this finitely-restricted version of
+negation in the decision procedure below.
+
+\begin{definition}
+The function $\neg_{S}(\phi)$ removes negation from $\phi$
+relative to a finite subset $S \subseteq \Sigma$:
+
+\begin{align*}
+  \neg_{S}(\top) &\ =\  \bot  &
+  \neg_S(\bot) &\ =\  \top  \\
+  \neg_S(\phi \land \psi) &\ =\  \neg_S(\phi) \lor \neg_S(\psi)  &
+  \neg_S(\phi \lor \psi) &\ =\  \neg_S(\phi) \land \neg_S(\psi)  \\
+  \neg_S(\langle a \rangle \phi) &\ =\  \fBang(S-\{a\}) \lor \langle a \rangle \neg_S(\phi)  &
+  \neg_S(\fBang A) &\ =\  \bigvee_{a \in S - A} \langle a \rangle \top
+\end{align*}
+
+
+\end{definition}
+
+\subsection{Decision procedure}
+
+\NI We can use the fact that \cathoristic\ has a quadratic-time
+decision procedure to build a super-polynomial time decision procedure for
+\cathoristic\ with negation.  Given $\phi \models \psi$, let $S =
+\ACTIONS{\phi} \cup \ACTIONS{\psi} \cup \{a\}$,   where $a$ is a
+fresh action.  The function $\ACTIONS{\cdot}$ returns all actions
+occurring in a formula, e.g. $\ACTIONS{\MAY{a}{\phi}} = \{a\} \cup
+\ACTIONS{\phi}$ and $\ACTIONS{!A} = A$. The decision procedure executes the following steps.
+
+\begin{enumerate}
+
+\item Inductively translate away all negations in $\phi$ using
+  $\neg_S(\phi)$ as defined above.  Let the result be $\phi'$.
+
+\item Reduce $\phi'$ to disjunctive normal form by repeated
+  application of the rewrite rules:
+  \[
+    \phi \land (\psi \lor \xi)  \ \leadsto \ (\phi \land \psi) \lor (\phi \land \xi)  
+       \qquad
+    (\phi \lor \psi) \land \xi  \ \leadsto \ (\phi \land \xi) \lor (\psi \land \xi). 
+  \]
+
+\item Let the resulting disjuncts be $\phi_1, ..., \phi_n$. 
+Note that
+\[
+\phi \models \psi \quad\text{ iff }\quad \phi_i \models \psi \text{ for all } i = 1, ..., n.
+\]
+For each disjunct $\phi_i$ do the following.
+\begin{itemize}
+
+\item Notice that $\phi_i \models \psi$ if and only if all
+  $S$-extensions (defined below) of $\SIMPL{\phi_i}$ satisfy $\psi$.
+  So, to check whether $\phi_i \models \psi$, we enumerate the
+  $S$-extensions of $\SIMPL{\phi_i}$ (there are a finite number of
+  such extensions - the exact number is exponential in the size of
+  $\SIMPL{\phi_i}$) and check for each such $S$-extension $\MMM$
+  whether $\MMM\models \psi$, using the algorithm of Section
+  \ref{decisionprocedure}.
+
+\end{itemize}
+\end{enumerate}
+
+\NI  Here is the definition of $S$-extension.
+
+\begin{definition}
+Given an cathoristic transition system $\LLL =
+(\mathcal{W},\rightarrow,\lambda)$, and a set $S$ of actions, then
+$(\mathcal{W'},\rightarrow',\lambda')$ is a \emph{$S$-extension} of
+$\LLL$ if it is a valid cathoristic transition system (recall
+Definition \ref{cathoristicTS}) and for all $(x,a,y) \in
+\rightarrow'$, either:
+\begin{itemize} 
+
+\item $(x, a, y) \in\ \rightarrow$,  or;
+
+\item $x \in \mathcal{W}$, $a \in S$, $a \in \lambda(x)$, and $y$ is a new state not
+  appearing elsewhere in $\mathcal{W}$ or $\mathcal{W'}$.
+
+\end{itemize}
+\end{definition}
+The state-labelling $\lambda'$ is:
+\begin{eqnarray*}
+\lambda'(x) & = & \lambda(x) \text{ if } x \in \mathcal{W} \\
+\lambda'(x) & = & \Sigma \text{ if } x \notin \mathcal{W} \\
+\end{eqnarray*}
+
+\NI In other words, $\MMM'$ is an extension of an annotated model
+$\MMM$, if all its transitions are either from $\MMM$ or involve
+states of $\MMM$ transitioning via elements of $S$ to new states not
+appearing in $\MMM$ or $\MMM'$.  The number of extensions grows
+quickly.  If the model $\MMM$ has $n$ states, then the number of
+possible extensions is:
+\[
+   ({2^{|S|}})^n
+\] 
+
+\NI But recall that we are computing these extensions in order to
+verify $\psi$. So we can make a significant optimisation by
+restricting the height of each tree to $|\psi|$. We state, without proof, that this optimisation preserves correctness.
+A Haskell implementation of the decision procedure is available
+\cite{HaskellImplementation}.

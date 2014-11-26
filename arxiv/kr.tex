@@ -1,0 +1,178 @@
+\section{\Cathoristic{} as a language for knowledge representation}\label{kr}
+
+
+\Cathoristic{} has been used as the representation language for a
+large, complex, dynamic multi-agent simulation \cite{evans-and-short}.
+This is an industrial-sized application, involving tens of thousands
+of rules and facts\footnote{The application has thousands of paying
+  users, and available for download on the App Store for the iPad
+  \cite{Versu}.}.  In this simulation, the entire world state is stored
+as a cathoristic model.
+	
+We found that \cathoristic\ has two distinct advantages as a language for knowledge representation. First, it is ergonomic: ubiquitous concepts (such as uniqueness) can be expressed directly.
+Second, it is efficient: the tantum operator allows certain sorts of optimisation that would not otherwise be available.
+We shall consider these in turn.
+
+\subsection{Representing facts  in \cathoristic{}}
+
+A sentence involving a one-place predicate of the form $p(a)$ is
+expressed in \cathoristic{} as
+\begin{eqnarray*}
+   \MAY{a} \MAY{p}
+\end{eqnarray*}
+
+\NI A sentence involving a many-to-many two-place relation of the form
+$r(a,b)$ is expressed in \cathoristic{} as
+\begin{eqnarray*}
+  \MAY{a} \MAY{r} \MAY{b}
+\end{eqnarray*}
+
+\NI But a sentence involving a many-to-one two-place relation of the
+form $r(a,b)$ is expressed as:
+\begin{eqnarray*}
+  \MAY{a} \MAY{r} (\MAY{b} \land \fBang \{b\})
+\end{eqnarray*}
+
+% \NI The translation is detailed in Section \ref{translationFOLtoFOEL}.
+
+\NI So, for example, to say that ``Jack likes Jill'' (where ``likes'' is,
+of course, a many-many relation), we would write:
+\begin{eqnarray*}
+  \MAY{jack} \MAY{likes} \MAY{jill}
+\end{eqnarray*}
+
+\NI But to say that ``Jack is married to Joan''
+(where``is-married-to'' is a many-one relation), we would write:
+\begin{eqnarray*}
+  \MAY{jack} \MAY{married} (\MAY{joan} \land \fBang \{joan\})
+\end{eqnarray*}
+
+\NI Colloquially, we might say that ``Jack is married to Joan - and
+only Joan''.  Note that the relations are placed in infix position, so
+that the facts about an object are ``contained'' within the object.
+One reason for this particular way of structuring the data will be
+explained below.
+ 
+Consider the following facts about a gentleman named Brown:
+
+\[
+   \MAY{brown} 
+   \left(
+   \begin{array}{l}
+     \MAY{sex} (\MAY{male} \land \fBang \{male\}) \\
+        \qquad \AND \\
+     \MAY{friends} (\MAY{lucy} \land \MAY{elizabeth}) 
+   \end{array}
+   \right)
+\]
+
+\NI All facts  starting with the prefix $\MAY{brown}$ form a
+sub-tree of the entire database.  And all  facts which start with
+the prefix $\MAY{brown} \MAY{friends}$ form a sub-tree of that tree.
+A sub-tree can be treated as an individual via its prefix.  
+A sub-tree of formulae is the \cathoristic{} equivalent of an
+\emph{object} in an object-oriented programming language.
+
+To model change over time, we assert and retract statements from the
+database, using a non-monotonic update mechanism.  If a fact is
+inserted into the database that involves a state-labelling restricting
+the permissible  transitions emanating from that state, then all
+transitions out of that state that are incompatible with the
+restriction are removed.  So, for example, if the database currently
+contains the fact that the traffic light is amber, and then we update
+the database to assert the traffic light is red:
+\[
+\MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\})
+\]
+Now the restriction on the state (that red is the only transition)
+means that the previous transition from that state (the transition
+labelled with amber) is automatically removed.
+
+The tree-structure of formulae allows us to express the \emph{life-time of data} in a natural way. 
+If we wish a piece of data $d$ to exist for just the duration of a proposition $t$, then we make $t$ be a sub-expression of $d$. 
+For example, if we want the friendships of an agent to exist just as long as the agent, then we place the relationships inside the agent: 
+\[
+\MAY{brown} \MAY{friends}
+\]
+Now, when we remove $\MAY{brown}$ all the sub-trees, including the data about who he is friends with, will be automatically deleted as well.
+
+Another advantage of our representation is that we get a form of \emph{automatic currying} which simplifies queries.
+So if, for example, Brown is married to Elizabeth, then the database would contain 
+\begin{eqnarray*}
+\MAY{brown} \MAY{married} (\MAY{elizabeth} \land \fBang \{elizabeth\})
+\end{eqnarray*}
+In \cathoristic{}, if we want to find out whether Brown is married, we can query the sub-formula directly -  we just ask if 
+\begin{eqnarray*}
+\MAY{brown} \MAY{married}
+\end{eqnarray*}
+In \fol, if $married$ is a two-place predicate, then we need to fill in the extra argument place with a free variable - we would need to find out if there exists an $x$ such that $married(brown, x)$ - this is more cumbersome to type and slower to compute. 
+
+\subsection{Simpler postconditions}
+
+In this section, we contrast the representation in action languages based on \fol{}\footnote{E.g. STRIPS \cite{strips}}, with our \cathoristic{}-based representation.
+Action definitions are rendered in typewriter font.
+
+When expressing the pre- and postconditions of an action, planners
+based on \fol{} have to explicitly describe the propositions that
+are removed when an action is performed:
+\begin{verbatim}
+   action move(A, X, Y)
+       preconditions
+           at(A, X)
+       postconditions
+           add: at(A, Y) 
+           remove: at(A, X)
+\end{verbatim}
+Here, we need to explicitly state that when $A$ moves from $X$ to $Y$, $A$ is no longer at $X$. It might seem obvious to us that if $A$ is now at $Y$, he is no longer at $X$ - but we need to explicitly tell the system this. This is unnecessary, cumbersome and error-prone. In \cathoristic{}, by contrast, the exclusion operator means we do not need to specify the facts that are no longer true:
+\begin{verbatim}
+   action move (A, X, Y)
+       preconditions
+           <A><at>(<X> /\ !{X})
+       postconditions
+           add: <A><at>(<Y> /\ !{Y})
+\end{verbatim}
+The tantum operator $!$ makes it clear that something can only be at one
+place at a time, and the non-monotonic update rule described above
+\emph{automatically} removes the old invalid location data.
+
+\subsection{Using tantum $!$  to optimise preconditions}
+\label{optimizingpreconditions}
+Suppose, for example, we want to find all married couples who are both Welsh.
+In Prolog, we might write something like:
+\begin{verbatim}
+   welsh_married_couple(X, Y) :-
+       welsh(X),
+       welsh(Y),
+       spouse(X,Y).
+\end{verbatim}	
+Rules like this create a large search-space because we need to find all instances of $welsh(X)$ and all instances of  $welsh(Y)$ and take the cross-product \cite{smith-and-genesereth}. If there are $n$ Welsh people, then we will be searching $n^2$ instances of $(X,Y)$ substitutions.
+
+If we express the rule in \cathoristic{}, the compiler is able to use the extra information expressed in the $!$ operator to reorder the literals to find the result significantly faster.
+Assuming someone can only have a single spouse at any moment, the rule is expressed in \cathoristic{} as:
+\begin{verbatim}
+   welsh_married_couple(X, Y) :-
+       <welsh> <X>,
+       <welsh> <Y>,
+       <spouse> <X> (<Y> /\ !{Y}).
+\end{verbatim}	
+Now the compiler is able to reorder these literals to minimise the search-space. 
+It can see that, once $X$ is instantiated, the following literal can be instantiated without increasing the search-space:
+\begin{verbatim}
+   <spouse> <X> (<Y> /\ !{Y})
+\end{verbatim}
+The \emph{tantum} operator can be used by the compiler to see that there is at most one $Y$ who is the spouse of $X$.
+So the compiler reorders the clauses to produce:
+\begin{verbatim}
+   welsh_married_couple (X, Y) :-
+       <welsh> <X>,
+       <spouse> <X> (<Y> /\ !{Y}),
+       <welsh> <Y>.
+\end{verbatim}	
+Now it is able to find all results by just searching $n$ instances - a significant optimisation.
+In our application, this optimisation has made a significant difference to the run-time cost of query evaluation.
+
+
+
+
+
+

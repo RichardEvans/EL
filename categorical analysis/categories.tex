@@ -1,0 +1,39 @@
+\section{Categories}
+
+\PARAGRAPH{The category $\LTS{\Sigma}$ of transition systems}
+
+Let $\Sigma$ be a set of \emph{actions}.  A \emph{labelled transition
+  system over $\Sigma$} is a pair $(\mathcal{S}, \rightarrow)$ where
+$\mathcal{S}$ is a set of \emph{states} and $\rightarrow \subseteq
+\mathcal{S} \times \Sigma \times \mathcal{S}$ is the \emph{transition
+  relation}.  We write $x \xrightarrow{a} y$ to abbreviate $(x,a,y)
+\in \rightarrow$. We let $s, t, w, w', x, y, z, ...$ range over
+states, $a, a', b, ...$ range over actions and $\LLL, \LLL', ...$
+range over labelled transition systems. We usually speak of labelled
+transition systems  when the set of actions is clear from the
+context.  We say $\LLL$ is \emph{deterministic} if $x \TRANS{a} y$ and
+$x \TRANS{a} z$ imply that $y = z$. Otherwise $\LLL$ is
+\emph{non-deterministic}.  A labelled transition system is
+\emph{finitely branching} if for each state $s$, the set $\{t\ |\ s
+\TRANS{a} t\}$ is finite.
+
+\begin{definition}
+The category $\LTS{\Sigma}$ of transition systems over $\Sigma$
+is given as follows.
+
+\begin{itemize}
+
+\item Objects are LTSs $(\mathcal{S}, \rightarrow)$ over $\Sigma$.
+
+\item Morphisms from $(\mathcal{S}, \rightarrow)$ to $(\mathcal{S}',
+  \rightarrow')$ are functions $m : S \rightarrow S'$ such that:
+     $s \TRANS{a} t$ implies $f\; s \TRANS{a}' f\; t$.
+
+\end{itemize}
+
+\NI The category $\DLTS{\Sigma}$ is the full subcategory obtained from
+$\LTS{\Sigma}$ by restriction to deterministic LTSs.
+\end{definition}
+
+
+

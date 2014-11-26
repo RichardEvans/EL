@@ -1,0 +1,394 @@
+\section{Introduction}\label{introduction}
+
+Natural language is full of incompatible alternatives.
+If Pierre is the current king of France, then nobody else can simultaneously fill that role.
+A traffic light can be green, amber or red - but it cannot be more than one colour at a time.
+Mutual exclusion is a natural and ubiquitous concept.
+
+\FOL{} can represent mutually exclusive alternatives, of course.
+To say that Pierre is the only king of France, we can write, following Russell:
+\[
+king(france, pierre) \land \forall x . (king(france, x) \rightarrow x = pierre).
+\]
+To say that a particular traffic light, $tl$, is red - and red is its only colour - we could write:
+\[
+colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red.
+\]
+In this approach, incompatibility is a \emph{derived} concept, reduced to 
+a combination of universal quantification and identity.  
+\FOL{}, in other words, uses relatively complex machinery to express a
+simple concept:
+\begin{itemize}
+
+\item Quantification's complexity comes from the
+  rules governing the distinction between free
+  and bound variables\footnote{Efficient handling of free/bound variables
+    is an active field of research, e.g.~nominal approaches to logic
+    \cite{PittsAM:nomsetnasics}.
+    The problem was put in focus in recent years with the rising
+     interest in the computational cost of syntax manipulation in
+     languages with binders.}.
+
+\item Identity's complexity comes from the infinite collection of axioms required to formalise the
+  indiscernibility of identicals.
+
+\end{itemize}
+
+\NI The costs of quantification and identity, such as a larger proof
+search space, have to be borne every time one expresses a sentence that excludes others - even
+though incompatibility does not, prima facie, appear to have anything to do
+with the free/bound variable distinction, or require the full power of 
+the identity relation.
+
+This paper introduces an alternative approach, where
+exclusion is expressed directly, as a first-class concept.
+ \Cathoristic{}\footnote{``Cathoristic'' comes from the Greek
+  $\kappa \alpha \theta o \rho \acute{\i} \zeta \epsilon i \nu$: to impose narrow
+  boundaries. We are grateful to Tim Whitmarsh for suggesting this
+  word.} is the simplest logic we could find in which incompatible
+statements can be expressed.  
+It is a multi-modal logic, a variant of Hennessy-Milner logic,
+that replaces negation with a new logical primitive
+\[
+   !A
+\]
+pronounced \emph{tantum}\footnote{``Tantum'' is Latin for ``only''.}
+$A$. Here $A$ is a finite set of alternatives, and $!A$ says that the
+alternatives in $A$ exhaust all possibilities.  For example:
+\begin{eqnarray*}
+\fBang \{green, amber, red\}
+\end{eqnarray*}
+states that nothing but $green$, $amber$ or $red$ is possible.  Our
+logic uses modalities to state facts, for example $\MAY{amber}{}$
+expresses that $amber$ is currently the case.  The power of the logic
+comes from the conjunction of modalities and tantum. For example
+\[
+   \MAY{amber}{}\ \AND\ !\{green, amber, red\} 
+\]
+expresses that $amber$ is currently the case and $red$ as well as
+$green$ are the only two possible alternatives to $amber$.  Any
+statement that exceeds what tantum $A$ allows, like
+\[
+   \MAY{blue} \ \AND\ !\{green, amber, red\},
+\]
+is necessarily false.  When the only options are green, amber, or red,
+then blue is not permissible.  Now to say that Pierre is the only king
+of France, we write:
+\[
+\MAY{king}\MAY{france}(\MAY{pierre} \land \fBang \{pierre\}).
+\]
+Crucially, \cathoristic{}'s representation involves no
+universal quantifier and no identity relation.  It is a purely
+propositional formulation.  To say that the traffic
+light is currently red, and red is its only colour, we write:
+\[
+\MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\}).
+\]
+This is simpler, both in terms of representation length and
+computational complexity, than the formulation in \fol{} given on the
+previous page.
+%% \[
+%% colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red
+%% \]
+Properties changing over time can be expressed by adding extra
+modalities that can be understood as time-stamps.  To say that that
+the traffic light was red at time $t_1$ and amber at time $t_2$, we
+can write:
+\[
+   \MAY{tl} \MAY{colour} (\MAY{t_1} (\MAY{red} \land !\{red\}) \land \MAY{t_2} (\MAY{amber} \land !\{amber\}))
+\]
+Change over time can be expressed in first-order logic with bounded
+quantification - but modalities are succinct and avoid introducing
+bound variables.
+
+Having claimed that incompatibility is a natural logical concept, not
+easily expressed in first-order logic\footnote{We will precisify this
+  claim in later sections; (1) first-order logic's representation of
+  incompatibility is longer in terms of formula length than
+  \cathoristic{}'s (see Section \ref{incompatiblepredicatesinfol});
+  and (2) logic programs in \cathoristic{} can be optimised to run
+  significantly faster than their equivalent in \fol{} (see Section
+  \ref{optimizingpreconditions}).}, we will now argue the following:
+
+\begin{itemize}
+
+\item Incompatibility is conceptually prior to negation.
+
+\item Negation arises as the weakest form of incompatibility.
+
+\end{itemize}
+
+\subsection{Material incompatibility and negation}
+
+\NI Every English speaker knows that
+\begin{quote}
+``Jack is male'' is incompatible with ``Jack is female''
+\end{quote}
+
+\NI But \emph{why} are these sentences incompatible? The orthodox
+position is that these sentences are incompatible because of the
+following general law:
+\begin{quote}
+If someone is male, then it is not the case that they are female
+\end{quote}
+Recast in first-order logic:
+\[
+\forall x. ( male(x) \IMPLIES \neg female(x) ).
+\]
+
+\NI In other words, according to the orthodox position, the
+incompatibility between the two particular sentences depends on a
+general law involving universal quantification, implication and
+negation.
+
+Brandom \cite{brandom2} follows Sellars in proposing an alternative explanation: ``Jack
+is male'' is incompatible with ``Jack is female'' because ``is male''
+and ``is female'' are \emph{materially incompatible} predicates.  They
+claim we can understand incompatible predicates even if we do
+not understand universal quantification or negation.  
+Material incompatibility is conceptually prior to logical negation.
+
+Imagine, to make this vivid, a primitive people speaking a primordial
+language of atomic sentences\footnote{In this paper, we define a sentence as \emph{atomic} if it does
+  not contain another sentence as a syntactic constituent.}. These people can express sentences
+that \emph{are} incompatible.  But they cannot express \emph{that}
+they are incompatible.  They recognise when atomic sentences are
+incompatible, and see that one sentence entails another - but their
+behaviour outreaches their ability to articulate it.
+
+Over time, these people \emph{may} advance to a more sophisticated
+language where incompatibilities are made explicit, using a negation
+operator - but this is a later (and optional) development:
+\begin{quote}
+[If negation is added to the language], it lets one say that two
+claims are materially incompatible:``If a monochromatic patch is red,
+then it is not blue.'' That is, negation lets one make explicit in the
+form of claims - something that can be said and (so) thought - a
+relation that otherwise remained implicit in what one practically did,
+namely treat two claims as materially
+incompatible\footnote{\cite{brandom} pp.47-48}.
+\end{quote}
+
+\NI But before making this optional
+explicating step, our primitive people understand incompatibility
+without understanding negation.  If this picture of our primordial
+language is coherent, then material incompatibility is conceptually
+independent of logical negation.
+
+Now imagine a modification of our primitive linguistic practice in
+which no sentences are ever treated as incompatible.  If one person
+says ``Jack is male'' and another says ``Jack is female'', nobody
+counts these claims as \emph{conflicting}.  The native speakers never
+disagree, back down, retract their claims, or justify them. They just
+say things.  Without an understanding of incompatibility, and the
+variety of behaviour that it engenders, we submit (following Brandom)
+that there is insufficient richness in the linguistic practice for
+their sounds to count as assertions.  Without material
+incompatibility, their sounds are just \emph{barks}.
+\begin{quote}
+
+  Suppose the reporter's differential responsive dispositions to call
+  things red are matched by those of a parrot trained to utter the
+  same noises under the same stimulation. What practical capacities of
+  the human distinguish the reporter from the parrot? What, besides
+  the exercise of regular differential responsive dispositions, must
+  one be able to \emph{do}, in order to count as having or grasping
+  \emph{concepts}? ... To grasp or understand a concept is, according
+  to Sellars, to have practical mastery over the inferences it is
+  involved in... The parrot does not treat ``That's red'' as
+  incompatible with ``That's green''\footnote{\cite{brandom2}
+    pp.88-89, our emphasis.}.
+\end{quote}
+
+\NI If this claim is also accepted, then material incompatibility is
+not just conceptually \emph{independent} of logical negation, but
+conceptually \emph{prior}.  
+
+\subsection{Negation as the minimal incompatible}
+
+In \cite{brandom2} and \cite{brandom}, Brandom describes 
+logical negation as a limiting form of material incompatibility:
+\begin{quote}
+Incompatible sentences are Aristotelian \emph{contraries}. A sentence
+and its negation are \emph{contradictories}. What is the relation
+between these? Well, the contradictory is a contrary: any sentence is
+incompatible with its negation. What distinguishes the contradictory
+of a sentence from all the rest of its contraries? The contradictory
+is the \emph{minimal} contrary: the one that is entailed by all the
+rest. Thus every contrary of ``Plane figure $f$ is a circle'' - for
+instance ``$f$ is a triangle'', ``$f$ is an octagon'', and so on -
+entails ``$f$ is \emph{not} a circle''.
+\end{quote}
+
+\NI If someone asserts that it is not the case that Pierre is the (only) King of France,
+we have said very little.  There are so many different ways in which
+it could be true:
+\begin{itemize}
+\item
+The King of France might be Jacques
+\item
+The King of France might be Louis
+\item
+...
+\item
+There may be no King of France at all
+\item
+There may be no country denoted by the word ``France''
+\end{itemize}
+Each of these concrete propositions is incompatible with Pierre being the King of France.
+To say ``It is not the case that the King of France is Pierre'' is just to claim that one of these indefinitely many concrete possibilities is true.
+Negation is just the logically weakest form of incompatibility.
+
+In the rest of this paper, we assume - without further argument - that material incompatibility is conceptually prior to logical negation.
+We develop a simple
+ modal logic to articulate Brandom's intuition: a language, without negation, in which we can nevertheless make incompatible claims.
+
+\subsection{Inferences between atomic sentences}
+\label{intrasentential}
+So far, we have justified the claim that incompatibility is a
+fundamental logical concept by arguing that incompatibility is
+conceptually prior to negation.  Now incompatibility is an inferential
+relation between \emph{atomic sentences}.  In this subsection, we
+shall describe \emph{other} inferential relations between atomic
+sentences - inferential relations that \fol{} cannot articulate (or
+can only do so awkwardly), but that \cathoristic{} handles naturally.
+
+The \emph{atomic sentences} of a natural language can be
+characterised as the sentences which do not contain any other
+sentences as constituent parts\footnote{Compare Russell \cite{russell}
+  p.117: ``A sentence is of atomic form when it contains no logical
+  words and no subordinate sentence''. We use a broader notion of
+  atomicity by focusing solely on whether or not it contains a
+  subordinate sentence, allowing logical words such as ``and'' \emph{as long
+  as they are conjoining noun-phrases} and not sentences.}.  According
+to this criterion, the following are atomic:
+
+\begin{itemize}
+
+\item Jack is male
+\item Jack loves Jill
+\end{itemize}
+
+\NI The following is not atomic:
+
+\begin{quote}
+  Jack is male and Jill is female
+\end{quote}
+
+\NI because it contains the complete sentence ``Jack is male'' as a
+syntactic constituent.  Note that, according to this criterion, the
+following \emph{is} atomic, despite using ``and'':
+
+\begin{quote}
+  Jack loves Jill and Joan
+\end{quote}
+
+\NI Here, ``Jack loves Jill'' is not a syntactic constituent\footnote{To see that ``Jack loves Jill'' is not a constituent of ``Jack loves Jill and Joan'', observe that ``and'' conjoins constituents of the \emph{same syntactic type}. But ``Jack loves Jill'' is a sentence, while ``Joan'' is a noun. Hence the correct parsing is ``Jack (loves (Jill and Joan))'', rather than ``(Jack loves Jill) and Joan''.}.
+
+There are many types of inferential relations between atomic
+sentences of a natural language.  For example:
+
+\begin{itemize}
+
+\item ``Jack is male'' is incompatible with ``Jack is female''
+\item ``Jack loves Jill'' implies ``Jack loves''
+\item ``Jack walks slowly'' implies ``Jack walks''
+\item ``Jack loves Jill and Joan'' implies ``Jack loves Jill''
+\item ``Jack is wet and cold'' implies ``Jack is cold''
+
+\end{itemize}
+
+\NI The first of these examples involves an incompatibility relation,
+while the others involve entailment relations.  A key question this
+paper seeks to answer is: what is the simplest logic that can capture
+these inferential relations between atomic sentences?
+
+\subsection{Wittgenstein's vision of a logic of elementary propositions}
+
+\NI In the \emph{Tractatus} \cite{wittgenstein-tractatus}, Wittgenstein
+claims that the world is a set of atomic sentences in an idealised
+logical language.  Each atomic sentence was supposed to be
+\emph{logically independent} of every other, so that they could be
+combined together in every possible permutation, without worrying
+about their mutual compatibility.
+But already there were doubts and problem cases.  He was aware that
+certain  statements seemed atomic, but did not seem logically
+independent:
+
+\begin{quote}
+  For two colours, e.g., to be at one place in the visual field is
+  impossible, and indeed logically impossible, for it is excluded by
+  the logical structure of colour. (6.3751)
+\end{quote}
+
+\NI At the time of writing the \emph{Tractatus}, he hoped that further
+analysis would reveal that these statements were not really atomic.
+
+Later, in the \emph{Philosophical Remarks} \cite{wittgenstein-remarks}, he
+renounced the thesis of the logical independence of atomic
+propositions.  In \S 76, talking about incompatible colour predicates,
+he writes:
+
+\begin{quote}
+  That makes it look as if \emph{a construction might be possible
+    within the elementary proposition}. That is to say, as if there
+  were a construction in logic which didn't work by means of truth
+  functions.  What's more, it also seems that these constructions have
+  an effect on one proposition's following logically from another.
+  For, if different degrees exclude one another it follows from the
+  presence of one that the other is not present.  In that case,
+  \emph{two elementary propositions can contradict one another}.
+\end{quote}
+
+\NI Here, he is clearly imagining a logical language in which there
+are incompatibilities between atomic propositions. In \S 82:
+
+\begin{quote}
+  This is how it is, what I said in the Tractatus doesn't exhaust the
+  grammatical rules for 'and', 'not', 'or', etc; \emph{there are rules
+    for the truth functions which also deal with the elementary part
+    of the proposition}.  The fact that one measurement is right
+  \emph{automatically} excludes all others.
+\end{quote}
+
+\NI Wittgenstein does not, unfortunately, show us what this
+language would look like.  
+In this paper, we present \cathoristic{} as one way of formalising inferences
+between atomic sentences.
+
+\subsection{Outline}
+
+\NI The rest of this paper is organised as follows: The next section
+briefly recapitulates the mathematical background of our work.
+Section \ref{coreEL} introduces the syntax and semantics of
+\cathoristic{} with examples. Section \ref{naturalLanguageInference}
+discusses how \cathoristic{} can be used to model inferences between
+atomic sentences.  Section \ref{kr} describes informally how our logic
+is useful as a knowledge representation language.  Section
+\ref{elAndBangCore} presents core results of the paper, in particular
+a semantic characterisation of elementary equivalence and a decision
+procedure with quadratic time-complexity. The decision procedure has
+been implemented in Haskell and is available for public use
+\cite{HaskellImplementation} under a liberal open-source
+license. This section also
+shows that Brandom's incompatibility semantics condition holds for
+\cathoristic{}.  Section \ref{elAndBangMore} presents the proof rules
+for \cathoristic{} and proves completeness. Section \ref{compactness}
+provides two translations from \cathoristic{} into \fol{}, and proves
+compactness using one of them.  Section \ref{ELAndNegation}
+investigates a variant of \cathoristic{} with an additional negation
+operator, and provides a decision procedure for this extension that
+has an exponential time-complexity.  Section \ref{quantifiedEL}
+extends \cathoristic{} with first-order quantifiers and sketches the
+translation of first-order formulae into first-order
+\cathoristic{}. The conclusion surveys related work and lists open
+problems.  Appendix \ref{pureModels} outlines a different approach to
+giving the semantics of \cathoristic{}, including a characterisation
+of the corresponding elementary equivalence. The appendix also
+discusses the question of non-deterministic models. The remaining
+appendices present routine proof of facts used in the main section.
+
+A reader not interested in mathematical detail is recommended to look
+only at Chapters \ref{introduction}, \ref{coreEL},
+\ref{naturalLanguageInference}, \ref{kr}, the beginning of Chapter
+\ref{elAndBangMore}, and the Conclusion.

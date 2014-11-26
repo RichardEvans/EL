@@ -1,0 +1,317 @@
+\renewcommand{\labelitemi}{$-$}
+
+\newcommand{\NI}{\noindent}
+
+%% \theoremstyle{plain}
+%%     \newtheorem{thm}{Theorem}
+%%     \newtheorem{lemma}[thm]{Lemma}
+%%     \newtheorem{prop}[thm]{Proposition}
+%%     \newtheorem{cor}[thm]{Corollary}
+%%     \newtheorem{fact}[thm]{Fact}
+%%     \newtheorem{question}[thm]{Question}
+%%     \newtheorem{conjecture}[thm]{Conjecture}
+%%     \newtheorem{Lemma}[thm]{Lemma}
+%%     \newtheorem{theorem}[thm]{Theorem}
+%%     \newtheorem{Theorem}[thm]{Theorem}
+%%     \newtheorem{Fact}[thm]{Fact}
+%%     \newtheorem{NOTE}[thm]{Note}
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem{note}[thm]{Note}
+\newtheorem*{ex}{Example}
+\newtheorem*{Examples}{Examples}
+\newtheorem*{todo}{To do}
+
+%% \newcommand{\QUOTATION}[1]{
+%% \hfill
+%% \hspace{74mm}
+%% \begin{minipage}{70mm}\tiny #1\end{minipage}
+%% }
+%% \newcommand{\HANDLE}[3]{\PROGRAM{handle}_{#1}\ #2\ #3}
+%% \newcommand{\OPTIMISE}[2]{\mathsf{opt}^{#1}(#2)}
+\newcommand{\infer}[2]{\frac{\displaystyle{ #1 }}{\displaystyle{ #2 }}}
+\newcommand{\ZEROPREMISERULE}[1]{\infer{-}{#1}}
+\newcommand{\ONEPREMISERULE}[2]{\infer{#1}{#2}}
+\newcommand{\TWOPREMISERULE}[3]{\infer{#1 \quad #2}{#3}}
+\newcommand{\THREEPREMISERULE}[4]{\infer{#1 \quad #2 \quad #3}{#4}}
+\newcommand{\FOURPREMISERULE}[5]{\infer{#1 \quad #2 \quad #3 \quad #4}{#5}}
+\newcommand{\SIXPREMISERULE}[7]{\infer{#1 \quad #2 \quad #3 \quad #4 \quad #5 \quad #6}{#7}}
+%% \newcommand{\RULENAME}[1]{\textsc{#1}}
+%% \newcommand{\SMALLRULENAME}[1]{\textsc{\tiny #1}}
+%% \newcommand{\SUBST}[2]{[#1/#2]}
+%% \newenvironment{FIGURE}{\begin{figure}\rule{\linewidth}{.5pt}}{\rule{\linewidth}{.5pt}\end{figure}}
+%% \newcommand{\FS}{\rightarrow}
+%% \newcommand{\IMPLIES}{\supset}
+%% \newcommand{\MAX}[2]{\text{\emph{max}}(#1, #2)}
+%% \newcommand{\STRING}[1]{\langle #1 \rangle}
+%% \newcommand{\HEAD}[2]{\mathsf{head}^{#1}(#2)}
+\newcommand{\MAY}[1]{\langle #1 \rangle}
+%% \newcommand{\MUST}[1]{[ #1 ]}
+%% \newcommand{\VEC}[1]{\tilde{#1}}
+%% \newcommand{\HW}[1]{\mathsf{hw}(#1)}
+%% \newcommand{\MUTATION}[1]{\mathsf{mutation}(#1)}
+%% \newcommand{\GF}[1]{\mathsf{gf}(#1)}
+%% \newcommand{\HD}[1]{\PROGRAM{hd}(#1)}
+%% \newcommand{\TL}[1]{\PROGRAM{tl}(#1)}
+\newenvironment{GRAMMAR}{\[\begin{array}{lcl}}{\end{array}\]}
+\newenvironment{RULES}{\[\begin{array}{c}}{\end{array}\]}
+\newcommand{\VERTICAL}{\  \mid\hspace{-3.0pt}\mid \ }
+%% \newcommand{\UNIT}{\mathsf{Unit}}
+%% \newcommand{\IFTHEN}[2]{\mathsf{if}\; #1\;\mathsf{then}\; #2}
+%% \newcommand{\IFTHENELSE}[3]{\IFTHEN{#1}{#2}\;\mathsf{else}\;#3}
+%% \newcommand{\BOOL}{\mathbb{B}}
+%% \newcommand{\INT}{\mathsf{Int}}
+%% \newcommand{\PROGRAM}[1]{\mathsf{#1}}
+%% \newcommand{\TRACE}[2]{\PROGRAM{trace}\; #1\;\PROGRAM{in}\; #2}
+%% \newcommand{\SIZE}[1]{{|#1|}}
+%% \newcommand{\EEE}[1]{\CAL{E}[#1]}
+%% \newcommand{\PPP}{\CAL{P}}
+%% \newcommand{\EXTYPE}[1]{\mathsf{Ex}(#1)}
+%% \newcommand{\RED}{\rightarrow}
+%% \newcommand{\LUB}{\vee}
+\newcommand{\LTS}[1]{{\mathscr{L}(#1)}}
+\newcommand{\DLTS}[1]{{\mathscr{DL}(#1)}}
+%% \newcommand{\GLB}{\wedge}
+%% \newcommand{\BIGLUB}{\bigvee}
+%% \newcommand{\BIGGLB}{\bigwedge}
+%% \newcommand{\TRUE}{\PROGRAM{true}}
+%% \newcommand{\LIST}[1]{\mathsf{List}(#1)}
+%% \usepackage{ifthen}
+%% \usepackage{amssymb}
+%% \usepackage{color}
+%% \newboolean{showcomments}
+%% \setboolean{showcomments}{true}
+%% \ifthenelse{\boolean{showcomments}}
+%%   {\newcommand{\mynote}[2]{
+%%    \textcolor{red}{%
+%%     \fbox{\bfseries\sffamily\scriptsize#1}
+%%     {\small$\blacktriangleright$\textsf{\emph{#2}}$\blacktriangleleft$}
+%%    }
+%%   }
+%%   }
+%%   {\newcommand{\mynote}[2]{}
+%%   }
+%% \newcommand\martin[1]{\mynote{Martin}{#1}}
+%% \newcommand{\MARGINPAR}[1]{\marginpar{{\small #1}}}
+%% \newcommand{\EEE}[1]{\CAL{E}^{#1}[\cdot]}
+%% \newcommand{\INST}[1]{\mathsf{inst}(#1)}
+%% \newcommand{\INVERT}[2]{|\!|#1 : #2 |\!|}
+%% \newcommand{\PROVES}[2]{#1 \vdash #2}
+%% \newcommand{\MODALFORALL}[2]{\forall #1^{\mathsf{\square #2}}}
+%% \newcommand{\UC}[2]{\uparrow\!(#1, #2)}
+%% \newcommand{\UP}[1]{\mathsf{up}^{#1}}
+%% \newcommand{\DOWN}[1]{\mathsf{down}^{#1}}
+%% \newcommand{\LIFT}[1]{\mathsf{lift}_{#1}}
+%% \newcommand{\APP}[1]{\mathsf{app}_{#1}}
+%% \newcommand{\EVAL}{\mathsf{eval}}
+%% \newcommand{\LIST}[1]{\mathsf{List}_{#1}}
+%% \newcommand{\TL}[1]{\mathsf{tl}(#1)}
+%% \newcommand{\HD}[1]{\mathsf{hd}(#1)}
+%% \newcommand{\NIL}[1]{\mathsf{\epsilon}_{#1}}
+%% \newcommand{\POWERSET}[1]{\frak{P}(#1)}
+%% \newcommand{\MODAL}[1]{\square{#1}}
+%% \newcommand{\EXT}[1]{\mathsf{Ext}{(#1)}}
+%% \newcommand{\EXTQ}[1]{\mathsf{Ext_q}{(#1)}}
+%% \newcommand{\CASE}[3]{\PROGRAM{case}\ #1\ \PROGRAM{of}\ \{\INJ{}{i}{#2}.#3\}_{i \in \{0, 1\}}}
+%% \newcommand{\FULLCASE}[5]{\PROGRAM{case}\ #1\ \PROGRAM{of}\ \{\INJ{}{1}{#2}.#3\;\&\; \INJ{}{2}{#4}.#5\}}
+%% \newcommand{\LISTCASE}[5]{\PROGRAM{case}\ #1\ \PROGRAM{of}\ \{\NIL{}.#2\;\&\; #3 :: #4.#5\}}
+%% \newcommand{\STACKEDLISTCASE}[5]{\PROGRAM{case}\ #1\ \PROGRAM{of}\ \begin{cases}\NIL{}.#2 \\ #3 :: #4.#5\end{cases}}
+%% \newcommand{\INJ}[3]{\PROGRAM{inj}^{#1}_{#2}(#3)}
+%% \newcommand{\PCFD}{\textsc{Pcf$_{\text{\textsc{d}}}$}}
+%% \newcommand{\PCF}{\textsc{Pcf}}
+%% \newcommand{\PCFDP}{\textsc{Pcf$_{\text{\textsc{dp}}}$}}
+%% \newcommand{\PCFTN}{\textsc{Pcf$_{\text{\textsc{tn}}}$}}
+%% \newcommand{\FORMULATYPES}[2]{#1 \vdash {#2}}
+%% \newcommand{\JUDGEMENTTYPES}[2]{\FORMULATYPES{#1}{#2}}
+%% \newcommand{\FV}[1]{\mathsf{fv}(#1)}
+%% \newcommand{\BV}[1]{\mathsf{bv}(#1)}
+%% \newcommand{\QQ}[1]{\langle #1 \rangle}
+%% \newcommand{\QQEVAL}[3]{#1 = \QQ{#2}\{#3\}}
+%% \newcommand{\ONEEVAL}[4]{#1 \bullet #2=#3 \{#4\}}
+%% \newcommand{\CSP}[1]{\% #1}
+%% \newcommand{\FEC}[1]{\mathsf{fec}(#1)}
+%% \newcommand{\SPLICE}[1]{\tilde{\, } #1}
+%% \newcommand{\RUN}[1]{\mathtt{run}(#1)}
+%% \newcommand{\LOGICRUN}[1]{\mathsf{run}(#1)}
+%% \newcommand{\DEFEQ}{\stackrel{\text{\emph{def}}}{=}}
+%% \newcommand{\ERROR}{\mathsf{error}}
+%% \newcommand{\SCR}[1]{\mathscr{#1}}
+\newcommand{\CAL}[1]{\mathcal{#1}}
+%% \newcommand{\AAA}{\CAL{A}}
+%% \newcommand{\BBB}{\CAL{B}}
+%% \newcommand{\CCC}{\CAL{C}}
+%% \newcommand{\DDD}{\CAL{D}}
+%% \newcommand{\GGG}{\CAL{G}}
+\newcommand{\MMM}{\frak{M}}
+\newcommand{\LLL}{\CAL{L}}
+%% \newcommand{\RRR}{\CAL{R}}
+%% \newcommand{\QQQ}{\CAL{Q}}
+%% \newcommand{\VVV}{\CAL{V}}
+%% \newcommand{\TTT}{\CAL{T}}
+%% \newcommand{\NAT}{\mathbb{N}}
+%% \newcommand{\INT}{\mathsf{Int}}
+%% \newcommand{\BOOL}{\mathsf{Bool}}
+%% \newcommand{\PAIR}[2]{(#1, #2)}
+%% \newcommand{\UNIT}{\mathsf{Unit}}
+%% \newcommand{\IFTHEN}[2]{\mathtt{if}\; #1\;\mathtt{then}\; #2}
+%% \newcommand{\IFTHENELSE}[3]{\IFTHEN{#1}{#2}\;\mathtt{else}\;#3}
+%% \newcommand{\IFZEROTHENELSE}[3]{\IFZEROTHEN{#1}{#2}\;\mathtt{else}\;#3}
+%% \newcommand{\IFZEROTHEN}[2]{\mathtt{if0}\; #1\;\mathtt{then}\; #2}
+%% \newcommand{\STAGEDIFTHENELSE}[3]{\begin{array}{l}\mathtt{if}\; {#1}\;\mathtt{then} \\ \quad #2\\ \mathtt{else}\\ \quad #3 \end{array} }
+%% \newcommand{\FN}[1]{\mathsf{fn}(#1)}
+%% \newcommand{\FC}[1]{\mathsf{fc}(#1)}
+%% \newcommand{\FPV}[1]{\mathsf{fpv}(#1)}
+%% \newcommand{\BN}[1]{\mathsf{bn}(#1)}
+%% \newcommand{\PVAR}[1]{\text{\textsc{#1}}}
+%% \newcommand{\AST}[1]{\QQ{#1}}
+%% \newcommand{\LET}[3]{\mathtt{let}\ #1 = #2\ \mathtt{in}\ #3}
+%% \newcommand{\LETQQ}[3]{\LET{\QQ{#1}}{#2}{#3}}
+%% \newcommand{\VLETQQ}[3]{\LETQQ{\VEC{#1}}{\VEC{#2}}{#3}}
+%% \newcommand{\NEXTSTAGE}[1]{\mathsf{next}(#1)}
+%% \newcommand{\PREVSTAGE}[1]{\mathsf{prev}(#1)}
+%% \newcommand{\BOX}[1]{\mathsf{box}(#1)}
+%% \newcommand{\CLOSURE}[1]{\mathsf{cl}(#1)}
+%% \newcommand{\PCFCLOSURE}[1]{\mathsf{cl}^{\PCF}(#1)}
+%% \newcommand{\UNBOX}[2]{\mathsf{unbox}_{#1}(#2)}
+%% \newcommand{\DOM}[1]{\mathsf{dom}(#1)}
+%% \newcommand{\ECDOM}[1]{\mathsf{ecdom}(#1)}
+%% \newcommand{\COD}{\mathsf{cod}}
+%% \newcommand{\TYPES}[3]{#1 \vdash #2 : #3}
+%% \newcommand{\PCFTYPES}[3]{#1 \vdash^{\PCF} #2 : #3}
+%% \newcommand{\EXPRESSIONTYPES}[3]{#1 \vdash #2 : #3}
+%% \newcommand{\ECTYPES}[4]{#1 \vdash^{#2} #3 : #4}
+%% \newcommand{\WELLFORMED}[2]{#1 \vdash #2}
+%% \newcommand{\COMP}{\asymp}
+%% 
+%% \newcommand{\FW}[1]{\textsf{fw}_{#1}}
+%% \newcommand{\VNU}[1]{(\nu \VEC{#1})}
+%% \newcommand{\CONV}{\Downarrow}
+%% \newcommand{\PCFCONV}{\Downarrow^{\PCF}}
+%% \newcommand{\LEQ}{\sqsubseteq}
+%% \newcommand{\EQ}{\cong}
+%% \newcommand{\CONG}{\simeq}
+%% \newcommand{\PCFCONG}{\CONG_{\PCF}}
+%% \newcommand{\infer}[2]{\frac{\displaystyle{ #1 }}{\displaystyle{ #2 }}}
+%% \newcommand{\ZEROPREMISERULE}[1]{\infer{}{#1}}
+%% \newcommand{\ONEPREMISERULE}[2]{\infer{#1}{#2}}
+%% \newcommand{\TWOPREMISERULE}[3]{\infer{#1 \quad #2}{#3}}
+%% \newcommand{\THREEPREMISERULE}[4]{\infer{#1 \quad #2 \quad #3}{#4}}
+%% \newcommand{\FOURPREMISERULE}[5]{\infer{#1 \quad #2 \quad #3 \quad #4}{#5}}
+%% \newcommand{\FIVEPREMISERULE}[6]{\infer{#1 \quad #2 \quad #3 \quad #4 \quad #5}{#6}}
+%% \newcommand{\SIXPREMISERULE}[7]{\infer{#1 \quad #2 \quad #3 \quad #4 \quad #5 \quad #6}{#7}}
+%% \newcommand{\RULENAME}[1]{\textsc{#1}}
+%% \newcommand{\LENGTH}[2]{\mathsf{length}(#1, #2)}
+%% \newcommand{\SMALLRULENAME}[1]{\textsc{\tiny #1}}
+%% \newcommand{\SUBST}[2]{[#1/#2]}
+%% \newcommand{\VSUBST}[2]{\SUBST{\VEC{#1}}{\VEC{#2}}}
+%% \newcommand{\MINUS}{{\mbox{\bf\small -}}}
+\newcommand{\LOGIC}[1]{\mathsf{#1}}
+%% \newcommand{\PROGRAM}[1]{\mathtt{#1}}
+%% \newcommand{\REC}{\PROGRAM{rec}\;}
+%% \newcommand{\SEMB}[1]{\lbrack\!\lbrack #1 \rbrack\!\rbrack}
+%% \newcommand{\TRANSLATE}[1]{\ulcorner #1 \urcorner}
+%% \newcommand{\MODELTRANSLATE}[1]{\ulcorner #1 \urcorner}
+%% \newcommand{\TYPETRANSLATE}[1]{\ulcorner #1 \urcorner}
+%% \newcommand{\EXPRESSIONTRANSLATE}[1]{\ulcorner #1 \urcorner}
+%% \newcommand{\JUDGEMENTTRANSLATE}[1]{\ulcorner #1 \urcorner}
+%% \newcommand{\ZEROPREMISERULENAMEDRIGHT}[2]{\ZEROPREMISERULE{#1}\,\SMALLRULENAME{#2}}
+%% \newcommand{\ONEPREMISERULENAMEDRIGHT}[3]{\ONEPREMISERULE{#1}{#2}\,\SMALLRULENAME{#3}}
+%% \newcommand{\TWOPREMISERULENAMEDRIGHT}[4]{\TWOPREMISERULE{#1}{#2}{#3}\,\SMALLRULENAME{#4}}
+%% \newcommand{\THREEPREMISERULENAMEDRIGHT}[5]{\THREEPREMISERULE{#1}{#2}{#3}{#4}\,\SMALLRULENAME{#5}}
+%% \newcommand{\FOURPREMISERULENAMEDRIGHT}[6]{\FOURPREMISERULE{#1}{#2}{#3}{#4}{#5}\,\SMALLRULENAME{#6}}
+%% \newcommand{\ZEROPREMISERULENAMEDLEFT}[2]{\SMALLRULENAME{#2}\,\ZEROPREMISERULE{#1}}
+%% \newcommand{\ONEPREMISERULENAMEDLEFT}[3]{\SMALLRULENAME{#3}\,\ONEPREMISERULE{#1}{#2}}
+%% \newcommand{\TWOPREMISERULENAMEDLEFT}[4]{\SMALLRULENAME{#4}\,\TWOPREMISERULE{#1}{#2}{#3}}
+%% \newcommand{\THREEPREMISERULENAMEDLEFT}[5]{\SMALLRULENAME{#5}\,\THREEPREMISERULE{#1}{#2}{#3}{#4}}
+%% \newcommand{\FOURPREMISERULENAMEDLEFT}[6]{\SMALLRULENAME{#6}\,\FOURPREMISERULE{#1}{#2}{#3}{#4}{#5}}
+%%  \newenvironment{FIGURE}{\begin{figure}\rule{\linewidth}{0.5pt}
+%%  \vspace{3.2mm}
+%%  }{\rule{\linewidth}{0.5pt}\end{figure}}
+\newcommand{\NOVSPACEPARAGRAPH}[1]{\NI\textbf{\emph{#1}.}}
+\newcommand{\PARAGRAPH}[1]{\vspace{2mm}\NOVSPACEPARAGRAPH{#1}}
+%% \newcommand{\ANSWER}{\NOVSPACEPARAGRAPH{Answer}\ }
+%% \newcommand{\SUBSECTION}[1]{\subsection{\textbf{\emph{#1}}}}
+%% \newenvironment{DEFINITION}{\begin{definition}\rm}{\end{definition}}
+%% \newtheorem{remark}{Remark}{\bfseries}{\rmfamily}
+%% \newtheorem{definition}[bla]{Definition}{\bfseries}{\itshape}
+%% \newtheorem{theorem}[bla]{Theorem}{\bfseries}{\rmfamily}
+%% \newcommand{\TRUTH}{\LOGIC{T}}
+\newcommand{\TRUE}{\LOGIC{\top}}
+%% \newcommand{\FALSITY}{\LOGIC{F}}
+%% \newcommand{\FALSE}{\LOGIC{f}}
+%% \newcommand{\FS}{\rightarrow}
+%% \newcommand{\IMPLIES}{\supset}
+%% \newcommand{\STRING}[1]{\langle #1 \rangle}
+%% \newcommand{\VEC}[1]{\tilde{#1}}
+%% \newenvironment{GRAMMAR}{\[\begin{array}{rcl c rcl c rcl}}{\end{array}\]}
+%% \newenvironment{RULES}{\[\begin{array}{c}}{\end{array}\]}
+%% \newcommand{\VERTICAL}{\;  \mid\hspace{-3.0pt}\mid \; }
+%% \newcommand{\OUT}[2]{\overline{#1} #2 }
+%% \newcommand{\VOUT}[2]{\OUT{#1}{\VEC{#2}}}
+%% \newcommand{\LOGICINJ}[3]{\LOGIC{inj}^{#1}_{#2}(#3)}
+\newcommand{\AND}{\land}
+%% \newcommand{\OR}{\lor}
+%% \newcommand{\BIGAND}{\bigwedge}
+%% \newcommand{\BIGOR}{\bigvee}
+%% \newcommand{\OR}{\vee}
+%% \newcommand{\IFF}{\equiv}
+%% \newcommand{\BRANCHIN}[4]{#1[\&_{#2} (#3).#4]}
+%% \newcommand{\VBRANCHIN}[4]{\BRANCHIN{#1}{\VEC{#2}}{\VEC{#3}}{#4}}
+%% \newcommand{\BAREBRANCHOUT}[3]{\OL{#1}#2\langle#3\rangle}
+%% \newcommand{\BBAREBRANCHOUT}[3]{\OL{#1}#2(#3)}
+%% \newcommand{\VBAREBRANCHOUT}[3]{\BAREBRANCHOUT{#1}{#2}{\VEC{#3}}}
+%% \newcommand{\VBBAREBRANCHOUT}[3]{\BBAREBRANCHOUT{#1}{#2}{\VEC{#3}}}
+%% \newcommand{\BRANCHOUT}[3]{\overline{#1}\,\mathsf{inj}_{#2}\langle #3 \rangle}
+%% \newcommand{\VBRANCHOUT}[3]{\BRANCHOUT{#1}{#2}{\VEC{#3}}}
+%% \newcommand{\IN}[2]{#1(#2)}
+%% \newcommand{\INs}[1]{#1}
+%% \newcommand{\VIN}[2]{\IN{#1}{\VEC{#2}}}
+%% \newcommand{\OUTs}[1]{\overline{#1}}
+%% \newcommand{\BOUT}[2]{\overline{#1}(#2)}
+%% \newcommand{\BBRANCHOUT}[3]{\overline{#1}\LOGIC{inj}_{#2}(#3)}
+%% \newcommand{\VBBRANCHOUT}[3]{\BBRANCHOUT{#1}{#2}{\VEC{#3}}}
+%% \newcommand{\VBOUT}[2]{\BOUT{#1}{\VEC{#2}}}
+%% \newcommand{\OL}[1]{\overline{#1}}
+%% \newcommand{\RIN}{!}
+%% \newcommand{\BOT}{\bot}
+%% \newcommand{\ROUT}{?}
+%% \newcommand{\VAL}{\mathsf{val}}
+%% \newcommand{\MODE}[1]{\LOGIC{md}(#1)}
+%% \newcommand{\OMODE}{\text{\sc o}}
+%% \newcommand{\IMODE}{\text{\sc i}}
+%% \newcommand{\GREYBOX}[1]{\psboxit{box .9 setgray fill}{$#1$}}
+%% \newcommand{\GREYBOXPARA}[1]{\psboxit{box .9 setgray fill}{#1}}
+%% \newcommand{\GREYBOXPARA}[1]{\begin{boxitpara}{box .9 setgray fill}#1\end{boxitpara}}
+\newcommand{\TRANS}[1]{\stackrel{#1}{\longrightarrow}}
+%% \newcommand{\VTRANS}[1]{\TRANS{\VEC{#1}}}
+%% \newcommand{\RED}{\rightarrow}
+%% \newcommand{\NRED}{\rightarrow\hspace{-3.0mm}\rightarrow}
+%% \newcommand{\PCFRED}{\rightarrow_{\PCF}}
+%% \newcommand{\NPCFRED}{\rightarrow\hspace{-3.0mm}\rightarrow_{\PCF}}
+%% \newcommand{\CONVERGES}{\Downarrow}
+%% \newcommand{\DIV}{\Uparrow}
+%% \newcommand{\CONG}{\cong}
+%% \newcommand{\PRECONG}{\lesssim}
+%% \newcommand{\EQUIV}{\sim_{\mathsf{fta}}}
+%%  \newcommand{\nextLine}{\\[1mm] \hline \\[-3mm]}
+%%  \newcommand{\LINESKELETON}[3]{\!\!\!#1#2\;\hfill\quad\text{{#3}}\!\!\!}
+%%  \newcommand{\NONUMBERLINESKELETON}[2]{#1\;\hfill\quad\text{{#2}}}
+%%  \newcommand{\LASTLINE}[3]{\LINESKELETON{#1}{#2}{#3}}
+%%  \newcommand{\LINE}[3]{\LINESKELETON{#1}{#2}{#3}\nextLine}
+%%  \newcommand{\NONUMBERLASTLINE}[2]{\NONUMBERLINESKELETON{#1}{#2}}
+%%  \newcommand{\NONUMBERLINE}[2]{\NONUMBERLINESKELETON{#1}{#2}\nextLine}
+%%  \newenvironment{DERIVATION}{\[\begin{array}{l}}{\end{array}\]}
+%% \newenvironment{NDERIVATION}[1]{\setcounter{line}{#1}\[\begin{array}{ll}}{\end{array}\]}
+%% \newcommand{\NLINESKELETON}[2]{\theline &\quad  #1\ \quad\hfill \text{\emph{#2}}\addtocounter{line}{1}}
+%% \newcommand{\NLINE}[2]{\NLINESKELETON{#1}{#2}\nextLine}
+%% \newcommand{\NLASTLINE}[2]{\NLINESKELETON{#1}{#2}}
+%% \newcommand{\ONEASSERT}[3]{#1 :_{#2} #3}
+%% \newcommand{\ASSERT}[4]{\{#1\}\; #2 :_{#3} \{#4\}}
+%% \newcommand{\TCAPASSERT}[4]{[#1]\; #2 :_{#3} [#4]}
+%% \newcommand{\CONST}[2]{#1\STRING{#2}}
+%% \newcommand{\VCONST}[2]{\CONST{#1}{\VEC{#2}}}
+
+
