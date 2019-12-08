@@ -1,17 +1,17 @@
-\usepackage{ifthen}
-\usepackage{amssymb}
-\newboolean{showcomments}
-\setboolean{showcomments}{true}
-\ifthenelse{\boolean{showcomments}}
-  {\newcommand{\mynote}[2]{
-    \fbox{\bfseries\sffamily\scriptsize#1}
-    {\small$\blacktriangleright$\textsf{\emph{#2}}$\blacktriangleleft$}
-   }
-  }
-  {\newcommand{\mynote}[2]{}
-  }
-\newcommand\martin[1]{\mynote{Martin}{#1}}
-\newcommand\richard[1]{\mynote{Richard}{#1}}
+%% \usepackage{ifthen}
+%% \usepackage{amssymb}
+%% \newboolean{showcomments}
+%% \setboolean{showcomments}{true}
+%% \ifthenelse{\boolean{showcomments}}
+%%   {\newcommand{\mynote}[2]{
+%%     \fbox{\bfseries\sffamily\scriptsize#1}
+%%     {\small$\blacktriangleright$\textsf{\emph{#2}}$\blacktriangleleft$}
+%%    }
+%%   }
+%%   {\newcommand{\mynote}[2]{}
+%%   }
+%% \newcommand\martin[1]{\mynote{Martin}{#1}}
+%% \newcommand\richard[1]{\mynote{Richard}{#1}}
 
 \newtheorem{convention}{Convention}
 \renewenvironment{proof}{\paragraph{Proof:}}{\hfill\qed}
