@@ -1,0 +1,87 @@
+\documentclass{llncs}
+%\smartqed  % flush right qed marks, e.g. at end of proof
+\usepackage{stmaryrd}
+\usepackage{citesort} % removed because it clashes with the hyperref package
+\usepackage{bussproofs}
+\usepackage{turnstile}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\setcounter{tocdepth}{3}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{subfig}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,snakes,automata,backgrounds,petri}
+\usepackage[latin1]{inputenc}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{wrapfig}
+\usepackage{lscape}
+\usepackage[counterclockwise]{rotating}
+%\usepackage{hyperref}
+
+   
+\input{macros}
+
+\begin{document}
+
+\title {Cathoristic logic}
+\subtitle{A logic for capturing inferences between atomic sentences}
+\titlerunning{Cathoristic logic}
+\author{Richard Prideaux Evans\inst{1} \and  Martin Berger\inst{2}}
+\authorrunning{Prideaux Evans and Berger}
+\institute {Richard Prideaux Evans, Imperial College, \email{richardevans@google.com}
+  \and
+ Martin Berger, University of Sussex, \email{M.F.Berger@sussex.ac.uk}.}
+%\date{Received: date / Accepted: date}
+
+
+%\bibliographystyle{abbrv} 
+\maketitle
+
+
+\include{abstract}
+
+%% \setcounter{tocdepth}{2}
+% \tableofcontents
+
+\include{introduction}
+\include{preliminaries}
+\include{elSmall}
+\include{naturalLanguageInference}
+\include{kr}
+\include{elAndBangCore}
+\include{elAndBangMore}
+\include{elCompactness}
+\include{elAndBangAndNeg}
+\include{quantifiedEL}
+\include{relatedWork}
+\include{conclusion}
+
+\bibliography{bib} 
+
+\appendix
+\include{pureModels}
+\include{app_omittedProofs}
+
+\end{document}
+
+
+
+%% \input{abstract}
+%% \input{introduction}
+%% \input{elSmall}
+%% \input{naturalLanguageInference}
+%% \input{kr}
+%% \input{relatedWork}
+%% % \input{newConclusion}
+
+%% \bibliography{../bib} 
+
+%% \input{inferenceRules}
+
+%% \end{document}
+
