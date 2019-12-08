@@ -150,7 +150,7 @@ Consider the formula $\MAY{a}\CHAR{(\LLL, y)}$.
 Now $x \models \MAY{a}\CHAR{(\LLL, y)}$, and since $(x,x') \in R$, $x' \models \MAY{a}\CHAR{(\LLL, y)}$.
 By the semantic clause for $\MAY{a}$, if $x' \models \MAY{a}\CHAR{(\LLL, y)}$ then there is a $y'$ such that 
 $y' \models \CHAR{(\LLL, y)}$.
-We need to show $(y,y') \in R$, i.e. that $y \models \phi$ implies $y' \models \phi$ for all $\phi$.
+We need to show $(y,y') \in R$, i.e.~that $y \models \phi$ implies $y' \models \phi$ for all $\phi$.
 Assume $y \models \phi$. 
 Then by the definition of $\CHAR$, $\CHAR{(\LLL, y)} \models \phi$.
 Since $y' \models \CHAR{(\LLL, y)}$, $y' \models \phi$. 
@@ -492,9 +492,9 @@ Given that $\mathcal{R}$ is a simulation from $\MMM$ to $\NNN$, we know that if 
 \lambda_{\MMM}(x) \supseteq \lambda_{\NNN}(y)
 \]
 Let $\MMM = ((S,\rightarrow,\lambda),w)$.
-If $x \neq w$ (i.e. $x$ is some state other than the start state), then, from the definition of $\mathsf{merge}$, $\lambda_{\mathsf{glb}(\MMM, \MMM')}(x) = \lambda_{\MMM}(x)$.
+If $x \neq w$ (i.e.~$x$ is some state other than the start state), then, from the definition of $\mathsf{merge}$, $\lambda_{\mathsf{glb}(\MMM, \MMM')}(x) = \lambda_{\MMM}(x)$.
 So, given $\lambda_{\MMM} \supseteq \lambda_{\NNN}(y)$, $\lambda_{\mathsf{glb}(\MMM, \MMM')}(x) \supseteq \lambda_{\NNN}(y)$.
-If, on the other hand, $x = w$ (i.e. $x$ is the start state  of our cathoristic model $\MMM$), then, from the definition of $\mathsf{merge}$:
+If, on the other hand, $x = w$ (i.e.~$x$ is the start state  of our cathoristic model $\MMM$), then, from the definition of $\mathsf{merge}$:
 \[
 \lambda_{\mathsf{glb}(\MMM, \MMM')}(w) = \lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w')
 \]
