@@ -80,27 +80,46 @@ $\RRR$ with $(s, s') \in \RRR$.
 
 \PARAGRAPH{First-order logic}
 A \emph{many-sorted first-order signature} is specified by the
-following data.  A non-empty set of \emph{sorts}, a set \emph{function
+following data:
+\begin{itemize}
+\item 
+a non-empty set of \emph{sorts}
+\item
+a set of \emph{function
   symbols} with associated \emph{arities}, i.e.~non-empty list of
-sorts $\#(f)$ for each function symbol $f$; a set of \emph{relation
+sorts $\#(f)$ for each function symbol $f$
+\item
+a set of \emph{relation
   symbols} with associated \emph{arities}, i.e.~a list of sorts
-$\#(R)$ for each relation symbol $R$; a set of \emph{constant symbols}
+$\#(R)$ for each relation symbol $R$
+\item
+a set of \emph{constant symbols}
 with associated \emph{arity}, i.e.~a sort $\#(c)$ for each constant
-symbol $c$. We say a function symbol $f$ is \emph{$n$-ary} if $\#(f)$
+symbol $c$. 
+\end{itemize}
+We say a function symbol $f$ is \emph{$n$-ary} if $\#(f)$
 has length $n+1$. Likewise, a relation symbol is \emph{$n$-ary} if
 $\#(R)$ has length $n$.
 
 Let $\SSS$ be a signature. An \emph{$\SSS$-model} $\CAL{M}$ is an
-object with the following components.  For each sort $\sigma$ a set
+object with the following components:
+\begin{itemize}
+\item
+for each sort $\sigma$ a set
 $U_{\sigma}$ called \emph{universe} of sort $\sigma$.  The members of
-$U_{\sigma}$ are called \emph{$\sigma$-elements} of $\CAL{M}$; an
-element $c^\CAL{M}$ of $U_{\sigma}$ for each constant $c$ of sort
-$\sigma$; a function $f^\CAL{M} : (U_{\sigma_1}\times \dots \times
+$U_{\sigma}$ are called \emph{$\sigma$-elements} of $\CAL{M}$
+\item
+an element $c^\CAL{M}$ of $U_{\sigma}$ for each constant $c$ of sort
+$\sigma$
+\item
+a function $f^\CAL{M} : (U_{\sigma_1}\times \dots \times
 U_{\sigma_n}) \rightarrow U_{\sigma}$ for each function symbol $f$ of
-arity $(\sigma_1, ..., \sigma_n, \sigma)$; a relation $R^\CAL{M}
+arity $(\sigma_1, ..., \sigma_n, \sigma)$
+\item
+a relation $R^\CAL{M}
 \subseteq U_{\sigma_1}\times \dots \times U_{\sigma_n}$ for each
-relation symbol $R$ of arity $(\sigma_1, ..., \sigma_n)$.
-
+relation symbol $R$ of arity $(\sigma_1, ..., \sigma_n)$
+\end{itemize}
 Given an infinite set of variables for each sort $\sigma$, the
 \emph{terms} and \emph{first-order formulae} for $\SSS$ are given by
 the following grammar
@@ -120,7 +139,7 @@ sort, we speak of \emph{single-sorted first-order logic} or just
 Given an $\SSS$-model $\CAL{M}$, an \emph{environment}, ranged over by
 $\sigma$, is a partial function from variables to $\CAL{M}$'s
 universes.  We write $x \mapsto u$ for the environment that maps $x$ to
-$u$ and is undefined for all other variables. Moreover, if $\sigma, x
+$u$ and is undefined for all other variables. Moreover, $\sigma, x
 \mapsto u$ is the environment that is exactly like $\sigma$, except
 that it also maps $x$ to $u$, assuming that $x$ is not in the domain
 of $\sigma$.  The \emph{interpretation} $\SEMB{t}_{\CAL{M}, \sigma}$
@@ -155,7 +174,7 @@ of $\sigma$ contains all free variables of $\phi$:
 
 \NI Note that if $\sigma$ and $\sigma'$ agree on the free variables of
 $t$, then $\SEMB{t}_{\CAL{M}, \sigma} =\SEMB{t}_{\CAL{M},
-  \sigma'}$. Likewise $\CAL{M} \models_{\sigma} \phi$ if and only iff
+  \sigma'}$. Likewise $\CAL{M} \models_{\sigma} \phi$ if and only if
 $\CAL{M} \models_{\sigma'} \phi$, provided $\sigma$ and $\sigma'$ agree
 on the free variables of $\phi$.
 

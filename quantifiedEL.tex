@@ -83,7 +83,7 @@ king of France, and he is bald, as:
 
 \NI Expressing this in \fol{} is more cumbersome:
 \[
-   \exists x. ( king(france, x) \land bald(x) \land \forall y. ( king(france, y) \rightarrow y = x ))
+   \exists x. ( \mathit{king}(\mathit{france}, x) \land \mathit{bald}(x) \land \forall y. ( \mathit{king}(\mathit{france}, y) \rightarrow y = x ))
 \]
 
 \NI The \fol{} version uses an extra universal quantifier, and also
@@ -93,24 +93,24 @@ To say that every person has exactly one sex, which is either male or
 female, we can write in quantified \cathoristic{}:
 \[
    \forall x . 
-      ( \MAY{x} \MAY{person} \rightarrow \MAY{x} \MAY{sex} !\{male, female\} 
+      ( \MAY{x} \MAY{\mathit{person}} \rightarrow \MAY{x} \MAY{\mathit{sex}} !\{\mathit{male}, \mathit{female}\} 
       \land 
-      \exists y . \MAY{x} \MAY{sex} (\MAY{y} \land
+      \exists y . \MAY{x} \MAY{\mathit{sex}} (\MAY{y} \land
    \fBang \{y\}) )
 \]
 
 \NI This is more elegant than the equivalent in \fol{}:
 \[
-   \forall x. ( person(x) \rightarrow \exists y .
+   \forall x. ( \mathit{person}(x) \rightarrow \exists y .
    \left(
       \begin{array}{l}
-        sex(x,y) \\
+        \mathit{sex}(x,y) \\
         \quad\land\\
-        (y = male \; \lor \; y = female)\\ 
+        (y = \mathit{male} \; \lor \; y = \mathit{female})\\ 
         \quad\land\\
-        \forall z . sex(x,z) \rightarrow    y = z 
+        \forall z . \mathit{sex}(x,z) \rightarrow    y = z 
       \end{array}
-   \right))
+   \right)
 \]
 
 \NI To say that every traffic light is coloured either green, amber or
@@ -133,6 +133,6 @@ red, we can write in quantified \cathoristic{}:
         \quad\land \\
         \forall z . colour(x,z) \rightarrow y = z
       \end{array}
-   \right)  )
+   \right) 
 \]
 

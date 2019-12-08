@@ -64,9 +64,9 @@ Incompatibility, such as that between ``Jack is male'' and ``Jack is
 female'', is translated into \cathoristic{} as the pair of incompatible
 sentences:
 \begin{eqnarray*}
-\MAY{jack} \MAY{sex} (\MAY{male} \land \fBang \{male\}) 
+\MAY{\mathit{jack}} \MAY{\mathit{sex}} (\MAY{\mathit{male}} \land \fBang \{\mathit{male}\}) 
    \qquad\qquad
-\MAY{jack} \MAY{sex} (\MAY{female} \land \fBang \{female\}).
+\MAY{\mathit{jack}} \MAY{\mathit{sex}} (\MAY{\mathit{female}} \land \fBang \{\mathit{female}\}).
 \end{eqnarray*}
 
 \NI \Cathoristic{} handles entailments from dyadic to monadic predicates\footnote{Although
@@ -87,11 +87,11 @@ sentences:
 There is no deep problem here - just another case where natural language overloads the same word in different situation to have different meanings.}.
 ``Jack loves Jill'' is translated into \cathoristic{} as:
 \begin{eqnarray*}
-   \MAY{jack} \MAY{loves} \MAY{jill}.
+   \MAY{\mathit{jack}} \MAY{\mathit{loves}} \MAY{\mathit{jill}}.
 \end{eqnarray*}
 The semantics of modalities ensures that this directly entails:
 \begin{eqnarray*}
-   \MAY{jack} \MAY{loves}.
+   \MAY{\mathit{jack}} \MAY{\mathit{loves}}.
 \end{eqnarray*}
 
 \NI Similarly, \cathoristic{} supports inferences from triadic to dyadic
@@ -102,16 +102,16 @@ predicates:
 
 \NI This can be expressed directly in \cathoristic{} as:
 \[
-   \MAY{jack} \MAY{passed} \MAY{biscuit} \MAY{to} (\MAY{mary} \land !\{mary\}) \models \MAY{jack} \MAY{passed} \MAY{biscuit}.
+   \MAY{\mathit{jack}} \MAY{\mathit{passed}} \MAY{\mathit{biscuit}} \MAY{\mathit{to}} (\MAY{\mathit{mary}} \land !\{\mathit{mary}\}) \models \MAY{\mathit{jack}} \MAY{\mathit{passed}} \MAY{\mathit{biscuit}}.
 \]
 
 \NI Adverbial inferences is captured in \cathoristic{} as follows.
 \begin{eqnarray*}
-  \MAY{jack} \MAY{walks} \MAY{quickly}
+  \MAY{\mathit{jack}} \MAY{\mathit{walks}} \MAY{\mathit{quickly}}
 \end{eqnarray*}
 entails:
 \begin{eqnarray*}
-  \MAY{jack} \MAY{walks}.
+  \MAY{\mathit{jack}} \MAY{\mathit{walks}}.
 \end{eqnarray*}
 
 \NI \Cathoristic{} directly supports inferences from conjunctions of
@@ -120,23 +120,23 @@ deterministic, we have the general rule that $ \MAY{a} \MAY{b} \land
 \MAY{a} \MAY{c} \models \MAY{a} (\MAY{b} \land \MAY{c})$ from which
 it follows that
 \begin{eqnarray*}
-   \MAY{jack} \MAY{loves} \MAY{jill}
+   \MAY{\mathit{jack}} \MAY{\mathit{loves}} \MAY{\mathit{jill}}
       \qquad\text{and}\qquad
-   \MAY{jack} \MAY{loves} \MAY{joan}
+   \MAY{\mathit{jack}} \MAY{\mathit{loves}} \MAY{\mathit{joan}}
 \end{eqnarray*}
 together imply
 \begin{eqnarray*}
-\MAY{jack} \MAY{loves} (\MAY{jill} \land \MAY{joan}).
+\MAY{\mathit{jack}} \MAY{\mathit{loves}} (\MAY{\mathit{jill}} \land \MAY{\mathit{joan}}).
 \end{eqnarray*}
 
 \NI Using the same rule, we can infer that
 \begin{eqnarray*}
-   \MAY{jack} \MAY{bruised} \land \MAY{jack} \MAY{humiliated}
+   \MAY{\mathit{jack}} \MAY{\mathit{bruised}} \land \MAY{\mathit{jack}} \MAY{\mathit{humiliated}}
 \end{eqnarray*}
 
 \NI together imply
 \begin{eqnarray*}
-\MAY{jack} (\MAY{bruised} \land \MAY{humiliated}).
+\MAY{\mathit{jack}} (\MAY{\mathit{bruised}} \land \MAY{\mathit{humiliated}}).
 \end{eqnarray*}
  
 \subsection{Intra-atomic inferences in \fol{}}
@@ -154,7 +154,7 @@ and Levesque \cite{brachman} introduce the topic by remarking:
 
 \NI They propose adding an extra axiom to express the incompatibility:
 \[
-   \forall x. ( Man(x) \IMPLIES \neg Woman(x) )
+   \forall x. ( \mathit{Man}(x) \IMPLIES \neg \mathit{Woman}(x) )
 \]  
  
 \NI This proposal imposes a burden on the knowledge-representer: an
@@ -165,9 +165,9 @@ support one team at a time.  We would need to add ${50 \choose
   2}$ axioms, which is unwieldy.
 \[
 \begin{array}{l}
-  \forall x.  \neg (SupportsArsenal(x) \land SupportsLiverpool(x))  \\
-  \forall x.  \neg (SupportsArsenal(x) \land SupportsManUtd(x))  \\
-  \forall x.  \neg (SupportsLiverpool(x) \land SupportsManUtd(x))  \\
+  \forall x.  \neg (\mathit{SupportsArsenal}(x) \land \mathit{SupportsLiverpool}(x))  \\
+  \forall x.  \neg (\mathit{SupportsArsenal}(x) \land \mathit{SupportsManUtd}(x))  \\
+  \forall x.  \neg (\mathit{SupportsLiverpool}(x) \land \mathit{SupportsManUtd}(x))  \\
   \qquad \qquad \qquad \vdots
 \end{array}
 \]
@@ -175,7 +175,7 @@ support one team at a time.  We would need to add ${50 \choose
 \NI Or, if we treat the football-teams as objects, and have a
 two-place $Supports$ relation between people and teams, we could have:
 \[
-   \forall x y z . (Supports(x,y) \land y \neq z \IMPLIES \neg Supports(x,z)).
+   \forall x y z . (\mathit{Supports}(x,y) \land y \neq z \IMPLIES \neg \mathit{Supports}(x,z)).
 \]   
 
 \NI If we also assume that each football team is distinct from all 
@@ -205,11 +205,11 @@ every $n$-place action verb be analysed as an $n$+1-place predicate,
 with an additional slot representing an event.  For example, he
 analyses ``I flew my spaceship to the Morning Star'' as
 \[
-\exists x. ( Flew(I, MySpaceship, x) \land To(x, TheMorningStar))
+\exists x. ( Flew(I, \mathit{MySpaceship}, x) \land To(x, \mathit{TheMorningStar}))
 \]
-This implies 
+Here, $x$ ranges over events. This implies 
 \[
-\exists x.  Flew(I, MySpaceship, x)
+\exists x.  Flew(I, \mathit{MySpaceship}, x)
 \]
 This captures the inference from ``I flew my spaceship to the Morning
 Star'' to ``I flew my spaceship''.
@@ -222,7 +222,7 @@ of Davidson's proposal is that a seemingly simple sentence - such as
 ``Jones walks'' - turns out, on closer inspection, not to be atomic at
 all - but to involve existential quantification:
 \[
-\exists x.  Walks(Jones, x)
+\exists x.  \mathit{Walks}(\mathit{Jones}, x)
 \]
 
 \NI First-order logic \emph{can} handle such inferences - but only by

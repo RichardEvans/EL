@@ -126,7 +126,7 @@ inductively by the following clauses, where we assume that $\MMM =
 \begin{array}{lclcl}
   \MMM & \models & \top   \\
   \MMM & \models & \phi \AND \psi &\ \mbox{ iff } \ & \MMM  \models \phi \mbox { and } \MMM \models \psi  \\
-  \MMM & \models & \langle a \rangle \phi & \mbox{ iff } & \text{there is transition } s \xrightarrow{a} t \mbox { such that } (\LLL, t) \models \phi  \\
+  \MMM & \models & \langle a \rangle \phi & \mbox{ iff } & \text{there is a transition } s \xrightarrow{a} t \mbox { such that } (\LLL, t) \models \phi  \\
   \MMM & \models & \fBang A &\mbox{ iff } & \lambda(s) \subseteq A
 \end{array}
 \]
@@ -137,7 +137,7 @@ intended meaning of $!A$: the permissible modalities in the model are
 \emph{at least as constrained} as required by $!A$. They may even be
 more constrained if the inclusion $\lambda(s) \subseteq A$ is
 proper. For infinite sets $\Sigma$ of actions, allowing $\lambda(s)$
-to return arbitrary infinite sets in addition to $\sigma$ does not
+to return arbitrary infinite sets in addition to $\Sigma$ does not
 make a difference because $A$ is finite by construction, so
 $\lambda(s) \subseteq A$ can never hold anyway for infinite
 $\lambda(s)$.
@@ -158,7 +158,7 @@ others.
 \MAY{c} \fBang \{a\} &&
 \MAY{c} \fBang \{a,b\} &&
 \MAY{a} \land \MAY{c} &&
-\MAY{a} (\MAY{b} \land \fBang \{b,c\}
+\MAY{a} (\MAY{b} \land \fBang \{b,c\})
 \end{array}
 \]
 
@@ -183,7 +183,7 @@ $!\{a, b, c\}$.
 $\IMPLIES$.  This has the following two significant consequences.
 First, every satisfiable formula has a unique (up to isomorphism)
 simplest model.  In Figure \ref{threemodels}, the left model is the
-unique simplest model satisfying$\MAY{a} \MAY{b}$.  We will clarify
+unique simplest model satisfying $\MAY{a} \MAY{b}$.  We will clarify
 below that model simplicity is closely related to the process
 theoretic concept of similarity, and use the existence of unique
 simplest models in our quadratic-time decision procedure.
@@ -220,8 +220,7 @@ contradictories to be expressed.  For example:
 \NI Next, we present the semantic consequence relation.
 \begin{definition} 
  We say the formula $\phi$ \emph{semantically implies} $\psi$, written $\phi
-   \models \psi$, provided for all cathoristic models $\MMM$ if it is the
-   case that $\MMM \models \phi$ then also $\MMM \models \phi$.
+   \models \psi$, provided for all cathoristic models $\MMM$ if $\MMM \models \phi$ then also $\MMM \models \psi$.
    We sometimes write $\models \phi$ as a shorthand for $\top \models \phi$.
 \end{definition}
 
@@ -235,7 +234,7 @@ implications:
 As \cathoristic{} is restricted to deterministic models, it also
 validates the following formula:
 \begin{eqnarray*}
-\MAY{a} \MAY{b} \land \MAY{a} \MAY{b}  \models \MAY{a} (\MAY{b} \land \MAY{c})
+\MAY{a} \MAY{b} \land \MAY{a} \MAY{c}  \models \MAY{a} (\MAY{b} \land \MAY{c})
 \end{eqnarray*}
 \Cathoristic{} also validates all implications in which the set of constraints is relaxed from left to right. For example:
 \begin{eqnarray*}
