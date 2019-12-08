@@ -1,0 +1,35 @@
+echo
+echo "----------- Style Check -----------"
+echo
+
+grep "ie " *.tex ; echo
+grep "ie\. " *.tex ; echo
+grep "i\.e " *.tex ; echo
+grep "i\.e\. " *.tex ; echo
+# grep "\.\." *.tex ; echo
+# grep "%" *.tex 
+grep "cf " *tex ; echo
+grep "cf\. " *tex ; echo
+grep "c\.f " *tex ; echo
+grep "c\.f\. " *tex ; echo
+grep "eg\. " *tex ; echo
+grep "e\.g\. " *tex ; echo
+grep martin *.tex ; echo
+grep MARTIN *.tex ; echo
+grep RICHARD *.tex ; echo
+grep -i TODO *.tex ; echo
+grep -i XXX *.tex ; echo
+grep -i YYY *.tex ; echo
+grep -i ZZZ *.tex ; echo
+grep -i XYZ *.tex ; echo
+grep undefined *.log ; echo
+grep practice  *.t?? ; echo
+grep -i warning *.log ; echo
+
+for src in *.tex; do
+    scala -classpath /Users/mfb21/prog/finished/spell-check Main -c $src  -l -e spelling-exceptions.txt
+done 
+
+echo
+echo "IMPORTANT: Make sure the exceptions list is itself spell-checked with different checker!"
+echo
