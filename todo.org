@@ -1,3 +1,4 @@
+* DONE Upload to EasyChair
 * DONE Read Richards comments
 ** DONE p14.I would like a citation on the claim that Th(M) <= Th(N) implies Th(M) = Th(N).
     >>> ??? I am very unsure about this... Martin, can you help out here?
@@ -14,9 +15,9 @@ Please rotate the subset symbols in the middle row of Fig 15.
 MB I agree with the reviewer. In the current form, it's unclear if the
 upper or lower row is including the other. Why do you think this
 suggestion is wrong?
-* TODO Formatting
-* TODO Springer requiremwents
-** TODO 1. FINAL PAPER: Please submit the files belonging to your
+* DONE Formatting
+* DONE Springer requiremwents
+** DONE 1. FINAL PAPER: Please submit the files belonging to your
 camera-ready paper using your EasyChair author account. Follow
 the instructions after the login for uploading two files:
 
@@ -37,7 +38,7 @@ happen shortly before the printing of the proceedings. At that
 time your quick interaction with Springer-Verlag will be greatly
 appreciated.
 
-** TODO 2. COPYRIGHT: Please upload a signed and completed copyright form
+** DONE 2. COPYRIGHT: Please upload a signed and completed copyright form
 to us as soon as possible. The Springer copyright forms can be
 found at
 
@@ -46,7 +47,6 @@ https://resource-cms.springernature.com/springer-cms/rest/v1/content/15433008/da
 It is sufficient for one of the authors to sign the copyright
 form. You can scan the form into PDF or any other standard image
 format.
-
 
 * ---------------------- Before Hankin Festschrift ----------------------
 * TODO Respond to Feedback:
