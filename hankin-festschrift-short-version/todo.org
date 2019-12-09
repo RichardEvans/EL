@@ -1,0 +1,22 @@
+* Submission site: https://easychair.org/conferences/?conf=chrisfest19
+* Deadline: 1 August 2019
+* Style: LNCS
+* TODO Change 
+** TODO Merge back into master branch
+** DONE Remove references to non-exist9ng appendices
+** DONE Add reference to long version
+** DONE Richard
+
+1) the link in the bibliography to the iTunes store 
+
+   R. Evans and E. Short. Versu. http://www.versu.com, available at https://
+   itunes.apple.com/us/app/blood-laurels/id882505676?mt=8.
+
+is no longer valid. Have you got a better one? If not, we could remove
+the iTunes link and just provide http://www.versu.com.
+** DONE Add 2019 notes
+** DONE Talk briefly abot the stuff reviewers complained: description logics
+** DONE Make note about M/F binary
+* DONE Checklist
+** DONE Setup style-checker
+** DONE Submit

@@ -1,0 +1,55 @@
+\begin{FIGURE}
+\begin{RULES}
+     \ONEPREMISERULENAMEDRIGHT
+     {
+       a \notin A
+     }
+     {
+       !A \AND \MAY{a}{\phi} \judge \bot
+     }{$\bot$-Right 1}
+        \qquad
+     \ZEROPREMISERULENAMEDRIGHT
+     {
+       \MAY{a}{\bot} \judge \bot
+     }{$\bot$-Right 2}
+     \\\\
+     \TWOPREMISERULENAMEDRIGHT
+     {
+       \phi \judge !A
+     }
+     {
+       A \subseteq A'
+     }
+     {
+       \phi \judge!A'
+     }{!-Right 1}
+     \qquad
+     \TWOPREMISERULENAMEDRIGHT
+     {
+       \phi \judge !A
+     }
+     {
+       \phi \judge !B
+     }
+     {
+       \phi \judge !(A \cap B)
+     }{!-Right 2}
+     \\\\
+     \ONEPREMISERULENAMEDRIGHT
+     {
+       \phi \judge \psi
+     }
+     {
+       \MAY{a}{\phi} \judge \MAY{a}{\psi}
+     }{Normal}
+     \qquad
+     \ONEPREMISERULENAMEDRIGHT
+     {
+       \phi \judge \MAY{a}\psi \land \MAY{a}\xi
+     }
+     {
+       \phi \judge \MAY{a}(\psi \land \xi)
+     }{Det}
+\end{RULES}
+\caption{Proof rules.}\label{figure:elAndBangRules}
+\end{FIGURE}

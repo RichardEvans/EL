@@ -1,0 +1,8 @@
+In \cathoristic{}:
+\begin{verbatim}
+   welsh_married_couple(X, Y) :-
+       <welsh> <X>,
+       <X><spouse>(<Y> /\ !{Y}),
+       <welsh> <Y>.
+\end{verbatim}
+This reordering reduces the search from $n^2$ to $n$.

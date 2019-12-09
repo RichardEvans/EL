@@ -1,0 +1,34 @@
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance=1.3cm,>=stealth',bend angle=45,auto]
+  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
+  \tikzstyle{red place}=[place,draw=red!75,fill=red!20]
+  \tikzstyle{transition}=[rectangle,thick,draw=black!75,
+  			  fill=black!20,minimum size=4mm]
+  \tikzstyle{every label}=[red]
+
+  \begin{scope}[xshift=0cm]
+    \node [place] (t) {$y$};
+    \node [place] (a) [below left of=t] {$z_1$}
+      edge [pre]  node[swap] {a}                 (t);
+    \node [place] (a2) [below right of=t] {$z_2$}
+      edge [pre]  node[swap] {a}                 (t);
+    \node [place] (b) [below of=a] {$w_1$}
+      edge [pre]  node[swap] {b}                 (a);
+    \node [place] (c) [below of=a2] {$w_2$}
+      edge [pre]  node[swap] {c}                 (a2);
+  \end{scope}  
+  \begin{scope}[xshift=6cm]
+    \node [place] (t) {$y'_j$};
+    \node [place] (a) [below of=t] {$z'$}
+      edge [pre]  node[swap] {a}                 (t);
+    \node [place] (b) [below left of=a] {$w'_1$}
+      edge [pre]  node[swap] {b}                 (a);
+    \node [place] (c) [below right of=a] {$w'_2$}
+      edge [pre]  node[swap] {c}                 (a);
+  \end{scope}  
+\end{tikzpicture}
+\caption{{\small Worked example of $\mathsf{neg}$. Note that the transition
+  system on the left is non-deterministic.}}\label{figure:example:neg}
+\end{figure}
+

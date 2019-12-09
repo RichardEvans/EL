@@ -1,0 +1,176 @@
+\section{Related work}\label{relatedWork}
+
+%% We have defined \cathoristic{}, and investigated its key properties.
+%% We close with an overview of related work and a discussion of 
+%% open problems.
+
+This section surveys  \cathoristic's intellectual background, and related
+approaches.
+
+
+%% The work described here was inspired by Sellars' and Brandom's claim
+%% that material incompatibility is conceptually prior to logical
+%% negation.
+%% \Cathoristic{} is a logic without negation in which you can, nevertheless, make incompatible claims.
+
+\subsection{Brandom's incompatibility semantics}
+\NI In \cite{brandom}, Chapter 5, Appendix I, Brandom developed a new
+type of semantics, incompatibility semantics, that takes material
+incompatibility - rather than truth-assignment - as the semantically
+primitive notion.
+
+Incompatibility semantics applies to any language, $\mathcal{L}$,
+given as a set of sentences.  Given a predicate $\mathsf{Inc}(X)$
+which is true of sets $X \subseteq \mathcal{L}$ that are incompatible,
+he defines an incompatibility function $\mathcal{I}$ from subsets of
+$\mathcal{L}$ to sets of subsets of $\mathcal{L}$:
+\[
+X \in \mathcal{I}(Y) \quad\text{ iff }\quad \mathsf{Inc}(X \cup Y).
+\]
+We assume that $\mathcal{I}$ satisfies the
+monotonicity requirement (Brandom calls it ``Persistence''):
+\[
+   \text{If } X \in \mathcal{I}(Y) \text{ and } X \subseteq X' \text{ then } X' \in \mathcal{I}(Y).
+\]
+
+\NI Now Brandom defines entailment in terms of the incompatibility
+function. Given a set $X \subseteq \mathcal{L}$ and an individual
+sentence $\phi \in \mathcal{L}$:
+
+\[
+   X \models \phi\quad \text{ iff }\quad \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X).
+\]
+
+\NI Now, given material incompatibility (as captured by the
+$\mathcal{I}$ function) and entailment, he introduces logical negation
+as a \emph{derived} concept via the rule:
+
+\[
+   \{\neg \phi\} \in \mathcal{I}(X)\quad \text{ iff }\quad X \models \phi.
+\]
+
+\NI Brandom goes on to show that the $\neg$ operator, as defined, satisfies
+the laws of classical negation.  He also introduces a modal operator,
+again defined in terms of material incompatibility, and shows that
+this operator satisfies the laws of $S5$.
+
+\Cathoristic{} was inspired by Brandom's vision that material
+incompatibility is conceptually prior to logical negation: in other
+words, it is possible for a community of language users to make incompatible claims, even if that
+language has no explicit logical operators such as negation.  The
+language users of this simple language may go on to introduce logical
+operators, in order to make certain inferential properties explicit -
+but this is an optional further development.  The language before that
+addition was already in order as it is.
+
+The approach taken in this paper takes Brandom's original insight in a
+different direction.  While Brandom defines an unusual (non
+truth-conditional) semantics that applies to any language, we have
+defined an unusual logic with a standard (truth-conditional) semantics, and then shown that this logic satisfies the Brandomian connection between incompatibility and entailment.
+
+\subsection{Peregrin on defining a negation operator}\label{peregrin}
+
+Peregrin \cite{PeregrinJ:logbasoi} investigates the  structural
+rules that any logic must satisfy if it is to connect incompatibility
+($\mathsf{Inc}$) and entailment ($\models$) via the Brandomian
+incompatibility semantics constraint:
+\[
+X \models \phi \quad\text{ iff }\quad \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X).
+\]
+
+\NI The general structural rules are:
+\begin{eqnarray*}
+  (\bot) & & \text{If } \mathsf{Inc}(X) \text{ and } X \subseteq Y \text{ then } \mathsf{Inc}(Y). \\
+  (\models 1) & & \phi, X \models \phi. \\
+  (\models 2) & & \text{If }X, \phi \models \psi \text{ and } Y \models \phi \text{ then } X, Y \models \psi. \\
+  (\bot \models 2) & & \text{If } X \models \phi \text{ for all } \phi, \text{ then } \mathsf{Inc}(X). \\
+  (\models \bot 2) & & \text{If } \mathsf{Inc}(Y \cup \{\phi\}) \text{ implies } \mathsf{Inc}(Y \cup X) \text{ for all } Y, \text{ then } X \models \phi.
+\end{eqnarray*}
+
+\NI Peregrin shows that if a logic satisfied the above laws, then
+incompatibility and entailment are mutually interdefinable, and the
+logic satisfies the Brandomian incompatibility semantics constraint.
+
+Next, Peregrin gives a pair of laws for defining negation in terms
+of $\mathsf{Inc}$ and $\models$\footnote{The converse of $(\neg 2)$
+  follows from $(\neg 1)$ and the general structural laws above.}:
+\begin{eqnarray*}
+  (\neg 1) & & \mathsf{Inc}(\{\phi, \neg \phi\}). \\
+  (\neg 2) & & \text{If } \mathsf{Inc}(X, \phi) \text{ then } X \models \neg \phi.
+\end{eqnarray*}
+
+\NI These laws characterise intuitionistic negation as the
+\emph{minimal incompatible}\footnote{$\psi$ is the minimal
+  incompatible of $\phi$ iff for all $\xi$, if $\mathsf{Inc}(\{\phi\}
+  \cup \{\xi\})$ then $\xi \models \psi$.}.  
+  Now, in \cite{brandom},
+Brandom defines negation slightly differently. He uses the rule:
+\begin{eqnarray*}
+  (\neg B) & &\mathsf{Inc}(X, \neg \phi) \text{ iff } X \models \phi.
+\end{eqnarray*}
+Using this stronger rule, we can infer the classical law of
+double-negation: $\neg \neg \phi \models \phi$.  Peregrin establishes
+that Brandom's rule for negation entail $(\neg 1)$ and $(\neg 2)$
+above, but not conversely: Brandom's rule is stronger than Peregrin's
+minimal laws $(\neg 1)$ and $(\neg 2)$.
+
+Peregrin concludes that the Brandomian constraint between
+incompatibility and entailment is satisfied by many different logics.
+Brandom  happened to choose a particular rule for negation
+that led to classical logic, but the general connection between
+incompatibility and entailment is satisfied by many different logics,
+including intuitionistic logic.  This paper supports Peregrin's
+conclusion: we have shown that \cathoristic{} also satisfies the
+Brandomian constraint.
+
+\subsection{Peregrin and Turbanti on defining a necessity operator}\label{peregrinTurbanti}
+
+In \cite{brandom}, Brandom gives a rule for defining necessity in terms of incompatibility and entailment:
+\[
+X \in \mathcal{I}(\{\Box \phi\}) \quad\text{ iff }\quad \mathsf{Inc}(X) \lor \exists Y . \; Y \notin \mathcal{I}(X) \land Y \nvDash \phi.
+\]
+In other words, $X$ is incompatible with $\Box \phi$ if $X$ is compatible with something that does not entail $\phi$.
+
+The trouble is, as Peregrin and Turbanti point out, if $\phi$ is not tautological, then \emph{every set} $X \subseteq \mathcal{L}$ is incompatible with $\Box \phi$.
+To show this, take any set $X \subseteq \mathcal{L}$. 
+If $\mathsf{Inc}(X)$, then $X \in \mathcal{I}(\Box \phi)$ by definition.
+If, on the other hand, $\neg \mathsf{Inc}(X)$, then let $Y = \emptyset$.
+Now $\neg \mathsf{Inc}(X \cup Y)$ as $Y = \emptyset$, and $Y \nvDash \phi$ as $\phi$ is not tautological.
+Hence $X \in \mathcal{I}(\Box \phi)$ for all $X \subseteq \mathcal{L}$. 
+Brandom's rule, then, is only capable of specifying a very specific form of necessity: logical necessity.
+
+In \cite{PeregrinJ:logbasoi} and \cite{turbanti}, Peregrin and Turbanti describe alternative ways of defining necessity.
+These alternative rule sets can be used to characterise modal logics other than S5.
+For example, Turbanti defines the accessibility relation between worlds in terms of a \emph{compossibility relation}, and then argues that the S4 axiom of transitivity fails because compossibility is not transitive.
+
+We draw two conclusions from this work.
+The first is, once again, that a commitment to connecting incompatibility and entailment via the Brandomian constraint:
+\[
+X \models \phi\quad \text{ iff }\quad \mathcal{I}(\{\phi\}) \subseteq \mathcal{I}(X)
+\]
+does not commit us to any particular logical system. 
+There are a variety of logics that can satisfy this constraint.
+Second, questions about the structure of the accessibility relation in Kripke semantics - questions that can seem hopelessly abstract and difficult to answer - can be re-cast in terms of concrete questions about the incompatibility relation.
+Incompatibility semantics can shed light on possible-world semantics \cite{turbanti}. 
+
+\subsection{Description logics} Perhaps most closely related are
+description logics \cite{baader_horrocks_lutz_sattler_2017}.  Like
+Cathoristic logic, and modal logics more generally, description logics
+are decidable fragments of first-order logic, whose purpose is
+knowledge representation. Some description logics can also express
+exclusion efficiently, for example the \emph{OWL 2 Web Ontology
+  Language} \cite{W3C:OWL2} has a disjoint-classes axiom.  The precise
+relationship between description logics and cathoristic logic is
+unclear, for example the ``dyadic to monadic'' inferences of
+Cathoristic logic might not be possible in description logic. We leave
+detailed investigations of this relationship as further work.
+
+
+\subsection{Linguistics}
+
+Linguists have also investigated how mutually exclusive alternatives
+are expressed, often in the context of antonymy
+\cite{AllanK:conencos,AronoffM:hanlin,OKeeffeA:rouhanocl}, but, to the
+best of our knowledge have not proposed formal theories of linguistic
+exclusion.
+

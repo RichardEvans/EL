@@ -1,0 +1,58 @@
+\begin{FIGURE}
+\begin{RULES}
+
+  \ZEROPREMISERULENAMEDRIGHT
+  {
+    \phi \judge \phi
+  }{Id}
+    \qquad
+  \TWOPREMISERULENAMEDRIGHT
+  {
+    \phi \judge \psi
+  }
+  {
+    \psi \judge \xi
+  }
+  {
+    \phi \judge \xi
+  }{Trans}
+    \\\\
+  \ZEROPREMISERULENAMEDRIGHT
+  {
+    \phi \judge \top
+  }{$\top$-Right}
+    \qquad
+  \ZEROPREMISERULENAMEDRIGHT
+  {
+    \bot \judge \phi
+  }{$\bot$-Left}
+    \\\\
+  \ONEPREMISERULENAMEDRIGHT
+  {
+    \phi \judge \psi
+  }
+  {
+    \phi \AND \xi \judge \psi
+  }{$\AND$-Left 1}
+     \qquad
+  \ONEPREMISERULENAMEDRIGHT
+  {
+    \phi \judge \psi
+  }
+  {
+    \xi \AND \phi  \judge \psi
+  }{$\AND$-Left 2}
+     \\\\
+  \TWOPREMISERULENAMEDRIGHT
+  {
+    \phi \judge \psi
+  }
+  {
+    \phi \judge \xi
+  }
+  {
+    \phi \judge \psi \AND \xi
+  }{$\AND$-Right}
+\end{RULES}
+\caption{Proof rules.}\label{figure:elAndBangRules}
+\end{FIGURE}

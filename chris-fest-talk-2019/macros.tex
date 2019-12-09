@@ -1,0 +1,152 @@
+\usepackage{ifthen}
+\usepackage{amssymb}
+\newboolean{showcomments}
+\setboolean{showcomments}{true}
+\ifthenelse{\boolean{showcomments}}
+  {\newcommand{\mynote}[2]{
+    \fbox{\bfseries\sffamily\scriptsize#1}
+    {\small$\blacktriangleright$\textsf{\emph{#2}}$\blacktriangleleft$}
+   }
+  }
+  {\newcommand{\mynote}[2]{}
+  }
+\newcommand\martin[1]{\mynote{Martin}{#1}}
+\newcommand\richard[1]{\mynote{Richard}{#1}}
+
+\newtheorem{convention}{Convention}
+\renewenvironment{proof}{\paragraph{Proof:}}{\hfill\qed}
+
+
+\def \Cathoristic {Cathoristic logic}
+\def \cathoristic {cathoristic logic}
+\def\FOL{First-order logic}
+\def\fol{first-order logic}
+\newcommand{\VSPACE}{\vspace{4mm}}
+\newcommand{\PARAGRAPH}[1]{\vspace{2mm}\NOVSPACEPARAGRAPH{#1}}
+\newcommand{\EMPH}[1]{\emph{#1}}
+\newcommand{\NI}{\noindent}
+\newcommand{\LEQ}{\sqsubseteq}
+\newcommand{\MODELLEQ}{\preceq}
+\newcommand{\MODELEQ}{\simeq}
+\newcommand{\SIM}{\preceq_{sim}}
+\newcommand{\BISIM}{\sim}
+\newcommand{\BIGLUB}{\bigsqcup}
+\newcommand{\BIGGLB}{\bigsqcap}
+\newenvironment{FIGURE}{\begin{figure}[h]\rule{\linewidth}{0.5pt}
+ %\vspace{3.2mm}
+}{\rule{\linewidth}{0.5pt}\end{figure}}
+\newenvironment{SIDEWAYSFIGURE}{\begin{sidewaysfigure}[ht]\rule{\linewidth}{0.5pt}
+ %\vspace{3.2mm}
+}{\rule{\linewidth}{0.5pt}\end{sidewaysfigure}}
+\newenvironment{RULES}{\[\begin{array}{c}}{\end{array}\]}
+\newenvironment{GRAMMAR}{\[\begin{array}{lcl}}{\end{array}\]}
+\newcommand{\VERTICAL}{\  \mid\hspace{-3.0pt}\mid \ }
+\newcommand{\infer}[2]{\frac{\displaystyle{ #1 }}{\displaystyle{ #2 }}}
+\newcommand{\ZEROPREMISERULE}[1]{\infer{-}{#1}}
+\newcommand{\ONEPREMISERULE}[2]{\infer{#1}{#2}}
+\newcommand{\TWOPREMISERULE}[3]{\infer{#1 \quad #2}{#3}}
+\newcommand{\THREEPREMISERULE}[4]{\infer{#1 \quad #2 \quad #3}{#4}}
+\newcommand{\FOURPREMISERULE}[5]{\infer{#1 \quad #2 \quad #3 \quad #4}{#5}}
+\newcommand{\SIXPREMISERULE}[7]{\infer{#1 \quad #2 \quad #3 \quad #4 \quad #5 \quad #6}{#7}}
+\newcommand{\RULENAME}[1]{\textsc{#1}}
+\newcommand{\SMALLRULENAME}[1]{\textsc{\small #1}}
+\newcommand{\ZEROPREMISERULENAMEDRIGHT}[2]{\ZEROPREMISERULE{#1}\,\SMALLRULENAME{#2}}
+\newcommand{\ONEPREMISERULENAMEDRIGHT}[3]{\ONEPREMISERULE{#1}{#2}\,\SMALLRULENAME{#3}}
+\newcommand{\TWOPREMISERULENAMEDRIGHT}[4]{\TWOPREMISERULE{#1}{#2}{#3}\,\SMALLRULENAME{#4}}
+\newcommand{\THREEPREMISERULENAMEDRIGHT}[5]{\THREEPREMISERULE{#1}{#2}{#3}{#4}\,\SMALLRULENAME{#5}}
+\newcommand{\FOURPREMISERULENAMEDRIGHT}[6]{\FOURPREMISERULE{#1}{#2}{#3}{#4}{#5}\,\SMALLRULENAME{#6}}
+\newcommand{\ZEROPREMISERULENAMEDLEFT}[2]{\SMALLRULENAME{#2}\,\ZEROPREMISERULE{#1}}
+\newcommand{\ONEPREMISERULENAMEDLEFT}[3]{\SMALLRULENAME{#3}\,\ONEPREMISERULE{#1}{#2}}
+\newcommand{\TWOPREMISERULENAMEDLEFT}[4]{\SMALLRULENAME{#4}\,\TWOPREMISERULE{#1}{#2}{#3}}
+\newcommand{\THREEPREMISERULENAMEDLEFT}[5]{\SMALLRULENAME{#5}\,\THREEPREMISERULE{#1}{#2}{#3}{#4}}
+\newcommand{\FOURPREMISERULENAMEDLEFT}[6]{\SMALLRULENAME{#6}\,\FOURPREMISERULE{#1}{#2}{#3}{#4}{#5}}
+
+\newcommand{\FV}[1]{\mathsf{fv}(#1)}
+\newcommand{\THEORY}[1]{\mathsf{Th}(#1)}
+\newcommand{\FORGET}[1]{\mathsf{forget}(#1)}
+\newcommand{\ACTIONS}[1]{\mathsf{actions}(#1)}
+\newcommand{\MAX}[1]{\mathsf{max}(#1)}
+\newcommand{\MIN}[1]{\mathsf{min}(#1)}
+\newcommand{\SIMPL}[1]{\mathsf{simpl}(#1)}
+\newcommand{\CHAR}[1]{\mathsf{char}(#1)}
+\newcommand{\MAY}[2]{\langle #1 \rangle #2}
+\newcommand{\MUST}[2]{[ #1 ] #2}
+\newcommand{\NEG}[1]{\mathsf{neg}(#1)}
+\newcommand{\AND}{\land}
+\newcommand{\BIGAND}{\bigwedge}
+\newcommand{\BIGOR}{\bigvee}
+\newcommand{\OR}{\lor}
+\newcommand{\INC}[1]{\mathsf{Inc}(#1)}
+\newcommand{\PVAR}[1]{\text{\textsc{#1}}}
+\newcommand{\CAL}[1]{\mathcal{#1}}
+\newcommand{\FRAK}[1]{\mathfrak{#1}}
+\newcommand{\SEMB}[1]{\lbrack\!\lbrack #1 \rbrack\!\rbrack}
+\newcommand{\SEMBTWO}[1]{\langle\!\langle #1 \rangle\!\rangle}
+\newcommand{\STATE}{\mathsf{State}}
+\newcommand{\SYMBOL}{\mathsf{Symbol}}
+\newcommand{\DEFEQ}{\stackrel{\text{\emph{def}}}{=}}
+\newcommand{\TRUE}{\top}
+\newcommand{\FALSE}{\bot}
+\newcommand{\LOGIC}[1]{\mathsf{#1}}
+\newcommand{\MMM}{\frak{M}}
+\newcommand{\NNN}{\frak{N}}
+\newcommand{\PPP}{\frak{P}}
+\newcommand{\SSS}{\CAL{S}}
+\newcommand{\VVV}{\CAL{V}}
+\newcommand{\IMPLIES}{\rightarrow}
+\newcommand{\RED}{\rightarrow}
+\newcommand{\RESTRICT}[2]{\mathsf{Restrict}_{#1}(#2)}
+\newcommand{\ALLOWED}[3]{\mathsf{Allow}^{#1}(#2, #3)}
+\newcommand{\RESTRICTTWO}[3]{\mathsf{Restrict}^{#1}(#2, #3)}
+\newcommand{\ARROW}[3]{\mathsf{Arrow}_{#1}(#2, #3)}
+\newcommand{\ARROWTWO}[4]{\mathsf{Arrow}^{#1}(#2, #3, #4)}
+\newcommand{\LLL}{\mathcal{L}}
+\newcommand{\RRR}{\mathcal{R}}
+\newcommand{\TRANS}[1]{\stackrel{#1}{\longrightarrow}}
+
+\newcommand{\QUOTATION}[1]{
+\hfill
+\hspace{58mm}
+\begin{minipage}{60mm}\tiny #1\end{minipage}
+}
+
+\lstnewenvironment{code}
+    {\lstset{}%
+      \csname lst@SetFirstLabel\endcsname}
+    {\csname lst@SaveFirstLabel\endcsname}
+    \lstset{
+      basicstyle=\small\ttfamily,
+      flexiblecolumns=false,
+      basewidth={0.5em,0.45em},
+      literate={+}{{$+$}}1 {/}{{$/$}}1 {*}{{$*$}}1 {=}{{$=$}}1
+               {>}{{$>$}}1 {<}{{$<$}}1 {\\}{{$\lambda$}}1
+               {\\\\}{{\char`\\\char`\\}}1
+               {->}{{$\rightarrow$}}2 {>=}{{$\geq$}}2 {<-}{{$\leftarrow$}}2
+               {<=}{{$\leq$}}2 {=>}{{$\Rightarrow$}}2 
+               {\ .}{{$\bigcirc$}}2 {\ .\ }{{$\bigcirc$}}2
+               {>>}{{>>}}2 {>>=}{{>>=}}2
+               {|}{{$\mid$}}1               
+    }
+
+
+\newcommand{\CASE}[1]{\underline{Case #1.}}
+\newcommand{\SUBCASE}[1]{\underline{Subcase #1.}}
+%\newtheorem{mycase}{Case}
+%\newtheorem{subcase}{Case}
+%\numberwithin{subcase}{mycase}
+
+
+% Dot
+\def\fDot {\ast}
+% Bang
+\def\fBang {!}
+% Or
+\def\fOr {\ | \ }
+
+% Turnstiles with subscripts
+\def\judgeX {\sststile{\mathrm{X}}{}}
+\def\judgeY {\sststile{\mathrm{Y}}{}}
+%\def\judge {\sststile{\mathrm{}}{}}
+
+\newcommand{\judge}{\vdash}
+

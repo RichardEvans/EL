@@ -1,0 +1,670 @@
+\section{Semantics and Decision Procedure}\label{elAndBangCore}
+
+In this section we provide our key semantic results.  We define a
+partial ordering $\MODELLEQ$ on models, and show how the partial
+ordering can be extended into a bounded lattice.  We use the bounded
+lattice to construct a quadratic-time decision procedure.
+
+\subsection{Semantic characterisation of elementary equivalence}\label{elementaryEquivalence}
+
+Elementary equivalence induces a notion of model equivalence: two
+models are elementarily equivalent exactly when they make the same
+formulae true. Elementary equivalence as a concept thus relies on
+\cathoristic{} even for its definition. We now present an alternative
+characterisation that is purely semantic, using the concept of
+(mutual) simulation from process theory. Apart from its intrinsic
+interest, this characterisation will also be crucial for proving
+completeness of the proof rules.
+
+We first define a pre-order $\MODELLEQ$ on models by extending the
+notion of simulation on labelled transition systems to cathoristic
+models. Then we prove an alternative characterisation of $\MODELLEQ$
+in terms of set-inclusion of the theories induced by models. We then
+show that two models are elementarily equivalent exactly when they are
+related by $\MODELLEQ$ and by $\MODELLEQ^{-1}$.
+
+First, we recall the definition of a simulation on labelled transition systems.
+Given two labelled transition systems $\LLL_i = (S_i, \rightarrow_i)$
+over $\Sigma$ for $i = 1, 2$, a \emph{simulation from $\LLL_1$ to
+  $\LLL_2$} is a relation $\RRR \subseteq S_1 \times S_2$ such that
+whenever $(s, s') \in \RRR$: if $s \TRANS{a}_1 s'$ then there exists a
+transition $t \TRANS{a}_2 t'$ with $(t, t') \in \RRR$.  We write $s \SIM
+t$ whenever $(s, t) \in \RRR$ for some simulation $\RRR$.  We say
+$\RRR$ is a \emph{bisimulation between $\LLL_1$ and $\LLL_2$} if both,
+$\RRR$ and $\RRR^{-1}$ are simulations. Here $\RRR^{-1} = \{(y,
+x)\ |\ (x, y) \in \RRR\}$.  We say two states $s, s'$ are
+\emph{bisimilar}, written $s \BISIM s'$ if there is a bisimulation
+$\RRR$ with $(s, s') \in \RRR$.
+
+\begin{definition}
+Let $\LLL_i = (S_i, \rightarrow_i, \lambda_i)$ be cathoristic transition
+systems for $i = 1, 2$.  A relation $\RRR \subseteq S_1 \times S_2$ is
+a \emph{simulation from $\LLL_1$ to $\LLL_2$}, provided:
+\begin{itemize} 
+
+\item $\RRR$ is a simulation on the underlying transition systems. 
+
+\item Whenever $(x, y) \in \RRR$ then also $\lambda_1(x) \supseteq
+  \lambda_2(y)$.
+
+\end{itemize}
+
+\NI If $\MMM_i = (\LLL_i, x_i)$ are models, we say $\RRR$ is a
+\emph{simulation from $\MMM_1$ to $\MMM_2$}, provided the following hold.
+
+\begin{itemize}
+
+\item $\RRR$ is a simulation from $\LLL_1$ to $\LLL_2$ as cathoristic transition systems.
+
+\item  $(x_1, x_2) \in \RRR$. 
+
+\end{itemize}
+
+\end{definition}
+
+\NI Note that the only difference from the usual definition of
+simulation is the additional requirement on the state labelling
+functions $\lambda_1$ and $\lambda_2$.
+
+\begin{definition}
+The largest simulation from $\MMM_1$ to $\MMM_2$ is denoted $\MMM_1
+\SIM \MMM_2$.  It is easy to see that $\SIM$ is itself a
+simulation from $\MMM_1$ to $\MMM_2$, and the union of all such
+simulations.  If $\MMM_1 \SIM \MMM_2$ we say $\MMM_2$
+\emph{simulates} $\MMM_1$.
+
+We write $\MODELEQ$ for $\SIM \cap \SIM^{-1}$. We call $\MODELEQ$ the
+\emph{mutual simulation} relation.
+\end{definition}
+
+\NI We briefly discuss the relationship of $\MODELEQ$ with
+bisimilarity, a notion of equality well-known from process theory and
+modal logic. For non-deterministic transition systems $\MODELEQ$ is a
+strictly coarser relation than bisimilarity.
+
+\begin{definition}
+We say $\RRR$ is a \emph{bisimulation} if $\RRR$ is a simulation from
+$\MMM_1$ to $\MMM_2$ and $\RRR^{-1}$ is a simulation from $\MMM_2$ to
+$\MMM_1$. By $\BISIM$ we denote the largest bisimulation, and we say
+that $\MMM_1$ and $\MMM_2$ are \emph{bisimilar} whenever $\MMM_1
+\BISIM \MMM_2$.
+\end{definition}
+
+\begin{lemma}
+On cathoristic models, $\BISIM$ and $\MODELEQ$ coincide.
+\end{lemma}
+\begin{proof}
+Straightforward from the definitions.
+\end{proof}
+
+\begin{definition}
+Let $\THEORY{\MMM}$ be the \emph{theory} of $\MMM$, i.e.~the formulae
+made true by $\MMM$, i.e.~$\THEORY{\MMM} = \{\phi\ |\ \MMM \models
+\phi \}$.
+\end{definition}
+
+\NI We give an alternative characterisation on $\SIM^{-1}$ using
+theories. In what follows, we will mostly be interested in
+$\SIM^{-1}$, so we give it its own symbol.
+
+\begin{definition}
+Let $\MODELLEQ$  be short for $\SIM^{-1}$. 
+\end{definition}
+
+\NI Figure \ref{figure:leq} gives some examples of models and how they
+are related by $\MODELLEQ$.
+
+\input{figure_leq}
+
+\begin{theorem}[Characterisation of elementary equivalence]\label{theorem:completeLattice}
+\begin{enumerate}
+
+\item\label{theorem:completeLattice:1} $\MMM' \MODELLEQ \MMM$ if and
+  only if $\THEORY{\MMM} \subseteq \THEORY{\MMM'}$.
+
+\item\label{theorem:completeLattice:2} $\MMM' \MODELEQ \MMM$ if and
+  only if $\THEORY{\MMM} = \THEORY{\MMM'}$.
+
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For (\ref{theorem:completeLattice:1}) assume $\MMM' \MODELLEQ \MMM$
+and $\MMM \models \phi$.  We must show $\MMM' \models \phi$.  Let
+$\MMM = (\LLL, w)$ and $\MMM' = (\LLL', w')$.  The proof proceeds by
+induction on $\phi$.  The cases for $\top$ and $\land$ are trivial.
+Assume $\phi = \MAY{a}\psi$ and assume $(\LLL, w) \models
+\MAY{a}\psi$.  Then $w \xrightarrow{a} x$ and $(\LLL, x) \models
+\psi$.  As $\MMM'$ simulates $\MMM$, there is an $x'$ such that
+$(x,x') \in R$ and $w' \xrightarrow{a} x'$.  By the induction
+hypothesis, $(\LLL', x') \models \psi$.  Therefore, by the semantic
+clause for $\MAY{}$, $(\LLL', w') \models \MAY{a}\psi$.  Assume now
+that $\phi = \; ! \; A$, for some finite $A \subseteq \Sigma$, and
+that $(\LLL, w) \models \; ! \; A$.  By the semantic clause for $!$,
+$\lambda(w) \subseteq A$.  Since $(\LLL', w') \MODELLEQ (\LLL, w)$, by
+the definition of simulation of cathoristic transition systems, $\lambda(w)
+\supseteq \lambda'(w')$.  Therefore, $\lambda'(w') \subseteq
+\lambda(w) \subseteq A$.  Therefore, by the semantic clause for $!$,
+$(\LLL', w') \models \; ! \; A$.
+
+For the other direction, let $\MMM = (\LLL, w)$ and $\MMM' = (\LLL',
+w')$.  Assume $\THEORY{\MMM} \subseteq \THEORY{\MMM'} $. We need to
+show that $\MMM'$ simulates $\MMM$.  In other words, we need to
+produce a relation $R \subseteq S \times S'$ where $S$ is the state
+set of $\LLL$, $S'$ is the state set for $\LLL'$ and $(w,w') \in R$
+and $R$ is a simulation from $(\LLL, w)$ to $ (\LLL', w')$.  Define $R
+= \{(x,x') \; | \; \THEORY{ (\LLL, x)} \subseteq \THEORY{ (\LLL',
+  x')}\}$.  Clearly, $(w,w') \in R$, as $\THEORY{(\LLL, w)} \subseteq
+\THEORY{(\LLL', w')} $.  To show that $R$ is a simulation, assume $x
+\xrightarrow{a} y$ in $\LLL$ and $(x,x') \in R$. 
+We need to provide a
+$y'$ such that $x' \xrightarrow{a} y'$ in $\LLL'$ and $(y,y') \in R$.  
+Consider the formula $\MAY{a}\CHAR{(\LLL, y)}$. 
+Now $x \models \MAY{a}\CHAR{(\LLL, y)}$, and since $(x,x') \in R$, $x' \models \MAY{a}\CHAR{(\LLL, y)}$.
+By the semantic clause for $\MAY{a}$, if $x' \models \MAY{a}\CHAR{(\LLL, y)}$ then there is a $y'$ such that 
+$y' \models \CHAR{(\LLL, y)}$.
+We need to show $(y,y') \in R$, i.e. that $y \models \phi$ implies $y' \models \phi$ for all $\phi$.
+Assume $y \models \phi$. 
+Then by the definition of $\CHAR$, $\CHAR{(\LLL, y)} \models \phi$.
+Since $y' \models \CHAR{(\LLL, y)}$, $y' \models \phi$. 
+So $(y,y') \in R$, as required.
+
+Finally,we need to show that whenever $(x,x') \in R$, then $\lambda(x)
+\supseteq \lambda'(x')$.  Assume, first, that $\lambda(x)$ is finite.
+Then $(\LLL, x) \models \; ! \; \lambda(x)$.  But as $(x,x') \in R$,
+$\THEORY{(\LLL, x)} \subseteq \THEORY{(\LLL', x')} $, so $(\LLL', x')
+\models \; ! \; \lambda(x)$.  But, by the semantic clause for $!$,
+$(\LLL', x') \models \; ! \; \lambda(x)$ iff $\lambda'(x') \subseteq
+\lambda(x)$.  Therefore $\lambda(x) \supseteq \lambda'(x')$.  If, on
+the other hand, $\lambda(x)$ is infinite, then $\lambda(x) = \Sigma$
+(because the only infinite state labelling that we allow is
+$\Sigma$). Every state labelling is a subset of $\Sigma$, so here too,
+$\lambda(x) = \Sigma \supseteq \lambda'(x')$.  
+
+This establishes (\ref{theorem:completeLattice:1}), and
+(\ref{theorem:completeLattice:2}) is immediate from the definitions.
+
+
+\end{proof}
+
+\NI Theorem
+\ref{theorem:completeLattice}.\ref{theorem:completeLattice:1}
+captures one way in which the model theory of
+classical and \cathoristic{} differ. In classical logic the theory of
+each model is complete, and $\THEORY{\CAL{M}} \subseteq
+\THEORY{\CAL{N}}$ already implies that $\THEORY{\CAL{M}} =
+\THEORY{\CAL{N}}$, i.e.~$\CAL{M}$ and $\CAL{N}$ are elementarily
+equivalent. \Cathoristic{}'s lack of negation changes this drastically, and
+gives $\MODELLEQ$ the structure of a non-trivial bounded lattice as we
+shall demonstrate below.
+
+Theorem \ref{theorem:completeLattice} has various
+consequences.
+
+\begin{corollary}
+\begin{enumerate}
+
+\item If $\phi$ has a model then it has a model whose underlying
+  transition system is a tree, i.e.~all states except for the start state
+  have exactly one predecessor, and the start state has no predecessors.
+
+\item If $\phi$ has a model then it has a model where every state is
+  reachable from the start state.
+
+\end{enumerate}
+\end{corollary}
+\begin{proof}
+Both are straightforward because $\MODELEQ$ is closed under
+tree-unfolding as well as under removal of states not reachable from
+the start state.
+\end{proof}
+
+
+\subsection{Quotienting models}
+
+\NI The relation $\MODELLEQ$ is not a partial order, only a
+pre-order. For example 
+\[
+   \MMM_1 = ( (\{w\}, \emptyset, \{w \mapsto \Sigma\}), w)
+      \qquad\qquad
+   \MMM_2 = ( (\{v\}, \emptyset, \{v \mapsto \Sigma\}), v)
+\]
+
+\NI are two distinct models with $\MMM_1 \MODELLEQ \MMM_2$ and $\MMM_2
+\MODELLEQ \MMM_1$. The difference between the two models, the name of
+the unique state, is trivial and not relevant for the formulae they
+make true: $\THEORY{\MMM_1} = \THEORY{\MMM_2}$.  As briefly mentioned
+in the mathematical preliminaries (Section \ref{preliminaries}), we
+obtain a proper partial-order by simply quotienting models:
+
+\[
+   \MMM \MODELEQ \MMM'
+      \qquad\text{iff}\qquad
+   \MMM \MODELLEQ \MMM' \ \text{and}\ \MMM' \MODELLEQ \MMM
+\]
+
+\NI and then ordering the $\MODELEQ$-equivalence classes as follows:
+\[
+    [\MMM]_{\MODELEQ} \MODELLEQ [\MMM']_{\MODELEQ}
+      \qquad\text{iff}\qquad
+    \MMM \MODELLEQ \MMM'.
+\]
+
+\NI Greatest lower and least upper bounds can also be computed on
+representatives:
+\[
+   \BIGLUB \{[\MMM]_{\MODELEQ} \ |\ \MMM \in S\ \} \quad=\quad [\BIGLUB S]_{\MODELEQ}
+\]
+whenever $\BIGLUB S$ exists, and likewise for the greatest lower bound.
+We also define 
+\[
+   [\MMM]_{\MODELEQ} \models \phi 
+      \qquad\text{iff}\qquad
+   \MMM \models \phi.
+\]
+
+\NI It is easy to see that these definitions are independent of the
+chosen representatives.
+
+In the rest of this text we will usually be sloppy and work with
+concrete models instead of $\MODELEQ$-equivalence classes of models
+because the quotienting process is straightforward and not especially
+interesting. We can do this because all relevant subsequent
+constructions are also representation independent.  
+
+\subsection{The bounded lattice of models}
+\label{boundedlattice}
+It turns out that $\MODELLEQ $ on ($\MODELEQ$-equivalence classes of)
+models is not just a partial order, but a bounded lattice, except
+that a bottom element is missing.
+
+\begin{definition}
+We extend the collection of models with a single \emph{bottom} element
+$\bot$, where $\bot \models \phi$ for all $\phi$. We also write $\bot$
+for $[\bot]_{\MODELEQ}$.  We extend the relation $\MODELLEQ $ and
+stipulate that $\bot \MODELLEQ \MMM$ for all models $\MMM$.
+\end{definition}
+
+\begin{theorem}
+The collection of (equivalence classes of) models together with
+$\bot$, and ordered by $\MODELLEQ$ is a bounded lattice.
+\end{theorem}
+\begin{proof}
+The topmost element in the lattice is the model $( (\{w\}, \emptyset,
+\{w \mapsto \Sigma\}), w)$ (for some state $w$): this is the model
+with no transitions and no transition restrictions.  The bottom
+element is $\bot$.  Below, we shall define two functions $\mathsf{glb}$ and $\mathsf{lub}$, and show that they satisfy the required properties of $\sqcap$ and $\sqcup$ respectively.
+\end{proof}
+
+\Cathoristic{} is unusual in that every set of models has a unique (up to
+isomorphism) least upper bound. Logics with disjunction, negation or implication do
+not have this property.  
+
+Consider propositional logic, for example.
+Define a model of propositional logic as a set of atomic formulae that are set to true.
+Then we have a natural ordering  on propositional logic models:
+\[
+\MMM \leq \MMM' \quad\text{ iff }\quad \MMM \supseteq \MMM'
+\]
+Consider all the possible models that satisfy $\phi \lor \psi$:
+\[
+\{\phi\} \qquad
+\{\psi\} \qquad
+\{\phi, \psi\} \qquad
+\{\phi, \psi, \xi\}\qquad
+\cdots
+\]
+This set of satisfying models has no least upper bound, since $\{\phi\} \nleq \{\psi\}$ and $\{\psi\} \nleq \{\phi\}$.
+Similarly,  the set of models satisfying $\neg (\neg \phi \land \neg \psi)$ has no least upper bound.
+
+The fact that \cathoristic{} models have unique least upper bounds is used in proving
+completeness of our inference rules, and implementing the quadratic-time
+decision procedure.
+
+\subsection{Computing the least upper bound of the models that satisfy a formula}
+\label{simpl}
+
+In our decision procedure, we will see if $\phi \models \psi$ by constructing the least upper bound of the models satisfying $\phi$, and checking whether it satisfies $\psi$.
+
+In this section, we define a function $\SIMPL{\phi}$ that satisfies the following condition:
+\[
+\SIMPL{\phi} = \bigsqcup \{ \MMM | \MMM \models \phi \}
+\]
+Define $\SIMPL{\phi}$ as:
+\begin{eqnarray*}
+  \SIMPL{\top} &\ = \ & ( (\{v\}, \emptyset, \{v \mapsto \Sigma\}), v)  \\
+  \SIMPL{\fBang A} & = & ( (\{v\}, \emptyset, \{v \mapsto A\}), v)  \\
+  \SIMPL{\phi_1 \AND \phi_2} & = & \mathsf{glb} (\SIMPL{\phi_1}, \SIMPL{\phi_2})  \\
+  \SIMPL{\langle a \rangle \phi} 
+     & = & ( (S \cup \{w'\}, \rightarrow \cup (w' \xrightarrow{a} w), \lambda \cup \{w' \mapsto \Sigma\}]), w')  \\
+		& & \mbox{where }\SIMPL{\phi} = ( (S, \rightarrow, \lambda), w) \mbox{and } w' \mbox{ is a new state} \\
+                &&  \mbox{not appearing in }S 
+\end{eqnarray*}
+
+\input{figure_glb}
+
+\NI Note that, by our conventions, $\SIMPL{\phi}$ really returns a
+$\MODELEQ$-equivalence class of models.
+
+The only complex case is the clause for $\SIMPL{\phi_1 \AND \phi_2}$,
+which uses the $\mathsf{glb}$ function, defined as follows, where we assume
+that the sets of states in the two models are disjoint and are trees.
+It is easy to see that $\SIMPL{\cdot}$ always returns tree models.
+
+\begin{eqnarray*}
+  \mathsf{glb}(\bot, \MMM)  &\ =\ &  \bot  \\
+  \mathsf{glb}(\MMM, \bot)      & = &  \bot  
+     \\
+  \mathsf{glb}(\MMM, \MMM')
+     & = & 
+     \mathsf{merge}(\mathcal{L}, \mathcal{L}', \{(w,w')\}) 
+     \\
+     & & \text{where } \MMM = (\mathcal{L}, w) \text{ and } \MMM' = (\mathcal{L'}, w')
+\end{eqnarray*}
+
+\NI The $\mathsf{merge}$ function returns $\bot$ if either of its
+arguments are $\bot$. Otherwise, it merges the two transition systems
+together, given a set of state-identification pairs (a set of pairs of
+states from the two transition systems that need to be identified).  The
+state-identification pairs are used to make sure that the resulting
+model is deterministic.
+
+\begin{eqnarray*}
+  \mathsf{merge}(\mathcal{L}, \mathcal{L}', ids) 
+     & = & 
+  \begin{cases}
+    \bot & \text{if } \mathsf{inconsistent}(\mathcal{L}, \mathcal{L}', ids)  \\
+    \mathsf{join}(\mathcal{L}, \mathcal{L}') & \text{if } ids = \emptyset  \\
+    \mathsf{merge}(\mathcal{L}, \mathcal{L}'', ids')  & \text{else, where }
+          \mathcal{L}'' = \mathsf{applyIds}(ids, \mathcal{L}') \\
+          & \text{and } ids' = \mathsf{getIds}(\mathcal{L}, \mathcal{L}', ids)
+  \end{cases}
+\end{eqnarray*}
+
+\NI The $\mathsf{inconsistent}$ predicate is true if there is pair of
+states in the state-identification set such that the out-transitions
+of one state is incompatible with the state-labelling on the other
+state:
+\begin{eqnarray*}
+  \lefteqn{\mathsf{inconsistent}(\mathcal{L}, \mathcal{L}', ids)}\qquad
+     \\
+     &\text{ iff }& \exists (w,w') \in ids \; \text{with} \; \mathsf{out}(\mathcal{L},w) \nsubseteq \lambda'(w') \; \text{or} \; \mathsf{out}(\mathcal{L}',w') \nsubseteq \lambda(w).
+\end{eqnarray*}
+ 
+\NI Here the $\mathsf{out}$ function returns all the actions
+immediately available from the given state $w$.
+\[
+  \mathsf{out}(((S,\rightarrow,\lambda),w)) 
+     \ =\  \{ a \fOr \exists w' . w \xrightarrow{a} w'\} 
+\]
+
+\NI The $\mathsf{join}$ function takes the union of the two transition systems.
+\[
+   \mathsf{join}((S, \rightarrow,\lambda), (S', \rightarrow', \lambda')) 
+      \quad=\quad
+   (S \cup S', \rightarrow \cup \rightarrow', \lambda'')
+\]
+
+\NI Here $\lambda''$ takes the constraints arising from both, $\lambda$ and
+$\lambda'$ into account: 
+\[
+   \lambda''(s) 
+      \quad = \quad
+   \begin{array}{l}
+      \{\lambda(s) \cap \lambda'(s) \; | \; s \in S \cup S'\} \\ \cup \ 
+      \{\lambda(s)\; |\; s\in S \setminus S' \} \\ \cup \ 
+      \{\lambda(s)\; |\; s\in S' \setminus S \}. 
+   \end{array}
+\]
+
+\NI The $\mathsf{applyIds}$ function applies all the
+state-identification pairs as substitutions to the Labelled Transition
+System:
+\[
+   \mathsf{applyIds}(ids, (S, \rightarrow, \lambda)) 
+      \quad=\quad 
+   (S', \rightarrow', \lambda')
+\]
+
+\NI where
+\begin{eqnarray*}
+  S' &\quad =\quad & S \; [ w / w' \; | \; (w,w') \in ids] \\
+  \rightarrow' & = & \rightarrow \; [ w / w' \; | \; (w,w') \in ids] \\
+  \lambda' & = & \lambda \; [ w / w' \; | \; (w,w') \in ids]
+\end{eqnarray*}
+
+\NI Here $[ w / w' \; | \; (w,w') \in ids]$ means the simultaneous
+substitution of $w$ for $w'$ for all pairs $(w, w')$ in $ids$.  The
+$\mathsf{getIds}$ function returns the set of extra
+state-identification pairs that need to be added to respect
+determinism:
+\[
+   \mathsf{getIds}(\mathcal{L}, \mathcal{L}', ids) 
+      \quad=\quad 
+   \{(x,x') \; | \; (w,w') \in ids, \exists a \; . \; w \xrightarrow{a} x, w' \xrightarrow{a} x'\}
+\]
+
+\NI The function $\SIMPL{\cdot}$ has the expected properties, as the next
+lemma shows.  
+
+\begin{lemma}
+$\SIMPL{\phi} \models \phi.$
+\end{lemma}
+\begin{proof}
+By induction on $\phi$.
+\end{proof}
+
+\begin{lemma}
+$\mathsf{glb}$ as defined is the greatest lower bound
+\end{lemma}
+We will show that:
+\begin{itemize}
+\item
+$\mathsf{glb}(\MMM, \MMM') \MODELLEQ \MMM$ and $\mathsf{glb}(\MMM, \MMM') \MODELLEQ \MMM'$
+\item
+If $\NNN \MODELLEQ \MMM$ and $\NNN \MODELLEQ \MMM'$, then $\NNN \MODELLEQ \mathsf{glb}(\MMM, \MMM')$
+\end{itemize}
+If $\MMM$, $ \MMM'$ or $\mathsf{glb}(\MMM, \MMM')$ are equal to $\bot$, then we just apply the rule that $\bot \MODELLEQ m$ for all models $m$. 
+So let us assume that $\mathsf{consistent}(\MMM, \MMM')$ and that $\mathsf{glb}(\MMM, \MMM')  \neq \bot$.
+
+\begin{proof}
+To show $\mathsf{glb}(\MMM, \MMM') \MODELLEQ \MMM$, we need to provide a simulation $\mathcal{R}$ from $\MMM$ to  $\mathsf{glb}(\MMM, \MMM')$.
+If $\MMM = ((S,\rightarrow,\lambda),w)$, then define $\mathcal{R}$ as the identity relation on the states of $S$:
+\[
+\mathcal{R} = \{(x,x) \; | \; x \in S\}
+\]
+It is straightforward to show that $\mathcal{R}$ as defined is a simulation from $\MMM$ to  $\mathsf{glb}(\MMM, \MMM')$.
+If there is a transition $x \xrightarrow{a} y$ in $\MMM$, then by the construction of $\mathsf{merge}$, there is also a transition $x \xrightarrow{a} y$ in $\mathsf{glb}(\MMM, \MMM')$.
+We also need to show that $\lambda_{\MMM}(x) \supseteq \lambda_{\mathsf{glb}(\MMM, \MMM')}(x)$ for all states $x$ in $\MMM$. This is immediate from the construction of $\mathsf{merge}$.
+
+\end{proof}
+
+\begin{proof}
+To show that $\NNN \MODELLEQ \MMM$ and $\NNN \MODELLEQ \MMM'$ imply $\NNN \MODELLEQ \mathsf{glb}(\MMM, \MMM')$, assume there is a simulation $\mathcal{R}$ from $\MMM$ to $\NNN$ and there is a simulation $\mathcal{R}'$ from $\MMM'$ to $\NNN$.
+We need to provide a simulation $\mathcal{R}*$ from $\mathsf{glb}(\MMM, \MMM')$ to $\NNN$.
+
+Assume the states of $\MMM$ and $\MMM'$ are disjoint.
+Define:
+\[
+\mathcal{R}* = \mathcal{R} \cup \mathcal{R}'
+\]
+We need to show that $\mathcal{R}*$ as defined is a simulation from $\mathsf{glb}(\MMM, \MMM')$ to $\NNN$.
+
+Suppose $x \xrightarrow{a} y$ in $\mathsf{glb}(\MMM, \MMM')$ and that $(x,x_2) \in \mathcal{R} \cup \mathcal{R}'$.
+We need to provide a $y_2$ such that $x_2 \xrightarrow{a} y_2$ in  $\NNN$ and $(y,y_2) \in \mathcal{R} \cup \mathcal{R}'$.
+If  $x \xrightarrow{a} y$ in $\mathsf{glb}(\MMM, \MMM')$, then, from the definition of $\mathsf{merge}$, either $x \xrightarrow{a} y$ in $\MMM$ or $x \xrightarrow{a} y$ in $\MMM'$. If the former, and given that $\mathcal{R}$ is a simulation from $\MMM$ to $\NNN$, then there is a $y_2$ such that $(y,y_2) \in \mathcal{R}$ and $x_2 \xrightarrow{a} y_2$ in $\NNN$. But, if $(y,y_2) \in \mathcal{R}$, then also $(y,y_2) \in \mathcal{R} \cup \mathcal{R}'$.
+
+Finally, we need to show that if $(x,y) \in \mathcal{R} \cup \mathcal{R}'$ then
+\[
+\lambda_{\mathsf{glb}(\MMM, \MMM')}(x) \supseteq \lambda_{\NNN}(y)
+\]
+If $(x,y) \in \mathcal{R} \cup \mathcal{R}'$ then either $(x,y) \in \mathcal{R}$ or $(x,y) \in \mathcal{R}'$.
+Assume the former.
+Given that $\mathcal{R}$ is a simulation from $\MMM$ to $\NNN$, we know that if $(x,y) \in \mathcal{R}$, then 
+\[
+\lambda_{\MMM}(x) \supseteq \lambda_{\NNN}(y)
+\]
+Let $\MMM = ((S,\rightarrow,\lambda),w)$.
+If $x \neq w$ (i.e. $x$ is some state other than the start state), then, from the definition of $\mathsf{merge}$, $\lambda_{\mathsf{glb}(\MMM, \MMM')}(x) = \lambda_{\MMM}(x)$.
+So, given $\lambda_{\MMM} \supseteq \lambda_{\NNN}(y)$, $\lambda_{\mathsf{glb}(\MMM, \MMM')}(x) \supseteq \lambda_{\NNN}(y)$.
+If, on the other hand, $x = w$ (i.e. $x$ is the start state  of our cathoristic model $\MMM$), then, from the definition of $\mathsf{merge}$:
+\[
+\lambda_{\mathsf{glb}(\MMM, \MMM')}(w) = \lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w')
+\]
+where $w'$ is the start state  of $\MMM'$.
+In this case, given $\lambda_{\MMM}(w) \supseteq \lambda_{\NNN}(y)$ and $\lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$, it follows that $\lambda_{\MMM}(w) \cap \lambda_{\MMM'}(w') \supseteq \lambda_{\NNN}(y)$ and hence 
+\[
+\lambda_{\mathsf{glb}(\MMM, \MMM')}(w) \supseteq \lambda_{\NNN}(y)
+\]
+\end{proof}
+
+\NI Next, define the least upper bound ($\mathsf{lub}$) of two models as:
+\begin{eqnarray*}
+\mathsf{lub}(\MMM, \bot) & = & \MMM \\
+\mathsf{lub}(\bot, \MMM) & = & \MMM \\
+\mathsf{lub}((\CAL{L},w), (\CAL{L}',w')) & = & \mathsf{lub}_2(\CAL{L}, \CAL{L}', (\MMM_\top, z), \{(w, w', z)\})
+\end{eqnarray*}
+
+\NI where $\MMM_\top$ is the topmost model $(\mathcal{W}=\{z\},
+\rightarrow=\emptyset, \lambda=\{z \mapsto \Sigma\})$ for some state $z$.
+$\mathsf{lub}_2$ takes four parameters: the two cathoristic transition
+systems $\CAL{L}$ and $\CAL{L}'$, an accumulator representing the
+constructed result so far, and a list of state triples (each triple
+contains one state from each of the two input models plus the state of
+the accumulated result) to consider next.  It is defined as:
+\begin{eqnarray*}
+  \mathsf{lub}_2(\CAL{L}, \CAL{L}', \MMM, \emptyset) 
+     &\quad =\quad & 
+  \MMM \\
+  \mathsf{lub}_2(\CAL{L}, \CAL{L}', ((\mathcal{W}, \rightarrow, \lambda), y), \{(w,w',x)\} \cup R) 
+     & = & 
+  \mathsf{lub}_2(\CAL{L}, \CAL{L}', ((\mathcal{W} \cup \mathcal{W}', \rightarrow \cup \rightarrow', \lambda'), y), R' \cup R\}
+\end{eqnarray*}
+where:
+\begin{eqnarray*}
+  \{(a_i, w_i, w'_i) \;|\; i = 1 ... n\} 
+     &\quad =\quad & 
+  \mathsf{sharedT}((\CAL{L},w), (\CAL{L}',w')) \\
+  \mathcal{W}' 
+     & = & 
+  \{x_i \;|\; i = 1 ... n\} \\
+  \rightarrow' 
+     & = & 
+  \{(x, a_i, x_i) \;|\; i = 1 ... n\} \\
+  \lambda' 
+     & = & 
+  \lambda [x \mapsto \lambda(w) \cup \lambda(w)'] \\
+  R' 
+     & = & 
+  \{(w_i, w'_i, x_i) \;|\; i = 1 ... n\}
+\end{eqnarray*}
+
+\NI Here $\lambda[x \mapsto S]$ is the state labelling function that is
+exactly like $\lambda$, except that it maps $x$ to $S$.  Moreover,
+$\mathsf{sharedT}$ returns the shared transitions between two models,
+and is defined as:
+\[
+\mathsf{sharedT}(((\mathcal{W}, \rightarrow, \lambda),w) ((\mathcal{W}', \rightarrow', \lambda'),w')) =  \{(a, x, x') \;|\; w \xrightarrow{a} x \land w' \xrightarrow{a}' x'\}
+\]
+If $((S*,\rightarrow*,\lambda*),w*) = ((S,\rightarrow,\lambda),w) \sqcup ((S',\rightarrow',\lambda'),w')$ then define
+the set $\mathsf{triples}_\mathsf{lub}$ as the set of triples $(x,x',x*) \; | \; x \in S, x' \in S', x* \in S*$ that were used during the construction of $\mathsf{lub}$ above. So $\mathsf{triples}_\mathsf{lub}$ stores the associations between states in $\MMM$, $\MMM'$ and $\MMM \sqcup \MMM'$. 
+
+\input{figure_lub}
+
+\begin{lemma}
+$\mathsf{lub}$ as defined is the least upper bound
+\end{lemma}
+We will show that:
+\begin{itemize}
+\item
+$\MMM \MODELLEQ \mathsf{lub}(\MMM, \MMM')$ and $\MMM' \MODELLEQ \mathsf{lub}(\MMM, \MMM')$
+\item
+If $\MMM \MODELLEQ \NNN $ and $\MMM' \MODELLEQ \NNN $, then $\mathsf{lub}(\MMM, \MMM') \MODELLEQ \NNN$
+\end{itemize}
+If $\MMM$ or $ \MMM'$ are equal to $\bot$, then we just apply the rule that $\bot \MODELLEQ m$ for all models $m$. 
+So let us assume that neither $\MMM$ not $\MMM'$ are $\bot$.
+
+\begin{proof}
+To see that $\MMM \MODELLEQ \mathsf{lub}(\MMM, \MMM')$, observe that, by construction of $\mathsf{lub}$ above, every transition in $\mathsf{lub}(\MMM, \MMM')$ has a matching transition in $\MMM$, and every state label in  $\mathsf{lub}(\MMM, \MMM')$ is a superset of the corresponding state label in $\MMM$.
+
+To show that $\MMM \MODELLEQ \NNN $ and $\MMM' \MODELLEQ \NNN $ together imply $\mathsf{lub}(\MMM, \MMM') \MODELLEQ \NNN$, assume a simulation $\mathcal{R}$ from $\NNN$ to $\MMM$ and a simulation $\mathcal{R}'$ from $\NNN$ to $\MMM'$.
+We need to produce a simulation relation $\mathcal{R}*$ from $\NNN$ to $\mathsf{lub}(\MMM, \MMM')$.
+Define
+\[
+\mathcal{R}* =   \{(x, y*) \; | \; \exists y_1 . \exists y_2 . (x,y_1) \in \mathcal{R}, (x,y_2) \in \mathcal{R}', (y_1,y_2,y*) \in \mathsf{triples}_\mathsf{lub} \}
+\]
+In other words, $\mathsf{R}*$ contains the pairs corresponding to the pairs in both $\mathsf{R}$ and $\mathsf{R}'$.
+We just need to show that $\mathsf{R}*$ as defined is a simulation from $\NNN$ to $\mathsf{lub}(\MMM, \MMM')$.
+Assume $(x,x*) \in \mathsf{R}*$ and $x \xrightarrow{a} y$ in $\NNN$. 
+We need to produce a $y*$ such that $(x*,y*) \in \mathsf{R}*$ and $x* \xrightarrow{a} y*$ in $\mathsf{lub}(\MMM, \MMM')$.
+Given that $\mathcal{R}$ is a simulation from $\NNN$ to $\MMM$, and that  $\mathcal{R}'$ is a simulation from $\NNN$ to $\MMM'$, we know that there is a pair of states $x_1, y_1$ in $\MMM$ and a pair of states $x_2, y_2$ in $\MMM'$ such that $(x,x_1) \in \mathsf{R}$ and $(x,x_2) \in \mathsf{R}'$ and $x_1 \xrightarrow{a} y_1$ in $\MMM$ and $x_2 \xrightarrow{a} y_2$ in $\MMM'$.
+Now, from the construction of $\mathsf{lub}$ above, there is a triple $(y_1, y_2, y*) \in \mathsf{triples}_\mathsf{lub}$.
+Now, from the construction of $\mathsf{R}*$ above, $(x*,y*) \in \mathsf{R}*$.
+
+Finally, we need to show that for all states $x$ and $y$, if $(x,y) \in \mathsf{R}*, \lambda_{\NNN}(x) \supseteq \lambda_{\mathsf{lub}(\MMM, \MMM')}(y)$.
+Given that $\mathcal{R}$ is a simulation from $\NNN$ to $\MMM$, and that  $\mathcal{R}'$ is a simulation from $\NNN$ to $\MMM'$, we know that if $(x,y_1) \in \mathsf{R}$, then $\lambda_\NNN(x) \supseteq \lambda_\MMM(y_1)$.
+Similarly, if  $(x,y_2) \in \mathsf{R}$, then $\lambda_\NNN(x) \supseteq \lambda_\MMM'(y_2)$.
+Now, from the construction of $\mathsf{lub}$, $\lambda_{\mathsf{lub}(\MMM, \MMM')}(y*) = \lambda_{\MMM}(y_1) \cup \lambda_{\MMM}(y_2)$ for all triples $(y_1, y_2, y*) \in \mathsf{triples}_\mathsf{lub}$. 
+So $\lambda_{\NNN}(x) \supseteq \lambda_{\mathsf{lub}(\MMM, \MMM')}(y)$, as required.
+\end{proof}
+
+\subsection{A quadratic-time decision procedure}\label{decisionprocedure}
+
+We use the semantic constructions above to provide a quadratic-time
+decision procedure.  The complexity of the decision procedure is an
+indication that \cathoristic{} is useful as a query language in knowledge
+representation.
+
+\Cathoristic{}'s lack of connectives for negation, disjunction or
+implication is the key reason for the efficiency of the decision
+procedure.  Although any satisfiable formula has an infinite number of
+models, we have shown that the satisfying models form a bounded
+lattice with a least upper bound.  The $\SIMPL$ function defined above
+gives us the least upper bound of all models satisfying an expression.  Using this least
+upper bound, we can calculate entailment by checking a \emph{single
+  model}.  To decide whether $\phi \models \psi$, we use the following
+algorithm.
+
+\begin{enumerate}
+
+\item Compute $\SIMPL{\phi}$.
+
+\item Check if $\SIMPL{\phi} \models \psi$.
+
+\end{enumerate}
+
+\NI The correctness of this algorithm is given by the follow theorem.
+
+\begin{theorem}\label{theorem:decision}
+  The following are equivalent:
+  \begin{enumerate}
+    \item\label{theorem:decision:1} For all cathoristic models $\MMM$,
+      $\MMM \models \phi$ implies $\MMM \models \psi$.
+    \item\label{theorem:decision:2} $\SIMPL{\phi} \models \psi$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The implication from  (\ref{theorem:decision:1}) to
+(\ref{theorem:decision:2}) is trivial because $\SIMPL{\phi} \models \phi$ by construction.
+
+For the reverse direction, we make use of the following lemma (proved in the Appendix):
+\begin{lemma}
+\label{lemmasimpl}
+If $\MMM \models \phi$ then $\MMM \MODELLEQ \SIMPL{\phi}$.
+\end{lemma}
+
+With Lemma \ref{lemmasimpl} in hand, the proof of Theorem \ref{theorem:decision} is straightforward.
+Assume $\MMM \models \phi$. We need to show
+$\MMM \models \psi$.  Now if $\MMM \models \phi$ then $\MMM \MODELLEQ
+\SIMPL{\phi}$ (by Lemma \ref{lemmasimpl}).  Further, if $\MMM' \models \xi $
+and $\MMM \MODELLEQ \MMM'$ then $\MMM \models \xi $ by Theorem
+\ref{theorem:completeLattice}. So, substituting $\psi$ for $\xi $ and
+$\SIMPL{\phi}$ for $\MMM'$, it follows that $\MMM \models \psi$.
+\end{proof}
+
+Construction of $\SIMPL{\phi}$ is quadratic in the size of $\phi$,
+and computing whether a model satisfies $\psi$ is of order $|\psi|
+\times |\phi|$, so computing whether $\phi \models \psi$ is quadratic
+time.
+

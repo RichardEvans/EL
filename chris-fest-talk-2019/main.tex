@@ -1,0 +1,46 @@
+\documentclass[compress,subsection=false,red,transparent=false]{beamer}
+
+
+\usepackage{epsf}
+%\usepackage{listings}                                                                
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,snakes,automata,backgrounds,petri}
+\usepackage{amssymb}
+\usepackage{listings}
+
+\mode<presentation>
+{
+
+
+% \usetheme{compatibility}                                                            
+%   \setbeamercovered{transparent}                                                    
+   \setbeamercovered{invisible}
+   \setbeamertemplate{navigation symbols}{}
+}
+
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+%\setbeamertemplate{sidebar right}{}                                                  
+\newcounter{line}
+\setcounter{line}{1}
+
+\input{macros}
+
+\setbeamertemplate{footline}[text line]{%
+  \parbox{\linewidth}{\vspace*{-8pt}\hfill\insertpagenumber}}
+\setbeamertemplate{navigation symbols}{}
+
+
+\title{Cathoristic Logic}
+\subtitle{A Modal Logic of Incompatible Propositions}
+\author{Richard Prideaux Evans (DeepMind \& Imperial) \\ Martin Berger (Sussex)}
+\date{18 September 2019}
+
+\begin{document}
+
+\input{text}
+
+\end{document}
