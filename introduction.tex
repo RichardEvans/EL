@@ -8,11 +8,11 @@ Mutual exclusion is a natural and ubiquitous concept.
 \FOL{} can represent mutually exclusive alternatives, of course.
 To say that Pierre is the only king of France, we can write, following Russell:
 \[
-king(france, pierre) \land \forall x . (king(france, x) \rightarrow x = pierre).
+\mathit{king}(\mathit{france}, \mathit{pierre}) \land \forall x . (\mathit{king}(\mathit{france}, x) \rightarrow x = \mathit{pierre}).
 \]
 To say that a particular traffic light, $tl$, is red - and red is its only colour - we could write:
 \[
-colour(tl, red) \land \forall x . colour(tl, x) \rightarrow x = red.
+\mathit{colour}(tl, \mathit{red}) \land \forall x . \mathit{colour}(tl, x) \rightarrow x = \mathit{red}.
 \]
 In this approach, incompatibility is a \emph{derived} concept, reduced to 
 a combination of universal quantification and identity.  
@@ -63,26 +63,26 @@ logic uses modalities to state facts, for example $\MAY{amber}{}$
 expresses that $amber$ is currently the case.  The power of the logic
 comes from the conjunction of modalities and tantum. For example
 \[
-   \MAY{amber}{}\ \AND\ !\{green, amber, red\} 
+   \MAY{\mathit{amber}}{}\ \AND\ !\{\mathit{green}, \mathit{amber}, \mathit{red}\} 
 \]
 expresses that $amber$ is currently the case and $red$ as well as
 $green$ are the only two possible alternatives to $amber$.  Any
 statement that exceeds what tantum $A$ allows, like
 \[
-   \MAY{blue} \ \AND\ !\{green, amber, red\},
+   \MAY{\mathit{blue}} \ \AND\ !\{\mathit{green}, \mathit{amber}, \mathit{red}\},
 \]
 is necessarily false.  When the only options are green, amber, or red,
 then blue is not permissible.  Now to say that Pierre is the only king
 of France, we write:
 \[
-\MAY{king}\MAY{france}(\MAY{pierre} \land \fBang \{pierre\}).
+\MAY{\mathit{king}}\MAY{\mathit{france}}(\MAY{\mathit{pierre}} \land \fBang \{\mathit{pierre}\}).
 \]
 Crucially, \cathoristic{}'s representation involves no
 universal quantifier and no identity relation.  It is a purely
 propositional formulation.  To say that the traffic
 light is currently red, and red is its only colour, we write:
 \[
-\MAY{tl} \MAY{colour} (\MAY{red} \land !\{red\}).
+\MAY{tl} \MAY{\mathit{colour}} (\MAY{\mathit{red}} \land !\{\mathit{red}\}).
 \]
 This is simpler, both in terms of representation length and
 computational complexity, than the formulation in \fol{} given on the
@@ -95,7 +95,7 @@ modalities that can be understood as time-stamps.  To say that
 the traffic light was red at time $t_1$ and amber at time $t_2$, we
 can write:
 \[
-   \MAY{tl} \MAY{colour} (\MAY{t_1} (\MAY{red} \land !\{red\}) \land \MAY{t_2} (\MAY{amber} \land !\{amber\}))
+   \MAY{tl} \MAY{\mathit{colour}} (\MAY{t_1} (\MAY{\mathit{red}} \land !\{\mathit{red}\}) \land \MAY{t_2} (\MAY{\mathit{amber}} \land !\{\mathit{amber}\}))
 \]
 Change over time can be expressed in first-order logic with bounded
 quantification - but modalities are succinct and avoid introducing
@@ -133,7 +133,7 @@ If someone is male, then it is not the case that they are female
 \end{quote}
 Recast in first-order logic:
 \[
-\forall x. ( male(x) \IMPLIES \neg female(x) ).
+\forall x. ( \mathit{male}(x) \IMPLIES \neg \mathit{female}(x) ).
 \]
 
 \NI In other words, according to the orthodox position, the
